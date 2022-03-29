@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../user/understanding-shapes.rst:3
 msgid "Understanding Shapes"
-msgstr ""
+msgstr "理解形状"
 
 #: ../../user/understanding-shapes.rst:5
 msgid ""
@@ -31,16 +31,19 @@ msgid ""
 "make sense of how to work with them and then we'll jump right into "
 "working with the specific types."
 msgstr ""
+"幻灯片上的几乎所有东西都是一个形状；我能想到的唯一能出现在一张不是形状的幻灯片上的东西就是幻灯片背景。"
+"有六到十种不同的形状，取决于你如何计数。"
+"我将解释一些一般的形状概念，你将需要理解如何使用它们，然后我们将直接进入具体的类型。"
 
 #: ../../user/understanding-shapes.rst:11
 msgid ""
 "Technically there are six and only six different types of shapes that can"
 " be placed on a slide:"
-msgstr ""
+msgstr "从技术上讲，有六种且只有六种不同类型的形状可以放置在幻灯片上："
 
 #: ../../user/understanding-shapes.rst:21
 msgid "auto shape"
-msgstr ""
+msgstr "aoto 形状"
 
 #: ../../user/understanding-shapes.rst:15
 msgid ""
@@ -52,6 +55,11 @@ msgid ""
 "rectangle are for example. A text box is also an autoshape, a rectangular"
 " one, just by default without a fill and without an outline."
 msgstr ""
+"这是规则的形状，像矩形，椭圆，或块箭头。"
+"它们有各种各样的预设形状，大约有 180 种不同的形状。"
+"auto 形状可以有填充和轮廓，也可以包含文本。"
+"一些 auto 形状有调节器，比如你可以拖动黄色的小方块来调整圆角矩形的圆角。"
+"文本框也是 auto 形状，矩形的，只是默认情况下没有填充和轮廓线。"
 
 #: ../../user/understanding-shapes.rst:28
 msgid "picture"
@@ -65,10 +73,14 @@ msgid ""
 "fill, in which an image \"shows through\" as the background of the shape "
 "instead of a fill color or gradient. That's a different thing. But cool."
 msgstr ""
+"光栅图像，如照片或剪贴画，在 PowerPoint 中被称为 *picture*。"
+"它有自己的形状，与 auto 形状有不同的行为。"
+"注意，auto 形状可以有 picture 填充，其中图像“通过显示”作为形状的背景，而不是填充颜色或渐变。"
+"这是另一回事。但很酷。"
 
 #: ../../user/understanding-shapes.rst:34
 msgid "graphic frame"
-msgstr ""
+msgstr "图形框架"
 
 #: ../../user/understanding-shapes.rst:31
 msgid ""
@@ -77,6 +89,9 @@ msgid ""
 "itself, it just shows up in the file when you add a graphical object. You"
 " probably won't need to know anything more about these."
 msgstr ""
+"这是用于存放表（table）、图表（chart）、"
+"智能艺术图表（smart art diagram）或媒体剪辑（media clip）的容器的技术名称。"
+"你不能单独添加其中一个，当你添加图形对象时，它会在文件中显示出来。关于这些，你可能不需要知道更多。"
 
 #: ../../user/understanding-shapes.rst:41
 msgid "group shape"

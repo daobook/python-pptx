@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../user/slides.rst:3
 msgid "Working with Slides"
-msgstr ""
+msgstr "幻灯片"
 
 #: ../../user/slides.rst:5
 msgid ""
@@ -29,10 +29,13 @@ msgid ""
 " new slide. Let's take a minute to understand a few things about slide "
 "layouts that we'll need so the slide we add looks the way we want it to."
 msgstr ""
+"演示文稿中的每张幻灯片都基于幻灯片布局。"
+"毫无疑问，当您创建新的幻灯片时，您必须指定使用哪个幻灯片布局。"
+"让我们花点时间来理解一些关于幻灯片布局的东西，这样我们就可以添加我们想要的幻灯片外观。"
 
 #: ../../user/slides.rst:12
 msgid "Slide layout basics"
-msgstr ""
+msgstr "幻灯片布局基础"
 
 #: ../../user/slides.rst:14
 msgid ""
@@ -46,6 +49,12 @@ msgid ""
 "decisions on the slide layouts. There can actually be multiple slide "
 "masters, but I'll pretend for now there's only one. Usually there is."
 msgstr ""
+"幻灯片布局就像幻灯片的模板。"
+"无论幻灯片布局上的内容是什么，它都会“通过”显示在幻灯片上，而在幻灯片布局上所做的格式选择也会被幻灯片继承。"
+"这是重要的特性，可以获得看起来很专业的演示文稿套件，其中所有幻灯片的格式都是一致的。"
+"每个幻灯片布局都以类似的方式基于幻灯片母版，因此您可以在幻灯片母版上做出整个演示文稿的格式决定，"
+"在幻灯片布局上做出特定于布局的决定。"
+"实际上可以有多个幻灯片母版，但现在我假设只有一个。通常有。"
 
 #: ../../user/slides.rst:24
 msgid ""
@@ -55,6 +64,9 @@ msgid ""
 "preformatted areas into which you can place a title, multi-level bullets,"
 " an image, etc. More on those later."
 msgstr ""
+"PowerPoint 的演示文稿主题有九种幻灯片布局，分别是 *Title*、*Title and Content*、*Title Only* 和 *Blank*。"
+"每个都有零个或多个占位符（大多数不是零个），可以放置标题、多级项目列表符号、图像等的预设格式化区域。"
+"稍后再详细介绍。"
 
 #: ../../user/slides.rst:30
 msgid ""
@@ -62,6 +74,8 @@ msgid ""
 " sequence. This allows content from one deck to be pasted into another "
 "and be connected with the right new slide layout:"
 msgstr ""
+"标准 PowerPoint 主题中的幻灯片布局总是以相同的顺序出现。"
+"这允许内容从一个 deck 粘贴到另一个，并连接到正确的新幻灯片布局："
 
 #: ../../user/slides.rst:34
 msgid "Title (presentation title slide)"
@@ -110,22 +124,26 @@ msgid ""
 "Slide Master view in PowerPoint and count down from the top, starting at "
 "zero."
 msgstr ""
+"在 |pp| 中，这些是 ``prs.slide_layouts[0]`` 通过 ``prs.slide_layouts[8]``。"
+"然而，并没有规定它们必须按照这个顺序出现，这只是 PowerPoint 提供的主题遵循的惯例。"
+"如果你使用的模板有不同的幻灯片布局，或者有不同的顺序，你必须自己制定幻灯片布局索引。"
+"它很简单。只要在 PowerPoint 的幻灯片主视图中打开它，从顶部开始倒数，从 0 开始。"
 
 #: ../../user/slides.rst:52
 msgid "Now we can get to creating a new slide."
-msgstr ""
+msgstr "现在我们可以创建新的幻灯片。"
 
 #: ../../user/slides.rst:56
 msgid "Adding a slide"
-msgstr ""
+msgstr "添加幻灯片"
 
 #: ../../user/slides.rst:58
 msgid "Let's use the Title and Content slide layout; a lot of slides do::"
-msgstr ""
+msgstr "让我们使用标题和内容幻灯片布局；很多幻灯片都是这样的::"
 
 #: ../../user/slides.rst:66
 msgid "A few things to note:"
-msgstr ""
+msgstr "有几件事需要注意："
 
 #: ../../user/slides.rst:68
 msgid ""
@@ -135,6 +153,9 @@ msgid ""
 "There isn't a set of these built into the package because they can't be "
 "assured to be right for the starting deck you're using."
 msgstr ""
+"使用像 ``SLD_LAYOUT_TITLE_AND_CONTENT`` 这样的 \"constant\" 值是由你决定的。"
+"如果你要制作很多幻灯片，定义一些常量会很方便，这样读者就能更容易地理解你在做什么。"
+"软件包中并没有一套这样的工具，因为你不能保证它们对你正在使用的起始平台是正确的。"
 
 #: ../../user/slides.rst:74
 msgid ""
@@ -144,6 +165,9 @@ msgid ""
 "for the Presentation instance is purely conventional, but I like it and "
 "use it consistently."
 msgstr ""
+"``prs.slide_layouts`` 是包含在演示文稿中的幻灯片布局的集合，具有列表语义，至少对于 item 访问，"
+"这是关于所有你可以用该集合在此刻做的。"
+"在 Presentation 实例中使用 ``prs`` 纯粹是传统的，但我喜欢它，并一直使用它。"
 
 #: ../../user/slides.rst:80
 msgid ""
@@ -156,10 +180,15 @@ msgid ""
 "and when they post a feature request for that I expect I'll add an "
 "``insert_slide(idx, ...)`` method."
 msgstr ""
+"``prs.slides`` 是演示文稿中的幻灯片集合，也有用于项访问的列表语义，``len()`` 可以处理它。"
+"请注意，添加幻灯片的方法是在幻灯片集合中，而不是在演示文稿中。"
+"``add_slide()`` 方法将新幻灯片追加到集合的末尾。"
+"在编写时，这是添加幻灯片的唯一方法，但我预计迟早会有人想要在中间插入幻灯片，"
+"当他们发布功能请求时，我预计我会添加 ``insert_slide(idx, ...)`` 方法。"
 
 #: ../../user/slides.rst:91
 msgid "Doing other things with slides"
-msgstr ""
+msgstr "用幻灯片做其他事情"
 
 #: ../../user/slides.rst:93
 msgid ""
@@ -170,14 +199,18 @@ msgid ""
 "general case, so that probably won't come until more of the backlog is "
 "burned down."
 msgstr ""
+"现在，添加幻灯片是幻灯片集合上的唯一操作。"
+"在编写待办事项列表时，删除幻灯片并将幻灯片移动到列表中的不同位置。"
+"在一般情况下，将幻灯片从一个演示文稿复制到另一个演示文稿是非常困难的，所以在更多的积压工作完成之前，"
+"这可能不会发生。"
 
 #: ../../user/slides.rst:101
 msgid "Up next ..."
-msgstr ""
+msgstr "接下来为你放映 。。。"
 
 #: ../../user/slides.rst:103
 msgid ""
 "Ok, now that we have a new slide, let's talk about how to put something "
 "on it ..."
 msgstr ""
-
+"好了，现在我们有了新幻灯片，让我们来谈谈如何在上面添加东西 ……"

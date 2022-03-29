@@ -60,6 +60,7 @@ msgid ""
 "This creates a new presentation from the built-in default template and "
 "saves it unchanged to a file named 'test.pptx'. A couple things to note:"
 msgstr ""
+"这将从内置的默认模板创建新的演示文稿，并将其保存到名为 'test.pptx' 的文件中。有几件事需要注意："
 
 #: ../../user/presentations.rst:31
 msgid ""
@@ -71,6 +72,10 @@ msgid ""
 "contain any slides. PowerPoint always adds a blank first slide by "
 "default."
 msgstr ""
+"所谓的默认模板实际上只是 PowerPoint 文件，里面没有任何幻灯片，存储在已安装的 python-pptx 包中。"
+"这与你从全新的 PowerPoint 安装中创建新的演示文稿时所得到的效果是一样的，"
+"基于 \"White\" 模板的 4x3 宽高比演示文稿。"
+"好吧，但它不包含任何幻灯片。默认情况下，PowerPoint 总是会添加一张空白页作为第一张幻灯片。"
 
 #: ../../user/presentations.rst:38
 msgid ""
@@ -78,6 +83,7 @@ msgid ""
 "see exactly what that template contains, just look in the 'test.pptx' "
 "file this creates."
 msgstr ""
+"在保存之前，您不需要对它做任何操作。如果你想知道模板包含了什么，只需查看它创建的 'test.pptx' 文件。"
 
 #: ../../user/presentations.rst:42
 msgid ""
@@ -86,10 +92,13 @@ msgid ""
 " files) are something a bit different. More on those later maybe, but you"
 " won't need them to work with |pp|."
 msgstr ""
+"我们称它为 **模板**，但实际上它只是普通的 PowerPoint 文件，删除了所有的幻灯片。"
+"和实际的 PowerPoint 模板文件（``.potx``）有点不同。"
+"稍后可能会详细介绍这些内容，但是在使用 |pp| 时并不需要它们。"
 
 #: ../../user/presentations.rst:49
 msgid "REALLY opening a presentation"
-msgstr ""
+msgstr "真正打开演示文稿"
 
 #: ../../user/presentations.rst:51
 msgid ""
@@ -97,10 +106,11 @@ msgid ""
 "presentation, or if you want to change an existing presentation, you need"
 " to open one with a filename::"
 msgstr ""
+"好的，如果你想要控制最终的演示文稿，或者如果你想要改变现有的演示文稿，你需要打开带文件名的文件::"
 
 #: ../../user/presentations.rst:58
 msgid "Things to note:"
-msgstr ""
+msgstr "注意事项："
 
 #: ../../user/presentations.rst:60
 msgid ""
@@ -112,6 +122,10 @@ msgid ""
 "has them |pp| is polite enough to leave them alone and smart enough to "
 "save them without actually understanding what they are."
 msgstr ""
+"你可以用这种方式打开任何 PowerPoint 2007 及以后版本的文件（PowerPoint 2003 及以前版本的 .ppt 文件不行）。"
+"虽然您可能还不能操作所有的内容，但已经存在的内容都可以加载和保存。"
+"功能集仍在构建中，所以你还不能添加或更改像 Notes Pages 这样的东西，但如果演示文稿已经有了这些功能，"
+"那么 |pp| 就会礼貌地不去理会它们，而聪明地在不了解它们是什么的情况下保存它们。"
 
 #: ../../user/presentations.rst:68
 msgid ""
@@ -119,10 +133,12 @@ msgid ""
 "obediently overwrite the original file without a peep. You'll want to "
 "make sure that's what you intend."
 msgstr ""
+"如果你使用相同的文件名来打开和保存文件，|pp| 会乖乖地覆盖原来的文件，一眼也看不出来。"
+"你要确保这就是你的意图。"
 
 #: ../../user/presentations.rst:74
 msgid "Opening a 'file-like' presentation"
-msgstr ""
+msgstr "打开 'file-like' 演示文稿"
 
 #: ../../user/presentations.rst:76
 msgid ""
@@ -133,10 +149,14 @@ msgid ""
 "with the file system. In practice this means you can pass an open file or"
 " StringIO/BytesIO stream object to open or save a presentation like so::"
 msgstr ""
+"|pp| 可以从所谓的 *file-like* 对象打开演示文稿。"
+"它还可以保存到 file-like 的对象。"
+"当您希望通过网络连接或从数据库获得源或目标演示文稿，并且不希望（或不允许）与文件系统交互时，这很方便。"
+"在实践中，这意味着你可以像这样传递打开的文件或 StringIO/BytesIO 流对象来打开或保存演示文稿::"
 
 #: ../../user/presentations.rst:98
 msgid ""
 "Okay, so you've got a presentation open and are pretty sure you can save "
 "it somewhere later. Next step is to get a slide in there ..."
 msgstr ""
-
+"好吧，你已经打开了演示文稿，并且很确定你可以把它保存在某个地方。下一步就是在那里幻灯片……"

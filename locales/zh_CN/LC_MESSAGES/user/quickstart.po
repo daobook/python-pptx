@@ -42,7 +42,7 @@ msgstr "你好世界！例子"
 
 #: ../../user/quickstart.rst:43
 msgid "Bullet slide example"
-msgstr "子弹幻灯片的例子"
+msgstr "Bullet 幻灯片的例子"
 
 #: ../../user/quickstart.rst:77
 msgid ""
