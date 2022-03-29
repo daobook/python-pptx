@@ -1,0 +1,421 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-data-labels.rst:3
+msgid "Chart - Data Labels"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:5
+msgid ""
+"On a PowerPoint chart, data points may be labeled as an aid to readers. "
+"Typically, the label is the value of the data point, but a data label may"
+" have any combination of its series name, category name, and value. A "
+"number format may also be applied to the value displayed."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:12
+msgid "Object access"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:14
+msgid ""
+"The `DataLabels` object is not a collection of `DataLabel` objects. "
+"`DataLabels` controls the formatting of the data labels for a whole "
+"series, so \"global\" settings in a way of thinking. An individual "
+"`DataLabel` object is accessed using it's associated `Point` object::"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:21
+msgid "The two object types share many attributes."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:25
+msgid "DataLabel.font"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:27
+#: ../../dev/analysis/cht-data-labels.rst:76
+msgid "Proposed protocol::"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:34
+#: ../../dev/analysis/cht-data-labels.rst:121
+msgid "Position"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:36
+msgid ""
+"There are nine choices for where a data label may be positioned relative "
+"to its data point marker, although the available options depend on the "
+"chart type. The options are specified using the "
+":ref:`XlDataLabelPosition` enumeration."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:41
+msgid ""
+"**XML Semantics.** The default position when no ``<c:dLblPos>`` element "
+"is present (common) depends on the chart type:"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:45
+msgid "barChart (clustered)"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:45
+#: ../../dev/analysis/cht-data-labels.rst:47
+#: ../../dev/analysis/cht-data-labels.rst:69
+msgid "OUTSIDE_END"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:47
+msgid "bar3DChart (clustered)"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:49
+msgid "barChart (stacked)"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:49
+#: ../../dev/analysis/cht-data-labels.rst:51
+#: ../../dev/analysis/cht-data-labels.rst:53
+#: ../../dev/analysis/cht-data-labels.rst:55
+#: ../../dev/analysis/cht-data-labels.rst:63
+#: ../../dev/analysis/cht-data-labels.rst:65
+#: ../../dev/analysis/cht-data-labels.rst:67
+msgid "CENTER"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:51
+msgid "barChart (percent stacked)"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:53
+msgid "bar3DChart (stacked)"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:55
+msgid "bar3DChart (percent stacked)"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:57
+msgid "pieChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:57
+#: ../../dev/analysis/cht-data-labels.rst:59
+#: ../../dev/analysis/cht-data-labels.rst:61
+msgid "BEST_FIT"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:59
+msgid "pie3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:61
+msgid "ofPieChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:63
+msgid "areaChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:65
+msgid "area3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:67
+msgid "doughnutChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:69
+msgid "radarChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:71
+msgid "all others"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:71
+msgid "RIGHT"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:74
+msgid "http://msdn.microsoft.com/en-us/library/ff535061(v=office.12).aspx"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:87
+msgid "MS API"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:89
+msgid ""
+"The following properties from the MS API DataLabel object are of most "
+"interest:"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:94
+msgid "Delete()"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:93
+msgid ""
+"Deletes the DataLabel object, which might be useful for \"undoing\" data "
+"label overrides and restoring inherited behaviors."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:98
+msgid "AutoText"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:97
+msgid ""
+"True if the object automatically generates appropriate text based on "
+"context. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:101
+msgid "Caption"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:101
+msgid "Returns or sets the data label text. Read/write String."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:105
+msgid "Format"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:104
+msgid ""
+"Returns the line, fill, and effect formatting for the object. Read-only "
+"ChartFormat."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:108
+msgid "NumberFormat"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:108
+msgid "Returns or sets the format code for the object. Read/write String."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:113
+msgid "NumberFormatLinked"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:111
+msgid ""
+"True if the number format is linked to the cells (so that the number "
+"format changes in the labels when it changes in the cells). Read/write "
+"Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:117
+msgid "Orientation"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:116
+msgid ""
+"Returns or sets the text orientation. Read/write Long in range -90 to 90 "
+"(degrees)."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:120
+msgid ""
+"Returns or sets the position of the data label. Read/write "
+"XlDataLabelPosition."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:126
+msgid "Separator"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:124
+msgid ""
+"Returns or sets the separator used for the data labels on a chart. Used "
+"when more than one value is shown, like category+value. Read/write "
+"Variant."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:130
+msgid "Shadow"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:129
+msgid ""
+"Returns or sets a value that indicates whether the object has a shadow. "
+"Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:134
+msgid "ShowBubbleSize"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:133
+msgid ""
+"True to show the bubble size for the data labels on a chart. False to "
+"hide the bubble size. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:138
+msgid "ShowCategoryName"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:137
+msgid ""
+"True to display the category name for the data labels on a chart. False "
+"to hide the category name. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:143
+msgid "ShowLegendKey"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:141
+msgid ""
+"True if the data label legend key is visible. This is a small square of "
+"the series color shown in the legend, and appears adjacent to the data "
+"label. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:148
+msgid "ShowPercentage"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:146
+msgid ""
+"True to display the percentage value for the data labels on a chart. "
+"False to hide the value. This might only be relevant for pie charts and "
+"similar. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:152
+msgid "ShowSeriesName"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:151
+msgid ""
+"True to show the series name for the data labels on a chart. False to "
+"hide the series name. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:156
+msgid "ShowValue"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:155
+msgid ""
+"True to display a specified chart's data label values. False to hide the "
+"values. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:159
+msgid "Text"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:159
+msgid "Returns or sets the text for the specified object. Read/write String."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:164
+msgid "VerticalAlignment"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:162
+msgid ""
+"Returns or sets the vertical alignment of the specified object. "
+"Read/write Variant."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:167
+msgid "PowerPoint behavior"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:169
+msgid ""
+"A default PowerPoint bar chart does not display data labels, but it does "
+"have a ``<c:dLbls>`` child element on its ``<c:barChart>`` element."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:172
+msgid ""
+"Data labels are added to a chart in the UI by selecting the *Data Labels*"
+" drop-down menu in the Chart Layout ribbon. The options include setting "
+"the contents of the data label, its position relative to the point, and "
+"bringing up the *Format Data Labels* dialog."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:177
+msgid ""
+"The default number format, when no ``<c:numFmt>`` child element appears, "
+"is equivalent to ``<c:numFmt formatCode=\"General\" "
+"sourceLinked=\"1\"/>``"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:182
+msgid "XML Semantics"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:184
+msgid ""
+"A ``<c:dLbls>`` element at the plot level (e.g. ``<c:barChart>``) is "
+"overridden completely by a ``<c:dLbls>`` element at the series level. "
+"Unless overridden, a ``<c:dLbls>`` element at the plot level determines "
+"the content and formatting for data labels on all the plot's series."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:189
+msgid ""
+"A ``<c:dLbl>`` element appears as a child of ``<c:dLbls>`` only when the "
+"data label for its associated data point has overrides."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:194
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:198
+msgid ""
+"The ``<c:dLbls>`` element is available on a plot (e.g. ``<c:barChart>``),"
+" a series (``<c:ser>``), and perhaps elsewhere."
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:201
+msgid ""
+"Default ``<c:dLbls>`` element added by PowerPoint when selecting Data "
+"Labels > Value from the Chart Layout ribbon::"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:213
+msgid ""
+"A ``<c:dLbls>`` element specifying the labels should appear in 10pt Bold "
+"Italic Arial Narrow, color Accent 6, 25% Darker::"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:242
+msgid ""
+"A ``<c:dLbls>`` element having an individual point override for font "
+"color and outline box::"
+msgstr ""
+
+#: ../../dev/analysis/cht-data-labels.rst:281
+msgid "Related Schema Definitions"
+msgstr ""
+

@@ -1,0 +1,564 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/txt-font-color.rst:3
+msgid "Font Color"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:6
+msgid "Overview"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:8
+msgid ""
+"Font color is a particular case of the broader topic of *fill*, the case "
+"of *solid fill*, in which a drawing element is filled with a single "
+"color. Other possible fill types are *gradient*, *picture*, *pattern*, "
+"and *background* (transparent)."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:13
+msgid ""
+"Any drawing element that can have a fill can have a solid fill, or color."
+" Elements that can have a fill include shape, line, text, table, table "
+"cell, and slide background."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:19
+msgid "Scope"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:21
+msgid ""
+"This analysis focuses on *font color*, although much of it is general to "
+"solid fills. The focus is simply to enable getting to feature "
+"implementation as quickly as possible, just not before its clear I "
+"understand how it works in general."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:28
+msgid "Candidate API"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:30
+msgid "New members:"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:32
+msgid "``Font.color``"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:33
+msgid "``ColorFormat(fillable_elm)``"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:34
+msgid "``ColorFormat.type``"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:35
+msgid "``ColorFormat.rgb``"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:36
+msgid "``ColorFormat.theme_color``"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:37
+msgid "``ColorFormat.brightness``"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:38
+msgid "``RGBColor(r, g, b)``"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:39
+msgid "``RGBColor.__str__``"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:40
+msgid "``RGBColor.from_str(rgb_str)``"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:42
+msgid "Enumerations:"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:44
+msgid "MSO_COLOR_TYPE_INDEX"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:45
+msgid "MSO_THEME_COLOR_INDEX"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:48
+msgid "Protocol::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:66
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:68
+msgid ""
+"Here is a representative sample of the various font color cases as they "
+"appear in the XML, as produced by PowerPoint. Some inoperative attributes"
+" have been removed for clarity."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:72
+msgid "Baseline run::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:79
+msgid ""
+"set to a specific RGB color, using color wheel; HSB sliders yield the "
+"same::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:87
+msgid "set to theme color, Text 2::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:95
+#, python-format
+msgid "set to theme color, Accent 2, 80% Lighter::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:108
+msgid "PowerPoint API"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:110
+msgid ""
+"Changing the color of text in the PowerPoint API is accomplished with "
+"something like this::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:125
+msgid ""
+"The ColorFormat object is the first interesting object here, the type of "
+"object returned by ``TextRange.Font.Color``. It includes the following "
+"properties that will likely have counterparts in python-pptx:"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:134
+msgid "Brightness"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:130
+#, python-format
+msgid ""
+"Returns or sets the brightness of the specified object. The value for "
+"this property must be a number from -1.0 (darker) to 1.0 (lighter), with "
+"0 corresponding to no brightness adjustment. Read/write Single. Note: "
+"this corresponds to selecting an adjusted theme color from the PowerPoint"
+" ribbon color picker, like 'Accent 1, 40% Lighter'."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:139
+msgid "ObjectThemeColor"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:137
+msgid ""
+"Returns or sets the theme color of the specified ColorFormat object. "
+"Read/Write. Accepts and returns values from the enumeration "
+"MsoThemeColorIndex."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:143
+#: ../../dev/analysis/txt-font-color.rst:473
+msgid "RGB"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:142
+msgid ""
+"Returns or sets the red-green-blue (RGB) value of the specified color. "
+"Read/write."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:147
+msgid "Type"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:146
+msgid "Represents the type of color. Read-only."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:150
+msgid "Legacy properties"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:152
+msgid ""
+"These two properties will probably not need to be implemented in python-"
+"pptx."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:158
+msgid "SchemeColor"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:155
+msgid ""
+"Returns or sets the color in the applied color scheme that's associated "
+"with the specified object. Accepts and returns values from "
+"PpColorSchemeIndex. Read/write. Appears to be a legacy method to "
+"accomodate code prior to PowerPoint 2007."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:163
+msgid "TintAndShade"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:161
+msgid ""
+"Sets or returns the lightening or darkening of the the color of a "
+"specified shape. Read/write."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:166
+msgid "Resources"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:168
+msgid "`MSDN TextFrame2 Members`_"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:169
+msgid "`MSDN TextRange Members`_"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:170
+msgid "`MSDN Font Members`_"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:171
+msgid "`MSDN ColorFormat Members`_"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:172
+msgid "`MSDN MsoThemeColorIndex Enumeration`_"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:192
+msgid "Behaviors"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:194
+msgid ""
+"The API method ``Brightness`` corresponds to the UI action of selecting "
+"an auto-generated tint or shade of a theme color from the PowerPoint "
+"ribbon color picker:"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:198
+msgid "Setting font color to Accent 1 from the UI produces::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:206
+msgid "The following code does the same from the API::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:210
+msgid ""
+"Setting font color to Accent 1, Lighter 40% (40% tint) from the "
+"PowerPoint UI produces this XML::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:222
+msgid "Setting ``Brightness`` to +0.4 has the same effect::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:226
+#, python-format
+msgid ""
+"Setting font color to Accent 1, Darker 25% (25% shade) from the UI "
+"results in the following XML. Note that no ``<a:lumOff>`` element is "
+"used.::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:237
+msgid "Setting ``Brightness`` to -0.25 has the same effect::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:241
+msgid ""
+"Calling ``TintAndShade`` with a positive value (between 0 and 1) causes a"
+" tint element to be inserted, but I'm not at all sure why and when one "
+"would want to use it rather than the ``Brightness`` property.::"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:257
+msgid "Related Schema Definitions"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:401
+msgid "Enumerations"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:403
+msgid "**MsoColorType**"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:405
+msgid "http://msdn.microsoft.com/en-us/library/office/aa432491(v=office.12).aspx"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:408
+msgid "msoColorTypeRGB"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:408
+msgid "1 - Color is determined by values of red, green, and blue."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:411
+msgid "msoColorTypeScheme"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:411
+msgid "2 - Color is defined by an application-specific scheme."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:414
+msgid "msoColorTypeCMYK"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:414
+msgid "3 - Color is determined by values of cyan, magenta, yellow, and black."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:417
+msgid "msoColorTypeCMS"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:417
+msgid "4 - Color Management System color type."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:420
+msgid "msoColorTypeInk"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:420
+msgid "5 - Not supported."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:423
+msgid "msoColorTypeMixed"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:423
+msgid "-2 - Not supported."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:425
+msgid "**MsoThemeColorIndex**"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:427
+msgid "http://msdn.microsoft.com/en-us/library/office/aa432702(v=office.12).aspx"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:429
+msgid "msoNotThemeColor"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:430
+msgid "0 - Specifies no theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:431
+msgid "msoThemeColorDark1"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:432
+msgid "1 - Specifies the Dark 1 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:433
+msgid "msoThemeColorLight1"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:434
+msgid "2 - Specifies the Light 1 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:435
+msgid "msoThemeColorDark2"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:436
+msgid "3 - Specifies the Dark 2 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:437
+msgid "msoThemeColorLight2"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:438
+msgid "4 - Specifies the Light 2 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:439
+msgid "msoThemeColorAccent1"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:440
+msgid "5 - Specifies the Accent 1 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:441
+msgid "msoThemeColorAccent2"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:442
+msgid "6 - Specifies the Accent 2 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:443
+msgid "msoThemeColorAccent3"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:444
+msgid "7 - Specifies the Accent 3 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:445
+msgid "msoThemeColorAccent4"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:446
+msgid "8 - Specifies the Accent 4 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:447
+msgid "msoThemeColorAccent5"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:448
+msgid "9 - Specifies the Accent 5 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:449
+msgid "msoThemeColorAccent6"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:450
+msgid "10 - Specifies the Accent 6 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:451
+msgid "msoThemeColorHyperlink"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:452
+msgid "11 - Specifies the theme color for a hyperlink."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:453
+msgid "msoThemeColorFollowedHyperlink"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:454
+msgid "12 - Specifies the theme color for a clicked hyperlink."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:455
+msgid "msoThemeColorText1"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:456
+msgid "13 - Specifies the Text 1 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:457
+msgid "msoThemeColorBackground1"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:458
+msgid "14 - Specifies the Background 1 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:459
+msgid "msoThemeColorText2"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:460
+msgid "15 - Specifies the Text 2 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:461
+msgid "msoThemeColorBackground2"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:462
+msgid "16 - Specifies the Background 2 theme color."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:465
+msgid "msoThemeColorMixed"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:464
+msgid "-2 - Specifies a mixed color theme."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:468
+msgid "Value Objects"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:471
+msgid ""
+"RGBColor would be an immutable value object that could be reused as often"
+" as needed and not tied to any part of the underlying XML tree."
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:476
+msgid "Other possible bits"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:478
+msgid "acceptance test sketch"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:479
+msgid "test data requirements; files, builder(s)"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:480
+msgid "enumerations and mappings"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:481
+msgid "value types required"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:482
+msgid "test criteria"
+msgstr ""
+
+#: ../../dev/analysis/txt-font-color.rst:484
+msgid "Example test criteria::"
+msgstr ""
+

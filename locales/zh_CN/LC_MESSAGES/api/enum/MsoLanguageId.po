@@ -1,0 +1,1760 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/MsoLanguageId.rst:4
+msgid "``MSO_LANGUAGE_ID``"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:6
+msgid "Specifies the language identifier."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:8
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:17
+msgid "MIXED"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:17
+msgid "More than one language in specified range."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:20
+msgid "NONE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:20
+msgid "No language specified."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:23
+msgid "AFRIKAANS"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:23
+msgid "The Afrikaans language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:26
+msgid "ALBANIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:26
+msgid "The Albanian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:29
+msgid "AMHARIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:29
+msgid "The Amharic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:32
+msgid "ARABIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:32
+msgid "The Arabic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:35
+msgid "ARABIC_ALGERIA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:35
+msgid "The Arabic Algeria language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:38
+msgid "ARABIC_BAHRAIN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:38
+msgid "The Arabic Bahrain language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:41
+msgid "ARABIC_EGYPT"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:41
+msgid "The Arabic Egypt language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:44
+msgid "ARABIC_IRAQ"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:44
+msgid "The Arabic Iraq language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:47
+msgid "ARABIC_JORDAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:47
+msgid "The Arabic Jordan language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:50
+msgid "ARABIC_KUWAIT"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:50
+msgid "The Arabic Kuwait language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:53
+msgid "ARABIC_LEBANON"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:53
+msgid "The Arabic Lebanon language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:56
+msgid "ARABIC_LIBYA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:56
+msgid "The Arabic Libya language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:59
+msgid "ARABIC_MOROCCO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:59
+msgid "The Arabic Morocco language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:62
+msgid "ARABIC_OMAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:62
+msgid "The Arabic Oman language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:65
+msgid "ARABIC_QATAR"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:65
+msgid "The Arabic Qatar language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:68
+msgid "ARABIC_SYRIA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:68
+msgid "The Arabic Syria language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:71
+msgid "ARABIC_TUNISIA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:71
+msgid "The Arabic Tunisia language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:74
+msgid "ARABIC_UAE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:74
+msgid "The Arabic UAE language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:77
+msgid "ARABIC_YEMEN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:77
+msgid "The Arabic Yemen language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:80
+msgid "ARMENIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:80
+msgid "The Armenian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:83
+msgid "ASSAMESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:83
+msgid "The Assamese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:86
+msgid "AZERI_CYRILLIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:86
+msgid "The Azeri Cyrillic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:89
+msgid "AZERI_LATIN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:89
+msgid "The Azeri Latin language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:92
+msgid "BASQUE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:92
+msgid "The Basque language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:95
+msgid "BELGIAN_DUTCH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:95
+msgid "The Belgian Dutch language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:98
+msgid "BELGIAN_FRENCH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:98
+msgid "The Belgian French language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:101
+msgid "BENGALI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:101
+msgid "The Bengali language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:104
+msgid "BOSNIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:104
+msgid "The Bosnian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:107
+msgid "BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:107
+msgid "The Bosnian Bosnia Herzegovina Cyrillic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:110
+msgid "BOSNIAN_BOSNIA_HERZEGOVINA_LATIN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:110
+msgid "The Bosnian Bosnia Herzegovina Latin language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:113
+msgid "BRAZILIAN_PORTUGUESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:113
+msgid "The Brazilian Portuguese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:116
+msgid "BULGARIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:116
+msgid "The Bulgarian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:119
+msgid "BURMESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:119
+msgid "The Burmese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:122
+msgid "BYELORUSSIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:122
+msgid "The Byelorussian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:125
+msgid "CATALAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:125
+msgid "The Catalan language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:128
+msgid "CHEROKEE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:128
+msgid "The Cherokee language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:131
+msgid "CHINESE_HONG_KONG_SAR"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:131
+msgid "The Chinese Hong Kong SAR language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:134
+msgid "CHINESE_MACAO_SAR"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:134
+msgid "The Chinese Macao SAR language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:137
+msgid "CHINESE_SINGAPORE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:137
+msgid "The Chinese Singapore language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:140
+msgid "CROATIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:140
+msgid "The Croatian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:143
+msgid "CZECH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:143
+msgid "The Czech language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:146
+msgid "DANISH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:146
+msgid "The Danish language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:149
+msgid "DIVEHI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:149
+msgid "The Divehi language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:152
+msgid "DUTCH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:152
+msgid "The Dutch language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:155
+msgid "EDO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:155
+msgid "The Edo language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:158
+msgid "ENGLISH_AUS"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:158
+msgid "The English AUS language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:161
+msgid "ENGLISH_BELIZE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:161
+msgid "The English Belize language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:164
+msgid "ENGLISH_CANADIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:164
+msgid "The English Canadian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:167
+msgid "ENGLISH_CARIBBEAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:167
+msgid "The English Caribbean language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:170
+msgid "ENGLISH_INDONESIA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:170
+msgid "The English Indonesia language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:173
+msgid "ENGLISH_IRELAND"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:173
+msgid "The English Ireland language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:176
+msgid "ENGLISH_JAMAICA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:176
+msgid "The English Jamaica language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:179
+msgid "ENGLISH_NEW_ZEALAND"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:179
+msgid "The English NewZealand language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:182
+msgid "ENGLISH_PHILIPPINES"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:182
+msgid "The English Philippines language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:185
+msgid "ENGLISH_SOUTH_AFRICA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:185
+msgid "The English South Africa language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:188
+msgid "ENGLISH_TRINIDAD_TOBAGO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:188
+msgid "The English Trinidad Tobago language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:191
+msgid "ENGLISH_UK"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:191
+msgid "The English UK language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:194
+msgid "ENGLISH_US"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:194
+msgid "The English US language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:197
+msgid "ENGLISH_ZIMBABWE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:197
+msgid "The English Zimbabwe language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:200
+msgid "ESTONIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:200
+msgid "The Estonian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:203
+msgid "FAEROESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:203
+msgid "The Faeroese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:206
+msgid "FARSI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:206
+msgid "The Farsi language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:209
+msgid "FILIPINO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:209
+msgid "The Filipino language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:212
+msgid "FINNISH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:212
+msgid "The Finnish language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:215
+msgid "FRANCH_CONGO_DRC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:215
+msgid "The French Congo DRC language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:218
+msgid "FRENCH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:218
+msgid "The French language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:221
+msgid "FRENCH_CAMEROON"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:221
+msgid "The French Cameroon language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:224
+msgid "FRENCH_CANADIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:224
+msgid "The French Canadian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:227
+msgid "FRENCH_COTED_IVOIRE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:227
+msgid "The French Coted Ivoire language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:230
+msgid "FRENCH_HAITI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:230
+msgid "The French Haiti language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:233
+msgid "FRENCH_LUXEMBOURG"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:233
+msgid "The French Luxembourg language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:236
+msgid "FRENCH_MALI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:236
+msgid "The French Mali language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:239
+msgid "FRENCH_MONACO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:239
+msgid "The French Monaco language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:242
+msgid "FRENCH_MOROCCO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:242
+msgid "The French Morocco language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:245
+msgid "FRENCH_REUNION"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:245
+msgid "The French Reunion language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:248
+msgid "FRENCH_SENEGAL"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:248
+msgid "The French Senegal language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:251
+msgid "FRENCH_WEST_INDIES"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:251
+msgid "The French West Indies language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:254
+msgid "FRISIAN_NETHERLANDS"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:254
+msgid "The Frisian Netherlands language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:257
+msgid "FULFULDE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:257
+msgid "The Fulfulde language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:260
+msgid "GAELIC_IRELAND"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:260
+msgid "The Gaelic Ireland language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:263
+msgid "GAELIC_SCOTLAND"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:263
+msgid "The Gaelic Scotland language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:266
+msgid "GALICIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:266
+msgid "The Galician language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:269
+msgid "GEORGIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:269
+msgid "The Georgian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:272
+msgid "GERMAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:272
+msgid "The German language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:275
+msgid "GERMAN_AUSTRIA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:275
+msgid "The German Austria language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:278
+msgid "GERMAN_LIECHTENSTEIN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:278
+msgid "The German Liechtenstein language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:281
+msgid "GERMAN_LUXEMBOURG"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:281
+msgid "The German Luxembourg language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:284
+msgid "GREEK"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:284
+msgid "The Greek language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:287
+msgid "GUARANI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:287
+msgid "The Guarani language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:290
+msgid "GUJARATI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:290
+msgid "The Gujarati language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:293
+msgid "HAUSA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:293
+msgid "The Hausa language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:296
+msgid "HAWAIIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:296
+msgid "The Hawaiian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:299
+msgid "HEBREW"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:299
+msgid "The Hebrew language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:302
+msgid "HINDI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:302
+msgid "The Hindi language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:305
+msgid "HUNGARIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:305
+msgid "The Hungarian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:308
+msgid "IBIBIO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:308
+msgid "The Ibibio language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:311
+msgid "ICELANDIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:311
+msgid "The Icelandic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:314
+msgid "IGBO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:314
+msgid "The Igbo language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:317
+msgid "INDONESIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:317
+msgid "The Indonesian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:320
+msgid "INUKTITUT"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:320
+msgid "The Inuktitut language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:323
+msgid "ITALIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:323
+msgid "The Italian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:326
+msgid "JAPANESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:326
+msgid "The Japanese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:329
+msgid "KANNADA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:329
+msgid "The Kannada language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:332
+msgid "KANURI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:332
+msgid "The Kanuri language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:335
+msgid "KASHMIRI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:335
+msgid "The Kashmiri language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:338
+msgid "KASHMIRI_DEVANAGARI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:338
+msgid "The Kashmiri Devanagari language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:341
+msgid "KAZAKH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:341
+msgid "The Kazakh language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:344
+msgid "KHMER"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:344
+msgid "The Khmer language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:347
+msgid "KIRGHIZ"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:347
+msgid "The Kirghiz language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:350
+msgid "KONKANI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:350
+msgid "The Konkani language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:353
+msgid "KOREAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:353
+msgid "The Korean language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:356
+msgid "KYRGYZ"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:356
+msgid "The Kyrgyz language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:359
+msgid "LAO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:359
+msgid "The Lao language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:362
+msgid "LATIN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:362
+msgid "The Latin language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:365
+msgid "LATVIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:365
+msgid "The Latvian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:368
+msgid "LITHUANIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:368
+msgid "The Lithuanian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:371
+msgid "MACEDONINAN_FYROM"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:371
+msgid "The Macedonian FYROM language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:374
+msgid "MALAY_BRUNEI_DARUSSALAM"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:374
+msgid "The Malay Brunei Darussalam language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:377
+msgid "MALAYALAM"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:377
+msgid "The Malayalam language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:380
+msgid "MALAYSIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:380
+msgid "The Malaysian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:383
+msgid "MALTESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:383
+msgid "The Maltese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:386
+msgid "MANIPURI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:386
+msgid "The Manipuri language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:389
+msgid "MAORI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:389
+msgid "The Maori language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:392
+msgid "MARATHI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:392
+msgid "The Marathi language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:395
+msgid "MEXICAN_SPANISH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:395
+msgid "The Mexican Spanish language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:398
+msgid "MONGOLIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:398
+msgid "The Mongolian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:401
+msgid "NEPALI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:401
+msgid "The Nepali language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:404
+msgid "NO_PROOFING"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:404
+msgid "No proofing."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:407
+msgid "NORWEGIAN_BOKMOL"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:407
+msgid "The Norwegian Bokmol language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:410
+msgid "NORWEGIAN_NYNORSK"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:410
+msgid "The Norwegian Nynorsk language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:413
+msgid "ORIYA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:413
+msgid "The Oriya language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:416
+msgid "OROMO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:416
+msgid "The Oromo language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:419
+msgid "PASHTO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:419
+msgid "The Pashto language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:422
+msgid "POLISH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:422
+msgid "The Polish language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:425
+msgid "PORTUGUESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:425
+msgid "The Portuguese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:428
+msgid "PUNJABI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:428
+msgid "The Punjabi language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:431
+msgid "QUECHUA_BOLIVIA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:431
+msgid "The Quechua Bolivia language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:434
+msgid "QUECHUA_ECUADOR"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:434
+msgid "The Quechua Ecuador language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:437
+msgid "QUECHUA_PERU"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:437
+msgid "The Quechua Peru language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:440
+msgid "RHAETO_ROMANIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:440
+msgid "The Rhaeto Romanic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:443
+msgid "ROMANIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:443
+msgid "The Romanian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:446
+msgid "ROMANIAN_MOLDOVA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:446
+msgid "The Romanian Moldova language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:449
+msgid "RUSSIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:449
+msgid "The Russian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:452
+msgid "RUSSIAN_MOLDOVA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:452
+msgid "The Russian Moldova language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:455
+msgid "SAMI_LAPPISH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:455
+msgid "The Sami Lappish language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:458
+msgid "SANSKRIT"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:458
+msgid "The Sanskrit language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:461
+msgid "SEPEDI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:461
+msgid "The Sepedi language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:464
+msgid "SERBIAN_BOSNIA_HERZEGOVINA_CYRILLIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:464
+msgid "The Serbian Bosnia Herzegovina Cyrillic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:467
+msgid "SERBIAN_BOSNIA_HERZEGOVINA_LATIN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:467
+msgid "The Serbian Bosnia Herzegovina Latin language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:470
+msgid "SERBIAN_CYRILLIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:470
+msgid "The Serbian Cyrillic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:473
+msgid "SERBIAN_LATIN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:473
+msgid "The Serbian Latin language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:476
+msgid "SESOTHO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:476
+msgid "The Sesotho language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:479
+msgid "SIMPLIFIED_CHINESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:479
+msgid "The Simplified Chinese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:482
+msgid "SINDHI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:482
+msgid "The Sindhi language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:485
+msgid "SINDHI_PAKISTAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:485
+msgid "The Sindhi Pakistan language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:488
+msgid "SINHALESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:488
+msgid "The Sinhalese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:491
+msgid "SLOVAK"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:491
+msgid "The Slovak language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:494
+msgid "SLOVENIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:494
+msgid "The Slovenian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:497
+msgid "SOMALI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:497
+msgid "The Somali language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:500
+msgid "SORBIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:500
+msgid "The Sorbian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:503
+msgid "SPANISH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:503
+msgid "The Spanish language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:506
+msgid "SPANISH_ARGENTINA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:506
+msgid "The Spanish Argentina language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:509
+msgid "SPANISH_BOLIVIA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:509
+msgid "The Spanish Bolivia language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:512
+msgid "SPANISH_CHILE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:512
+msgid "The Spanish Chile language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:515
+msgid "SPANISH_COLOMBIA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:515
+msgid "The Spanish Colombia language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:518
+msgid "SPANISH_COSTA_RICA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:518
+msgid "The Spanish Costa Rica language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:521
+msgid "SPANISH_DOMINICAN_REPUBLIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:521
+msgid "The Spanish Dominican Republic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:524
+msgid "SPANISH_ECUADOR"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:524
+msgid "The Spanish Ecuador language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:527
+msgid "SPANISH_EL_SALVADOR"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:527
+msgid "The Spanish El Salvador language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:530
+msgid "SPANISH_GUATEMALA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:530
+msgid "The Spanish Guatemala language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:533
+msgid "SPANISH_HONDURAS"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:533
+msgid "The Spanish Honduras language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:536
+msgid "SPANISH_MODERN_SORT"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:536
+msgid "The Spanish Modern Sort language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:539
+msgid "SPANISH_NICARAGUA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:539
+msgid "The Spanish Nicaragua language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:542
+msgid "SPANISH_PANAMA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:542
+msgid "The Spanish Panama language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:545
+msgid "SPANISH_PARAGUAY"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:545
+msgid "The Spanish Paraguay language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:548
+msgid "SPANISH_PERU"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:548
+msgid "The Spanish Peru language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:551
+msgid "SPANISH_PUERTO_RICO"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:551
+msgid "The Spanish Puerto Rico language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:554
+msgid "SPANISH_URUGUAY"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:554
+msgid "The Spanish Uruguay language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:557
+msgid "SPANISH_VENEZUELA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:557
+msgid "The Spanish Venezuela language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:560
+msgid "SUTU"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:560
+msgid "The Sutu language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:563
+msgid "SWAHILI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:563
+msgid "The Swahili language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:566
+msgid "SWEDISH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:566
+msgid "The Swedish language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:569
+msgid "SWEDISH_FINLAND"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:569
+msgid "The Swedish Finland language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:572
+msgid "SWISS_FRENCH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:572
+msgid "The Swiss French language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:575
+msgid "SWISS_GERMAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:575
+msgid "The Swiss German language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:578
+msgid "SWISS_ITALIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:578
+msgid "The Swiss Italian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:581
+msgid "SYRIAC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:581
+msgid "The Syriac language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:584
+msgid "TAJIK"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:584
+msgid "The Tajik language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:587
+msgid "TAMAZIGHT"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:587
+msgid "The Tamazight language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:590
+msgid "TAMAZIGHT_LATIN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:590
+msgid "The Tamazight Latin language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:593
+msgid "TAMIL"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:593
+msgid "The Tamil language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:596
+msgid "TATAR"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:596
+msgid "The Tatar language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:599
+msgid "TELUGU"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:599
+msgid "The Telugu language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:602
+msgid "THAI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:602
+msgid "The Thai language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:605
+msgid "TIBETAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:605
+msgid "The Tibetan language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:608
+msgid "TIGRIGNA_ERITREA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:608
+msgid "The Tigrigna Eritrea language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:611
+msgid "TIGRIGNA_ETHIOPIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:611
+msgid "The Tigrigna Ethiopic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:614
+msgid "TRADITIONAL_CHINESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:614
+msgid "The Traditional Chinese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:617
+msgid "TSONGA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:617
+msgid "The Tsonga language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:620
+msgid "TSWANA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:620
+msgid "The Tswana language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:623
+msgid "TURKISH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:623
+msgid "The Turkish language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:626
+msgid "TURKMEN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:626
+msgid "The Turkmen language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:629
+msgid "UKRAINIAN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:629
+msgid "The Ukrainian language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:632
+msgid "URDU"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:632
+msgid "The Urdu language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:635
+msgid "UZBEK_CYRILLIC"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:635
+msgid "The Uzbek Cyrillic language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:638
+msgid "UZBEK_LATIN"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:638
+msgid "The Uzbek Latin language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:641
+msgid "VENDA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:641
+msgid "The Venda language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:644
+msgid "VIETNAMESE"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:644
+msgid "The Vietnamese language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:647
+msgid "WELSH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:647
+msgid "The Welsh language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:650
+msgid "XHOSA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:650
+msgid "The Xhosa language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:653
+msgid "YI"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:653
+msgid "The Yi language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:656
+msgid "YIDDISH"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:656
+msgid "The Yiddish language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:659
+msgid "YORUBA"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:659
+msgid "The Yoruba language."
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:663
+msgid "ZULU"
+msgstr ""
+
+#: ../../api/enum/MsoLanguageId.rst:662
+msgid "The Zulu language."
+msgstr ""
+

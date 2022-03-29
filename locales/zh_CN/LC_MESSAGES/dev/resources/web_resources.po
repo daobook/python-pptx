@@ -1,0 +1,143 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/resources/web_resources.rst:3
+msgid "Web Resources"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:5
+msgid "... just collected bits and pieces here for now ..."
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:9
+msgid "ECMA Spec"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:10
+msgid "..."
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:14
+msgid "Microsoft PowerPoint API documentation"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:16
+msgid "`PowerPoint 2010 Interop Namespace`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:18
+msgid "`PowerPoint 2013 Object Model Reference`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:20
+msgid "`PowerPoint 2010 Object Model Reference`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:22
+msgid "`Open XML Presentation Namespace on MSDN`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:24
+msgid "`Office 2013 Open XML Presentation Namespace`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:26
+msgid "`Open XML Content Types as an XML Document`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:51
+msgid "Sphinx Resources"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:53
+msgid ""
+"Alternate source for `Sphinx documentation "
+"<http://sphinx.readthedocs.org/en/latest/contents.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:56
+msgid ""
+"`An example PyPi project "
+"<http://packages.python.org/an_example_pypi_project/sphinx.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:61
+msgid "Documentation Guides"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:63
+msgid ""
+"Nice GitHub Project Style Guide (esp. Commit Style Guide) `textmate / "
+"restructuredtext.tmbundle "
+"<https://github.com/textmate/restructuredtext.tmbundle>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:67
+msgid ""
+"Python Documentation guide `Documenting Python Guide "
+"<http://docs.python.org/devguide/documenting.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:70
+msgid ""
+"`Google Python Style Guide <http://google-"
+"styleguide.googlecode.com/svn/trunk/pyguide.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:72
+msgid ""
+"`Read The Docs (readthedocs.org) "
+"<https://docs.readthedocs.org/en/latest/index.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:74
+msgid ""
+"`OpenComparison documetation on readthedocs.org "
+"<http://opencomparison.readthedocs.org/en/latest/contributing.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:76
+msgid ""
+"`The Hitchhiker’s Guide to Packaging <http://guide.python-"
+"distribute.org/index.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:80
+msgid "Other Resources"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:82
+msgid "`Python Magic Methods <http://www.rafekettler.com/magicmethods.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:84
+msgid "`lxml.etree Tutorial <http://lxml.de/tutorial.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:86
+msgid "`lxml API Reference <http://lxml.de/api/index.html>`_"
+msgstr ""
+
+#: ../../dev/resources/web_resources.rst:88
+msgid ""
+"`The factory pattern in Python with __new__ "
+"<http://whilefalse.net/2009/10/21/factory-pattern-python-__new__/>`_"
+msgstr ""
+

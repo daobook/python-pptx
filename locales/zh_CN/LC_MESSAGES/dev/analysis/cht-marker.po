@@ -1,0 +1,255 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-marker.rst:3
+msgid "Chart - Markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:5
+msgid ""
+"A marker is a small geometric shape that explicitly indicates a data "
+"point position on a line-oriented chart. Line, XY, and Radar are the "
+"line-oriented charts. Other chart types do not have markers."
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:11
+msgid "PowerPoint behavior"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:13
+msgid "At series level, UI provides property controls for:"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:15
+msgid "Marker Fill"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:17 ../../dev/analysis/cht-marker.rst:24
+msgid "Solid"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:18 ../../dev/analysis/cht-marker.rst:29
+msgid "Gradient"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:19
+msgid "Picture or Texture"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:20
+msgid "Pattern"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:22
+msgid "Marker Line"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:26
+msgid "RGBColor (probably HSB too, etc.)"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:27
+msgid "Transparency"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:30
+msgid "Weights & Arrows"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:32
+msgid "Marker Style"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:34
+msgid "Choice of enumerated shapes"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:35
+msgid "Size"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:39
+msgid "XL_MARKER_STYLE enumeration"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:41
+msgid "https://msdn.microsoft.com/en-us/library/bb241374(v=office.12).aspx"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:44
+msgid "xlMarkerStyleAutomatic"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:44
+msgid "-4105"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:44
+msgid "Automatic markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:46
+msgid "xlMarkerStyleCircle"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:46
+msgid "8"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:46
+msgid "Circular markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:48
+msgid "xlMarkerStyleDash"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:48
+msgid "-4115"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:48
+msgid "Long bar markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:50
+msgid "xlMarkerStyleDiamond"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:50
+msgid "2"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:50
+msgid "Diamond-shaped markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:52
+msgid "xlMarkerStyleDot"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:52
+msgid "-4118"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:52
+msgid "Short bar markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:54
+msgid "xlMarkerStyleNone"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:54
+msgid "-4142"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:54
+msgid "No markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:56
+msgid "xlMarkerStylePicture"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:56
+msgid "-4147"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:56
+msgid "Picture markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:58
+msgid "xlMarkerStylePlus"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:58
+msgid "9"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:58
+msgid "Square markers with a plus sign"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:60
+msgid "xlMarkerStyleSquare"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:60
+msgid "1"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:60
+msgid "Square markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:62
+msgid "xlMarkerStyleStar"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:62
+msgid "5"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:62
+msgid "Square markers with an  asterisk"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:64
+msgid "xlMarkerStyleTriangle"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:64
+msgid "3"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:64
+msgid "Triangular markers"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:66
+msgid "xlMarkerStyleX"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:66
+msgid "-4168"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:66
+msgid "Square markers with an X"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:70
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:74
+msgid "Marker properties set at the series level, all markers for the series::"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:98
+msgid "Marker properties set on an individual point::"
+msgstr ""
+
+#: ../../dev/analysis/cht-marker.rst:157
+msgid "Related Schema Definitions"
+msgstr ""
+

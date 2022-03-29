@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/MsoFillType.rst:4
+msgid "``MSO_FILL_TYPE``"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:6
+msgid "Specifies the type of bitmap used for the fill of a shape."
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:8
+msgid "Alias: ``MSO_FILL``"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:10
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:21
+msgid "BACKGROUND"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:19
+msgid ""
+"The shape is transparent, such that whatever is behind the shape shows "
+"through. Often this is the slide background, but if a visible shape is "
+"behind, that will show through."
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:24
+msgid "GRADIENT"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:24
+msgid "Shape is filled with a gradient"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:28
+msgid "GROUP"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:27
+msgid ""
+"Shape is part of a group and should inherit the fill properties of the "
+"group."
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:31
+msgid "PATTERNED"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:31
+msgid "Shape is filled with a pattern"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:34
+msgid "PICTURE"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:34
+msgid "Shape is filled with a bitmapped image"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:37
+msgid "SOLID"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:37
+msgid "Shape is filled with a solid color"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:41
+msgid "TEXTURED"
+msgstr ""
+
+#: ../../api/enum/MsoFillType.rst:40
+msgid "Shape is filled with a texture"
+msgstr ""
+

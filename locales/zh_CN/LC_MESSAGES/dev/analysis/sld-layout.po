@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/sld-layout.rst:3
+msgid "Slide Layout"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:5
+msgid ""
+"A slide layout acts as an property inheritance base for zero or more "
+"slides. This provides a certain amount of separation between formatting "
+"and content and contributes to visual consistency across the slides of a "
+"presentation."
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:10
+msgid "Remove Layout"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:13
+msgid "Preliminary notes"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:15
+msgid ""
+"Images on a removed slide layout appear to disappear automatically "
+"(without explicitly dropping their relationship from the slide layout "
+"before removing it)."
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:18
+msgid ""
+"A \"used\" layout cannot be removed. Being \"used\" in this context means"
+" the presentation contains one or more slides *based* on that layout. The"
+" layout provides inherited placeholders, styling, and perhaps other "
+"background objects and will cause a repair error if missing."
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:25
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:27
+msgid ""
+"The default slide layout collection (the one belonging to the first slide"
+" master) is accessible directly from the presentation object::"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:34
+msgid "Remove an (unused) slide layout::"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:38
+msgid "Identify unused slide layouts::"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:49
+msgid "Specimen XML"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:51
+msgid ""
+"Each slide master contains a list of its slide layouts. Each layout is "
+"uniquely identified by a slide-layout id (although this is the only place"
+" it appears) and is accessed by traversing the relationship-id (rId) in "
+"the `r:id` attribute::"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:73
+msgid ""
+"The layout used by a slide is specified (only) in the `.rels` file for "
+"that slide::"
+msgstr ""
+
+#: ../../dev/analysis/sld-layout.rst:84
+msgid "Schema excerpt"
+msgstr ""
+

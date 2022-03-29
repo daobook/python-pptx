@@ -1,0 +1,457 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-chart-type.rst:3
+msgid "Chart - Chart Type"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:5
+msgid "There are 73 distinct chart types supported by PowerPoint."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:7
+msgid ""
+"These are implemented with 16 distinct elements (e.g. c:bar3DChart). "
+"Within an element tag name, they are further differentiated by child "
+"elements and attributes such as c:grouping and c:shape."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:11
+msgid "These differentiators are summaried below."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:15
+msgid "c:areaChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:17
+msgid "./c:grouping{val=stacked}        => AREA_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:18
+msgid "./c:grouping{val=percentStacked} => AREA_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:19
+msgid "./c:grouping{val=standard}       => AREA"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:20
+msgid ".                                => AREA"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:24
+msgid "c:area3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:26
+msgid "./c:grouping{val=stacked}        => THREE_D_AREA_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:27
+msgid "./c:grouping{val=percentStacked} => THREE_D_AREA_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:28
+msgid "./c:grouping{val=standard}       => THREE_D_AREA"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:29
+msgid ".                                => THREE_D_AREA"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:33
+msgid "c:barChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:35
+#: ../../dev/analysis/cht-chart-type.rst:51
+msgid "./c:barDir{val=bar}"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:37
+msgid "./c:grouping{val=clustered}      => BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:38
+msgid "./c:grouping{val=stacked}        => BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:39
+msgid "./c:grouping{val=percentStacked} => BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:41
+#: ../../dev/analysis/cht-chart-type.rst:74
+msgid "./c:barDir{val=col}"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:43
+msgid "./c:grouping{val=clustered}      => COLUMN_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:44
+msgid "./c:grouping{val=stacked}        => COLUMN_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:45
+msgid "./c:grouping{val=percentStacked} => COLUMN_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:49
+msgid "c:bar3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:53
+#: ../../dev/analysis/cht-chart-type.rst:76
+msgid "./c:grouping{val=clustered}"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:55
+msgid "./c:shape{val=box}      => THREE_D_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:56
+msgid "./c:shape{val=cone}     => CONE_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:57
+msgid "./c:shape{val=cylinder} => CYLINDER_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:58
+msgid "./c:shape{val=pyramid}  => PYRAMID_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:60
+#: ../../dev/analysis/cht-chart-type.rst:83
+#: ../../dev/analysis/cht-chart-type.rst:127
+msgid "./c:grouping{val=stacked}"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:62
+msgid "./c:shape{val=box}      => THREE_D_BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:63
+msgid "./c:shape{val=cone}     => CONE_BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:64
+msgid "./c:shape{val=cylinder} => CYLINDER_BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:65
+msgid "./c:shape{val=pyramid}  => PYRAMID_BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:67
+#: ../../dev/analysis/cht-chart-type.rst:90
+#: ../../dev/analysis/cht-chart-type.rst:132
+msgid "./c:grouping{val=percentStacked}"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:69
+msgid "./c:shape{val=box}      => THREE_D_BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:70
+msgid "./c:shape{val=cone}     => CONE_BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:71
+msgid "./c:shape{val=cylinder} => CYLINDER_BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:72
+msgid "./c:shape{val=pyramid}  => PYRAMID_BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:78
+msgid "./c:shape{val=box}      => THREE_D_COLUMN_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:79
+msgid "./c:shape{val=cone}     => CONE_COL_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:80
+msgid "./c:shape{val=cylinder} => CYLINDER_COL_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:81
+msgid "./c:shape{val=pyramid}  => PYRAMID_COL_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:85
+msgid "./c:shape{val=box}      => THREE_D_COLUMN_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:86
+msgid "./c:shape{val=cone}     => CONE_COL_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:87
+msgid "./c:shape{val=cylinder} => CYLINDER_COL_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:88
+msgid "./c:shape{val=pyramid}  => PYRAMID_COL_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:92
+msgid "./c:shape{val=box}      => THREE_D_COLUMN_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:93
+msgid "./c:shape{val=cone}     => CONE_COL_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:94
+msgid "./c:shape{val=cylinder} => CYLINDER_COL_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:95
+msgid "./c:shape{val=pyramid}  => PYRAMID_COL_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:97
+#: ../../dev/analysis/cht-chart-type.rst:122
+msgid "./c:grouping{val=standard}"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:99
+msgid "./c:shape{val=box}      => THREE_D_COLUMN"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:100
+msgid "./c:shape{val=cone}     => CONE_COL"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:101
+msgid "./c:shape{val=cylinder} => CYLINDER_COL"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:102
+msgid "./c:shape{val=pyramid}  => PYRAMID_COL"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:106
+msgid "c:bubbleChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:108
+msgid "./c:bubble3D{val=0} => BUBBLE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:109
+msgid "./c:bubble3D{val=1} => BUBBLE_THREE_D_EFFECT"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:113
+msgid "c:doughnutChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:115
+msgid ".                          => DOUGHNUT"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:116
+msgid "./c:ser/c:explosion{val>0} => DOUGHNUT_EXPLODED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:120
+msgid "c:lineChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:124
+msgid "./c:ser/c:marker/c:symbol{val=none} => LINE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:125
+msgid "./c:marker{val=1}                   => LINE_MARKERS"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:129
+msgid "./c:marker{val=1}                   => LINE_MARKERS_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:130
+msgid "./c:ser/c:marker/c:symbol{val=none} => LINE_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:134
+msgid "./c:marker{val=1}                   => LINE_MARKERS_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:135
+msgid "./c:ser/c:marker/c:symbol{val=none} => LINE_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:139
+msgid "c:line3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:141
+msgid ". => THREE_D_LINE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:145
+msgid "c:ofPieChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:147
+msgid "./c:ofPieType{val=bar} => BAR_OF_PIE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:148
+msgid "./c:ofPieType{val=pie} => PIE_OF_PIE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:152
+msgid "c:pieChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:154
+msgid ".                          => PIE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:155
+msgid "./c:ser/c:explosion{val>0} => PIE_EXPLODED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:159
+msgid "c:pie3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:161
+msgid ".                          => THREE_D_PIE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:162
+msgid "./c:ser/c:explosion{val>0} => THREE_D_PIE_EXPLODED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:166
+msgid "c:radarChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:168
+msgid "./c:radarStyle{val=standard} => RADAR"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:169
+msgid "./c:radarStyle{val=filled}   => RADAR_FILLED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:170
+msgid "./c:radarStyle{val=marker}   => RADAR_MARKERS"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:174
+msgid "c:scatterChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:176
+msgid "./c:scatterStyle{val=lineMarker}   =>  XY_SCATTER"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:177
+msgid "has to do with ./c:ser/c:spPr/a:ln/a:noFill"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:178
+msgid "./c:scatterStyle{val=lineMarker}   =>  XY_SCATTER_LINES"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:179
+msgid "./c:scatterStyle{val=line}         =>  XY_SCATTER_LINES_NO_MARKERS"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:180
+msgid "./c:scatterStyle{val=smoothMarker} =>  XY_SCATTER_SMOOTH"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:181
+msgid "./c:scatterStyle{val=smooth}       =>  XY_SCATTER_SMOOTH_NO_MARKERS"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:182
+msgid "check all these to verify"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:186
+msgid "c:stockChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:188
+msgid "./? => STOCK_HLC"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:189
+msgid "./? => STOCK_OHLC"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:190
+msgid "./? => STOCK_VHLC"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:191
+msgid "./? => STOCK_VOHLC"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:192
+msgid ""
+"possibly related to 3 vs. 4 series. VOHLC has a second plot and axis for "
+"volume"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:197
+msgid "c:surface3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:199
+msgid "./c:wireframe{val=0} => SURFACE_TOP_VIEW"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:200
+msgid "./c:wireframe{val=1} => SURFACE_TOP_VIEW_WIREFRAME"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:204
+msgid "c:surfaceChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:206
+msgid "./c:wireframe{val=0} => SURFACE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:207
+msgid "./c:wireframe{val=1} => SURFACE_WIREFRAME"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:211
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-type.rst:232
+msgid "Related Schema Definitions"
+msgstr ""
+

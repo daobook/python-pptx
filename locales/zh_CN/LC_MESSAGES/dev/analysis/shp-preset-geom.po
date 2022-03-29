@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-preset-geom.rst:3
+msgid "``CT_PresetGeometry2D``"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:1
+msgid "Spec Name"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:1
+msgid "Preset Geometry"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:1
+msgid "Tag(s)"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:1
+msgid "a:prstGeom"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:1
+msgid "Namespace"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:1
+msgid "drawingml (dml-main.xsd)"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:1
+msgid "Spec Section"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:1
+msgid "20.1.9.18"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:19
+msgid "Spec text"
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:21
+msgid ""
+"This element specifies when a preset geometric shape should be used "
+"instead of a custom geometric shape. The generating application should be"
+" able to render all preset geometries enumerated in the ST_ShapeType "
+"list."
+msgstr ""
+
+#: ../../dev/analysis/shp-preset-geom.rst:27
+msgid "Schema excerpt"
+msgstr ""
+

@@ -1,0 +1,144 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:3
+msgid "Chart - BaseAxis.has_gridlines"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:5
+msgid ""
+"A chart axis can have gridlines that extend the axis tick marks across "
+"the body of the plot area. Gridlines for major and minor tick marks can "
+"be controlled separately. Both vertical and horizontal axes can have "
+"gridlines."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:11
+msgid "Candidate protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:28
+msgid ""
+"Can be implemented in BaseAxis since the controlling element appears in "
+"``EG_AxShared``."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:33
+msgid "Microsoft API"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:36
+msgid "Axis.HasMajorGridlines"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:36
+msgid "True if the axis has major gridlines. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:39
+msgid "Axis.HasMinorGridlines"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:39
+msgid "True if the axis has minor gridlines. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:42
+msgid "Axis.MajorGridlines"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:42
+msgid "Returns the major gridlines for the specified axis. Read-only Gridlines."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:45
+msgid "Axis.MinorGridlines"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:45
+msgid "Returns the minor gridlines for the specified axis. Read-only Gridlines."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:47
+msgid "Gridlines.Border"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:49
+msgid "Gridlines.Format.Line"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:51
+msgid "Gridlines.Format.Shadow"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:55
+msgid "PowerPoint behavior"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:57
+msgid ""
+"Turning gridlines on and off is controlled from the ribbon (on the Mac at"
+" least)"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:59
+msgid ""
+"Each set of gridlines (horz/vert, major/minor) can be formatted "
+"individually."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:61
+msgid "The formatting dialog has panes for Line, Shadow, and Glow & Soft Edges"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:65
+msgid "XML Semantics"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:67
+msgid ""
+"Each axis can have a ``<c:majorGridlines>`` and a ``<c:minorGridlines>`` "
+"element."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:69
+msgid ""
+"The corresponding gridlines appear if the element is present and not if "
+"it doesn't."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:71
+msgid ""
+"Line formatting, like width and color, is specified in the child "
+"``<c:spPr>`` element."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:76
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:80
+msgid "Example axis XML for a single-series line plot::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-has-gridlines.rst:115
+msgid "Related Schema Definitions"
+msgstr ""
+

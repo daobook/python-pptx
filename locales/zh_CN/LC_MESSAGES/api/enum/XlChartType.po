@@ -1,0 +1,604 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/XlChartType.rst:4
+msgid "``XL_CHART_TYPE``"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:6
+msgid "Specifies the type of a chart."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:8
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:17
+msgid "THREE_D_AREA"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:17
+msgid "3D Area."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:20
+msgid "THREE_D_AREA_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:20
+msgid "3D Stacked Area."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:23
+msgid "THREE_D_AREA_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:23 ../../api/enum/XlChartType.rst:62
+msgid "100% Stacked Area."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:26
+msgid "THREE_D_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:26
+msgid "3D Clustered Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:29
+msgid "THREE_D_BAR_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:29
+msgid "3D Stacked Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:32
+msgid "THREE_D_BAR_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:32
+msgid "3D 100% Stacked Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:35
+msgid "THREE_D_COLUMN"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:35
+msgid "3D Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:38
+msgid "THREE_D_COLUMN_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:38
+msgid "3D Clustered Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:41
+msgid "THREE_D_COLUMN_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:41
+msgid "3D Stacked Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:44
+msgid "THREE_D_COLUMN_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:44
+msgid "3D 100% Stacked Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:47
+msgid "THREE_D_LINE"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:47
+msgid "3D Line."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:50
+msgid "THREE_D_PIE"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:50
+msgid "3D Pie."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:53
+msgid "THREE_D_PIE_EXPLODED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:53
+msgid "Exploded 3D Pie."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:56
+msgid "AREA"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:56
+msgid "Area"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:59
+msgid "AREA_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:59
+msgid "Stacked Area."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:62
+msgid "AREA_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:65
+msgid "BAR_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:65
+msgid "Clustered Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:68
+msgid "BAR_OF_PIE"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:68
+msgid "Bar of Pie."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:71
+msgid "BAR_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:71
+msgid "Stacked Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:74
+msgid "BAR_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:74
+msgid "100% Stacked Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:77
+msgid "BUBBLE"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:77
+msgid "Bubble."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:80
+msgid "BUBBLE_THREE_D_EFFECT"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:80
+msgid "Bubble with 3D effects."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:83
+msgid "COLUMN_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:83
+msgid "Clustered Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:86
+msgid "COLUMN_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:86
+msgid "Stacked Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:89
+msgid "COLUMN_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:89
+msgid "100% Stacked Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:92
+msgid "CONE_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:92
+msgid "Clustered Cone Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:95
+msgid "CONE_BAR_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:95
+msgid "Stacked Cone Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:98
+msgid "CONE_BAR_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:98
+msgid "100% Stacked Cone Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:101
+msgid "CONE_COL"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:101
+msgid "3D Cone Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:104
+msgid "CONE_COL_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:104 ../../api/enum/XlChartType.rst:125
+msgid "Clustered Cone Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:107
+msgid "CONE_COL_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:107 ../../api/enum/XlChartType.rst:128
+msgid "Stacked Cone Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:110
+msgid "CONE_COL_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:110
+msgid "100% Stacked Cone Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:113
+msgid "CYLINDER_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:113
+msgid "Clustered Cylinder Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:116
+msgid "CYLINDER_BAR_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:116
+msgid "Stacked Cylinder Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:119
+msgid "CYLINDER_BAR_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:119
+msgid "100% Stacked Cylinder Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:122
+msgid "CYLINDER_COL"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:122
+msgid "3D Cylinder Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:125
+msgid "CYLINDER_COL_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:128
+msgid "CYLINDER_COL_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:131
+msgid "CYLINDER_COL_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:131
+msgid "100% Stacked Cylinder Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:134
+msgid "DOUGHNUT"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:134
+msgid "Doughnut."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:137
+msgid "DOUGHNUT_EXPLODED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:137
+msgid "Exploded Doughnut."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:140
+msgid "LINE"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:140
+msgid "Line."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:143
+msgid "LINE_MARKERS"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:143
+msgid "Line with Markers."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:146
+msgid "LINE_MARKERS_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:146
+msgid "Stacked Line with Markers."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:149
+msgid "LINE_MARKERS_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:149
+msgid "100% Stacked Line with Markers."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:152
+msgid "LINE_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:152
+msgid "Stacked Line."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:155
+msgid "LINE_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:155
+msgid "100% Stacked Line."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:158
+msgid "PIE"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:158
+msgid "Pie."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:161
+msgid "PIE_EXPLODED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:161
+msgid "Exploded Pie."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:164
+msgid "PIE_OF_PIE"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:164
+msgid "Pie of Pie."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:167
+msgid "PYRAMID_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:167
+msgid "Clustered Pyramid Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:170
+msgid "PYRAMID_BAR_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:170
+msgid "Stacked Pyramid Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:173
+msgid "PYRAMID_BAR_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:173
+msgid "100% Stacked Pyramid Bar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:176
+msgid "PYRAMID_COL"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:176
+msgid "3D Pyramid Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:179
+msgid "PYRAMID_COL_CLUSTERED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:179
+msgid "Clustered Pyramid Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:182
+msgid "PYRAMID_COL_STACKED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:182
+msgid "Stacked Pyramid Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:185
+msgid "PYRAMID_COL_STACKED_100"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:185
+msgid "100% Stacked Pyramid Column."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:188
+msgid "RADAR"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:188
+msgid "Radar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:191
+msgid "RADAR_FILLED"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:191
+msgid "Filled Radar."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:194
+msgid "RADAR_MARKERS"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:194
+msgid "Radar with Data Markers."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:197
+msgid "STOCK_HLC"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:197
+msgid "High-Low-Close."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:200
+msgid "STOCK_OHLC"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:200
+msgid "Open-High-Low-Close."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:203
+msgid "STOCK_VHLC"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:203
+msgid "Volume-High-Low-Close."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:206
+msgid "STOCK_VOHLC"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:206
+msgid "Volume-Open-High-Low-Close."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:209
+msgid "SURFACE"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:209
+msgid "3D Surface."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:212
+msgid "SURFACE_TOP_VIEW"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:212
+msgid "Surface (Top View)."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:215
+msgid "SURFACE_TOP_VIEW_WIREFRAME"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:215
+msgid "Surface (Top View wireframe)."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:218
+msgid "SURFACE_WIREFRAME"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:218
+msgid "3D Surface (wireframe)."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:221
+msgid "XY_SCATTER"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:221
+msgid "Scatter."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:224
+msgid "XY_SCATTER_LINES"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:224
+msgid "Scatter with Lines."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:227
+msgid "XY_SCATTER_LINES_NO_MARKERS"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:227
+msgid "Scatter with Lines and No Data Markers."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:230
+msgid "XY_SCATTER_SMOOTH"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:230
+msgid "Scatter with Smoothed Lines."
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:234
+msgid "XY_SCATTER_SMOOTH_NO_MARKERS"
+msgstr ""
+
+#: ../../api/enum/XlChartType.rst:233
+msgid "Scatter with Smoothed Lines and No Data Markers."
+msgstr ""
+

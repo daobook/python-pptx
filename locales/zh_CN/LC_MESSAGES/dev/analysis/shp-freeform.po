@@ -1,0 +1,1023 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-freeform.rst:3
+msgid "Freeform Shapes"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:5
+msgid ""
+"PowerPoint AutoShapes, such as rectangles, circles, and triangles, have a"
+" *preset* geometry. The user simply picks from a selection of some 160 "
+"pre-defined shapes to place one on the slide, at which point they can be "
+"scaled. Many shapes allow their geometry to be adjusted in certain ways "
+"using adjustment points (by dragging the small yellow diamonds)."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:11
+msgid ""
+"PowerPoint also supports a much less commonly used but highly flexible "
+"sort of shape having *custom geometry*. Whereas a shape with preset "
+"geometry has that geometry defined internally to PowerPoint and simply "
+"referred to by a keyname (such as 'rect'), a shape with custom geometry "
+"spells out the custom geometry step-by-step in an XML subtree, using a "
+"sequence of moveTo, lineTo, and other drawing commands."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:20
+msgid "Vocabulary"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:22
+msgid ""
+"A freeform shape is composed of one or more *paths*. Each path may be "
+"configured to get a stroke, a fill, both, or neither. This allows drawing"
+" some shapes such as call-outs where, say, a reference line should be "
+"stroked but not filled, and the callout balloon contour should be filled "
+"but not stroked."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:28
+msgid ""
+"Each path also has its own local coordinate system, which may come in "
+"handy when using guides. I haven't seen any clear examples of this yet "
+"but I haven't gone looking either."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:32
+msgid ""
+"In any case, only a single path will be supported in the initial "
+"implementation."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:35
+msgid ""
+"A path is composed of one or more *contours*. A contour can be a *closed "
+"contour* or and *open contour*. The closure state only affects the "
+"continuity of the contour outline (although it also adds a straight line "
+"between start and end if needed)."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:40
+msgid ""
+"A contour is specified by a starting point (`<a:moveTo>`) followed by a "
+"sequence of line segments, each of which can be a straight or curved. "
+"Curve segments will not be supported in the initial implementation."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:44
+msgid ""
+"The term *contour* is not \"official\", but there are behaviors that "
+"depend on \"continuous pen-down strokes\", such as \"cut-out\" behavior. "
+"Consequently, a term is needed."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:50
+msgid "Scope"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:52
+msgid "Move to, line to, and close, initially."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:53
+msgid "Line style (solid, dashed, etc.)"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:54
+msgid "Fill pattern (solid, dashed, etc.)"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:57
+msgid "Limits of scope"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:59
+msgid "Curve segments will not be implemented initially."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:61
+msgid ""
+"Curves wouldn't be that hard to add, but until anyone cares about the "
+"control points and we have some live example about how those would be "
+"calculated etc., we don't have a requirement to design to."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:65
+msgid "Multiple-path freeforms are out of scope for now."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:67
+msgid ""
+"It's not immediately apparent what they would be good for, and they don't"
+" seem to be required to fulfill present requirements."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:72
+msgid "Use Case 1 - Specify all points in slide coordinates"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:74
+msgid ""
+"A very simple case can be had by specifying the verticies in slide "
+"coordinates::"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:89
+msgid ""
+"This method may be used to place a freeform shape when you know exactly "
+"where you want the vertices to be positioned on the slide. The position "
+"and size of the shape (its bounding box) is worked out automatically from"
+" the minimum and maximum x and y positions of the points specified."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:94
+msgid ""
+"The shape is automatically closed if the last vertex is the same as the "
+"beginning vertex; otherwise the shape is left open."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:97
+msgid ""
+"The library automatically subtracts the top-left corner (origin) "
+"coordinates from each point to write the XML."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:102
+msgid "Use Case 2 - Specify points in custom coordinates"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:104
+msgid ""
+"The next step up in complexity is where a custom coordinate system is to "
+"be used to specify vertices for a single shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:107
+msgid ""
+"In this alternative, all the verticies are specified in custom "
+"coordinates and a scaling factor is provided::"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:124
+msgid ""
+"This method creates a shape of exactly the same appearance as the prior "
+"example. It's probably not the most natural approach because all "
+"coordinates have to be translated to their position on the slide. "
+"However, it is an option and it's more compact. It could also be made to "
+"work with floating point values."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:130
+msgid ""
+"This could also work by creating the shape at (0, 0) on the slide and "
+"then simply moving the shape to where you wanted using its `.top` and "
+"`.left` properties."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:136
+msgid "Use Case 3 - Specify origin for custom coordinates"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:138
+msgid ""
+"This is perhaps the most natural approach for doing something fancy, like"
+" creating individual shapes for each of the 50 US states within a "
+"particular area of the slide such that their boundaries all align with "
+"adjacent states to make a map of the United States."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:143
+msgid ""
+"Like in the prior use case, verticies are specified in custom coordinates"
+" and a scaling factor is provided. In addition, an origin in provided in "
+"slide coordinates (EMU). This would correspond to the origin of the "
+"entire map of the US in our example and represents where you want the "
+"top-left corner of the map to be on the slide."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:149
+msgid ""
+"It is up to the client code to adjust the vertices provided such that "
+"they represent their position relative to this origin in the custom "
+"coordinates provided. It is also up to the client to get the scaling "
+"factor right such that the entire map fits in the intended area of the "
+"slide."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:154
+msgid ""
+"In this scenario, `top` and `left` arguments are added to the "
+"`.build_freeform()` call. These arguments should be given the same values"
+" for each of the \"interlocking\" shapes. These two arguments each "
+"independently take on the value of zero when omitted, which produces the "
+"behavior of the prior use case::"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:175
+msgid ""
+"As we can see here, the size of the shape is exactly the same, but it has"
+" been translated to be relative to the slide coordinates provided in the "
+"`.build_freeform()` call."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:181
+msgid "Use Case 4 - Specify position on conversion"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:183
+msgid ""
+"Another use case is where you want to specify a shape entirely in terms "
+"of its local coordinates, relative to its local origin (top-left corner)."
+" This might be used when you want a custom shape that is not one of the "
+"168 provided preset geometry shapes, say an orthoganal projection cube or"
+" something like that, and then place that in a variety of locations "
+"around the slide."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:190
+msgid ""
+"For this you build the shape as in Use Case 2, allowing the origin to "
+"default to (0, 0), and then specify a position for the shape in the "
+"`.convert_to_shape()` call. You can even call `.convert_to_shape()` "
+"multiple times to \"rubber stamp\" the shape in various positions around "
+"the slide."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:195
+msgid ""
+"Can you call `.convert_to_shape()` multiple times? Maybe that would be "
+"good!"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:199
+msgid "Usage Notes"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:201
+msgid ""
+"**Closing a contour.** A contour is only *truly* closed if it ends with a"
+" `<a:close>` element. It can *appear* closed if its end point is the same"
+" as its start point, but close inspection of the line-ends will reveal "
+"there is no smooth transition around the starting corner. This is more "
+"apparent when a wide line style is used for the outline."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:207
+msgid ""
+"A `<a:close>` element will cause a straight line segment to be drawn "
+"between the last point point of the contour and the first. So it's not "
+"necessary to repeat the first point as the last one if a straight line "
+"segment suits. The advantage is small however, and might only be an "
+"optimization to consider when thousands of freeform shapes were being "
+"drawn in a single presentation."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:215
+msgid "Candidate Protocol"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:217
+msgid "Obtain a FreeformBuilder object::"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:223
+msgid ""
+"The `x` and `y` arguments specify the starting pen location in local "
+"coordinates. The `scale` argument determines the rendered size of the "
+"shape relative to the values specified for the vertices. The `scale` "
+"argument can be an `(x_scale, y_scale)` pair to specify a shape "
+"coordinate system that is rectangular rather than square."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:229
+msgid ""
+"**Add vertices to the freeform shape** an arbitrary number of straight "
+"line segments can be added to the shape using the `add_line_segments()` "
+"method::"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:235
+msgid ""
+"The method also specifies whether the contour so generated should be "
+"closed (`True` by default). Closing a contour causes its end point to be "
+"connected to its starting point with a straight line segment. It also "
+"causes the contour to form a smooth perimeter outline. A contour that is "
+"not closed will have line end caps and may be assigned line ends like "
+"arrowheads."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:241
+msgid ""
+"Although PowerPoint supports a variety of curved line segments, those "
+"will not be implemented in this initial effort."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:244
+msgid ""
+"**Add second and further contours** A path can have multiple distinct "
+"contours. These contours can be separate and distinct or they can "
+"overlap. A contour that is completely enclosed by another contour forms a"
+" \"cutout\" in the enclosing contour. Where two contours partially "
+"overlap, the fill begins at the outermost boundary and stops when it "
+"reaches another boundary."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:252
+msgid "A new contour is begun by calling the `.move_to()` method::"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:256
+msgid "Set freeform coordinate system (extents)"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:258
+msgid ""
+"There is no need to explicitly specify the extents of the coordinate "
+"system. The position and size of the shape can be calculated from the "
+"origin provided and the maxima and minima of the vertices provided."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:262
+msgid "Specify the scaled size of the freeform shape"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:264
+msgid ""
+"This is also unnecessary to specify as it is implied by the scaling "
+"factor provided and the maxima and minima of the vertices specified."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:268
+msgid "**Possible approach:**"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:270
+msgid ""
+"Optionally specify an alternate coordinate system in the initial call "
+"such that parameters are:"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:273
+msgid ""
+"`x, y` - X and Y coordinates of initial pen position. If no scaling "
+"factor is provided, these are interpreted as `Length` values from the "
+"top-left corner of the slide."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:277
+msgid ""
+"`scale=1.0` (*optional*) - Determines the scaling of the x and y values "
+"used to specify the vertices. This is a proportion to a `Length` unit, "
+"which is an `Emu`, 914400 to the inch. This value is conveniently formed "
+"by division with a `Length` subclass, like `1000/Inches(1)` to give "
+"\"1000 units per inch\" in that case. This could just as easily be "
+"`2142/Cm(1)` to give \"2142 units per centimeter\". The default value of "
+"1.0 means \"1 unit per Emu\"."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:285
+msgid ""
+"`left` (*optional*) - X-axis position of top-left corner of freeform "
+"shape bounding box, specified as a `Length` (not scaled) value relative "
+"to left edge of slide. If this value is not specified, it is calculated "
+"from the minimum x position of the points in the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:290
+msgid ""
+"`top` (*optional*) - Y-axis position of top-left corner of freeform shape"
+" bounding box, specified as a `Length` (not scaled) value relative to top"
+" edge of the slide. If this value is not specified, it is calculated from"
+" the minimum y position of the points in the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:295
+msgid ""
+"`y_scale=None` (*optional, not implemented*) - Y-axis scaling factor "
+"(defaults to same as X-axis scaling factor)"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:298
+msgid ""
+"The shape size (extents) are calculated from max_X and max_Y in given "
+"coordinates, multiplied by the scaling factor."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:303
+msgid "Experimentation"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:305
+msgid ""
+"How does PowerPoint behave if we leave out all the \"guides\" and "
+"connection points, i.e. if the `a:gdLst` and `a:cxnLst` elements are "
+"empty?"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:308
+msgid ""
+"It likes it just fine. Might not be a bad idea to leave empty `a:gdLst` "
+"and `a:cxnLst` elements in there though, when creating a new freeform XML"
+" subtree, just to be a little safer compatibility-wise since PowerPoint "
+"seems to always put them in there."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:315
+msgid "What happens if there's no `a:moveTo` element at the start of a path?"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:317
+msgid ""
+"The path does not appear; it is not drawn. Note this is contrary to the "
+"(unofficial) documentation indicating that (0, 0) is used as the starting"
+" pen location."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:323
+msgid ""
+"What happens if a second path overlaps the first one, i.e. partly in and "
+"partly out?"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:326
+msgid ""
+"The \"outside\" portion of the overlapping contour becomes the outside of"
+" the shape and the region between that contour and the boundary of the "
+"first shape is shaded. This produces two (or more) \"point\" areas on the"
+" perimeter of the first shape where the width is zero."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:333
+msgid ""
+"What happens if the last point is not the same as the first point and the"
+" path is closed?"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:336
+msgid ""
+"A straight-line segment is added between the last point and the starting "
+"point. The appearance is just as it is when the last point is the same as"
+" the starting point."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:342
+msgid ""
+"What happens if you do a shape with an `a:moveTo` in the middle "
+"(producing a gap in the outline) but then close the shape? Does it still "
+"get a fill or is it considered open then?"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:346
+msgid ""
+"The `moveTo` operation essentially resets the \"starting\" point for "
+"closure purposes. The remainder of the path is closed, but the part "
+"before the `moveTo` remains an open contour."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:352
+msgid ""
+"What happens when the last point is the same as the first point but there"
+" is no `a:close` element?"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:355
+msgid ""
+"The shape outline is discontinuous at the start/end point and does not "
+"form a smooth contour at that point. The visual appearance depends on the"
+" line ends and line end caps chosen."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:361
+msgid "[ ] What happens when negative coordinate values are used?"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:363
+msgid "[ ] What happens when you close a contour right after an `a:moveTo`?"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:369
+msgid "[ ] What is the point of having multiple paths? The only difference I can"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:366
+msgid ""
+"see is that overlapping areas are not \"subtracted\" and you can have a "
+"different coordinate system. I'm inclined to think it's all about needing"
+" distinct coordinate systems for some reason, perhaps when variables "
+"(guides `<a:gd>`) are used."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:371
+msgid "[ ] What is the purpose of the boolean `stroke` attribute on path?"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:375
+msgid "PowerPoint UI behaviors"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:377
+msgid ""
+"A freeform shape can be created using the ribbon Shape > Lines and "
+"Connectors > Freeform command. There is also a \"Curve\" and \"Scribble\""
+" option."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:381
+msgid ""
+"A shape is then created by placing points with the mouse. In the freeform"
+" case, each vertex defines a line segment. In the case of a curve "
+"freeform, the vertices are control points."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:385
+msgid ""
+"Clicking close to the starting point closes the shape. Double-clicking "
+"also ends the drawing, leaving the shape open."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:388
+msgid ""
+"Once created, an \"Edit Points\" option appears on the context menu when "
+"right-clicking the shape. This allows the points to be fine-tuned."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:391
+msgid ""
+"Hypothesis: PowerPoint uses an arbitrary scale of 10,000 (period, not per"
+" inch) as the coordinate space for a freeform shape added or edited using"
+" the UI. The rules are more complicated, not sure what they are, but it "
+"seems to start with a square of about that and move from there."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:398
+msgid "MS API"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:401
+msgid "MS API protocol"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:405
+msgid "Example::"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:418
+msgid "Specify pen starting point in initial `BuildFreeform` call."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:420
+msgid "All points are specified in slide coordinates."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:422
+msgid ""
+"Specify each vertex separately in an `.AddNodes()` method call. It seems "
+"like it should actually be named `.AddNode()`, but perhaps they consider "
+"control points to be nodes separate from the vertex point."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:426
+msgid ""
+"A line segment can be specified by specifying the x, y vertex of the "
+"ending point."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:429
+msgid ""
+"A curve segment can be specified by specifying additional control points "
+"(nodes). The vertex can be specified to be a corner (one control point on"
+" starting vertex), smooth (tangent at the vertex), or symmetric (we'd "
+"have to experiment to see what that does exactly, no ready available "
+"documentation)."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:435
+msgid ""
+"The path is closed (or not) when the `.ConvertToShape()` method is called"
+" on the `FreeformBuilder` object. It looks like it's closed if the last "
+"point is coincident with the first and open otherwise."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:439
+msgid "There is no way to make a multi-path shape as far as I can tell."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:441
+msgid ""
+"The MS API provides no way to \"lift the pen\" to make a discontinuous "
+"path as far as I can tell. (And so does not provide a way to make "
+"\"cutouts\" like a lake within a landmass shape.)"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:447
+msgid "MS API Objects"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid "Shapes.BuildFreeform(x, y)"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid ""
+"https://msdn.microsoft.com/VBA/PowerPoint-VBA/articles/shapes-"
+"buildfreeform-method-powerpoint"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid "FreeformBuilder"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid ""
+"https://msdn.microsoft.com/VBA/PowerPoint-VBA/articles/freeformbuilder-"
+"object-powerpoint"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid "FreeformBuilder.AddNodes()"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid ""
+"https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles"
+"/freeformbuilder-addnodes-method-powerpoint"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid "FreeformBuilder.ConvertToShape()"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid ""
+"https://msdn.microsoft.com/VBA/PowerPoint-VBA/articles/freeformbuilder-"
+"converttoshape-method-powerpoint"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid "Cannot be called before adding at least one segment to the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid "Shape.Nodes"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid "MsoSegmentType enumeration"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid ""
+"https://msdn.microsoft.com/VBA/Office-Shared-VBA/articles/msosegmenttype-"
+"enumeration-office"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:469
+#: ../../dev/analysis/shp-freeform.rst:480
+msgid "Name"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:469
+#: ../../dev/analysis/shp-freeform.rst:480
+msgid "Value"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:469
+#: ../../dev/analysis/shp-freeform.rst:480
+msgid "Description"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:471
+msgid "msoSegmentCurve"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:471
+#: ../../dev/analysis/shp-freeform.rst:485
+msgid "1"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:471
+msgid "Curve."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:473
+msgid "msoSegmentLine"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:473
+#: ../../dev/analysis/shp-freeform.rst:482
+msgid "0"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:473
+msgid "Line."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid "MsoEditingType enumeration"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst
+msgid ""
+"https://msdn.microsoft.com/VBA/Office-Shared-VBA/articles/msoeditingtype-"
+"enumeration-office"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:482
+msgid "msoEditingAuto"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:482
+msgid "Editing type is appropriate to the segments being connected."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:485
+msgid "msoEditingCorner"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:485
+msgid "Corner node."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:487
+msgid "msoEditingSmooth"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:487
+msgid "2"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:487
+msgid "Smooth node."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:489
+msgid "msoEditingSymmetric"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:489
+msgid "3"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:489
+msgid "Symmetric node."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:494
+msgid "XML Semantics"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:496
+msgid ""
+"The `w` and `h` attributes of a `a:path` element specify size of the "
+"shape canvas in local coordinates."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:499
+msgid ""
+"The **origin of the shape canvas** is at its top left corner and has the "
+"value (0, 0) in local coordinates. The vertices must be translated by the"
+" X and Y minima to place the bounding box tightly around the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:503
+msgid "The `a:rect` element specifies the text-box extents for the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:505
+msgid ""
+"The `a:pathLst` element contains zero or more `a:path` elements, each of "
+"which specify a *path*."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:508
+msgid ""
+"A path has a *private* and *arbitrary* *integral* coordinate system "
+"defined by the `w` and `h` attributes on the `a:path` element. This means"
+" that each path in an `a:custGeom/a:pathLst` has an independent scaling "
+"for its coordinate system."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:513
+msgid "A path is composed of a sequence of the following possible elements:"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:515
+msgid "`a:moveTo`"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:516
+msgid "`a:lnTo`"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:517
+msgid "`a:arcTo`"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:518
+msgid "`a:quadBezTo`"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:519
+msgid "`a:cubicBezTo`"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:520
+msgid "`a:close`"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:522
+msgid ""
+"A path may begin with an `a:moveTo` element. This essentially locates the"
+" starting location of the \"pen\". Each subsequent drawing command "
+"extends the shape by adding a line segment. If the path does not begin "
+"with an `a:moveTo` element, the path does not appear (it is not drawn). "
+"Note this is contrary to the (unofficial) documentation indicating that "
+"(0, 0) is used as the default starting pen location."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:529
+msgid ""
+"A path can be open or closed. If an `a:close` element is added, a "
+"straight line segment is drawn from the current pen location to the "
+"initial location of the drawing sequence and the shape appears with a "
+"fill. If the pen is already at the starting location, no additional line "
+"segment appears. If no `a:close` element is added, the shape remains "
+"\"open\" and only the path appears (no fill)."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:536
+msgid ""
+"A path can contain more than one drawing sequence, i.e. one sequence can "
+"be \"closed\" and another sequence started. If a subsequent drawing "
+"sequence is entirely enclosed within a prior sequence, it appears as a "
+"\"cutout\", or an interior boundary. This behavior does not occur when "
+"the two drawing sequences are in separate paths, even within the same "
+"shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:542
+msgid ""
+"The pen can be \"lifted\" using an `a:moveTo` element, in which case no "
+"line segment is drawn between the prior location and the new location. "
+"This can be used to produce a discontinuous outline."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:546
+msgid ""
+"A path has a boolean `stroke` attribute (default True) that specifies "
+"whether a line should appear on the path."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:549
+msgid ""
+"The `a:pathLst` element can contain multiple `a:path` elements. In this "
+"case, each path is essentially a \"sub-shape\", such as a shape that "
+"depicts the islands of Hawaii."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:553
+msgid ""
+"If a prior path is not closed, its end point path will be connected to "
+"the first point of the subsequent path."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:556
+msgid ""
+"The paths within a shape all have the same z-position, i.e. they appear "
+"on a single plane such that all outlines appear, even when they "
+"intersect. There is no cropping behavior such as occurs for individual "
+"shapes on a slide."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:563
+msgid "Fill behavior"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:565
+msgid ""
+"Hypothesis: Any shape can have a fill, even an \"open\" shape. The "
+"question of whether a shape has a fill is not determined by whether it is"
+" closed, but by whether a fill is *applied* to the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:569
+msgid ""
+"In the PowerPoint UI, a closed shape is automatically assigned a fill "
+"when it is drawn. Conversely, an open shape is not assigned a fill. This "
+"behavior is built into the drawing code and is not dependent solely on "
+"the \"closed-ness\" of the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:574
+msgid ""
+"The XML template for a freeform shape (as of this writing) includes an "
+"element for a fill and effect, consistent with the PowerPoint defaults "
+"for a closed shape. The fill would need to be removed from an open shape "
+"if the user didn't want it."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:581
+msgid "Coordinate system"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:583
+msgid ""
+"Each path has its own local coordinate system, distinct both from the "
+"*shape* coordinate system and the coordinate systems of the other paths "
+"in the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:587
+msgid ""
+"The x and y extents of a path coordinate system are specified by the `w` "
+"and `h` attributes on the `a:path` element, respectively. The top, left "
+"corner of the path bounding box is (0, 0) and the bottom, right corner is"
+" at (`h`, `w`). Coordinates are positive integers in the range 0 to "
+"27,273,042,316,900 (about 2^44.63)."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:595
+msgid "Resources"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:597
+msgid ""
+"Office Open XML - Custom Geometry http://officeopenxml.com/drwSp-"
+"custGeom.php"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:602
+msgid "XML Specimens"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:607
+msgid "Hand-built, as-written by PowerPoint"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:611
+msgid ""
+"This triangle is hand-built using the 'Freeform' shape tool in the "
+"PowerPoint UI. A couple things to notice:"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:614
+msgid ""
+"The shape includes a full complement of `<a:gd>` and `<a:cxn>` elements. "
+"The shape works fine without these and providing a way to specify these "
+"is out of scope for the current effort."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:618
+msgid ""
+"The freeform shape itself is specified in `p:sp/p:spPr/a:custGeom`. "
+"That's a little interesting that the geometry is considered a shape "
+"property (spPr) rather than somehow more core to the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:622
+msgid ""
+"The `<a:pathLst>` element contains only a single path. I haven't yet "
+"discovered how to add a second path to a shape using the UI."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:714
+msgid ""
+"The rest of these shape subtrees have the `<a:gdLst>` and `<a:cxnLst>` "
+"elements removed for brevity and many focus simply on the `a:pathLst` "
+"element for compact presentation."
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:720
+msgid "Effect of `<a:close>` element"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:724
+msgid ""
+"This one is a little tricky to see, but if you look closely, you'll see "
+"that the outline at the apex of the triangle is not \"closed\". This "
+"behavior arises when there is no `<a:close/>` element at the end of the "
+"path, even when the end-point is the same as the start-point::"
+msgstr ""
+
+#: ../../dev/analysis/shp-freeform.rst:740
+msgid "XML Schema excerpt"
+msgstr ""
+

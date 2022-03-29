@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/resources/applescript.rst:3
+msgid "AppleScript Resources"
+msgstr ""
+
+#: ../../dev/resources/applescript.rst:5
+msgid ""
+"In the fullness of time, it might make sense to incorporate some "
+"AppleScript steps into the acceptance tests, to make sure that PowerPoint"
+" isn't barfing after changes. I've collected some resources here that I "
+"discovered during some preliminary resource discovery."
+msgstr ""
+
+#: ../../dev/resources/applescript.rst:12
+msgid "Resources"
+msgstr ""
+
+#: ../../dev/resources/applescript.rst:14
+msgid "`Outlook archive message shortcut`_"
+msgstr ""
+
+#: ../../dev/resources/applescript.rst:15
+msgid "`AppleScript Essentials`_"
+msgstr ""
+
+#: ../../dev/resources/applescript.rst:16
+msgid "`AppleScript Essentials: Introduction to Scripting Microsoft PowerPoint`_"
+msgstr ""
+
+#: ../../dev/resources/applescript.rst:17
+msgid "`Applescript Microsoft 2011 PowerPoint`_"
+msgstr ""
+
+#: ../../dev/resources/applescript.rst:18
+msgid "`Converting VBA Macros to AppleScript in Microsoft Office`_"
+msgstr ""
+
+#: ../../dev/resources/applescript.rst:19
+msgid ""
+"`How can I use AppleScript to check if PowerPoint is playing a "
+"presentation?`_"
+msgstr ""
+
+#: ../../dev/resources/applescript.rst:20
+msgid "`AppleScript on Wikipedia`_"
+msgstr ""
+

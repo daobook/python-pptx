@@ -1,0 +1,259 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/resources/about_packaging.rst:3
+msgid "About Open XML Packaging"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:6
+msgid "Recent Notes"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:8
+msgid ""
+"The content type for **XML** parts (only) is strictly determined by the "
+"relationship type. Binary media parts may have multiple allowable content"
+" types."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:12
+msgid "Each part type has one and only one relationship type."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:16
+msgid "About Packages"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:18
+msgid ""
+"Open XML PowerPoint files are stored in files with the extension "
+"``.pptx``. These ``.pptx`` files are zip archives containing a separate "
+"file for each main component of the presentation along with other files "
+"which contain metadata about the overall presentation and relationships "
+"between its components."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:24
+msgid ""
+"The overall collection of files is known as a **package**. Each file "
+"within the package represents a **package item**, commonly although "
+"sometimes ambiguously referred to simply as an **item**. Package items "
+"that represent high-level presentation components, such as slides, slide "
+"masters, and themes, are referred to as **parts**. All parts are package "
+"items, but not all package items are parts."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:31
+msgid ""
+"Package items that are not parts are primarily **relationship items** "
+"that express relationships between one part and another. Examples of "
+"relationships include a slide having a relationship to the slide layout "
+"it is based on and a slide master's relationship to an image such as a "
+"logo it displays. There is one special relationship item, the **package "
+"relationship item** (``/_rels/.rels``) which contains relationships "
+"between the package and certain parts rather than relationships between "
+"parts."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:39
+msgid ""
+"The only other package item is the **content types item** "
+"(``/[Content_Types].xml``) which contains mappings of the parts to their "
+"content types (roughly MIME types)."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:45
+msgid "Package Loading Strategies"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:48
+msgid "Strategy 1"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:50
+msgid ""
+"The content type item ([Content_Types].xml actually contains references "
+"to all the main parts of the package. So one approach might be:"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:53
+msgid ""
+"Have passed in a mapping of content types to target classes that each "
+"know how to load themselves from the xml and a list of relationships. "
+"These classes are what OpenXML4J calls an *unmarshaller*. These would "
+"each look something like::"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:63
+msgid ""
+"Have a ContentType class that can load from a content type item and allow"
+" lookups by partname. Have it load the content type item from the "
+"package. Lookups on it first look for an explicit override, but then fall"
+" back to defaults. Not sure yet whether it should try to be smart about "
+"whether a package part that looks like one that should have an override "
+"will get fed to the xml default or not."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:70
+msgid "Walk the package directory tree, and as each file is encountered:"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:72
+msgid "OR"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:74
+msgid "Walk the relationships tree, starting from /_rels/.rels"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:76
+msgid "look up its content type in the content type manager"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:77
+msgid "look up the unmarshaller for that content type"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:78
+msgid "dispatch the part to the specified unmarshaller for loading"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:79
+msgid "add the resulting part to the package parts collection"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:80
+msgid ""
+"if it's a rels file, parse it and associate the relationships with the "
+"appropriate source part."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:83
+msgid ""
+"If a content type or unmarshaller is not found, throw an exception and "
+"exit. Skip the content type item (already processed), and for now skip "
+"the package relationship item. Infer the corresponding part name from "
+"part rels item names. I think the walk can be configured so rels items "
+"are encountered only after their part has been processed."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:89
+msgid "Resolve all part relationship targets to in-memory references."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:93
+msgid "Principles upheld:"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:95
+msgid ""
+"If there are any stray items in the package (items not referenced in the "
+"content type part), they are identified and can be dealt with "
+"appropriately by throwing an exception if it looks like a package part or"
+" just writing it to the log if it's an extra file. Can set debug during "
+"development to throw an exception either way just to give a sense of what"
+" might typically be found in a package or to give notice that a hand-"
+"crafted package has an internal inconsistency."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:103
+msgid ""
+"Conversely, if there are any parts referenced in the content type part "
+"that are not found in the zip archive, that throws an exception too."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:108
+msgid "Random thoughts"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:110
+msgid ""
+"I'm starting to think that the packaging module could be a useful "
+"general-purpose capability that could be applied to .docx and .xlsx files"
+" in addition to .pptx ones."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:114
+msgid ""
+"Also I'm thinking that a generalized loading strategy that walks the zip "
+"archive directory tree and loads files based on combining what it "
+"discovers there with what it can look up in it's spec tables might be an "
+"interesting approach."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:119
+msgid ""
+"I can think of the following possible ways to identify the type of "
+"package, not sure which one is most reliable or definitive:"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:122
+#, python-format
+msgid ""
+"Check the file extension. Kind of thinking this should do the trick "
+"99.99% of the time."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:125
+msgid ""
+"Might not hurt to confirm that by finding an expected directory of /ppt, "
+"/word, or /xl."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:127
+msgid ""
+"A little further on that would be to find /ppt/presentation.xml, "
+"/word/document.xml, or /xl/workbook.xml."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:129
+msgid ""
+"Even further would be to find a relationship in the package relationship "
+"item to one of those three and not to any of the others."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:131
+msgid ""
+"Another confirmation might be finding a content type in "
+"[Content_Types].xml of:"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:133
+msgid ".../presentationml.presentation.main+xml for /ppt/presentation.xml"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:135
+msgid ""
+".../spreadsheetml.sheet.main+xml for /xl/workbook.xml (Note that macro-"
+"enabled workbooks use a different content type 'application/vnd.ms-"
+"excel.sheet.macroEnabled.main+xml', I believe there are variants for "
+"PresentationML as well, used for templates and slide shows."
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:141
+msgid ".../wordprocessingml.document.main+xml for /word/document.xml"
+msgstr ""
+
+#: ../../dev/resources/about_packaging.rst:143
+msgid ""
+"It's probably worth consulting ECMA-376 Part 2 to see if there are any "
+"hard rules that might help determine what a definitive test would be."
+msgstr ""
+

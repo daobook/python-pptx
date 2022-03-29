@@ -1,0 +1,130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-axis-unit.rst:3
+msgid "Chart - ValueAxis.major/minor_unit"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:5
+msgid ""
+"The value axis has major and minor divisions, corresponding to where tick"
+" marks, tick labels, and gridlines appear, when present. How frequently "
+"these appear is determined by the major/minor units setting, specified as"
+" a floating point number of units to skip between divisions. These "
+"settings may be specified explictly, or PowerPoint can determine a "
+"sensible default based on the chart data. The latter setting is labeled "
+"'Auto' in the UI. By default, major and minor unit are both set to 'Auto'"
+" on new charts."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:15
+msgid "Candidate protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:17
+msgid ""
+"The properties ``ValueAxis.major_unit`` and ``ValueAxis.minor_unit`` are "
+"used to access and change this setting."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:20
+msgid ""
+"|None| is used as an out-of-band value to signify `Auto` behavior. No "
+"separate boolean properties are required."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:40
+msgid "Microsoft API"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:43
+msgid "Axis.MajorUnit"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:43
+msgid "Returns or sets the major units for the value axis. Read/write Double."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:46
+msgid "Axis.MinorUnit"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:46
+msgid "Returns or sets the minor units on the value axis. Read/write Double."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:50
+msgid "Axis.MajorUnitIsAuto"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:49
+msgid ""
+"True if PowerPoint calculates the major units for the value axis. "
+"Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:55
+msgid "Axis.MinorUnitIsAuto"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:53
+msgid ""
+"True if PowerPoint calculates minor units for the value axis. Read/write "
+"Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:58
+msgid "PowerPoint behavior"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:60
+msgid ""
+"Major and minor unit values are viewed and changed using the `Scale` pane"
+" of the `Format Axis` dialog. Checkboxes are used to set a value to "
+"`Auto`. Changing the floating point value causes the `Auto` checkbox to "
+"turn off."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:66
+msgid "XML Semantics"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:68
+msgid ""
+"Only a value axis axis or date axis can have a ``<c:majorUnit>`` or a "
+"``<c:minorUnit>`` element."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:70
+msgid "`Auto` behavior is signified by having no element for that unit."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:74
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:78
+msgid "Example value axis XML having an override for major unit::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-unit.rst:100
+msgid "Related Schema Definitions"
+msgstr ""
+

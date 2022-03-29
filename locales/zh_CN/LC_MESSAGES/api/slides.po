@@ -1,0 +1,350 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/slides.rst:4
+msgid "Slides"
+msgstr ""
+
+#: ../../api/slides.rst:7
+msgid "|Slides| objects"
+msgstr ""
+
+#: ../../api/slides.rst:9
+msgid ""
+"The |Slides| object is accessed using the "
+":attr:`~pptx.presentation.Presentation.slides` property of "
+"|Presentation|. It is not intended to be constructed directly."
+msgstr ""
+
+#: of pptx.slide.Slides:1
+msgid ""
+"Sequence of slides belonging to an instance of |Presentation|, having "
+"list semantics for access to individual slides. Supports indexed access, "
+"len(), and iteration."
+msgstr ""
+
+#: of pptx.slide.Slides.add_slide:1
+msgid "Return a newly added slide that inherits layout from *slide_layout*."
+msgstr ""
+
+#: of pptx.slide.Slides.get:1
+msgid ""
+"Return the slide identified by integer *slide_id* in this presentation, "
+"or *default* if not found."
+msgstr ""
+
+#: of pptx.slide.Slides.index:1
+msgid ""
+"Map *slide* to an integer representing its zero-based position in this "
+"slide collection. Raises |ValueError| on *slide* not present."
+msgstr ""
+
+#: ../../api/slides.rst:20
+msgid "|Slide| objects"
+msgstr ""
+
+#: ../../api/slides.rst:22
+msgid ""
+"An individual |Slide| object is accessed by index from |Slides| or as the"
+" return value of :meth:`add_slide`."
+msgstr ""
+
+#: of pptx.slide.Slide:1
+msgid "Slide object. Provides access to shapes and slide-level properties."
+msgstr ""
+
+#: ../../docstring of pptx.slide.Slide.background:1
+#: pptx.slide._BaseSlide.background:1
+msgid "|_Background| object providing slide background properties."
+msgstr ""
+
+#: of pptx.slide.Slide.background:3
+msgid ""
+"This property returns a |_Background| object whether or not the slide "
+"overrides the default background or inherits it. Determining which of "
+"those conditions applies for this slide is accomplished using the "
+":attr:`follow_master_background` property."
+msgstr ""
+
+#: ../../docstring of pptx.slide.Slide.background:8
+#: pptx.slide._BaseSlide.background:6
+msgid ""
+"The same |_Background| object is returned on every call for the same "
+"slide object."
+msgstr ""
+
+#: of pptx.slide.NotesSlide.element:1 pptx.slide.Slide.element:1
+msgid "The lxml element proxied by this object."
+msgstr ""
+
+#: of pptx.slide.Slide.follow_master_background:1
+msgid "|True| if this slide inherits the slide master background."
+msgstr ""
+
+#: of pptx.slide.Slide.follow_master_background:3
+msgid ""
+"Assigning |False| causes background inheritance from the master to be "
+"interrupted; if there is no custom background for this slide, a default "
+"background is added. If a custom background already exists for this "
+"slide, assigning |False| has no effect."
+msgstr ""
+
+#: of pptx.slide.Slide.follow_master_background:8
+msgid ""
+"Assigning |True| causes any custom background for this slide to be "
+"deleted and inheritance from the master restored."
+msgstr ""
+
+#: of pptx.slide.Slide.has_notes_slide:1
+msgid ""
+"Return True if this slide has a notes slide, False otherwise. A notes "
+"slide is created by :attr:`.notes_slide` when one doesn't exist; use this"
+" property to test for a notes slide without the possible side effect of "
+"creating one."
+msgstr ""
+
+#: of pptx.slide.NotesSlide.name:1 pptx.slide.Slide.name:1
+msgid ""
+"String representing the internal name of this slide. Returns an empty "
+"string (`''`) if no name is assigned. Assigning an empty string or |None|"
+" to this property causes any name to be removed."
+msgstr ""
+
+#: of pptx.slide.Slide.notes_slide:1
+msgid ""
+"Return the |NotesSlide| instance for this slide. If the slide does not "
+"have a notes slide, one is created. The same single instance is returned "
+"on each call."
+msgstr ""
+
+#: ../../docstring of pptx.slide.Slide.placeholders:1
+msgid ""
+"Instance of |SlidePlaceholders| containing sequence of placeholder shapes"
+" in this slide."
+msgstr ""
+
+#: ../../docstring of pptx.slide.Slide.shapes:1
+msgid ""
+"Instance of |SlideShapes| containing sequence of shape objects appearing "
+"on this slide."
+msgstr ""
+
+#: of pptx.slide.Slide.slide_id:1
+msgid ""
+"The integer value that uniquely identifies this slide within this "
+"presentation. The slide id does not change if the position of this slide "
+"in the slide sequence is changed by adding, rearranging, or deleting "
+"slides."
+msgstr ""
+
+#: of pptx.slide.Slide.slide_layout:1
+msgid "|SlideLayout| object this slide inherits appearance from."
+msgstr ""
+
+#: ../../api/slides.rst:33
+msgid "|SlideLayouts| objects"
+msgstr ""
+
+#: ../../api/slides.rst:35
+msgid ""
+"The |SlideLayouts| object is accessed using the "
+":attr:`~pptx.slide.SlideMaster.slide_layouts` property of |SlideMaster|, "
+"typically::"
+msgstr ""
+
+#: ../../api/slides.rst:42
+msgid ""
+"As a convenience, since most presentations have only a single slide "
+"master, the |SlideLayouts| collection for the first master may be "
+"accessed directly from the |Presentation| object::"
+msgstr ""
+
+#: ../../api/slides.rst:48 ../../api/slides.rst:81
+msgid "This class is not intended to be constructed directly."
+msgstr ""
+
+#: of pptx.slide.SlideLayouts:1
+msgid "Sequence of slide layouts belonging to a slide-master."
+msgstr ""
+
+#: of pptx.slide.SlideLayouts:3
+msgid "Supports indexed access, len(), iteration, index() and remove()."
+msgstr ""
+
+#: of pptx.slide.SlideLayouts.get_by_name:1
+msgid "Return SlideLayout object having *name* or *default* if not found."
+msgstr ""
+
+#: of pptx.slide.SlideLayouts.index:1
+msgid "Return zero-based index of *slide_layout* in this collection."
+msgstr ""
+
+#: of pptx.slide.SlideLayouts.index:3
+msgid "Raises ValueError if *slide_layout* is not present in this collection."
+msgstr ""
+
+#: of pptx.slide.NotesSlide.part:1 pptx.slide.SlideLayouts.part:1
+#: pptx.slide.SlideMasters.part:1
+msgid "The package part containing this object"
+msgstr ""
+
+#: of pptx.slide.SlideLayouts.remove:1
+msgid "Remove *slide_layout* from the collection."
+msgstr ""
+
+#: of pptx.slide.SlideLayouts.remove:3
+msgid ""
+"Raises ValueError when *slide_layout* is in use; a slide layout which is "
+"the basis for one or more slides cannot be removed."
+msgstr ""
+
+#: ../../api/slides.rst:58
+msgid "|SlideLayout| objects"
+msgstr ""
+
+#: of pptx.slide.SlideLayout:1
+msgid ""
+"Slide layout object. Provides access to placeholders, regular shapes, and"
+" slide layout-level properties."
+msgstr ""
+
+#: ../../docstring of pptx.slide.SlideLayout.placeholders:1
+msgid ""
+"Instance of |LayoutPlaceholders| containing sequence of placeholder "
+"shapes in this slide layout, sorted in *idx* order."
+msgstr ""
+
+#: ../../docstring of pptx.slide.SlideLayout.shapes:1
+msgid ""
+"Instance of |LayoutShapes| containing the sequence of shapes appearing on"
+" this slide layout."
+msgstr ""
+
+#: of pptx.slide.SlideLayout.slide_master:1
+msgid "Slide master from which this slide layout inherits properties."
+msgstr ""
+
+#: of pptx.slide.SlideLayout.used_by_slides:1
+msgid "Tuple of slide objects based on this slide layout."
+msgstr ""
+
+#: ../../api/slides.rst:66
+msgid "|SlideMasters| objects"
+msgstr ""
+
+#: ../../api/slides.rst:68
+msgid ""
+"The |SlideMasters| object is accessed using the "
+":attr:`~pptx.presentation.slide_masters` property of |Presentation|, "
+"typically::"
+msgstr ""
+
+#: ../../api/slides.rst:75
+msgid ""
+"As a convenience, since most presentations have only a single slide "
+"master, the first master may be accessed directly from the |Presentation|"
+" object without indexing the collection::"
+msgstr ""
+
+#: of pptx.slide.SlideMasters:1
+msgid "Sequence of |SlideMaster| objects belonging to a presentation."
+msgstr ""
+
+#: of pptx.slide.SlideMasters:3
+msgid ""
+"Has list access semantics, supporting indexed access, len(), and "
+"iteration."
+msgstr ""
+
+#: ../../api/slides.rst:90
+msgid "|SlideMaster| objects"
+msgstr ""
+
+#: of pptx.slide.SlideMaster:1
+msgid ""
+"Slide master object. Provides access to slide layouts. Access to "
+"placeholders, regular shapes, and slide master-level properties is "
+"inherited from |_BaseMaster|."
+msgstr ""
+
+#: ../../docstring of pptx.slide.SlideMaster.slide_layouts:1
+msgid "|SlideLayouts| object providing access to this slide-master's layouts."
+msgstr ""
+
+#: ../../api/slides.rst:98
+msgid "|SlidePlaceholders| objects"
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlidePlaceholders:1
+msgid ""
+"Collection of placeholder shapes on a slide. Supports iteration, "
+":func:`len`, and dictionary-style lookup on the `idx` value of the "
+"placeholders it contains."
+msgstr ""
+
+#: ../../api/slides.rst:105
+msgid "|NotesSlide| objects"
+msgstr ""
+
+#: of pptx.slide.NotesSlide:1
+msgid "Notes slide object."
+msgstr ""
+
+#: of pptx.slide.NotesSlide:3
+msgid ""
+"Provides access to slide notes placeholder and other shapes on the notes "
+"handout page."
+msgstr ""
+
+#: ../../docstring of pptx.slide._BaseSlide.background:3
+msgid ""
+"This property returns a |_Background| object whether or not the slide, "
+"master, or layout has an explicitly defined background."
+msgstr ""
+
+#: of pptx.slide.NotesSlide.notes_placeholder:1
+msgid ""
+"Return the notes placeholder on this notes slide, the shape that contains"
+" the actual notes text. Return |None| if no notes placeholder is present;"
+" while this is probably uncommon, it can happen if the notes master does "
+"not have a body placeholder, or if the notes placeholder has been deleted"
+" from the notes slide."
+msgstr ""
+
+#: of pptx.slide.NotesSlide.notes_text_frame:1
+msgid ""
+"Return the text frame of the notes placeholder on this notes slide, or "
+"|None| if there is no notes placeholder. This is a shortcut to "
+"accommodate the common case of simply adding \"notes\" text to the notes "
+"\"page\"."
+msgstr ""
+
+#: ../../docstring of pptx.slide.NotesSlide.placeholders:1
+msgid ""
+"An instance of |NotesSlidePlaceholders| containing the sequence of "
+"placeholder shapes in this notes slide."
+msgstr ""
+
+#: ../../docstring of pptx.slide.NotesSlide.shapes:1
+msgid ""
+"An instance of |NotesSlideShapes| containing the sequence of shape "
+"objects appearing on this notes slide."
+msgstr ""
+

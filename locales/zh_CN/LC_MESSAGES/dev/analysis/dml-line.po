@@ -1,0 +1,269 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/dml-line.rst:3
+msgid "Line format"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:7
+msgid "Intial scope"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:9
+msgid ""
+"Shape.line, Connector.line to follow, then Cell.border(s).line, possibly "
+"text underline and font.line (character outline)"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:14
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:25
+msgid "Notes"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:27
+msgid "definitely spike on this one."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:29
+msgid "start with line.color, first an object to hang members off of"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:32
+msgid "Issue: How to accommodate these competing requirements:"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:34
+msgid ""
+"Polymorphism in parent shape. More than one type of shape can have a line"
+" and possibly several (table cell border, Run/text, and text underline "
+"use the same CT_LineProperties element, and perhaps others)."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:38
+msgid ""
+"The line object cannot hold onto a `<a:ln>` element, even if that was a "
+"good idea, because it is an optional child; not having an `<a:ln>` "
+"element is a legitimate and common situation, indicating line formatting "
+"should be inherited from the theme or perhaps a layout placeholder."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:43
+msgid ""
+"Needing to accommodate XML changing might not be important, could make "
+"that operation immutable, such that changing the shape XML returns a new "
+"shape, not changing the existing one in-place."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:47
+msgid ""
+"maybe having the following 'line_format_owner_interface', delegating "
+"create, read, and delete of the `<a:ln>` element to the parent, and "
+"allowing LineFormat to take responsibility for update."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:51
+msgid "line.parent has the shape having the line format"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:52
+msgid ""
+"parent.ln has the `<a:ln>` element or None, delegating access to the "
+"parent"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:53
+msgid "ln = parent.add_ln()"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:54
+msgid "parent.remove_ln()"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:58
+msgid "MS API"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst
+msgid "LineFormat"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst
+msgid ""
+"https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles/lineformat-"
+"object-powerpoint"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst
+msgid "LineFormat.DashStyle"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst
+msgid ""
+"https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles/lineformat-"
+"dashstyle-property-powerpoint"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst
+msgid "MsoLineDashStyle Enumeration"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst
+msgid "https://msdn.microsoft.com/en-us/library/aa432639(v=office.12).aspx"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:70
+msgid "Name"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:70
+msgid "Value"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:70
+msgid "Description"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:72
+msgid "msoLineDash"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:72
+msgid "4"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:72
+msgid "Line consists of dashes only."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:74
+msgid "msoLineDashDot"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:74
+msgid "5"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:74
+msgid "Line is a dash-dot pattern."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:76
+msgid "msoLineDashDotDot"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:76
+msgid "6"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:76
+msgid "Line is a dash-dot-dot pattern."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:78
+msgid "msoLineDashStyleMixed"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:78
+msgid "-2"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:78
+msgid "Not supported."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:80
+msgid "msoLineLongDash"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:80
+msgid "7"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:80
+msgid "Line consists of long dashes."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:82
+msgid "msoLineLongDashDot"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:82
+msgid "8"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:82
+msgid "Line is a long dash-dot pattern."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:84
+msgid "msoLineRoundDot"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:84
+msgid "3"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:84
+msgid "Line is made up of round dots."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:86
+msgid "msoLineSolid"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:86
+msgid "1"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:86
+msgid "Line is solid."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:88
+msgid "msoLineSquareDot"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:88
+msgid "2"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:88
+msgid "Line is made up of square dots."
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:93
+msgid "Specimen XML"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:97
+msgid "solid line color::"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:114
+msgid "little bit of everything::"
+msgstr ""
+
+#: ../../dev/analysis/dml-line.rst:146
+msgid "Related Schema Definitions"
+msgstr ""
+

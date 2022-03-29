@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/sld-base.rst:4
+msgid "Base Slide"
+msgstr ""
+
+#: ../../dev/analysis/sld-base.rst:6
+msgid ""
+"A slide is the fundamental visual content container in a presentation, "
+"that content taking the form of shape objects. The SlideMaster and "
+"SlideLayout objects are also slides and the three share common behaviors."
+" They each also have distinctive behaviors. The focus of this page is the"
+" common slide characteristics."
+msgstr ""
+
+#: ../../dev/analysis/sld-base.rst:14
+msgid "Name"
+msgstr ""
+
+#: ../../dev/analysis/sld-base.rst:16
+msgid ""
+"For the moment, the only shared attribute is name, stored in the "
+"`p:sld/p:cSld/@name` attribute."
+msgstr ""
+
+#: ../../dev/analysis/sld-base.rst:19
+msgid ""
+"While this attribute is populated by PowerPoint in slide layouts, it is "
+"commonly unpopulated in slides and slide masters. When a slide has no "
+"explicit name, PowerPoint uses the default name 'Slide {n}', where *n* is"
+" the sequence number of the slide in the current presentation. This name "
+"is not written to the `p:cSlide/@name` attribute. In the outline pane, "
+"PowerPoint uses the slide title if there is one."
+msgstr ""
+
+#: ../../dev/analysis/sld-base.rst:26
+msgid ""
+"Slide names may come into things when doing animations. Otherwise they "
+"don't show up in the commonly-used parts of the UI."
+msgstr ""
+
+#: ../../dev/analysis/sld-base.rst:31
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/sld-base.rst:36
+msgid "Example slide contents::"
+msgstr ""
+
+#: ../../dev/analysis/sld-base.rst:56
+msgid "Schema excerpt"
+msgstr ""
+

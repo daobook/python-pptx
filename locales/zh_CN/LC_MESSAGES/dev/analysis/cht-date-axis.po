@@ -1,0 +1,201 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-date-axis.rst:4
+msgid "Chart - Date Axis"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:6
+msgid ""
+"A date axis maintains a linear relationship between axis distance and "
+"elapsed time in days, months, or years, even if the data items do not "
+"include values for each base time unit. This is in contrast to a category"
+" axis, which uses the independent axis values themselves to determine the"
+" discrete set of categories."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:12
+msgid ""
+"The date axis does this by essentially creating a \"logical category\" "
+"for each base time unit in a range, whether the data contains a value for"
+" that time unit or not."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:16
+msgid ""
+"Variations in the number of days in a month (or year) is also taken care "
+"of automatically. This would otherwise cause month starts to appear at "
+"days not the first of the month."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:20
+msgid ""
+"This does not make the category axis continuous, however the \"grain\" of"
+" the discrete units can be quite small in comparison to the axis length. "
+"The individual base unit divisions can but are not typically represented "
+"graphically. The granularity of major and minor divisions is specified as"
+" a property on the date axis."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:28
+msgid "MS API"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:30
+msgid "Axis.CategoryType = XL_CATEGORY_TYPE.TIME"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:31
+msgid "Axis.BaseUnit = XL_TIME_UNIT.DAYS"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:35
+msgid "Enumerations"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:40
+msgid "XL_CATEGORY_TYPE"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:38
+msgid ".AUTOMATIC (-4105)"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:39
+msgid ".CATEGORY (2)"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:40
+msgid ".TIME (3)"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:47
+msgid "XL_TIME_UNIT"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:43
+msgid ""
+"https://msdn.microsoft.com/en-us/library/office/ff746136.aspx * .DAYS (0)"
+" * .MONTHS (1) * .YEARS (2)"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:50
+msgid "XML Semantics"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:53
+msgid "Changing category axis between `c:catAx` and `c:dateAx`"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:55
+msgid ""
+"In the MS API, DateAxis.CategoryType is used to discover the category "
+"type, but is also used to change an axis from a date axis to a category "
+"axis and back. Note the corresponding property in |pp| is read-only for "
+"now."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:59
+msgid ""
+"Changing from a category to date axis leaves the base, major, and minor "
+"unit elements in place. They apply again (instead of the defaults) if the"
+" axis is changed back::"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:70
+msgid "Choice of date axis"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:72
+msgid ""
+"PowerPoint automatically uses a `c:dateAx` element if the category labels"
+" in Excel are dates (numbers with date formatting)."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:75
+msgid ""
+"|pp| uses a `c:dateAx` element if the category labels in the chart data "
+"object are datetime.date or datetime.datetime objects."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:78
+msgid ""
+"Note that |pp| does not change the category axis type when using "
+"`Chart.replace_data()`."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:81
+msgid ""
+"A date axis is only available on an area, bar (including column), or line"
+" chart."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:86
+msgid "Multi-level categories and date axis"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:88
+msgid "Multi-level categories are mutually exclusive with a date axis."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:90
+msgid ""
+"A `c:multiLvlStrRef` element is the only one that can enclose a multi-"
+"level category hierarchy. There is no provision for any or all the levels"
+" under this element to be other than string values (as the 'Str' in its "
+"name implies)."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:97
+msgid "Automatic axis type"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:99
+msgid ""
+"The `c:auto` element under `c:catAx` or `c:dateAx` controls whether the "
+"category axis changes automatically between category and date types."
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:104
+msgid "Specimen XML"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:108
+msgid "Series having date categories::"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:164
+msgid "Plot area having date axis::"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:260
+msgid "References"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:262
+msgid ""
+"Understanding Date-Based Axis Versus Category-Based Axis in Trend Charts "
+"http://www.quepublishing.com/articles/article.aspx?p=1642672&seqNum=2"
+msgstr ""
+
+#: ../../dev/analysis/cht-date-axis.rst:267
+msgid "Related Schema Definitions"
+msgstr ""
+

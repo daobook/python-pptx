@@ -1,0 +1,129 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-legend.rst:3
+msgid "Chart - Legend"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:5
+msgid ""
+"A chart may have a legend. The legend may be placed within the plot area "
+"or alongside it. The legend has a fill and font and may be positioned on "
+"the top, right, bottom, left, in the upper-right corner, or in a custom "
+"position. Individual legend entries may be custom specified, but that is "
+"not yet in scope."
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:13
+msgid "Candidate protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:49
+msgid "Feature Summary"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:51
+msgid ":attr:`.Chart.has_legend` -- Read/write boolean property"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:52
+msgid ":attr:`.Chart.legend` -- Read-only |Legend| object or None"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:53
+msgid ":attr:`.Legend.horz_offset` -- Read/write float (-1.0 -> 1.0)."
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:54
+msgid ":attr:`.Legend.include_in_layout` -- Read/write boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:55
+msgid ":attr:`.Legend.position` -- Read/write :ref:`XlLegendPosition`"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:56
+msgid ":attr:`.Legend.font` -- Read-only |Font| object."
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:60
+msgid "Enumerations"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:62
+msgid ":ref:`XlLegendPosition`"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:66
+msgid "Microsoft API"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:69
+msgid "Chart.HasLegend"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:69
+msgid "True if the chart has a legend. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:72
+msgid "Chart.Legend"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:72
+msgid "Returns the legend for the chart. Read-only Legend."
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:76
+msgid "Legend.IncludeInLayout"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:75
+msgid ""
+"True if a legend will occupy the chart layout space when a chart layout "
+"is being determined. The default is True. Read/write Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:81
+msgid "Legend.Position"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:79
+msgid ""
+"Returns or sets the position of the legend on the chart. Read/write "
+"XlLegendPosition."
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:84
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:88
+msgid "Example legend XML::"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:124
+msgid "Legend having horz_offset == 0.42::"
+msgstr ""
+
+#: ../../dev/analysis/cht-legend.rst:140
+msgid "Related Schema Definitions"
+msgstr ""
+

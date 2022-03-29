@@ -1,0 +1,404 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/text.rst:4
+msgid "Text-related objects"
+msgstr ""
+
+#: ../../api/text.rst:11
+msgid "|TextFrame| objects"
+msgstr ""
+
+#: of pptx.text.text.TextFrame:1
+msgid "The part of a shape that contains its text."
+msgstr ""
+
+#: of pptx.text.text.TextFrame:3
+msgid ""
+"Not all shapes have a text frame. Corresponds to the ``<p:txBody>`` "
+"element that can appear as a child element of ``<p:sp>``. Not intended to"
+" be constructed directly."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.add_paragraph:1
+msgid ""
+"Return new |_Paragraph| instance appended to the sequence of paragraphs "
+"contained in this text frame."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.auto_size:1
+msgid ""
+"The type of automatic resizing that should be used to fit the text of "
+"this shape within its bounding box when the text would otherwise extend "
+"beyond the shape boundaries. May be |None|, ``MSO_AUTO_SIZE.NONE``, "
+"``MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT``, or "
+"``MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE``."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.clear:1
+msgid "Remove all paragraphs except one empty one."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.fit_text:1
+msgid "Fit text-frame text entirely within bounds of its shape."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.fit_text:3
+msgid ""
+"Make the text in this text frame fit entirely within the bounds of its "
+"shape by setting word wrap on and applying the \"best-fit\" font size to "
+"all the text it contains. :attr:`TextFrame.auto_size` is set to "
+":attr:`MSO_AUTO_SIZE.NONE`. The font size will not be set larger than "
+"*max_size* points. If the path to a matching TrueType font is provided as"
+" *font_file*, that font file will be used for the font metrics. If "
+"*font_file* is |None|, best efforts are made to locate a font file with "
+"matchhing *font_family*, *bold*, and *italic* installed on the current "
+"system (usually succeeds if the font is installed)."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.margin_bottom:1
+msgid ""
+"|Length| value representing the inset of text from the bottom text frame "
+"border. :meth:`pptx.util.Inches` provides a convenient way of setting the"
+" value, e.g. ``text_frame.margin_bottom = Inches(0.05)``."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.margin_left:1
+msgid "Inset of text from left text frame border as |Length| value."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.margin_right:1
+msgid "Inset of text from right text frame border as |Length| value."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.margin_top:1
+msgid "Inset of text from top text frame border as |Length| value."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.paragraphs:1
+msgid ""
+"Immutable sequence of |_Paragraph| instances corresponding to the "
+"paragraphs in this text frame. A text frame always contains at least one "
+"paragraph."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.text:1
+msgid "Unicode/str containing all text in this text-frame."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.text:3
+msgid ""
+"Read/write. The return value is a str (unicode) containing all text in "
+"this text-frame. A line-feed character (``\"\\n\"``) separates the text "
+"for each paragraph. A vertical-tab character (``\"\\v\"``) appears for "
+"each line break (aka. soft carriage-return) encountered."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.text:8
+msgid ""
+"The vertical-tab character is how PowerPoint represents a soft carriage "
+"return in clipboard text, which is why that encoding was chosen."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.text:11
+msgid ""
+"Assignment replaces all text in the text frame. The assigned value can be"
+" a 7-bit ASCII string, a UTF-8 encoded 8-bit string, or unicode. A bytes "
+"value (such as a Python 2 ``str``) is converted to unicode assuming UTF-8"
+" encoding. A new paragraph is added for each line-feed character "
+"(``\"\\n\"``) encountered. A line-break (soft carriage-return) is "
+"inserted for each vertical-tab character (``\"\\v\"``) encountered."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.text:18
+msgid ""
+"Any control character other than newline, tab, or vertical-tab are "
+"escaped as plain-text like \"_x001B_\" (for ESC (ASCII 32) in this "
+"example)."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.vertical_anchor:1
+msgid ""
+"Read/write member of :ref:`MsoVerticalAnchor` enumeration or |None|, "
+"representing the vertical alignment of text in this text frame. |None| "
+"indicates the effective value should be inherited from this object's "
+"style hierarchy."
+msgstr ""
+
+#: of pptx.text.text.TextFrame.word_wrap:1
+msgid ""
+"Read-write setting determining whether lines of text in this shape are "
+"wrapped to fit within the shape's width. Valid values are True, False, or"
+" None. True and False turn word wrap on and off, respectively. Assigning "
+"None to word wrap causes any word wrap setting to be removed from the "
+"text frame, causing it to inherit this setting from its style hierarchy."
+msgstr ""
+
+#: ../../api/text.rst:20
+msgid "|Font| objects"
+msgstr ""
+
+#: ../../api/text.rst:22
+msgid ""
+"The |Font| object is encountered as a property of |_Run|, |_Paragraph|, "
+"and in future other presentation text objects."
+msgstr ""
+
+#: of pptx.text.text.Font:1
+msgid ""
+"Character properties object, providing font size, font name, bold, "
+"italic, etc. Corresponds to ``<a:rPr>`` child element of a run. Also "
+"appears as ``<a:defRPr>`` and ``<a:endParaRPr>`` in paragraph and "
+"``<a:defRPr>`` in list style elements."
+msgstr ""
+
+#: of pptx.text.text.Font.bold:1
+msgid ""
+"Get or set boolean bold value of |Font|, e.g. ``paragraph.font.bold = "
+"True``. If set to |None|, the bold setting is cleared and is inherited "
+"from an enclosing shape's setting, or a setting in a style or master. "
+"Returns None if no bold attribute is present, meaning the effective bold "
+"value is inherited from a master or the theme."
+msgstr ""
+
+#: ../../docstring of pptx.text.text.Font.color:1
+msgid ""
+"The |ColorFormat| instance that provides access to the color settings for"
+" this font."
+msgstr ""
+
+#: ../../docstring of pptx.text.text.Font.fill:1
+msgid ""
+"|FillFormat| instance for this font, providing access to fill properties "
+"such as fill color."
+msgstr ""
+
+#: of pptx.text.text.Font.italic:1
+msgid ""
+"Get or set boolean italic value of |Font| instance, with the same "
+"behaviors as bold with respect to None values."
+msgstr ""
+
+#: of pptx.text.text.Font.language_id:1
+msgid ""
+"Get or set the language id of this |Font| instance. The language id is a "
+"member of the :ref:`MsoLanguageId` enumeration. Assigning |None| removes "
+"any language setting, the same behavior as assigning "
+"`MSO_LANGUAGE_ID.NONE`."
+msgstr ""
+
+#: of pptx.text.text.Font.name:1
+msgid ""
+"Get or set the typeface name for this |Font| instance, causing the text "
+"it controls to appear in the named font, if a matching font is found. "
+"Returns |None| if the typeface is currently inherited from the theme. "
+"Setting it to |None| removes any override of the theme typeface."
+msgstr ""
+
+#: of pptx.text.text.Font.size:1
+msgid ""
+"Read/write |Length| value or |None|, indicating the font height in "
+"English Metric Units (EMU). |None| indicates the font size should be "
+"inherited from its style hierarchy, such as a placeholder or document "
+"defaults (usually 18pt). |Length| is a subclass of |int| having "
+"properties for convenient conversion into points or other length units. "
+"Likewise, the :class:`pptx.util.Pt` class allows convenient specification"
+" of point values::"
+msgstr ""
+
+#: of pptx.text.text.Font.underline:1
+msgid ""
+"Read/write. |True|, |False|, |None|, or a member of the "
+":ref:`MsoTextUnderlineType` enumeration indicating the underline setting "
+"for this font. |None| is the default and indicates the underline setting "
+"should be inherited from the style hierarchy, such as from a placeholder."
+" |True| indicates single underline. |False| indicates no underline. Other"
+" settings such as double and wavy underlining are indicated with members "
+"of the :ref:`MsoTextUnderlineType` enumeration."
+msgstr ""
+
+#: ../../api/text.rst:32
+msgid "|_Paragraph| objects"
+msgstr ""
+
+#: of pptx.text.text._Paragraph:1
+msgid "Paragraph object. Not intended to be constructed directly."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.add_line_break:1
+msgid "Add line break at end of this paragraph."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.add_run:1
+msgid "Return a new run appended to the runs in this paragraph."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.alignment:1
+msgid ""
+"Horizontal alignment of this paragraph, represented by either a member of"
+" the enumeration :ref:`PpParagraphAlignment` or |None|. The value |None| "
+"indicates the paragraph should 'inherit' its effective value from its "
+"style hierarchy. Assigning |None| removes any explicit setting, causing "
+"its inherited value to be used."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.clear:1
+msgid ""
+"Remove all content from this paragraph. Paragraph properties are "
+"preserved. Content includes runs, line breaks, and fields."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.font:1
+msgid ""
+"|Font| object containing default character properties for the runs in "
+"this paragraph. These character properties override default properties "
+"inherited from parent objects such as the text frame the paragraph is "
+"contained in and they may be overridden by character properties set at "
+"the run level."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.level:1
+msgid ""
+"Read-write integer indentation level of this paragraph, having a range of"
+" 0-8 inclusive. 0 represents a top-level paragraph and is the default "
+"value. Indentation level is most commonly encountered in a bulleted list,"
+" as is found on a word bullet slide."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.line_spacing:1
+msgid ""
+"Numeric or |Length| value specifying the space between baselines in "
+"successive lines of this paragraph. A value of |None| indicates no "
+"explicit value is assigned and its effective value is inherited from the "
+"paragraph's style hierarchy. A numeric value, e.g. `2` or `1.5`, "
+"indicates spacing is applied in multiples of line heights. A |Length| "
+"value such as ``Pt(12)`` indicates spacing is a fixed height. The |Pt| "
+"value class is a convenient way to apply line spacing in units of points."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.runs:1
+msgid ""
+"Immutable sequence of |_Run| objects corresponding to the runs in this "
+"paragraph."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.space_after:1
+msgid ""
+"|Length| value specifying the spacing to appear between this paragraph "
+"and the subsequent paragraph. A value of |None| indicates no explicit "
+"value is assigned and its effective value is inherited from the "
+"paragraph's style hierarchy. |Length| objects provide convenience "
+"properties, such as ``.pt`` and ``.inches``, that allow easy conversion "
+"to various length units."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.space_before:1
+msgid ""
+"|Length| value specifying the spacing to appear between this paragraph "
+"and the prior paragraph. A value of |None| indicates no explicit value is"
+" assigned and its effective value is inherited from the paragraph's style"
+" hierarchy. |Length| objects provide convenience properties, such as "
+"``.pt`` and ``.cm``, that allow easy conversion to various length units."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.text:1
+msgid "str (unicode) representation of paragraph contents."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.text:3
+msgid ""
+"Read/write. This value is formed by concatenating the text in each run "
+"and field making up the paragraph, adding a vertical-tab character "
+"(``\"\\v\"``) for each line-break element (`<a:br>`, soft carriage-"
+"return) encountered."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.text:7
+msgid ""
+"While the encoding of line-breaks as a vertical tab might be surprising "
+"at first, doing so is consistent with PowerPoint's clipboard copy "
+"behavior and allows a line-break to be distinguished from a paragraph "
+"boundary within the str return value."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.text:12
+msgid ""
+"Assignment causes all content in the paragraph to be replaced. Each "
+"vertical-tab character (``\"\\v\"``) in the assigned str is translated to"
+" a line-break, as is each line-feed character (``\"\\n\"``). Contrast "
+"behavior of line-feed character in `TextFrame.text` setter. If line-feed "
+"characters are intended to produce new paragraphs, use `TextFrame.text` "
+"instead. Any other control characters in the assigned string are escaped "
+"as a hex representation like \"_x001B_\" (for ESC (ASCII 27) in this "
+"example)."
+msgstr ""
+
+#: of pptx.text.text._Paragraph.text:20
+msgid ""
+"The assigned value can be a 7-bit ASCII byte string (Python 2 str), a "
+"UTF-8 encoded 8-bit byte string (Python 2 str), or unicode. Bytes values "
+"are converted to unicode assuming UTF-8 encoding."
+msgstr ""
+
+#: ../../api/text.rst:41
+msgid "|_Run| objects"
+msgstr ""
+
+#: of pptx.text.text._Run:1
+msgid "Text run object. Corresponds to ``<a:r>`` child element in a paragraph."
+msgstr ""
+
+#: of pptx.text.text._Run.font:1
+msgid ""
+"|Font| instance containing run-level character properties for the text in"
+" this run. Character properties can be and perhaps most often are "
+"inherited from parent objects such as the paragraph and slide layout the "
+"run is contained in. Only those specifically overridden at the run level "
+"are contained in the font object."
+msgstr ""
+
+#: ../../docstring of pptx.text.text._Run.hyperlink:1
+msgid ""
+"|_Hyperlink| instance acting as proxy for any ``<a:hlinkClick>`` element "
+"under the run properties element. Created on demand, the hyperlink object"
+" is available whether an ``<a:hlinkClick>`` element is present or not, "
+"and creates or deletes that element as appropriate in response to actions"
+" on its methods and attributes."
+msgstr ""
+
+#: of pptx.text.text._Run.text:1
+msgid "Read/write. A unicode string containing the text in this run."
+msgstr ""
+
+#: of pptx.text.text._Run.text:3
+msgid ""
+"Assignment replaces all text in the run. The assigned value can be a "
+"7-bit ASCII string, a UTF-8 encoded 8-bit string, or unicode. String "
+"values are converted to unicode assuming UTF-8 encoding."
+msgstr ""
+
+#: of pptx.text.text._Run.text:7
+msgid ""
+"Any other control characters in the assigned string other than tab or "
+"newline are escaped as a hex representation. For example, ESC (ASCII 27) "
+"is escaped as \"_x001B_\". Contrast the behavior of `TextFrame.text` and "
+"`_Paragraph.text` with respect to line-feed and vertical-tab characters."
+msgstr ""
+

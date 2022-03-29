@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-pos-and-size.rst:3
+msgid "Shape position and size"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:5
+msgid ""
+"Shapes of the following types can appear in the shape tree of a slide "
+"(``<p:spTree>``) and each will require support for querying size and "
+"position."
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:8
+msgid "**sp** -- Auto Shape *(completed)*"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:9
+msgid "**pic** -- Picture *(completed)*"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:10
+msgid "**graphicFrame** -- container for table and chart shapes"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:11
+msgid "**grpSp** -- Group Shape"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:12
+msgid "**cxnSp** -- Connector (line)"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:13
+msgid ""
+"**contentPart** -- has no position, but should return None instead of "
+"raising an exception"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:18
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:31
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:35
+msgid ""
+"Here is a representative sample of shape XML showing the placement of the"
+" position and size elements (in the <a:xfrm> element)."
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:38
+msgid "*Auto shape (rounded rectangle in this case)*::"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:85
+msgid "*Example picture shape*::"
+msgstr ""
+
+#: ../../dev/analysis/shp-pos-and-size.rst:121
+msgid "Related Schema Definitions"
+msgstr ""
+

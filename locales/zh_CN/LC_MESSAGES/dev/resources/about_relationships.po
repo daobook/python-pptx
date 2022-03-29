@@ -1,0 +1,303 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/resources/about_relationships.rst:3
+msgid "About Part Relationships"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:6
+msgid "Understanding Part Relationships"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:8
+msgid ""
+"An Open XML package part can have one or more relationships to other "
+"parts in the package. For example, a slide layout has a relationship to "
+"the slide master it inherits properties from. And if the slide layout "
+"includes an image, such as a company logo, it will also have a "
+"relationship to the image part corresponding to that logo's image file."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:14
+msgid "Conceptually, a part relationship might be stated::"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:18
+msgid ""
+"While these relationships are reciprocal in a way of thinking (e.g. part "
+"y is also related to part x), in Open XML they are generally defined in "
+"one direction only. For example, a slide may have a relationship to an "
+"image it contains, but an image never has a stated relationships to a "
+"slide. One exception to this is slide masters and slide layouts. A slide "
+"layout has a relationship to the slide master it inherits from at the "
+"same time the slide master has a relationship to each of the slide "
+"layouts that inherit from it."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:26
+msgid ""
+"In the example above, part x can be referred to as the *source part* or "
+"*from-part*, part y as the *target part* or *to-part*, and type z as the "
+"*relationship type*. The relationship type essentially ends up being the "
+"part type of the target part (e.g. image, slide master, etc.)."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:32
+msgid "Inbound and outbound relationships"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:34
+msgid ""
+"Each relationship is *outbound* for its source part and *inbound* for its"
+" target part. The *outbound* relationships of a part are those found in "
+"its *part relationship item*, commonly referred to as its \"rels file\". "
+"Only outbound relationships are recorded in the package. Inbound "
+"relationships are purely abstract, although they can be inferred from "
+"outbound relationships if an application had a need for them."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:41
+msgid ""
+"Not all parts can have outbound relationships. For example, image and "
+"presentation properties parts never have outbound relationships. All "
+"parts, however, participate in at least one inbound relationship. Any "
+"part with no inbound relationships could be removed from the package "
+"without consequence, and probably should be. For example, if upon saving "
+"it was noticed that a particular image had no inbound relationships, that"
+" image would be better not written to the package. *(Makes me wonder "
+"whether loading a package by walking its relationship graph might be a "
+"good idea in some instances.)*"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:52
+msgid "Direct and indirect relationship references"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:54
+msgid ""
+"Each relationship is recorded as a relationship element in the rels file "
+"belonging to a specific part. (The package relationship item "
+"``/_rels/.rels`` is the only exception, it belongs to the package, not to"
+" any part). Each relationship entry specifies a part-local relationship "
+"id (rId) for the relationship, the relationship type (essentially the "
+"part type of the target, e.g. slide, image), and a path the target part "
+"file. The source part is not explicitly stated in the relationship entry,"
+" it is implicitly the part the .rels file belongs to."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:63
+msgid ""
+"These can be thought of as *external relationship references* in that the"
+" rels file is a separate package item, external to the part itself. "
+"However, in certain cases, a relationship may be referenced within the "
+"XML of the from-part. These can be thought of as *internal relationship "
+"references*."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:68
+msgid ""
+"As an example of where an internal relationship reference is required, "
+"consider a slide containing images of three different products. Each "
+"picture has a corresponding <p:pic> element in the slide's shape tree, "
+"each of which must specify the particular image file it displays, "
+"distinguishing it from the other two image files related to the slide."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:74
+msgid ""
+"The picture elements specify which of the related images to display using"
+" the part-local relationship id (rId) matching the required image, 'rId2'"
+" in the example below::"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:84
+msgid ""
+"Which is an indirect reference to ``image1.png`` specified as the target "
+"of 'rId2' in the slide's rels file::"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:93
+msgid ""
+"This indirection makes sense as a way to limit the coupling of "
+"presentation parts to the mechanics of package composition. For example, "
+"when the XML for the slide part in the example above is being composed, "
+"the slide can determine the reference to the image it's displaying "
+"without reference outside its own natural scope. In contrast, determining"
+" the eventual location and filename of that image in any particular "
+"package that was saved would require the slide code to have visibility "
+"into the packaging process, which would prevent packaging being delegated"
+" to a separate, black-box module."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:103
+msgid "Implicit and explicit relationships"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:105
+msgid ""
+"There is also a distinction between implicit and explicit relationships "
+"which is described in the spec (ECMA-376-1) in section 9.2. I haven't "
+"encountered those yet in the context of PresentationML (the spec uses an "
+"example of footnotes from WordprocessingML), so I do not discuss them "
+"here."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:112
+msgid "Relationship Mechanics"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:115
+msgid "Relationship life-cycle"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:117
+msgid ""
+"A representation of a relationship must operate effectively in two "
+"distinct situations, in-package and in-memory. They must also support "
+"lifecycle transitions from in-package to in-memory and from in-memory "
+"back to in-package."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:123
+msgid "Abstract model"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:125
+msgid "Each relationship has the following abstract attributes"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:129
+msgid "The \"from-part\" of the relationship."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:133
+msgid ""
+"Source-local unique identifier for this relationship. Each source part's "
+"relationship ids should be a sequence of consecutive integers starting "
+"from 1."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:139
+msgid "The content type of the relationship's to-part."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:143
+msgid "A direct reference to the relationship's to-part."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:148
+msgid "Maintaining relationships by dynamic parts (e.g. Slides)"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:150
+msgid "How will dynamic parts (like Slide) interact with its relationship list?"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:152
+msgid ""
+"? Should it just add items to the relationship list when it creates new "
+"things?"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:154
+msgid ""
+"? Does it need some sort of lookup capability in order to delete? Or just"
+" have a delete relationship method on _Relationships or something like "
+"that."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:157
+msgid ""
+"Need to come up with a plausible set of use cases to think about a "
+"design. Right now the only use case is loading a template into a "
+"presentation and saving a presentation."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:161
+msgid "Add an image to a slide."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:163
+msgid "Change a slide's slide layout"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:165
+msgid ""
+"comment, notesSlide, tag, image, and slideLayout are the only outbound "
+"relationship types for a slide, although I expect there are some other "
+"DrawingML bits I haven't accounted for yet."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:169
+msgid ""
+"On reflection I'm thinking there's not too much urgency on noodling this "
+"out too far, the present construction should work fine for now and be "
+"able to be extended without disrupting other code too much."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:175
+msgid "SCRAP"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:178
+msgid "Rationale for Relationship to be an association class"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:180
+msgid ""
+"When loaded into memory, each relationship target must be a reference to "
+"an active part object (or at least a part key that can be resolved to a "
+"reference, but why do this lookup multiple times?). This is both because "
+"those relationships can change and also because the package path, while "
+"it can be calculated at runtime, is not guaranteed to be stable (e.g. a "
+"new slide can be inserted between two existing ones) and is not finally "
+"resolved until the presentation is saved."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:189
+msgid "General description of package relationships items"
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:191
+msgid ""
+"Relationships items specify the relationships between parts of the "
+"package, although they are not themselves a part."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:194
+msgid ""
+"All relationship items are XML documents having a filename with the "
+"extension '.rels' located in a directory named '_rels' located in the "
+"same directory as the part."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:198
+msgid "The package relationship item has the URI '/_rels/.rels'."
+msgstr ""
+
+#: ../../dev/resources/about_relationships.rst:200
+msgid ""
+"Part relationship items have the same filename as the part whose "
+"relationships they describe, with the '.rels' extension appended as a "
+"suffix. For example, the relationship item for a part named "
+"``/ppt/slides/slide1.xml`` would have the URI "
+"``/ppt/slides/_rels/slide1.xml.rels``."
+msgstr ""
+

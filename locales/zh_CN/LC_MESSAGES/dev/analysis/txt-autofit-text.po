@@ -1,0 +1,257 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/txt-autofit-text.rst:3
+msgid "Text - Auto-fit text to shape"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:5
+msgid ""
+"An AutoShape has a text frame, referred to in the PowerPoint UI as the "
+"shape's *Text Box*. One of the settings provided is *Autofit*, which can "
+"be one of \"Do not autofit\", \"Resize text to fit shape\", or \"Resize "
+"shape to fit text\". The scope of this analysis is how best to implement "
+"the \"Resize text to fit shape\" behavior."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:11
+msgid ""
+"A robust implementation would be complex and would lead the project "
+"outside the currently intended scope. In particular, because the shape "
+"size, text content, the \"full\" point size of the text, and the autofit "
+"and wrap settings of the text frame all interact to determine the proper "
+"\"fit\" of adjusted text, all events that could change the state of any "
+"of these five factors would need to be coupled to an \"update\" method. "
+"There would also need to be at least two \"fitting\" algorithms, one for "
+"when wrap was turned on and another for when it was off."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:20
+msgid ""
+"The initial solution we'll pursue is a special-purpose method on "
+"TextFrame that reduces the permutations of these variables to one and "
+"places responsibility on the developer to call it at the appropriate "
+"time. The method will calculate based on the current text and shape size,"
+" set wrap on, and set auto_size to fit text to the shape. If any of the "
+"variables change, the developer will be responsible for re-calling the "
+"method."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:29
+msgid "Current constraints"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:32
+msgid ":meth:`.TextFrame.autofit_text`"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:34
+msgid ""
+"User must manually set all shape text to a uniform 12pt default full-size"
+" font point size."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:37
+msgid ""
+"This is intended to be done before the call, but might work okay if done "
+"after too, as long as it matches the default 12pt."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:40
+msgid ""
+"Only 12pt \"full-size\" is supported. There is no mechanism to specify "
+"other sizes."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:42
+msgid "Unconditionally sets autofit and wrap."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:43
+msgid "Path to font file must be provided manually."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:44
+msgid ""
+"User must manually set the font typeface of all shape text to match the "
+"provided font file."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:49
+msgid "Incremental enhancements"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:51
+msgid ""
+"**.fit_text() or .autofit_text().** Two related methods are used to fit "
+"text in a shape using different approaches. ``TextFrame.autofit_text()`` "
+"uses the `TEXT_TO_FIT_SHAPE` autofit setting to shrink a full-size "
+"paragraph of text. Later edits to that text using PowerPoint will re-fit "
+"the text automatically, up to the original (full-size) font size."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:57
+msgid ""
+"``TextFrame.fit_text()`` takes the approach of simply setting the font "
+"size for all text in the shape to the best-fit size. No automatic "
+"resizing occurs on later edits in PowerPoint, although the user can "
+"switch on auto-fit for that text box, perhaps after setting the full-size"
+" point size to their preferred size."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:63
+msgid ""
+"**Specified full point size.** Allow the point size maximum to be "
+"specified; defaults to 18pt. All text in the shape is set to this size "
+"before calculating the best-fit based on that size."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:67
+msgid ""
+"**Specified font.** In the process, this specifies the font to use, "
+"although it may require a tuple specifying the type family name as well "
+"as the bold and italic states, plus a file path."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:71
+msgid ""
+"**Auto-locate installed font file.** Search for and use the appropriate "
+"locally-installed font file corresponding to the selected typeface. On "
+"Windows, the font directory can be located using a registry key, and is "
+"perhaps often `C:\\Windows\\Fonts`. However the font filename is not the "
+"same as the UI typeface name, so some mapping would be required, "
+"including detecting whether bold and/or italic were specified."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:78
+msgid ""
+"**Accommodate line breaks.** Either from `<a:br>` elements or multiple "
+"paragraphs. Would involve ending lines at a break, other than the last "
+"paragraph."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:82
+msgid ""
+"**Add line space reduction.** PowerPoint always reduces line spacing by "
+"as much as 20% to maximize the font size used. Add this factor into the "
+"calculation to improve the exact match likelihood for font scale and "
+"lnSpcReduction and thereby reduce occurence of \"jumping\" of text to a "
+"new size on edit."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:90
+msgid "Candidate Protocol"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:92
+msgid ""
+"Shape size and text are set before calling "
+":meth:`.TextFrame.autofit_text` or :meth:`.TextFrame.fit_text`::"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:101
+msgid ""
+"Calling :meth:`TextFrame.autofit_text` turns on auto fit (text to shape),"
+" switches on word wrap, and calculates the best-fit font scaling factor::"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:108
+msgid ""
+"Calling :meth:`TextFrame.fit_text` produces the same sized text, but "
+"autofit is not turned on. Rather the actual font size for text in the "
+"shape is set to the calculated \"best fit\" point size::"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:120
+msgid "Proposed |pp| behavior"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:122
+msgid "The :meth:`TextFrame.fit_text` method produces the following side effects:"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:124
+msgid ""
+":attr:`TextFrame.auto_size` is set to "
+":attr:`MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE`"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:126
+msgid ":attr:`TextFrame.word_wrap` is set to |True|."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:127
+msgid ""
+"A suitable value is calculated for `<a:normAutofit fontScale=\"?\"/>`. "
+"The `fontScale` attribute is set to this value and the `lnSpcReduction` "
+"attribute is removed, if present."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:131
+msgid ""
+"The operation can be undone by assigning |None|, "
+":attr:`MSO_AUTO_SIZE.NONE`, or :attr:`MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT` to"
+" `TextFrame.auto_size`."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:136
+msgid "PowerPoint behavior"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:138
+msgid "PowerPoint shrinks text in whole-number font sizes."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:140
+msgid ""
+"The behavior interacts with *Wrap text in shape*. The behavior we want "
+"here is only when wrap is turned on. When wrap is off, only height and "
+"manual line breaks are taken into account. Long lines simply extend "
+"outside the box."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:145
+msgid ""
+"When assigning a font size to a shape, PowerPoint applies that font size "
+"at the run level, adding a `sz` attribute to the `<a:rPr>` element for "
+"every content child of every `<a:p>` element in the shape. The sentinel "
+"`<a:endParaRPr>` element also gets a `sz` attribute set to that size, but"
+" only in the last paragraph, it appears."
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:153
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:157
+msgid "``<p:txBody>`` for default new textbox::"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:167
+msgid ""
+"8\" x 0.5\" text box, default margins, defaulting to 18pt \"full-size\" "
+"text, auto-reduced to 10pt. ``<a:t>`` element text wrapped for compact "
+"display::"
+msgstr ""
+
+#: ../../dev/analysis/txt-autofit-text.rst:190
+msgid "Related Schema Definitions"
+msgstr ""
+

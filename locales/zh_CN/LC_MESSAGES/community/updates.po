@@ -1,0 +1,1092 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../community/updates.rst:5
+msgid "Software Updates"
+msgstr ""
+
+#: ../../../HISTORY.rst:4
+msgid "Release History"
+msgstr ""
+
+#: ../../../HISTORY.rst:7
+msgid "0.6.21 (2021-09-20)"
+msgstr ""
+
+#: ../../../HISTORY.rst:9
+msgid "Fix #741 _DirPkgReader must implement .__contains__()"
+msgstr ""
+
+#: ../../../HISTORY.rst:13
+msgid "0.6.20 (2021-09-14)"
+msgstr ""
+
+#: ../../../HISTORY.rst:15
+msgid "Fix #206 accommodate NULL target-references in relationships."
+msgstr ""
+
+#: ../../../HISTORY.rst:16
+msgid "Fix #223 escape image filename that appears as literal in XML."
+msgstr ""
+
+#: ../../../HISTORY.rst:17
+msgid "Fix #517 option to display chart categories/values in reverse order."
+msgstr ""
+
+#: ../../../HISTORY.rst:18
+msgid "Major refactoring of ancient package loading code."
+msgstr ""
+
+#: ../../../HISTORY.rst:22
+msgid "0.6.19 (2021-05-17)"
+msgstr ""
+
+#: ../../../HISTORY.rst:24
+msgid ""
+"Add shapes.add_ole_object(), allowing arbitrary Excel or other binary "
+"file to be embedded as a shape on a slide. The OLE object is represented "
+"as an icon."
+msgstr ""
+
+#: ../../../HISTORY.rst:29
+msgid "0.6.18 (2019-05-02)"
+msgstr ""
+
+#: ../../../HISTORY.rst:31
+msgid ""
+".text property getters encode line-break as a vertical-tab (VT, '\\v', "
+"ASCII 11/x0B). This is consistent with PowerPoint's copy/paste behavior "
+"and allows like-breaks (soft carriage-return) to be distinguished from "
+"paragraph boundary. Previously, a line-break was encoded as a newline "
+"('\\n') and was not distinguishable from a paragraph boundary."
+msgstr ""
+
+#: ../../../HISTORY.rst:36
+msgid ""
+".text properties include Shape.text, _Cell.text, TextFrame.text, "
+"_Paragraph.text and _Run.text."
+msgstr ""
+
+#: ../../../HISTORY.rst:39
+msgid ""
+".text property setters accept vertical-tab character and place a line-"
+"break element in that location. All other control characters other than "
+"horizontal-tab ('\\t') and newline ('\\n') in range \\x00-\\x1F are "
+"accepted and escaped with plain-text like \"_x001B\" for ESC (ASCII 27)."
+msgstr ""
+
+#: ../../../HISTORY.rst:44
+msgid ""
+"Previously a control character other than tab or newline in an assigned "
+"string would trigger an exception related to invalid XML character."
+msgstr ""
+
+#: ../../../HISTORY.rst:49
+msgid "0.6.17 (2018-12-16)"
+msgstr ""
+
+#: ../../../HISTORY.rst:51
+msgid "Add SlideLayouts.remove() - Delete unused slide-layout"
+msgstr ""
+
+#: ../../../HISTORY.rst:52
+msgid "Add SlideLayout.used_by_slides - Get slides based on this slide-layout"
+msgstr ""
+
+#: ../../../HISTORY.rst:53
+msgid "Add SlideLayouts.index() - Get index of slide-layout in master"
+msgstr ""
+
+#: ../../../HISTORY.rst:54
+msgid "Add SlideLayouts.get_by_name() - Get slide-layout by its str name"
+msgstr ""
+
+#: ../../../HISTORY.rst:58
+msgid "0.6.16 (2018-11-09)"
+msgstr ""
+
+#: ../../../HISTORY.rst:60
+msgid "Feature #395 DataLabels.show_* properties, e.g. .show_percentage"
+msgstr ""
+
+#: ../../../HISTORY.rst:61
+msgid "Feature #453 Chart data tolerates None for labels"
+msgstr ""
+
+#: ../../../HISTORY.rst:65
+msgid "0.6.15 (2018-09-24)"
+msgstr ""
+
+#: ../../../HISTORY.rst:67
+msgid "Fix #436 ValueAxis._cross_xAx fails on c:dateAxis"
+msgstr ""
+
+#: ../../../HISTORY.rst:71
+msgid "0.6.14 (2018-09-24)"
+msgstr ""
+
+#: ../../../HISTORY.rst:73
+msgid "Add _Cell.merge()"
+msgstr ""
+
+#: ../../../HISTORY.rst:74
+msgid "Add _Cell.split()"
+msgstr ""
+
+#: ../../../HISTORY.rst:75
+msgid "Add _Cell.__eq__()"
+msgstr ""
+
+#: ../../../HISTORY.rst:76
+msgid "Add _Cell.is_merge_origin"
+msgstr ""
+
+#: ../../../HISTORY.rst:77
+msgid "Add _Cell.is_spanned"
+msgstr ""
+
+#: ../../../HISTORY.rst:78
+msgid "Add _Cell.span_height"
+msgstr ""
+
+#: ../../../HISTORY.rst:79
+msgid "Add _Cell.span_width"
+msgstr ""
+
+#: ../../../HISTORY.rst:80
+msgid "Add _Cell.text getter"
+msgstr ""
+
+#: ../../../HISTORY.rst:81
+msgid "Add Table.iter_cells()"
+msgstr ""
+
+#: ../../../HISTORY.rst:82
+msgid "Move pptx.shapes.table module to pptx.table"
+msgstr ""
+
+#: ../../../HISTORY.rst:83
+msgid "Add user documentation 'Working with tables'"
+msgstr ""
+
+#: ../../../HISTORY.rst:87
+msgid "0.6.13 (2018-09-10)"
+msgstr ""
+
+#: ../../../HISTORY.rst:89
+msgid "Add Chart.font"
+msgstr ""
+
+#: ../../../HISTORY.rst:90
+msgid "Fix #293 Can't hide title of single-series Chart"
+msgstr ""
+
+#: ../../../HISTORY.rst:91
+msgid "Fix shape.width value is not type Emu"
+msgstr ""
+
+#: ../../../HISTORY.rst:92
+msgid "Fix add a:defRPr with c:rich (fixes some font inheritance breakage)"
+msgstr ""
+
+#: ../../../HISTORY.rst:96
+msgid "0.6.12 (2018-08-11)"
+msgstr ""
+
+#: ../../../HISTORY.rst:98
+msgid "Add Picture.auto_shape_type"
+msgstr ""
+
+#: ../../../HISTORY.rst:99
+msgid "Remove Python 2.6 testing from build"
+msgstr ""
+
+#: ../../../HISTORY.rst:100
+msgid "Update dependencies to avoid vulnerable Pillow version"
+msgstr ""
+
+#: ../../../HISTORY.rst:101
+msgid "Fix #260, #301, #382, #401"
+msgstr ""
+
+#: ../../../HISTORY.rst:102
+msgid "Add _Paragraph.add_line_break()"
+msgstr ""
+
+#: ../../../HISTORY.rst:103
+msgid "Add Connector.line"
+msgstr ""
+
+#: ../../../HISTORY.rst:107
+msgid "0.6.11 (2018-07-25)"
+msgstr ""
+
+#: ../../../HISTORY.rst:109
+msgid "Add gradient fill."
+msgstr ""
+
+#: ../../../HISTORY.rst:110
+msgid ""
+"Add experimental \"turbo-add\" option for producing large shape-count "
+"slides."
+msgstr ""
+
+#: ../../../HISTORY.rst:114
+msgid "0.6.10 (2018-06-11)"
+msgstr ""
+
+#: ../../../HISTORY.rst:116
+msgid ""
+"Add `shape.shadow` property to autoshape, connector, picture, and group "
+"shape, returning a `ShadowFormat` object."
+msgstr ""
+
+#: ../../../HISTORY.rst:118
+msgid "Add `ShadowFormat` object with read/write (boolean) `.inherit` property."
+msgstr ""
+
+#: ../../../HISTORY.rst:119
+msgid "Fix #328 add support for 26+ series in a chart"
+msgstr ""
+
+#: ../../../HISTORY.rst:123
+msgid "0.6.9 (2018-05-08)"
+msgstr ""
+
+#: ../../../HISTORY.rst:125
+msgid ""
+"Add `Picture.crop_x` setters, allowing picture cropping values to be set,"
+" in addition to interrogated."
+msgstr ""
+
+#: ../../../HISTORY.rst:127
+msgid ""
+"Add `Slide.background` and `SlideMaster.background`, allowing the "
+"background fill to be set for an individual slide or for all slides based"
+" on a slide master."
+msgstr ""
+
+#: ../../../HISTORY.rst:130
+msgid ""
+"Add option `shapes` parameter to `Shapes.add_group_shape`, allowing a "
+"group shape to be formed from a number of existing shapes."
+msgstr ""
+
+#: ../../../HISTORY.rst:132
+msgid ""
+"Improve efficiency of `Shapes._next_shape_id` property to improve "
+"performance on high shape-count slides."
+msgstr ""
+
+#: ../../../HISTORY.rst:137
+msgid "0.6.8 (2018-04-18)"
+msgstr ""
+
+#: ../../../HISTORY.rst:139
+msgid ""
+"Add `GroupShape`, providing properties specific to a group shape, "
+"including its `shapes` property."
+msgstr ""
+
+#: ../../../HISTORY.rst:141
+msgid "Add `GroupShapes`, providing access to shapes contained in a group shape."
+msgstr ""
+
+#: ../../../HISTORY.rst:142
+msgid ""
+"Add `SlideShapes.add_group_shape()`, allowing a group shape to be added "
+"to a slide."
+msgstr ""
+
+#: ../../../HISTORY.rst:144
+msgid ""
+"Add `GroupShapes.add_group_shape()`, allowing a group shape to be added "
+"to a group shape, enabling recursive, multi-level groups."
+msgstr ""
+
+#: ../../../HISTORY.rst:146
+msgid ""
+"Add support for adding jump-to-named-slide behavior to shape and run "
+"hyperlinks."
+msgstr ""
+
+#: ../../../HISTORY.rst:151
+msgid "0.6.7 (2017-10-30)"
+msgstr ""
+
+#: ../../../HISTORY.rst:153
+msgid ""
+"Add `SlideShapes.build_freeform()`, allowing freeform shapes (such as "
+"maps) to be specified and added to a slide."
+msgstr ""
+
+#: ../../../HISTORY.rst:155
+msgid "Add support for patterned fills."
+msgstr ""
+
+#: ../../../HISTORY.rst:156
+msgid ""
+"Add `LineFormat.dash_style` to allow interrogation and setting of dashed "
+"line styles."
+msgstr ""
+
+#: ../../../HISTORY.rst:161
+msgid "0.6.6 (2017-06-17)"
+msgstr ""
+
+#: ../../../HISTORY.rst:163
+msgid ""
+"Add `SlideShapes.add_movie()`, allowing video media to be added to a "
+"slide."
+msgstr ""
+
+#: ../../../HISTORY.rst:165
+msgid "fix #190 Accommodate non-conforming part names having '00' index segment."
+msgstr ""
+
+#: ../../../HISTORY.rst:166
+msgid "fix #273 Accommodate non-conforming part names having no index segment."
+msgstr ""
+
+#: ../../../HISTORY.rst:167
+msgid "fix #277 ASCII/Unicode error on non-ASCII multi-level category names"
+msgstr ""
+
+#: ../../../HISTORY.rst:168
+msgid "fix #279 BaseShape.id warning appearing on placeholder access."
+msgstr ""
+
+#: ../../../HISTORY.rst:172
+msgid "0.6.5 (2017-03-21)"
+msgstr ""
+
+#: ../../../HISTORY.rst:174
+msgid ""
+"#267 compensate for non-conforming PowerPoint behavior on c:overlay "
+"element"
+msgstr ""
+
+#: ../../../HISTORY.rst:176
+msgid ""
+"compensate for non-conforming (to spec) PowerPoint behavior related to "
+"c:dLbl/c:tx that results in \"can't save\" error when explicit data "
+"labels are added to bubbles on a bubble chart."
+msgstr ""
+
+#: ../../../HISTORY.rst:182
+msgid "0.6.4 (2017-03-17)"
+msgstr ""
+
+#: ../../../HISTORY.rst:184
+msgid "add Chart.chart_title and ChartTitle object"
+msgstr ""
+
+#: ../../../HISTORY.rst:185
+msgid "#263 Use Number type to test for numeric category"
+msgstr ""
+
+#: ../../../HISTORY.rst:189
+msgid "0.6.3 (2017-02-28)"
+msgstr ""
+
+#: ../../../HISTORY.rst:191
+msgid "add DataLabel.font"
+msgstr ""
+
+#: ../../../HISTORY.rst:192
+msgid "add Axis.axis_title"
+msgstr ""
+
+#: ../../../HISTORY.rst:196
+msgid "0.6.2 (2017-01-03)"
+msgstr ""
+
+#: ../../../HISTORY.rst:198
+msgid "add support for NotesSlide (slide notes, aka. notes page)"
+msgstr ""
+
+#: ../../../HISTORY.rst:199
+msgid "add support for arbitrary series ordering in XML"
+msgstr ""
+
+#: ../../../HISTORY.rst:200
+msgid ""
+"add Plot.categories providing access to hierarchical categories in an "
+"existing chart."
+msgstr ""
+
+#: ../../../HISTORY.rst:202
+msgid ""
+"add support for date axes on category charts, including writing a dateAx "
+"element for the category axis when ChartData categories are date or "
+"datetime."
+msgstr ""
+
+#: ../../../HISTORY.rst:206 ../../../HISTORY.rst:268 ../../../HISTORY.rst:331
+#: ../../../HISTORY.rst:399
+msgid "**BACKWARD INCOMPATIBILITIES:**"
+msgstr ""
+
+#: ../../../HISTORY.rst:208
+msgid ""
+"Some changes were made to the boilerplate XML used to create new charts. "
+"This was done to more closely adhere to the settings PowerPoint uses when"
+" creating a chart using the UI. This may result in some appearance "
+"changes in charts after upgrading. In particular:"
+msgstr ""
+
+#: ../../../HISTORY.rst:213
+msgid "Chart.has_legend now defaults to True for Line charts."
+msgstr ""
+
+#: ../../../HISTORY.rst:214
+msgid "Plot.vary_by_categories now defaults to False for Line charts."
+msgstr ""
+
+#: ../../../HISTORY.rst:218
+msgid "0.6.1 (2016-10-09)"
+msgstr ""
+
+#: ../../../HISTORY.rst:220
+msgid "add Connector shape type"
+msgstr ""
+
+#: ../../../HISTORY.rst:224
+msgid "0.6.0 (2016-08-18)"
+msgstr ""
+
+#: ../../../HISTORY.rst:226
+msgid "add XY chart types"
+msgstr ""
+
+#: ../../../HISTORY.rst:227
+msgid "add Bubble chart types"
+msgstr ""
+
+#: ../../../HISTORY.rst:228
+msgid "add Radar chart types"
+msgstr ""
+
+#: ../../../HISTORY.rst:229
+msgid "add Area chart types"
+msgstr ""
+
+#: ../../../HISTORY.rst:230
+msgid "add Doughnut chart types"
+msgstr ""
+
+#: ../../../HISTORY.rst:231
+msgid "add Series.points and Point"
+msgstr ""
+
+#: ../../../HISTORY.rst:232
+msgid "add Point.data_label"
+msgstr ""
+
+#: ../../../HISTORY.rst:233
+msgid "add DataLabel.text_frame"
+msgstr ""
+
+#: ../../../HISTORY.rst:234
+msgid "add DataLabel.position"
+msgstr ""
+
+#: ../../../HISTORY.rst:235
+msgid "add Axis.major_gridlines"
+msgstr ""
+
+#: ../../../HISTORY.rst:236
+msgid "add ChartFormat with .fill and .line"
+msgstr ""
+
+#: ../../../HISTORY.rst:237
+msgid "add Axis.format (fill and line formatting)"
+msgstr ""
+
+#: ../../../HISTORY.rst:238
+msgid "add ValueAxis.crosses and .crosses_at"
+msgstr ""
+
+#: ../../../HISTORY.rst:239
+msgid "add Point.format (fill and line formatting)"
+msgstr ""
+
+#: ../../../HISTORY.rst:240
+msgid "add Slide.slide_id"
+msgstr ""
+
+#: ../../../HISTORY.rst:241
+msgid "add Slides.get() (by slide id)"
+msgstr ""
+
+#: ../../../HISTORY.rst:242
+msgid "add Font.language_id"
+msgstr ""
+
+#: ../../../HISTORY.rst:243
+msgid "support blank (None) data points in created charts"
+msgstr ""
+
+#: ../../../HISTORY.rst:244
+msgid "add Series.marker"
+msgstr ""
+
+#: ../../../HISTORY.rst:245
+msgid "add Point.marker"
+msgstr ""
+
+#: ../../../HISTORY.rst:246
+msgid "add Marker.format, .style, and .size"
+msgstr ""
+
+#: ../../../HISTORY.rst:250
+msgid "0.5.8 (2015-11-27)"
+msgstr ""
+
+#: ../../../HISTORY.rst:252
+msgid "add Shape.click_action (hyperlink on shape)"
+msgstr ""
+
+#: ../../../HISTORY.rst:253
+msgid "fix: #128 Chart cat and ser names not escaped"
+msgstr ""
+
+#: ../../../HISTORY.rst:254
+msgid "fix: #153 shapes.title raises on no title shape"
+msgstr ""
+
+#: ../../../HISTORY.rst:255
+msgid "fix: #170 remove seek(0) from Image.from_file()"
+msgstr ""
+
+#: ../../../HISTORY.rst:259
+msgid "0.5.7 (2015-01-17)"
+msgstr ""
+
+#: ../../../HISTORY.rst:261
+msgid "add PicturePlaceholder with .insert_picture() method"
+msgstr ""
+
+#: ../../../HISTORY.rst:262
+msgid "add TablePlaceholder with .insert_table() method"
+msgstr ""
+
+#: ../../../HISTORY.rst:263
+msgid "add ChartPlaceholder with .insert_chart() method"
+msgstr ""
+
+#: ../../../HISTORY.rst:264
+msgid "add Picture.image property, returning Image object"
+msgstr ""
+
+#: ../../../HISTORY.rst:265
+msgid "add Picture.crop_left, .crop_top, .crop_right, and .crop_bottom"
+msgstr ""
+
+#: ../../../HISTORY.rst:266
+msgid "add Shape.placeholder_format and PlaceholderFormat object"
+msgstr ""
+
+#: ../../../HISTORY.rst:270
+msgid ""
+"Shape.shape_type is now unconditionally `MSO_SHAPE_TYPE.PLACEHOLDER` for "
+"all placeholder shapes. Previously, some placeholder shapes reported "
+"`MSO_SHAPE_TYPE.AUTO_SHAPE`, `MSO_SHAPE_TYPE.CHART`, "
+"`MSO_SHAPE_TYPE.PICTURE`, or `MSO_SHAPE_TYPE.TABLE` for that property."
+msgstr ""
+
+#: ../../../HISTORY.rst:277
+msgid "0.5.6 (2014-12-06)"
+msgstr ""
+
+#: ../../../HISTORY.rst:279
+msgid "fix #138 - UnicodeDecodeError in setup.py on Windows 7 Python 3.4"
+msgstr ""
+
+#: ../../../HISTORY.rst:283
+msgid "0.5.5 (2014-11-17)"
+msgstr ""
+
+#: ../../../HISTORY.rst:285
+msgid "feature #51 - add Python 3 support"
+msgstr ""
+
+#: ../../../HISTORY.rst:289
+msgid "0.5.4 (2014-11-15)"
+msgstr ""
+
+#: ../../../HISTORY.rst:291
+msgid ""
+"feature #43 - image native size in shapes.add_picture() is now calculated"
+" based on DPI attribute in image file, if present, defaulting to 72 dpi."
+msgstr ""
+
+#: ../../../HISTORY.rst:293
+msgid ""
+"feature #113 - Add Paragraph.space_before, Paragraph.space_after, and "
+"Paragraph.line_spacing"
+msgstr ""
+
+#: ../../../HISTORY.rst:298
+msgid "0.5.3 (2014-11-09)"
+msgstr ""
+
+#: ../../../HISTORY.rst:300
+msgid "add experimental feature TextFrame.fit_text()"
+msgstr ""
+
+#: ../../../HISTORY.rst:304
+msgid "0.5.2 (2014-10-26)"
+msgstr ""
+
+#: ../../../HISTORY.rst:306
+msgid "fix #127 - Shape.text_frame fails on shape having no txBody"
+msgstr ""
+
+#: ../../../HISTORY.rst:310
+msgid "0.5.1 (2014-09-22)"
+msgstr ""
+
+#: ../../../HISTORY.rst:312
+msgid "feature #120 - add Shape.rotation"
+msgstr ""
+
+#: ../../../HISTORY.rst:313
+msgid "feature #97 - add Font.underline"
+msgstr ""
+
+#: ../../../HISTORY.rst:314
+msgid "issue #117 - add BMP image support"
+msgstr ""
+
+#: ../../../HISTORY.rst:315
+msgid "issue #95 - add BaseShape.name setter"
+msgstr ""
+
+#: ../../../HISTORY.rst:316
+msgid "issue #107 - all .text properties should return unicode, not str"
+msgstr ""
+
+#: ../../../HISTORY.rst:317
+msgid "feature #106 - add .text getters to Shape, TextFrame, and Paragraph"
+msgstr ""
+
+#: ../../../HISTORY.rst:319
+msgid ""
+"Rename Shape.textframe to Shape.text_frame. **Shape.textframe property "
+"(by that name) is deprecated.**"
+msgstr ""
+
+#: ../../../HISTORY.rst:324
+msgid "0.5.0 (2014-09-13)"
+msgstr ""
+
+#: ../../../HISTORY.rst:326
+msgid ""
+"Add support for creating and manipulating bar, column, line, and pie "
+"charts"
+msgstr ""
+
+#: ../../../HISTORY.rst:327
+msgid "Major refactoring of XML layer (oxml)"
+msgstr ""
+
+#: ../../../HISTORY.rst:328
+msgid ""
+"Rationalized graphical object shape access **Note backward "
+"incompatibilities below**"
+msgstr ""
+
+#: ../../../HISTORY.rst:333
+msgid ""
+"A table is no longer treated as a shape. Rather it is a graphical object "
+"contained in a GraphicFrame shape, as are Chart and SmartArt objects."
+msgstr ""
+
+#: ../../../HISTORY.rst:336
+msgid "Example::"
+msgstr ""
+
+#: ../../../HISTORY.rst:349
+msgid ""
+"As the enclosing shape, the id, name, shape type, position, and size are "
+"attributes of the enclosing GraphicFrame object."
+msgstr ""
+
+#: ../../../HISTORY.rst:352
+msgid ""
+"The contents of a GraphicFrame shape can be identified using three "
+"available properties on a shape: has_table, has_chart, and has_smart_art."
+" The enclosed graphical object is obtained using the properties "
+"GraphicFrame.table and GraphicFrame.chart. SmartArt is not yet supported."
+" Accessing one of these properties on a GraphicFrame not containing the "
+"corresponding object raises an exception."
+msgstr ""
+
+#: ../../../HISTORY.rst:361
+msgid "0.4.2 (2014-04-29)"
+msgstr ""
+
+#: ../../../HISTORY.rst:363
+msgid ""
+"fix: issue #88 -- raises on supported image file having uppercase "
+"extension"
+msgstr ""
+
+#: ../../../HISTORY.rst:364
+msgid "fix: issue #89 -- raises on add_slide() where non-contiguous existing ids"
+msgstr ""
+
+#: ../../../HISTORY.rst:368
+msgid "0.4.1 (2014-04-29)"
+msgstr ""
+
+#: ../../../HISTORY.rst:370
+msgid ""
+"Rename Presentation.slidemasters to Presentation.slide_masters. "
+"Presentation.slidemasters property is deprecated."
+msgstr ""
+
+#: ../../../HISTORY.rst:372
+msgid ""
+"Rename Presentation.slidelayouts to Presentation.slide_layouts. "
+"Presentation.slidelayouts property is deprecated."
+msgstr ""
+
+#: ../../../HISTORY.rst:374
+msgid ""
+"Rename SlideMaster.slidelayouts to SlideMaster.slide_layouts. "
+"SlideMaster.slidelayouts property is deprecated."
+msgstr ""
+
+#: ../../../HISTORY.rst:376
+msgid ""
+"Rename SlideLayout.slidemaster to SlideLayout.slide_master. "
+"SlideLayout.slidemaster property is deprecated."
+msgstr ""
+
+#: ../../../HISTORY.rst:378
+msgid ""
+"Rename Slide.slidelayout to Slide.slide_layout. Slide.slidelayout "
+"property is deprecated."
+msgstr ""
+
+#: ../../../HISTORY.rst:380
+msgid "Add SlideMaster.shapes to access shapes on slide master."
+msgstr ""
+
+#: ../../../HISTORY.rst:381
+msgid "Add SlideMaster.placeholders to access placeholder shapes on slide master."
+msgstr ""
+
+#: ../../../HISTORY.rst:382
+msgid "Add _MasterPlaceholder class."
+msgstr ""
+
+#: ../../../HISTORY.rst:383
+msgid ""
+"Add _LayoutPlaceholder class with position and size inheritable from "
+"master placeholder."
+msgstr ""
+
+#: ../../../HISTORY.rst:385
+msgid ""
+"Add _SlidePlaceholder class with position and size inheritable from "
+"layout placeholder."
+msgstr ""
+
+#: ../../../HISTORY.rst:387
+msgid "Add Table.left, top, width, and height read/write properties."
+msgstr ""
+
+#: ../../../HISTORY.rst:388
+msgid "Add rudimentary GroupShape with left, top, width, and height properties."
+msgstr ""
+
+#: ../../../HISTORY.rst:389
+msgid "Add rudimentary Connector with left, top, width, and height properties."
+msgstr ""
+
+#: ../../../HISTORY.rst:390
+msgid "Add TextFrame.auto_size property."
+msgstr ""
+
+#: ../../../HISTORY.rst:391
+msgid "Add Presentation.slide_width and .slide_height read/write properties."
+msgstr ""
+
+#: ../../../HISTORY.rst:392
+msgid ""
+"Add LineFormat class providing access to read and change line color and "
+"width."
+msgstr ""
+
+#: ../../../HISTORY.rst:394
+msgid "Add AutoShape.line"
+msgstr ""
+
+#: ../../../HISTORY.rst:395
+msgid "Add Picture.line"
+msgstr ""
+
+#: ../../../HISTORY.rst:397
+msgid "Rationalize enumerations. **Note backward incompatibilities below**"
+msgstr ""
+
+#: ../../../HISTORY.rst:401
+msgid ""
+"The following enumerations were moved/renamed during the rationalization "
+"of enumerations:"
+msgstr ""
+
+#: ../../../HISTORY.rst:404
+msgid "``pptx.enum.MSO_COLOR_TYPE`` --> ``pptx.enum.dml.MSO_COLOR_TYPE``"
+msgstr ""
+
+#: ../../../HISTORY.rst:405
+msgid "``pptx.enum.MSO_FILL`` --> ``pptx.enum.dml.MSO_FILL``"
+msgstr ""
+
+#: ../../../HISTORY.rst:406
+msgid "``pptx.enum.MSO_THEME_COLOR`` --> ``pptx.enum.dml.MSO_THEME_COLOR``"
+msgstr ""
+
+#: ../../../HISTORY.rst:407
+msgid "``pptx.constants.MSO.ANCHOR_*`` --> ``pptx.enum.text.MSO_ANCHOR.*``"
+msgstr ""
+
+#: ../../../HISTORY.rst:408
+msgid "``pptx.constants.MSO_SHAPE`` --> ``pptx.enum.shapes.MSO_SHAPE``"
+msgstr ""
+
+#: ../../../HISTORY.rst:409
+msgid "``pptx.constants.PP.ALIGN_*`` --> ``pptx.enum.text.PP_ALIGN.*``"
+msgstr ""
+
+#: ../../../HISTORY.rst:410
+msgid ""
+"``pptx.constants.MSO.{SHAPE_TYPES}`` --> "
+"``pptx.enum.shapes.MSO_SHAPE_TYPE.*``"
+msgstr ""
+
+#: ../../../HISTORY.rst:413
+msgid ""
+"Documentation for all enumerations is available in the Enumerations "
+"section of the User Guide."
+msgstr ""
+
+#: ../../../HISTORY.rst:418
+msgid "0.3.2 (2014-02-07)"
+msgstr ""
+
+#: ../../../HISTORY.rst:420
+msgid ""
+"Hotfix: issue #80 generated presentations fail to load in Keynote and "
+"other Apple applications"
+msgstr ""
+
+#: ../../../HISTORY.rst:425
+msgid "0.3.1 (2014-01-10)"
+msgstr ""
+
+#: ../../../HISTORY.rst:427
+msgid ""
+"Hotfix: failed to load certain presentations containing images with "
+"uppercase extension"
+msgstr ""
+
+#: ../../../HISTORY.rst:432
+msgid "0.3.0 (2013-12-12)"
+msgstr ""
+
+#: ../../../HISTORY.rst:434
+msgid ""
+"Add read/write font color property supporting RGB, theme color, and "
+"inherit color types"
+msgstr ""
+
+#: ../../../HISTORY.rst:436
+msgid "Add font typeface and italic support"
+msgstr ""
+
+#: ../../../HISTORY.rst:437
+msgid "Add text frame margins and word-wrap"
+msgstr ""
+
+#: ../../../HISTORY.rst:438
+msgid "Add support for external relationships, e.g. linked spreadsheet"
+msgstr ""
+
+#: ../../../HISTORY.rst:439
+msgid "Add hyperlink support for text run in shape and table cell"
+msgstr ""
+
+#: ../../../HISTORY.rst:440
+msgid ""
+"Add fill color and brightness for shape and table cell, fill can also be "
+"set to transparent (no fill)"
+msgstr ""
+
+#: ../../../HISTORY.rst:442
+msgid "Add read/write position and size properties to shape and picture"
+msgstr ""
+
+#: ../../../HISTORY.rst:443
+msgid "Replace PIL dependency with Pillow"
+msgstr ""
+
+#: ../../../HISTORY.rst:444
+msgid "Restructure modules to better suit size of library"
+msgstr ""
+
+#: ../../../HISTORY.rst:448
+msgid "0.2.6 (2013-06-22)"
+msgstr ""
+
+#: ../../../HISTORY.rst:450
+msgid "Add read/write access to core document properties"
+msgstr ""
+
+#: ../../../HISTORY.rst:451
+msgid "Hotfix to accomodate connector shapes in _AutoShapeType"
+msgstr ""
+
+#: ../../../HISTORY.rst:452
+msgid "Hotfix to allow customXml parts to load when present"
+msgstr ""
+
+#: ../../../HISTORY.rst:456
+msgid "0.2.5 (2013-06-11)"
+msgstr ""
+
+#: ../../../HISTORY.rst:458
+msgid "Add paragraph alignment property (left, right, centered, etc.)"
+msgstr ""
+
+#: ../../../HISTORY.rst:459
+msgid "Add vertical alignment within table cell (top, middle, bottom)"
+msgstr ""
+
+#: ../../../HISTORY.rst:460
+msgid "Add table cell margin properties"
+msgstr ""
+
+#: ../../../HISTORY.rst:461
+msgid ""
+"Add table boolean properties: first column (row header), first row "
+"(column headings), last row (for e.g. totals row), last column (for e.g. "
+"row totals), horizontal banding, and vertical banding."
+msgstr ""
+
+#: ../../../HISTORY.rst:464
+msgid ""
+"Add support for auto shape adjustment values, e.g. change radius of "
+"corner rounding on rounded rectangle, position of callout arrow, etc."
+msgstr ""
+
+#: ../../../HISTORY.rst:469
+msgid "0.2.4 (2013-05-16)"
+msgstr ""
+
+#: ../../../HISTORY.rst:471
+msgid "Add support for auto shapes (e.g. polygons, flowchart symbols, etc.)"
+msgstr ""
+
+#: ../../../HISTORY.rst:475
+msgid "0.2.3 (2013-05-05)"
+msgstr ""
+
+#: ../../../HISTORY.rst:477
+msgid "Add support for table shapes"
+msgstr ""
+
+#: ../../../HISTORY.rst:478
+msgid ""
+"Add indentation support to textbox shapes, enabling multi-level bullets "
+"on bullet slides."
+msgstr ""
+
+#: ../../../HISTORY.rst:483
+msgid "0.2.2 (2013-03-25)"
+msgstr ""
+
+#: ../../../HISTORY.rst:485
+msgid ""
+"Add support for opening and saving a presentation from/to a file-like "
+"object."
+msgstr ""
+
+#: ../../../HISTORY.rst:487
+msgid "Refactor XML handling to use lxml objectify"
+msgstr ""
+
+#: ../../../HISTORY.rst:491
+msgid "0.2.1 (2013-02-25)"
+msgstr ""
+
+#: ../../../HISTORY.rst:493
+msgid "Add support for Python 2.6"
+msgstr ""
+
+#: ../../../HISTORY.rst:494
+msgid ""
+"Add images from a stream (e.g. StringIO) in addition to a path, allowing "
+"images retrieved from a database or network resource to be inserted "
+"without saving first."
+msgstr ""
+
+#: ../../../HISTORY.rst:497
+msgid "Expand text methods to accept unicode and UTF-8 encoded 8-bit strings."
+msgstr ""
+
+#: ../../../HISTORY.rst:498
+msgid ""
+"Fix potential install bug triggered by importing ``__version__`` from "
+"package ``__init__.py`` file."
+msgstr ""
+
+#: ../../../HISTORY.rst:503
+msgid "0.2.0 (2013-02-10)"
+msgstr ""
+
+#: ../../../HISTORY.rst:505
+msgid "First non-alpha release with basic capabilities:"
+msgstr ""
+
+#: ../../../HISTORY.rst:507
+msgid "open presentation/template or use built-in default template"
+msgstr ""
+
+#: ../../../HISTORY.rst:508
+msgid "add slide"
+msgstr ""
+
+#: ../../../HISTORY.rst:509
+msgid "set placeholder text (e.g. bullet slides)"
+msgstr ""
+
+#: ../../../HISTORY.rst:510
+msgid "add picture"
+msgstr ""
+
+#: ../../../HISTORY.rst:511
+msgid "add text box"
+msgstr ""
+

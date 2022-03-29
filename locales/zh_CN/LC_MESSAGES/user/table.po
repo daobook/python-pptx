@@ -1,0 +1,348 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../user/table.rst:3
+msgid "Working with tables"
+msgstr ""
+
+#: ../../user/table.rst:5
+msgid ""
+"PowerPoint allows text and numbers to be presented in tabular form "
+"(aligned rows and columns) in a reasonably flexible way. A PowerPoint "
+"table is not nearly as functional as an Excel spreadsheet, and is "
+"definitely less powerful than a table in Microsoft Word, but it serves "
+"well for most presentation purposes."
+msgstr ""
+
+#: ../../user/table.rst:13
+msgid "Concepts"
+msgstr ""
+
+#: ../../user/table.rst:15
+msgid ""
+"There are a few terms worth reviewing as a basis for understanding "
+"PowerPoint tables:"
+msgstr ""
+
+#: ../../user/table.rst:25
+msgid "table"
+msgstr ""
+
+#: ../../user/table.rst:19
+msgid ""
+"A table is a matrix of cells arranged in aligned rows and columns. This "
+"orderly arrangement allows a reader to more easily make sense of "
+"relatively large number of individual items. It is commonly used for "
+"displaying numbers, but can also be used for blocks of text."
+msgstr ""
+
+#: ../../user/table.rst:33
+msgid "cell"
+msgstr ""
+
+#: ../../user/table.rst:28
+msgid ""
+"An individual content \"container\" within a table. A cell has a text-"
+"frame in which it holds that content. A PowerPoint table cell can only "
+"contain text. I cannot hold images, other shapes, or other tables."
+msgstr ""
+
+#: ../../user/table.rst:32
+msgid ""
+"A cell has a background fill, borders, margins, and several other "
+"formatting settings that can be customized on a cell-by-cell basis."
+msgstr ""
+
+#: ../../user/table.rst:37
+msgid "row"
+msgstr ""
+
+#: ../../user/table.rst:36
+msgid ""
+"A side-by-side sequence of cells running across the table, all sharing "
+"the same top and bottom boundary."
+msgstr ""
+
+#: ../../user/table.rst:41
+msgid "column"
+msgstr ""
+
+#: ../../user/table.rst:40
+msgid ""
+"A vertical sequence of cells spanning the height of the table, all "
+"sharing the same left and right boundary."
+msgstr ""
+
+#: ../../user/table.rst:50
+msgid "table grid, also cell grid"
+msgstr ""
+
+#: ../../user/table.rst:44
+msgid ""
+"The underlying cells in a PowerPoint table are strictly regular. In a "
+"three-by-three table there are nine grid cells, three in each row and "
+"three in each column. The presence of merged cells can obscure portions "
+"of the cell grid, but not change the number of cells in the grid. Access "
+"to a table cell in |pp| is always via that cell's coordinates in the cell"
+" grid, which may not conform to its visual location (or lack thereof) in "
+"the table."
+msgstr ""
+
+#: ../../user/table.rst:58
+msgid "merged cell"
+msgstr ""
+
+#: ../../user/table.rst:53
+msgid ""
+"A cell can be \"merged\" with adjacent cells, horizontally, vertically, "
+"or both, causing the resulting cell to look and behave like a single cell"
+" that spans the area formerly occupied by those individual cells."
+msgstr ""
+
+#: ../../user/table.rst:67
+msgid "merge-origin cell"
+msgstr ""
+
+#: ../../user/table.rst:61
+msgid ""
+"The top-left grid-cell in a merged cell has certain special behaviors. "
+"The content of that cell is what appears on the slide; content of any "
+"\"spanned\" cells is hidden. In |pp| a merge-origin cell can be "
+"identified with the :attr:`._Cell.is_merge_origin` property. Such a cell "
+"can report the size of the merged cell with its :attr:`.span_height` and "
+":attr:`.span_width` properties, and can be \"unmerged\" back to its "
+"underlying grid cells using its :meth:`.split` method."
+msgstr ""
+
+#: ../../user/table.rst:75
+msgid "spanned-cell"
+msgstr ""
+
+#: ../../user/table.rst:70
+msgid ""
+"A grid-cell other than the merge-origin cell that is \"occupied\" by a "
+"merged cell is called a *spanned cell*. Intuitively, the merge-origin "
+"cell \"spans\" the other grid cells within its area. A spanned cell can "
+"be identified with its :attr:`._Cell.is_spanned` property. A merge-origin"
+" cell is not itself a spanned cell."
+msgstr ""
+
+#: ../../user/table.rst:78
+msgid "Adding a table"
+msgstr ""
+
+#: ../../user/table.rst:80
+msgid "The following code adds a 3-by-3 table in a new presentation::"
+msgstr ""
+
+#: ../../user/table.rst:105
+msgid "A couple things to note:"
+msgstr ""
+
+#: ../../user/table.rst:107
+msgid ""
+":meth:`.SlideShapes.add_table` returns a shape that contains the table, "
+"not the table itself. In PowerPoint, a table is contained in a graphic-"
+"frame shape, as is a chart or SmartArt. You can determine whether a shape"
+" contains a table using its :attr:`~.BaseShape.has_table` property and "
+"you access the table object using the shape's "
+":attr:`~.GraphicFrame.table` property."
+msgstr ""
+
+#: ../../user/table.rst:116
+msgid "Inserting a table into a table placeholder"
+msgstr ""
+
+#: ../../user/table.rst:118
+msgid ""
+"A placeholder allows you to specify the position and size of a shape as "
+"part of the presentation \"template\", and to place a shape of your "
+"choosing into that placeholder when authoring a presentation based on "
+"that template. This can lead to a better looking presentation, with "
+"objects appearing in a consistent location from slide-to-slide."
+msgstr ""
+
+#: ../../user/table.rst:124
+msgid ""
+"Placeholders come in different types, one of which is a *table "
+"placeholder*. A table placeholder behaves like other placeholders except "
+"it can only accept insertion of a table. Other placeholder types accept "
+"text bullets or charts."
+msgstr ""
+
+#: ../../user/table.rst:128
+msgid ""
+"There is a subtle distinction between a *layout placeholder* and a *slide"
+" placeholder*. A layout placeholder appears in a slide layout, and "
+"defines the position and size of the placeholder \"cloned\" from it onto "
+"each slide created with that layout. As long as you don't adjust the "
+"position or size of the slide placeholder, it will inherit it's position "
+"and size from the layout placeholder it derives from."
+msgstr ""
+
+#: ../../user/table.rst:135
+msgid ""
+"To insert a table into a table placeholder, you need a slide layout that "
+"includes a table placeholder, and you need to create a slide using that "
+"layout. These examples assume that the third slide layout in "
+"`template.pptx` includes a table placeholder::"
+msgstr ""
+
+#: ../../user/table.rst:143
+msgid ""
+"*Accessing the table placeholder.* Generally, the easiest way to access a"
+" placeholder shape is to know its position in the `slide.shapes` "
+"collection. If you always use the same template, it will always show up "
+"in the same position::"
+msgstr ""
+
+#: ../../user/table.rst:150
+msgid ""
+"*Inserting a table.* A table is inserted into the placeholder by calling "
+"its :meth:`~.TablePlaceholder.insert_table` method and providing the "
+"desired number of rows and columns::"
+msgstr ""
+
+#: ../../user/table.rst:156
+msgid ""
+"The return value is a |GraphicFrame| shape containing the new table, not "
+"the table object itself. Use the :attr:`~.GraphicFrame.table` property of"
+" that shape to access the table object::"
+msgstr ""
+
+#: ../../user/table.rst:162
+msgid ""
+"The containing shape controls the position and size. Everything else, "
+"like accessing cells and their contents, is done from the table object."
+msgstr ""
+
+#: ../../user/table.rst:167
+msgid "Accessing a cell"
+msgstr ""
+
+#: ../../user/table.rst:169
+msgid ""
+"All content in a table is in a cell, so getting a reference to one of "
+"those is a good place to start::"
+msgstr ""
+
+#: ../../user/table.rst:181
+msgid ""
+"The cell is specified by its row, column coordinates as zero-based "
+"offsets. The top-left cell is at row, column (0, 0)."
+msgstr ""
+
+#: ../../user/table.rst:184
+msgid ""
+"Like an auto-shape, a cell has a text-frame and can contain arbitrary "
+"text divided into paragraphs and runs. Any desired character formatting "
+"can be applied individually to each run."
+msgstr ""
+
+#: ../../user/table.rst:188
+msgid ""
+"Often however, cell text is just a simple string. For these cases the "
+"read/write :attr:`._Cell.text` property can be the quickest way to set "
+"cell contents."
+msgstr ""
+
+#: ../../user/table.rst:194
+msgid "Merging cells"
+msgstr ""
+
+#: ../../user/table.rst:196
+msgid ""
+"A merged cell is produced by specifying two diagonal cells. The merged "
+"cell will occupy all the grid cells in the rectangular region specified "
+"by that diagonal:"
+msgstr ""
+
+#: ../../user/table.rst:224
+msgid "A few things to observe:"
+msgstr ""
+
+#: ../../user/table.rst:226
+msgid ""
+"The merged cell appears as a single cell occupying the space formerly "
+"occupied by the other grid cells in the specified rectangular region."
+msgstr ""
+
+#: ../../user/table.rst:229
+msgid ""
+"The formatting of the merged cell (background color, font etc.) is taken "
+"from the merge origin cell, the top-left cell of the table in this case."
+msgstr ""
+
+#: ../../user/table.rst:232
+msgid ""
+"Content from the merged cells was migrated to the merge-origin cell. That"
+" content is no longer present in the spanned grid cells (although you "
+"can't see those at the moment). The content of each cell appears as a "
+"separate paragraph in the merged cell; it isn't concatenated into a "
+"single paragraph. Content is migrated in left-to-right, top-to-bottom "
+"order of the original cells."
+msgstr ""
+
+#: ../../user/table.rst:239
+msgid ""
+"Calling :attr:`other_cell.merge(cell)` would have the exact same effect. "
+"The merge origin is always the top-left cell in the specified rectangular"
+" region. There are four distinct ways to specify a given rectangular "
+"region (two diagonals, each having two orderings)."
+msgstr ""
+
+#: ../../user/table.rst:246
+msgid "Un-merging a cell"
+msgstr ""
+
+#: ../../user/table.rst:248
+msgid ""
+"A merged cell can be restored to its underlying grid cells by calling the"
+" :meth:`~._Cell.split` method on its merge-origin cell. Calling "
+":meth:`~._Cell.split()` on a cell that is not a merge-origin raises "
+"|ValueError|::"
+msgstr ""
+
+#: ../../user/table.rst:266
+msgid ""
+"Note that the content migration performed as part of the `.merge()` "
+"operation was not reversed."
+msgstr ""
+
+#: ../../user/table.rst:271
+msgid "A few snippets that might be handy"
+msgstr ""
+
+#: ../../user/table.rst:273
+msgid "Use Case: Interrogate table for merged cells::"
+msgstr ""
+
+#: ../../user/table.rst:294
+msgid "prints a report like::"
+msgstr ""
+
+#: ../../user/table.rst:300
+msgid "Use Case: Access only cells that display text (are not spanned)::"
+msgstr ""
+
+#: ../../user/table.rst:305
+msgid "Use Case: Determine whether table contains merged cells::"
+msgstr ""
+

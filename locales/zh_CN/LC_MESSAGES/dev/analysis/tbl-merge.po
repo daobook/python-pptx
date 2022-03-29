@@ -1,0 +1,214 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/tbl-merge.rst:4
+msgid "Cell Merge"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:6
+msgid ""
+"PowerPoint allows a user to *merge* table cells, causing multiple *grid "
+"cells* to appear and behave as a single cell."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:11
+msgid "Terminology"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:13
+msgid ""
+"The following distinctions are important to the implementation and also "
+"to using the API."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:20
+msgid "table grid"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:17
+msgid ""
+"A PowerPoint (DrawingML) table has an underlying grid which is a strict "
+"two-dimensional (n X m) array; each row in the table grid has m cells and"
+" each column has n cells. Grid cell boundaries are aligned both "
+"vertically and horizontally."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:27
+msgid "grid cell"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:23
+msgid ""
+"Each of the n x m cells in a table is a grid cell. Every grid cell is "
+"addressable, even those \"shadowed\" by a merge-origin cell."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:26
+msgid ""
+"*Apparent* cell boundaries can be modified by *merging* two or more grid "
+"cells."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:31
+msgid "merge-origin cell"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:30
+msgid ""
+"The top-left grid cell in a merged cell. This cell will be visible, have "
+"the combined extent of all spanned cells, and contain any visible "
+"content."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:41
+msgid "spanned cell"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:34
+msgid ""
+"All grid cells in a merged cell are spanned cells, excepting the one at "
+"the top-left (the merge-origin cell). Intuitively, the merge-origin cell "
+"\"spans\" all the other grid cells in the merge range."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:38
+msgid ""
+"Content in a spanned cell is not visible, and is typically moved to the "
+"merge-origin cell as part of the merge operation, leaving each spanned "
+"cell with exactly one empty paragraph. This content becomes visible again"
+" if the merged cell is split."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:47
+msgid "unmerged cell"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:44
+msgid ""
+"While not a distinction directly embodied in the code, any cell which is "
+"not a merge-origin cell and is also not a spanned cell is a \"regular\" "
+"cell and not part of a merged cell."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:50
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:52
+msgid ""
+"A cell is accessed by grid location (regardless of any merged regions). "
+"All grid cells are addressable, even those \"shadowed\" by a merge (such "
+"a shadowed cell is a *spanned* cell)::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:64
+msgid "Merge 2 x 2 cells at top left::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:70
+msgid "The top-left cell of a merged cell is the merge-origin cell::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:84
+msgid "A spanned cell has |True| on its `.is_spanned` property::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:94
+msgid ""
+"A \"regular\" cell not participating in a merge is neither the merge "
+"origin nor spanned::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:105
+msgid "Cell instances proxying the same `a:tc` element compare equal::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:118
+msgid "Use Cases"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:120
+msgid "Use Case: Interrogate table for merged cells::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:141
+msgid "Use Case: Access only cells that display text (are not spanned)::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:146
+msgid "Use Case: Determine whether table contains merged cells::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:155
+msgid "PowerPoint behaviors"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:157
+msgid ""
+"Two or more cells are merged by selecting them using the mouse, then "
+"selecting \"Merge cells\" from the context menu."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:160
+msgid "Content from spanned cells is moved to the merge origin cell."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:162
+msgid ""
+"A merged cell can be split (\"unmerged\" roughly). The UI allows the "
+"merge to be split into an arbitrary number of rows and columns and "
+"adjusts the table grid and row heights etc. to accommodate, adding "
+"(potentially very many) new merged cells as required."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:167
+msgid ""
+"`python-pptx` just removes the merge, restoring the underlying table grid"
+" cells to regular (unmerged) cells."
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:172
+msgid "Specimen XML"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:176
+msgid "Super-simplified 3-cell horizontal merge::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:184
+msgid "Super-simplified 3-cell vertical merge::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:196
+msgid "Super-simplified 2D merge::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:214
+msgid "Simplified 2 x 3 table with first two horizontal cells merged::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:243
+msgid "Simplified 2 x 3 table with first two vertical cells merged::"
+msgstr ""
+
+#: ../../dev/analysis/tbl-merge.rst:289
+msgid "Schema excerpt"
+msgstr ""
+

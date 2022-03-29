@@ -1,0 +1,380 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/ExcelNumFormat.rst:4
+msgid "Excel Number Formats"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:6
+msgid ""
+"The following integer values correspond to built-in Excel number formats."
+" While they cannot be used directly in |pp|, this reference can be used "
+"to determine the format strings that can be substituted in "
+":meth:`.ChartData.add_series` to specify a numeric display format for "
+"series values."
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:12
+msgid ""
+"Further information on string number format codes (such as '#,##0') can "
+"be found on `this web page`_."
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:22
+msgid "Value"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:22
+msgid "Type"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:22
+msgid "Format String"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:24 ../../api/enum/ExcelNumFormat.rst:25
+msgid "0"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:24
+msgid "General"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:25
+msgid "1"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:25 ../../api/enum/ExcelNumFormat.rst:26
+#: ../../api/enum/ExcelNumFormat.rst:27 ../../api/enum/ExcelNumFormat.rst:28
+msgid "Decimal"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:26
+msgid "2"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:26
+msgid "0.00"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:27
+msgid "3"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:27
+msgid "#,##0"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:28
+msgid "4"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:28
+msgid "#,##0.00"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:29
+msgid "5"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:29 ../../api/enum/ExcelNumFormat.rst:30
+#: ../../api/enum/ExcelNumFormat.rst:31 ../../api/enum/ExcelNumFormat.rst:32
+#: ../../api/enum/ExcelNumFormat.rst:47 ../../api/enum/ExcelNumFormat.rst:48
+#: ../../api/enum/ExcelNumFormat.rst:49 ../../api/enum/ExcelNumFormat.rst:50
+msgid "Currency"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:29
+msgid "$#,##0;$-#,##0"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:30
+msgid "6"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:30
+msgid "$#,##0;[Red]$-#,##0"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:31
+msgid "7"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:31
+msgid "$#,##0.00;$-#,##0.00"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:32
+msgid "8"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:32
+msgid "$#,##0.00;[Red]$-#,##0.00"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:33
+msgid "9"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:33 ../../api/enum/ExcelNumFormat.rst:34
+msgid "Percentage"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:33
+msgid "0%"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:34
+msgid "10"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:34
+msgid "0.00%"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:35
+msgid "11"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:35 ../../api/enum/ExcelNumFormat.rst:58
+msgid "Scientific"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:35
+msgid "0.00E+00"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:36
+msgid "12"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:36 ../../api/enum/ExcelNumFormat.rst:37
+msgid "Fraction"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:36
+msgid "# ?/?"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:37
+msgid "13"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:37
+msgid "# /"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:38
+msgid "14"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:38 ../../api/enum/ExcelNumFormat.rst:39
+#: ../../api/enum/ExcelNumFormat.rst:40 ../../api/enum/ExcelNumFormat.rst:41
+msgid "Date"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:38
+msgid "m/d/yy"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:39
+msgid "15"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:39
+msgid "d-mmm-yy"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:40
+msgid "16"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:40
+msgid "d-mmm"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:41
+msgid "17"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:41
+msgid "mmm-yy"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:42
+msgid "18"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:42 ../../api/enum/ExcelNumFormat.rst:43
+#: ../../api/enum/ExcelNumFormat.rst:44 ../../api/enum/ExcelNumFormat.rst:45
+#: ../../api/enum/ExcelNumFormat.rst:46 ../../api/enum/ExcelNumFormat.rst:55
+#: ../../api/enum/ExcelNumFormat.rst:56 ../../api/enum/ExcelNumFormat.rst:57
+msgid "Time"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:42
+msgid "h:mm AM/PM"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:43
+msgid "19"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:43
+msgid "h:mm:ss AM/PM"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:44
+msgid "20"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:44
+msgid "h:mm"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:45
+msgid "21"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:45
+msgid "h:mm:ss"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:46
+msgid "22"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:46
+msgid "m/d/yy h:mm"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:47
+msgid "37"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:47
+msgid "#,##0;-#,##0"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:48
+msgid "38"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:48
+msgid "#,##0;[Red]-#,##0"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:49
+msgid "39"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:49
+msgid "#,##0.00;-#,##0.00"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:50
+msgid "40"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:50
+msgid "#,##0.00;[Red]-#,##0.00"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:51
+msgid "41"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:51 ../../api/enum/ExcelNumFormat.rst:52
+#: ../../api/enum/ExcelNumFormat.rst:53 ../../api/enum/ExcelNumFormat.rst:54
+msgid "Accounting"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:51
+msgid "_ * #,##0_ ;_ * \"_ ;_ @_"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:52
+msgid "42"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:52
+msgid "_ $* #,##0_ ;_ $* \"_ ;_ @_"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:53
+msgid "43"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:53
+msgid "_ * #,##0.00_ ;_ * \"??_ ;_ @_"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:54
+msgid "44"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:54
+msgid "_ $* #,##0.00_ ;_ $* \"??_ ;_ @_"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:55
+msgid "45"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:55
+msgid "mm:ss"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:56
+msgid "46"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:56
+msgid "h :mm:ss"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:57
+msgid "47"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:57
+msgid "mm:ss.0"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:58
+msgid "48"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:58
+msgid "##0.0E+00"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:59
+msgid "49"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:59
+msgid "Text"
+msgstr ""
+
+#: ../../api/enum/ExcelNumFormat.rst:59
+msgid "@"
+msgstr ""
+

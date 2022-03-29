@@ -1,0 +1,302 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/dml.rst:4
+msgid "DrawingML objects"
+msgstr ""
+
+#: ../../api/dml.rst:6
+msgid ""
+"Low-level drawing elements like fill and color that appear repeatedly in "
+"various aspects of shapes."
+msgstr ""
+
+#: ../../api/dml.rst:11
+msgid "|ChartFormat| objects"
+msgstr ""
+
+#: of pptx.dml.chtfmt.ChartFormat:1
+msgid ""
+"The |ChartFormat| object provides access to visual shape properties for "
+"chart elements like |Axis|, |Series|, and |MajorGridlines|. It has two "
+"properties, :attr:`fill` and :attr:`line`, which return a |FillFormat| "
+"and |LineFormat| object respectively. The |ChartFormat| object is "
+"provided by the :attr:`format` property on the target axis, series, etc."
+msgstr ""
+
+#: ../../docstring of pptx.dml.chtfmt.ChartFormat.fill:1
+msgid ""
+"|FillFormat| instance for this object, providing access to fill "
+"properties such as fill color."
+msgstr ""
+
+#: ../../docstring of pptx.dml.chtfmt.ChartFormat.line:1
+msgid ""
+"The |LineFormat| object providing access to the visual properties of this"
+" object, such as line color and line style."
+msgstr ""
+
+#: ../../api/dml.rst:18
+msgid "|FillFormat| objects"
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat:1
+msgid ""
+"Provides access to the current fill properties object and provides "
+"methods to change the fill type."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.back_color:1
+msgid "Return a |ColorFormat| object representing background color."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.back_color:3
+msgid "This property is only applicable to pattern fills and lines."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.background:1
+msgid "Sets the fill type to noFill, i.e. transparent."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.fore_color:1
+msgid ""
+"Return a |ColorFormat| instance representing the foreground color of this"
+" fill."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.gradient:1
+msgid "Sets the fill type to gradient."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.gradient:3
+msgid ""
+"If the fill is not already a gradient, a default gradient is added. The "
+"default gradient corresponds to the default in the built-in PowerPoint "
+"\"White\" template. This gradient is linear at angle 90-degrees (upward),"
+" with two stops. The first stop is Accent-1 with tint 100%, shade 100%, "
+"and satMod 130%. The second stop is Accent-1 with tint 50%, shade 100%, "
+"and satMod 350%."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.gradient_angle:1
+msgid "Angle in float degrees of line of a linear gradient."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.gradient_angle:3
+msgid ""
+"Read/Write. May be |None|, indicating the angle should be inherited from "
+"the style hierarchy. An angle of 0.0 corresponds to a left-to-right "
+"gradient. Increasing angles represent counter-clockwise rotation of the "
+"line, for example 90.0 represents a bottom-to-top gradient. Raises "
+"|TypeError| when the fill type is not MSO_FILL_TYPE.GRADIENT. Raises "
+"|ValueError| for a non-linear gradient (e.g. a radial gradient)."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.gradient_stops:1
+msgid "|GradientStops| object providing access to stops of this gradient."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.gradient_stops:3
+msgid ""
+"Raises |TypeError| when fill is not gradient (call `fill.gradient()` "
+"first). Each stop represents a color between which the gradient smoothly "
+"transitions."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.pattern:1
+msgid "Return member of :ref:`MsoPatternType` indicating fill pattern."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.pattern:3
+msgid ""
+"Raises |TypeError| when fill is not patterned (call `fill.patterned()` "
+"first). Returns |None| if no pattern has been set; PowerPoint may display"
+" the default `PERCENT_5` pattern in this case. Assigning |None| will "
+"remove any explicit pattern setting, although relying on the default "
+"behavior is discouraged and may produce rendering differences across "
+"client applications."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.patterned:1
+msgid "Selects the pattern fill type."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.patterned:3
+msgid ""
+"Note that calling this method does not by itself set a foreground or "
+"background color of the pattern. Rather it enables subsequent assignments"
+" to properties like fore_color to set the pattern and colors."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.solid:1
+msgid ""
+"Sets the fill type to solid, i.e. a solid color. Note that calling this "
+"method does not set a color or by itself cause the shape to appear with a"
+" solid color fill; rather it enables subsequent assignments to properties"
+" like fore_color to set the color."
+msgstr ""
+
+#: of pptx.dml.fill.FillFormat.type:1
+msgid ""
+"Return a value from the :ref:`MsoFillType` enumeration corresponding to "
+"the type of this fill."
+msgstr ""
+
+#: ../../api/dml.rst:27
+msgid "|LineFormat| objects"
+msgstr ""
+
+#: of pptx.dml.line.LineFormat:1
+msgid "Provides access to line properties such as color, style, and width."
+msgstr ""
+
+#: of pptx.dml.line.LineFormat:3
+msgid ""
+"A LineFormat object is typically accessed via the ``.line`` property of a"
+" shape such as |Shape| or |Picture|."
+msgstr ""
+
+#: ../../docstring of pptx.dml.line.LineFormat.color:1
+msgid ""
+"The |ColorFormat| instance that provides access to the color settings for"
+" this line. Essentially a shortcut for ``line.fill.fore_color``. As a "
+"side-effect, accessing this property causes the line fill type to be set "
+"to ``MSO_FILL.SOLID``. If this sounds risky for your use case, use "
+"``line.fill.type`` to non-destructively discover the existing fill type."
+msgstr ""
+
+#: of pptx.dml.line.LineFormat.dash_style:1
+msgid "Return value indicating line style."
+msgstr ""
+
+#: of pptx.dml.line.LineFormat.dash_style:3
+msgid ""
+"Returns a member of :ref:`MsoLineDashStyle` indicating line style, or "
+"|None| if no explicit value has been set. When no explicit value has been"
+" set, the line dash style is inherited from the style hierarchy."
+msgstr ""
+
+#: of pptx.dml.line.LineFormat.dash_style:7
+msgid "Assigning |None| removes any existing explicitly-defined dash style."
+msgstr ""
+
+#: ../../docstring of pptx.dml.line.LineFormat.fill:1
+msgid ""
+"|FillFormat| instance for this line, providing access to fill properties "
+"such as foreground color."
+msgstr ""
+
+#: of pptx.dml.line.LineFormat.width:1
+msgid ""
+"The width of the line expressed as an integer number of :ref:`English "
+"Metric Units <EMU>`. The returned value is an instance of |Length|, a "
+"value class having properties such as `.inches`, `.cm`, and `.pt` for "
+"converting the value into convenient units."
+msgstr ""
+
+#: ../../api/dml.rst:35
+msgid "|ColorFormat| objects"
+msgstr ""
+
+#: of pptx.dml.color.ColorFormat:1
+msgid ""
+"Provides access to color settings such as RGB color, theme color, and "
+"luminance adjustments."
+msgstr ""
+
+#: of pptx.dml.color.ColorFormat.brightness:1
+#, python-format
+msgid ""
+"Read/write float value between -1.0 and 1.0 indicating the brightness "
+"adjustment for this color, e.g. -0.25 is 25% darker and 0.4 is 40% "
+"lighter. 0 means no brightness adjustment."
+msgstr ""
+
+#: of pptx.dml.color.ColorFormat.rgb:1
+msgid ""
+"|RGBColor| value of this color, or None if no RGB color is explicitly "
+"defined for this font. Setting this value to an |RGBColor| instance "
+"causes its type to change to MSO_COLOR_TYPE.RGB. If the color was a theme"
+" color with a brightness adjustment, the brightness adjustment is removed"
+" when changing it to an RGB color."
+msgstr ""
+
+#: of pptx.dml.color.ColorFormat.theme_color:1
+msgid "Theme color value of this color."
+msgstr ""
+
+#: of pptx.dml.color.ColorFormat.theme_color:3
+msgid ""
+"Value is a member of :ref:`MsoThemeColorIndex`, e.g. "
+"``MSO_THEME_COLOR.ACCENT_1``. Raises AttributeError on access if the "
+"color is not type ``MSO_COLOR_TYPE.SCHEME``. Assigning a member of "
+":ref:`MsoThemeColorIndex` causes the color's type to change to "
+"``MSO_COLOR_TYPE.SCHEME``."
+msgstr ""
+
+#: of pptx.dml.color.ColorFormat.type:1
+msgid ""
+"Read-only. A value from :ref:`MsoColorType`, either RGB or SCHEME, "
+"corresponding to the way this color is defined, or None if no color is "
+"defined at the level of this font."
+msgstr ""
+
+#: ../../api/dml.rst:43
+msgid "|RGBColor| objects"
+msgstr ""
+
+#: of pptx.dml.color.RGBColor:1
+msgid "Immutable value object defining a particular RGB color."
+msgstr ""
+
+#: of pptx.dml.color.RGBColor.from_string:1
+msgid "Return a new instance from an RGB color hex string like ``'3C2F80'``."
+msgstr ""
+
+#: ../../api/dml.rst:51
+msgid "|ShadowFormat| objects"
+msgstr ""
+
+#: of pptx.dml.effect.ShadowFormat:1
+msgid "Provides access to shadow effect on a shape."
+msgstr ""
+
+#: of pptx.dml.effect.ShadowFormat.inherit:1
+msgid "True if shape inherits shadow settings."
+msgstr ""
+
+#: of pptx.dml.effect.ShadowFormat.inherit:3
+msgid ""
+"Read/write. An explicitly-defined shadow setting on a shape causes this "
+"property to return |False|. A shape with no explicitly-defined shadow "
+"setting inherits its shadow settings from the style hierarchy (and so "
+"returns |True|)."
+msgstr ""
+
+#: of pptx.dml.effect.ShadowFormat.inherit:8
+msgid ""
+"Assigning |True| causes any explicitly-defined shadow setting to be "
+"removed and inheritance is restored. Note this has the side-effect of "
+"removing **all** explicitly-defined effects, such as glow and reflection,"
+" and restoring inheritance for all effects on the shape. Assigning "
+"|False| causes the inheritance link to be broken and **no** effects to "
+"appear on the shape."
+msgstr ""
+

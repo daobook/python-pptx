@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-bar-chart.rst:3
+msgid "Bar Chart"
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:5
+msgid ""
+"The bar chart is a fundamental plot type, used for both column and bar "
+"charts by specifying the bar direction. It is also used for the "
+"clustered, stacked, and stacked 100% varieties by specifying grouping and"
+" overlap."
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:11
+msgid "Gap Width"
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:13
+#, python-format
+msgid ""
+"A gap appears between the bar or clustered bars for each category on a "
+"bar chart. The default width for this gap is 150% of the bar width. It "
+"can be set between 0 and 500% of the bar width. In the MS API this is set"
+" using the property `ChartGroup.GapWidth`."
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:18
+#: ../../dev/analysis/cht-bar-chart.rst:43
+msgid "Proposed protocol::"
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:31
+msgid "Overlap"
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:33
+msgid ""
+"In a bar chart having two or more series, the bars for each category are "
+"clustered together for ready comparison. By default, these bars are "
+"directly adjacent to each other, visually \"touching\"."
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:37
+msgid ""
+"The bars can be made to overlap each other or have a space between them "
+"using the *overlap* property. Its values range between -100 and 100, "
+"representing the percentage of the bar width by which to overlap adjacent"
+" bars. A setting of -100 creates a gap of a full bar width and a setting "
+"of 100 causes all the bars in a category to be superimposed. The default "
+"value is 0."
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:57
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:61
+msgid ""
+"Minimal working XML for a single-series column plot. Note this does not "
+"reference values in a spreadsheet.::"
+msgstr ""
+
+#: ../../dev/analysis/cht-bar-chart.rst:126
+msgid "Related Schema Definitions"
+msgstr ""
+

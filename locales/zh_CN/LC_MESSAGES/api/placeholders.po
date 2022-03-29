@@ -1,0 +1,605 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/placeholders.rst:4
+msgid "Placeholders"
+msgstr ""
+
+#: ../../api/placeholders.rst:6
+msgid ""
+"The following classes represent placeholder shapes. A placeholder most "
+"commonly appears on a slide, but also appears on a slide layout and a "
+"slide master. The role of a master placeholder and layout placeholder "
+"differs from that of a slide placeholder and these roles are reflected in"
+" the distinct classes for each."
+msgstr ""
+
+#: ../../api/placeholders.rst:12
+msgid ""
+"There are a larger variety of slide placeholders to accomodate their more"
+" complex and varied behaviors."
+msgstr ""
+
+#: ../../api/placeholders.rst:17
+msgid "|MasterPlaceholder| objects"
+msgstr ""
+
+#: of pptx.shapes.placeholder.MasterPlaceholder:1
+msgid "Placeholder shape on a slide master."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.auto_shape_type:1
+#: pptx.shapes.placeholder.MasterPlaceholder.auto_shape_type:1
+#: pptx.shapes.placeholder.PicturePlaceholder.auto_shape_type:1
+#: pptx.shapes.placeholder.TablePlaceholder.auto_shape_type:1
+msgid ""
+"Enumeration value identifying the type of this auto shape, like "
+"``MSO_SHAPE.ROUNDED_RECTANGLE``. Raises |ValueError| if this shape is not"
+" an auto shape."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.base.BaseShape.click_action:1
+msgid "|ActionSetting| instance providing access to click behaviors."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.base.BaseShape.click_action:3
+msgid ""
+"Click behaviors are hyperlink-like behaviors including jumping to a "
+"hyperlink (web page) or to another slide in the presentation. The click "
+"action is that defined on the overall shape, not a run of text within the"
+" shape. An |ActionSetting| object is always returned, even when no click "
+"behavior is defined on the shape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.element:1
+#: pptx.shapes.placeholder.MasterPlaceholder.element:1
+#: pptx.shapes.placeholder.PicturePlaceholder.element:1
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.element:1
+#: pptx.shapes.placeholder.PlaceholderPicture.element:1
+#: pptx.shapes.placeholder.TablePlaceholder.element:1
+msgid "`lxml` element for this shape, e.g. a CT_Shape instance."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.element:3
+#: pptx.shapes.placeholder.MasterPlaceholder.element:3
+#: pptx.shapes.placeholder.PicturePlaceholder.element:3
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.element:3
+#: pptx.shapes.placeholder.PlaceholderPicture.element:3
+#: pptx.shapes.placeholder.TablePlaceholder.element:3
+msgid ""
+"Note that manipulating this element improperly can produce an invalid "
+"presentation file. Make sure you know what you're doing if you use this "
+"to change the underlying XML."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.autoshape.Shape.fill:1
+msgid ""
+"|FillFormat| instance for this shape, providing access to fill properties"
+" such as fill color."
+msgstr ""
+
+#: of pptx.shapes.placeholder.MasterPlaceholder.has_text_frame:1
+msgid "|True| if this shape can contain text. Always |True| for an AutoShape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.MasterPlaceholder.height:1
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.height:1
+msgid ""
+"Read/write. Integer distance between top and bottom extents of shape in "
+"EMUs"
+msgstr ""
+
+#: of pptx.shapes.placeholder.MasterPlaceholder.is_placeholder:1
+#: pptx.shapes.placeholder.PlaceholderPicture.is_placeholder:1
+msgid ""
+"True if this shape is a placeholder. A shape is a placeholder if it has a"
+" <p:ph> element."
+msgstr ""
+
+#: of pptx.shapes.placeholder.MasterPlaceholder.left:1
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.left:1
+msgid ""
+"Read/write. Integer distance of the left edge of this shape from the left"
+" edge of the slide, in English Metric Units (EMU)"
+msgstr ""
+
+#: ../../docstring of pptx.shapes.autoshape.Shape.line:1
+msgid ""
+"|LineFormat| instance for this shape, providing access to line properties"
+" such as line color."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.name:1
+#: pptx.shapes.placeholder.MasterPlaceholder.name:1
+#: pptx.shapes.placeholder.PicturePlaceholder.name:1
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.name:1
+#: pptx.shapes.placeholder.PlaceholderPicture.name:1
+#: pptx.shapes.placeholder.TablePlaceholder.name:1
+msgid "Name of this shape, e.g. 'Picture 7'"
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.placeholder_format:1
+#: pptx.shapes.placeholder.MasterPlaceholder.placeholder_format:1
+#: pptx.shapes.placeholder.PicturePlaceholder.placeholder_format:1
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.placeholder_format:1
+#: pptx.shapes.placeholder.PlaceholderPicture.placeholder_format:1
+#: pptx.shapes.placeholder.TablePlaceholder.placeholder_format:1
+msgid ""
+"A |_PlaceholderFormat| object providing access to placeholder-specific "
+"properties such as placeholder type. Raises |ValueError| on access if the"
+" shape is not a placeholder."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.rotation:1
+#: pptx.shapes.placeholder.MasterPlaceholder.rotation:1
+#: pptx.shapes.placeholder.PicturePlaceholder.rotation:1
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.rotation:1
+#: pptx.shapes.placeholder.PlaceholderPicture.rotation:1
+#: pptx.shapes.placeholder.TablePlaceholder.rotation:1
+msgid ""
+"Read/write float. Degrees of clockwise rotation. Negative values can be "
+"assigned to indicate counter-clockwise rotation, e.g. assigning -45.0 "
+"will change setting to 315.0."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.base.BaseShape.shadow:1
+msgid "|ShadowFormat| object providing access to shadow for this shape."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.base.BaseShape.shadow:3
+msgid ""
+"A |ShadowFormat| object is always returned, even when no shadow is "
+"explicitly defined on this shape (i.e. it inherits its shadow behavior)."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.shape_id:1
+#: pptx.shapes.placeholder.MasterPlaceholder.shape_id:1
+#: pptx.shapes.placeholder.PicturePlaceholder.shape_id:1
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.shape_id:1
+#: pptx.shapes.placeholder.PlaceholderPicture.shape_id:1
+#: pptx.shapes.placeholder.TablePlaceholder.shape_id:1
+msgid "Read-only positive integer identifying this shape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.shape_id:3
+#: pptx.shapes.placeholder.MasterPlaceholder.shape_id:3
+#: pptx.shapes.placeholder.PicturePlaceholder.shape_id:3
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.shape_id:3
+#: pptx.shapes.placeholder.PlaceholderPicture.shape_id:3
+#: pptx.shapes.placeholder.TablePlaceholder.shape_id:3
+msgid "The id of a shape is unique among all shapes on a slide."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.text:1
+#: pptx.shapes.placeholder.MasterPlaceholder.text:1
+#: pptx.shapes.placeholder.PicturePlaceholder.text:1
+#: pptx.shapes.placeholder.TablePlaceholder.text:1
+msgid "Read/write. Unicode (str in Python 3) representation of shape text."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.text:3
+#: pptx.shapes.placeholder.MasterPlaceholder.text:3
+#: pptx.shapes.placeholder.PicturePlaceholder.text:3
+#: pptx.shapes.placeholder.TablePlaceholder.text:3
+msgid ""
+"The returned string will contain a newline character (``\"\\n\"``) "
+"separating each paragraph and a vertical-tab (``\"\\v\"``) character for "
+"each line break (soft carriage return) in the shape's text."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.text:7
+#: pptx.shapes.placeholder.MasterPlaceholder.text:7
+#: pptx.shapes.placeholder.PicturePlaceholder.text:7
+#: pptx.shapes.placeholder.TablePlaceholder.text:7
+msgid ""
+"Assignment to *text* replaces all text previously contained in the shape,"
+" along with any paragraph or font formatting applied to it. A newline "
+"character (``\"\\n\"``) in the assigned text causes a new paragraph to be"
+" started. A vertical-tab (``\"\\v\"``) character in the assigned text "
+"causes a line-break (soft carriage-return) to be inserted. (The vertical-"
+"tab character appears in clipboard text copied from PowerPoint as its "
+"encoding of line-breaks.)"
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.text:14
+#: pptx.shapes.placeholder.MasterPlaceholder.text:14
+#: pptx.shapes.placeholder.PicturePlaceholder.text:14
+#: pptx.shapes.placeholder.TablePlaceholder.text:14
+msgid ""
+"Either bytes (Python 2 str) or unicode (Python 3 str) can be assigned. "
+"Bytes can be 7-bit ASCII or UTF-8 encoded 8-bit bytes. Bytes values are "
+"converted to unicode assuming UTF-8 encoding (which also works for "
+"ASCII)."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.text_frame:1
+#: pptx.shapes.placeholder.MasterPlaceholder.text_frame:1
+#: pptx.shapes.placeholder.PicturePlaceholder.text_frame:1
+#: pptx.shapes.placeholder.TablePlaceholder.text_frame:1
+msgid "|TextFrame| instance for this shape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.text_frame:3
+#: pptx.shapes.placeholder.MasterPlaceholder.text_frame:3
+#: pptx.shapes.placeholder.PicturePlaceholder.text_frame:3
+#: pptx.shapes.placeholder.TablePlaceholder.text_frame:3
+msgid ""
+"Contains the text of the shape and provides access to text formatting "
+"properties."
+msgstr ""
+
+#: of pptx.shapes.placeholder.MasterPlaceholder.top:1
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.top:1
+msgid ""
+"Read/write. Integer distance of the top edge of this shape from the top "
+"edge of the slide, in English Metric Units (EMU)"
+msgstr ""
+
+#: of pptx.shapes.placeholder.MasterPlaceholder.width:1
+#: pptx.shapes.placeholder.PlaceholderGraphicFrame.width:1
+msgid ""
+"Read/write. Integer distance between left and right extents of shape in "
+"EMUs"
+msgstr ""
+
+#: ../../api/placeholders.rst:29
+msgid "|LayoutPlaceholder| objects"
+msgstr ""
+
+#: of pptx.shapes.placeholder.LayoutPlaceholder:1
+msgid ""
+"Placeholder shape on a slide layout, providing differentiated behavior "
+"for slide layout placeholders, in particular, inheriting shape properties"
+" from the master placeholder having the same type, when a matching one "
+"exists."
+msgstr ""
+
+#: ../../api/placeholders.rst:37
+msgid "ChartPlaceholder objects"
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder:1
+msgid "Placeholder shape that can only accept a chart."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.autoshape.Shape.adjustments:1
+msgid "Read-only reference to |AdjustmentCollection| instance for this shape"
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.get_or_add_ln:1
+msgid ""
+"Return the ``<a:ln>`` element containing the line format properties XML "
+"for this shape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.height:1
+#: pptx.shapes.placeholder.PicturePlaceholder.height:1
+#: pptx.shapes.placeholder.PlaceholderPicture.height:1
+#: pptx.shapes.placeholder.TablePlaceholder.height:1
+msgid ""
+"The effective height of this placeholder shape; its directly-applied "
+"height if it has one, otherwise the height of its parent layout "
+"placeholder."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.insert_chart:1
+msgid ""
+"Return a |PlaceholderGraphicFrame| object containing a new chart of "
+"*chart_type* depicting *chart_data* and having the same position and size"
+" as this placeholder. *chart_type* is one of the :ref:`XlChartType` "
+"enumeration values. *chart_data* is a |ChartData| object populated with "
+"the categories and series values for the chart. Note that the new |Chart|"
+" object is not returned directly. The chart object may be accessed using "
+"the :attr:`~.PlaceholderGraphicFrame.chart` property of the returned "
+"|PlaceholderGraphicFrame| object."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.is_placeholder:1
+#: pptx.shapes.placeholder.PicturePlaceholder.is_placeholder:1
+msgid ""
+"Boolean indicating whether this shape is a placeholder. Unconditionally "
+"|True| in this case."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.left:1
+#: pptx.shapes.placeholder.PicturePlaceholder.left:1
+#: pptx.shapes.placeholder.PlaceholderPicture.left:1
+#: pptx.shapes.placeholder.TablePlaceholder.left:1
+msgid ""
+"The effective left of this placeholder shape; its directly-applied left "
+"if it has one, otherwise the left of its parent layout placeholder."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.ln:1
+#: pptx.shapes.placeholder.PicturePlaceholder.ln:1
+#: pptx.shapes.placeholder.TablePlaceholder.ln:1
+msgid ""
+"The ``<a:ln>`` element containing the line format properties such as line"
+" color and width. |None| if no ``<a:ln>`` element is present."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.shape_type:1
+#: pptx.shapes.placeholder.PicturePlaceholder.shape_type:1
+#: pptx.shapes.placeholder.PlaceholderPicture.shape_type:1
+#: pptx.shapes.placeholder.TablePlaceholder.shape_type:1
+msgid ""
+"Member of :ref:`MsoShapeType` specifying the type of this shape. "
+"Unconditionally ``MSO_SHAPE_TYPE.PLACEHOLDER`` in this case. Read-only."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.top:1
+#: pptx.shapes.placeholder.PicturePlaceholder.top:1
+#: pptx.shapes.placeholder.PlaceholderPicture.top:1
+#: pptx.shapes.placeholder.TablePlaceholder.top:1
+msgid ""
+"The effective top of this placeholder shape; its directly-applied top if "
+"it has one, otherwise the top of its parent layout placeholder."
+msgstr ""
+
+#: of pptx.shapes.placeholder.ChartPlaceholder.width:1
+#: pptx.shapes.placeholder.PicturePlaceholder.width:1
+#: pptx.shapes.placeholder.PlaceholderPicture.width:1
+#: pptx.shapes.placeholder.TablePlaceholder.width:1
+msgid ""
+"The effective width of this placeholder shape; its directly-applied width"
+" if it has one, otherwise the width of its parent layout placeholder."
+msgstr ""
+
+#: ../../api/placeholders.rst:48
+msgid "PicturePlaceholder objects"
+msgstr ""
+
+#: of pptx.shapes.placeholder.PicturePlaceholder:1
+msgid "Placeholder shape that can only accept a picture."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PicturePlaceholder.insert_picture:1
+msgid "Return a |PlaceholderPicture| object depicting the image in `image_file`."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PicturePlaceholder.insert_picture:3
+msgid ""
+"`image_file` may be either a path (string) or a file-like object. The "
+"image is cropped to fill the entire space of the placeholder. A "
+"|PlaceholderPicture| object has all the properties and methods of a "
+"|Picture| shape except that the value of its "
+":attr:`~._BaseSlidePlaceholder.shape_type` property is "
+"`MSO_SHAPE_TYPE.PLACEHOLDER` instead of `MSO_SHAPE_TYPE.PICTURE`."
+msgstr ""
+
+#: ../../api/placeholders.rst:59
+msgid "TablePlaceholder objects"
+msgstr ""
+
+#: of pptx.shapes.placeholder.TablePlaceholder:1
+msgid "Placeholder shape that can only accept a table."
+msgstr ""
+
+#: of pptx.shapes.placeholder.TablePlaceholder.insert_table:1
+msgid ""
+"Return |PlaceholderGraphicFrame| object containing a `rows` by `cols` "
+"table."
+msgstr ""
+
+#: of pptx.shapes.placeholder.TablePlaceholder.insert_table:3
+msgid ""
+"The position and width of the table are those of the placeholder and its "
+"height is proportional to the number of rows. A |PlaceholderGraphicFrame|"
+" object has all the properties and methods of a |GraphicFrame| shape "
+"except that the value of its :attr:`~._BaseSlidePlaceholder.shape_type` "
+"property is unconditionally `MSO_SHAPE_TYPE.PLACEHOLDER`. Note that the "
+"return value is not the new table but rather *contains* the new table. "
+"The table can be accessed using the "
+":attr:`~.PlaceholderGraphicFrame.table` property of the returned "
+"|PlaceholderGraphicFrame| object."
+msgstr ""
+
+#: ../../api/placeholders.rst:71
+msgid "PlaceholderGraphicFrame objects"
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame:1
+msgid "Placeholder shape populated with a table, chart, or smart art."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.chart:1
+msgid "The |Chart| object containing the chart in this graphic frame."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.chart:3
+msgid "Raises |ValueError| if this graphic frame does not contain a chart."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.has_chart:1
+msgid "|True| if this graphic frame contains a chart object. |False| otherwise."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.has_chart:3
+msgid ""
+"When |True|, the chart object can be accessed using the ``.chart`` "
+"property."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.has_table:1
+msgid "|True| if this graphic frame contains a table object, |False| otherwise."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.has_table:3
+msgid "When |True|, the table object can be accessed using the `.table` property."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.ole_format:1
+msgid "Optional _OleFormat object for this graphic-frame shape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.ole_format:3
+msgid ""
+"Raises `ValueError` on a GraphicFrame instance that does not contain an "
+"OLE object."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.ole_format:6
+msgid ""
+"An shape that contains an OLE object will have `.shape_type` of either "
+"`EMBEDDED_OLE_OBJECT` or `LINKED_OLE_OBJECT`."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.shadow:1
+msgid "Unconditionally raises |NotImplementedError|."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.shadow:3
+msgid ""
+"Access to the shadow effect for graphic-frame objects is content-specific"
+" (i.e. different for charts, tables, etc.) and has not yet been "
+"implemented."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.shape_type:1
+msgid "Optional member of `MSO_SHAPE_TYPE` identifying the type of this shape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.shape_type:3
+msgid ""
+"Possible values are ``MSO_SHAPE_TYPE.CHART``, ``MSO_SHAPE_TYPE.TABLE``, "
+"``MSO_SHAPE_TYPE.EMBEDDED_OLE_OBJECT``, "
+"``MSO_SHAPE_TYPE.LINKED_OLE_OBJECT``."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.shape_type:6
+msgid ""
+"This value is `None` when none of these four types apply, for example "
+"when the shape contains SmartArt."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderGraphicFrame.table:1
+msgid ""
+"The |Table| object contained in this graphic frame. Raises |ValueError| "
+"if this graphic frame does not contain a table."
+msgstr ""
+
+#: ../../api/placeholders.rst:82
+msgid "PlaceholderPicture objects"
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture:1
+msgid "Placeholder shape populated with a picture."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.auto_shape_type:1
+msgid "Member of MSO_SHAPE indicating masking shape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.auto_shape_type:3
+msgid ""
+"A picture can be masked by any of the so-called \"auto-shapes\" available"
+" in PowerPoint, such as an ellipse or triangle. When a picture is masked "
+"by a shape, the shape assumes the same dimensions as the picture and the "
+"portion of the picture outside the shape boundaries does not appear. Note"
+" the default value for a newly-inserted picture is "
+"`MSO_AUTO_SHAPE_TYPE.RECTANGLE`, which performs no cropping because the "
+"extents of the rectangle exactly correspond to the extents of the "
+"picture."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.auto_shape_type:12
+msgid "The available shapes correspond to the members of :ref:`MsoAutoShapeType`."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.auto_shape_type:15
+msgid ""
+"The return value can also be |None|, indicating the picture either has no"
+" geometry (not expected) or has custom geometry, like a freeform shape. A"
+" picture with no geometry will have no visible representation on the "
+"slide, although it can be selected. This is because without geometry, "
+"there is no \"inside-the-shape\" for it to appear in."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.crop_bottom:1
+msgid "|float| representing relative portion cropped from shape bottom."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.crop_bottom:3
+#, python-format
+msgid ""
+"Read/write. 1.0 represents 100%. For example, 25% is represented by 0.25."
+" Negative values are valid as are values greater than 1.0."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.crop_left:1
+msgid "|float| representing relative portion cropped from left of shape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.crop_left:3
+msgid ""
+"Read/write. 1.0 represents 100%. A negative value extends the side beyond"
+" the image boundary."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.crop_right:1
+msgid "|float| representing relative portion cropped from right of shape."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.crop_right:3
+#: pptx.shapes.placeholder.PlaceholderPicture.crop_top:3
+msgid "Read/write. 1.0 represents 100%."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.crop_top:1
+msgid "|float| representing relative portion cropped from shape top."
+msgstr ""
+
+#: of pptx.shapes.placeholder.PlaceholderPicture.image:1
+msgid ""
+"An |Image| object providing access to the properties and bytes of the "
+"image in this picture shape."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.picture._BasePicture.line:1
+msgid ""
+"An instance of |LineFormat|, providing access to the properties of the "
+"outline bordering this shape, such as its color and width."
+msgstr ""
+
+#: ../../api/placeholders.rst:94
+msgid "_PlaceholderFormat objects"
+msgstr ""
+
+#: of pptx.shapes.base._PlaceholderFormat:1
+msgid ""
+"Accessed via the :attr:`~.BaseShape.placeholder_format` property of a "
+"placeholder shape, provides properties specific to placeholders, such as "
+"the placeholder type."
+msgstr ""
+
+#: of pptx.shapes.base._PlaceholderFormat.element:1
+msgid "The `p:ph` element proxied by this object."
+msgstr ""
+
+#: of pptx.shapes.base._PlaceholderFormat.idx:1
+msgid "Integer placeholder 'idx' attribute."
+msgstr ""
+
+#: of pptx.shapes.base._PlaceholderFormat.type:1
+msgid ""
+"Placeholder type, a member of the :ref:`PpPlaceholderType` enumeration, "
+"e.g. PP_PLACEHOLDER.CHART"
+msgstr ""
+

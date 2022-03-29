@@ -1,0 +1,1487 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/MsoAutoShapeType.rst:4
+msgid "``MSO_AUTO_SHAPE_TYPE``"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:6
+msgid "Specifies a type of AutoShape, e.g. DOWN_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:8
+msgid "Alias: ``MSO_SHAPE``"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:10
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:23
+msgid "ACTION_BUTTON_BACK_OR_PREVIOUS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:23
+msgid "Back or Previous button. Supports mouse-click and mouse-over actions"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:26
+msgid "ACTION_BUTTON_BEGINNING"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:26
+msgid "Beginning button. Supports mouse-click and mouse-over actions."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:30
+msgid "ACTION_BUTTON_CUSTOM"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:29
+msgid ""
+"Button with no default picture or text. Supports mouse-click and mouse-"
+"over action."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:33
+msgid "ACTION_BUTTON_DOCUMENT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:33
+msgid "Document button. Supports mouse-click and mouse-over actions."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:36
+msgid "ACTION_BUTTON_END"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:36
+msgid "End button. Supports mouse-click and mouse-over actions."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:39
+msgid "ACTION_BUTTON_FORWARD_OR_NEXT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:39
+msgid "Forward or Next button. Supports mouse-click and mouse-over actions."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:42
+msgid "ACTION_BUTTON_HELP"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:42
+msgid "Help button. Supports mouse-click and mouse-over actio."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:45
+msgid "ACTION_BUTTON_HOME"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:45
+msgid "Home button. Supports mouse-click and mouse-over actio."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:48
+msgid "ACTION_BUTTON_INFORMATION"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:48
+msgid "Information button. Supports mouse-click and mouse-over actions."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:51
+msgid "ACTION_BUTTON_MOVIE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:51
+msgid "Movie button. Supports mouse-click and mouse-over actions."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:54
+msgid "ACTION_BUTTON_RETURN"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:54
+msgid "Return button. Supports mouse-click and mouse-over actions."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:57
+msgid "ACTION_BUTTON_SOUND"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:57
+msgid "Sound button. Supports mouse-click and mouse-over actions."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:60
+msgid "ARC"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:60
+msgid "Arc"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:63
+msgid "BALLOON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:63
+msgid "Rounded Rectangular Callout"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:66
+msgid "BENT_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:66
+msgid "Block arrow that follows a curved 90-degree angle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:69
+msgid "BENT_UP_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:69
+msgid "Block arrow that follows a sharp 90-degree angle. Points up by default."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:72
+msgid "BEVEL"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:72
+msgid "Bevel"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:75
+msgid "BLOCK_ARC"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:75
+msgid "Block arc"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:78
+msgid "CAN"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:78
+msgid "Can"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:81
+msgid "CHART_PLUS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:81
+msgid "Chart Plus"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:84
+msgid "CHART_STAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:84
+msgid "Chart Star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:87
+msgid "CHART_X"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:87
+msgid "Chart X"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:90
+msgid "CHEVRON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:90
+msgid "Chevron"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:93
+msgid "CHORD"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:93
+msgid "Geometric chord shape"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:96
+msgid "CIRCULAR_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:96
+msgid "Block arrow that follows a curved 180-degree angle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:99
+msgid "CLOUD"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:99
+msgid "Cloud"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:102
+msgid "CLOUD_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:102
+msgid "Cloud callout"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:105
+msgid "CORNER"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:105
+msgid "Corner"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:108
+msgid "CORNER_TABS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:108
+msgid "Corner Tabs"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:111
+msgid "CROSS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:111
+msgid "Cross"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:114
+msgid "CUBE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:114
+msgid "Cube"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:117
+msgid "CURVED_DOWN_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:117
+msgid "Block arrow that curves down"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:120
+msgid "CURVED_DOWN_RIBBON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:120
+msgid "Ribbon banner that curves down"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:123
+msgid "CURVED_LEFT_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:123
+msgid "Block arrow that curves left"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:126
+msgid "CURVED_RIGHT_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:126
+msgid "Block arrow that curves right"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:129
+msgid "CURVED_UP_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:129
+msgid "Block arrow that curves up"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:132
+msgid "CURVED_UP_RIBBON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:132
+msgid "Ribbon banner that curves up"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:135
+msgid "DECAGON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:135
+msgid "Decagon"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:138
+msgid "DIAGONAL_STRIPE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:138
+msgid "Diagonal Stripe"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:141
+msgid "DIAMOND"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:141
+msgid "Diamond"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:144
+msgid "DODECAGON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:144
+msgid "Dodecagon"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:147
+msgid "DONUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:147
+msgid "Donut"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:150
+msgid "DOUBLE_BRACE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:150
+msgid "Double brace"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:153
+msgid "DOUBLE_BRACKET"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:153
+msgid "Double bracket"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:156
+msgid "DOUBLE_WAVE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:156
+msgid "Double wave"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:159
+msgid "DOWN_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:159
+msgid "Block arrow that points down"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:162
+msgid "DOWN_ARROW_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:162
+msgid "Callout with arrow that points down"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:165
+msgid "DOWN_RIBBON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:165
+msgid "Ribbon banner with center area below ribbon ends"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:168
+msgid "EXPLOSION1"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:168
+#: ../../api/enum/MsoAutoShapeType.rst:171
+msgid "Explosion"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:171
+msgid "EXPLOSION2"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:174
+msgid "FLOWCHART_ALTERNATE_PROCESS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:174
+msgid "Alternate process flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:177
+msgid "FLOWCHART_CARD"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:177
+msgid "Card flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:180
+msgid "FLOWCHART_COLLATE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:180
+msgid "Collate flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:183
+msgid "FLOWCHART_CONNECTOR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:183
+msgid "Connector flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:186
+msgid "FLOWCHART_DATA"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:186
+msgid "Data flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:189
+msgid "FLOWCHART_DECISION"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:189
+msgid "Decision flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:192
+msgid "FLOWCHART_DELAY"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:192
+msgid "Delay flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:195
+msgid "FLOWCHART_DIRECT_ACCESS_STORAGE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:195
+msgid "Direct access storage flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:198
+msgid "FLOWCHART_DISPLAY"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:198
+msgid "Display flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:201
+msgid "FLOWCHART_DOCUMENT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:201
+msgid "Document flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:204
+msgid "FLOWCHART_EXTRACT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:204
+msgid "Extract flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:207
+msgid "FLOWCHART_INTERNAL_STORAGE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:207
+msgid "Internal storage flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:210
+msgid "FLOWCHART_MAGNETIC_DISK"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:210
+msgid "Magnetic disk flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:213
+msgid "FLOWCHART_MANUAL_INPUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:213
+msgid "Manual input flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:216
+msgid "FLOWCHART_MANUAL_OPERATION"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:216
+msgid "Manual operation flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:219
+msgid "FLOWCHART_MERGE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:219
+msgid "Merge flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:222
+msgid "FLOWCHART_MULTIDOCUMENT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:222
+msgid "Multi-document flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:225
+msgid "FLOWCHART_OFFLINE_STORAGE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:225
+msgid "Offline Storage"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:228
+msgid "FLOWCHART_OFFPAGE_CONNECTOR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:228
+msgid "Off-page connector flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:231
+msgid "FLOWCHART_OR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:231
+msgid "\"Or\" flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:234
+msgid "FLOWCHART_PREDEFINED_PROCESS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:234
+msgid "Predefined process flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:237
+msgid "FLOWCHART_PREPARATION"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:237
+msgid "Preparation flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:240
+msgid "FLOWCHART_PROCESS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:240
+msgid "Process flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:243
+msgid "FLOWCHART_PUNCHED_TAPE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:243
+msgid "Punched tape flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:246
+msgid "FLOWCHART_SEQUENTIAL_ACCESS_STORAGE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:246
+msgid "Sequential access storage flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:249
+msgid "FLOWCHART_SORT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:249
+msgid "Sort flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:252
+msgid "FLOWCHART_STORED_DATA"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:252
+msgid "Stored data flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:255
+msgid "FLOWCHART_SUMMING_JUNCTION"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:255
+msgid "Summing junction flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:258
+msgid "FLOWCHART_TERMINATOR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:258
+msgid "Terminator flowchart symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:261
+msgid "FOLDED_CORNER"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:261
+msgid "Folded corner"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:264
+msgid "FRAME"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:264
+msgid "Frame"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:267
+msgid "FUNNEL"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:267
+msgid "Funnel"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:270
+msgid "GEAR_6"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:270
+msgid "Gear 6"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:273
+msgid "GEAR_9"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:273
+msgid "Gear 9"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:276
+msgid "HALF_FRAME"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:276
+msgid "Half Frame"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:279
+msgid "HEART"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:279
+msgid "Heart"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:282
+msgid "HEPTAGON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:282
+msgid "Heptagon"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:285
+msgid "HEXAGON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:285
+msgid "Hexagon"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:288
+msgid "HORIZONTAL_SCROLL"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:288
+msgid "Horizontal scroll"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:291
+msgid "ISOSCELES_TRIANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:291
+msgid "Isosceles triangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:294
+msgid "LEFT_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:294
+msgid "Block arrow that points left"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:297
+msgid "LEFT_ARROW_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:297
+msgid "Callout with arrow that points left"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:300
+msgid "LEFT_BRACE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:300
+msgid "Left brace"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:303
+msgid "LEFT_BRACKET"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:303
+msgid "Left bracket"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:306
+msgid "LEFT_CIRCULAR_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:306
+msgid "Left Circular Arrow"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:309
+msgid "LEFT_RIGHT_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:309
+msgid "Block arrow with arrowheads that point both left and right"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:312
+msgid "LEFT_RIGHT_ARROW_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:312
+msgid "Callout with arrowheads that point both left and right"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:315
+msgid "LEFT_RIGHT_CIRCULAR_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:315
+msgid "Left Right Circular Arrow"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:318
+msgid "LEFT_RIGHT_RIBBON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:318
+msgid "Left Right Ribbon"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:321
+msgid "LEFT_RIGHT_UP_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:321
+msgid "Block arrow with arrowheads that point left, right, and up"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:324
+msgid "LEFT_UP_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:324
+msgid "Block arrow with arrowheads that point left and up"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:327
+msgid "LIGHTNING_BOLT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:327
+msgid "Lightning bolt"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:330
+msgid "LINE_CALLOUT_1"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:330
+msgid "Callout with border and horizontal callout line"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:333
+msgid "LINE_CALLOUT_1_ACCENT_BAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:333
+msgid "Callout with vertical accent bar"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:336
+msgid "LINE_CALLOUT_1_BORDER_AND_ACCENT_BAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:336
+msgid "Callout with border and vertical accent bar"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:339
+msgid "LINE_CALLOUT_1_NO_BORDER"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:339
+msgid "Callout with horizontal line"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:342
+msgid "LINE_CALLOUT_2"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:342
+msgid "Callout with diagonal straight line"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:345
+msgid "LINE_CALLOUT_2_ACCENT_BAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:345
+msgid "Callout with diagonal callout line and accent bar"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:348
+msgid "LINE_CALLOUT_2_BORDER_AND_ACCENT_BAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:348
+msgid "Callout with border, diagonal straight line, and accent bar"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:351
+msgid "LINE_CALLOUT_2_NO_BORDER"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:351
+msgid "Callout with no border and diagonal callout line"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:354
+msgid "LINE_CALLOUT_3"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:354
+msgid "Callout with angled line"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:357
+msgid "LINE_CALLOUT_3_ACCENT_BAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:357
+msgid "Callout with angled callout line and accent bar"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:360
+msgid "LINE_CALLOUT_3_BORDER_AND_ACCENT_BAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:360
+msgid "Callout with border, angled callout line, and accent bar"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:363
+msgid "LINE_CALLOUT_3_NO_BORDER"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:363
+msgid "Callout with no border and angled callout line"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:366
+msgid "LINE_CALLOUT_4"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:366
+msgid "Callout with callout line segments forming a U-shape"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:369
+msgid "LINE_CALLOUT_4_ACCENT_BAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:369
+msgid "Callout with accent bar and callout line segments forming a U-shape"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:373
+msgid "LINE_CALLOUT_4_BORDER_AND_ACCENT_BAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:372
+msgid ""
+"Callout with border, accent bar, and callout line segments forming a "
+"U-shape"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:376
+msgid "LINE_CALLOUT_4_NO_BORDER"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:376
+msgid "Callout with no border and callout line segments forming a U-shape."
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:379
+msgid "LINE_INVERSE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:379
+msgid "Straight Connector"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:382
+msgid "MATH_DIVIDE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:382
+msgid "Division"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:385
+msgid "MATH_EQUAL"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:385
+msgid "Equal"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:388
+msgid "MATH_MINUS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:388
+msgid "Minus"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:391
+msgid "MATH_MULTIPLY"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:391
+msgid "Multiply"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:394
+msgid "MATH_NOT_EQUAL"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:394
+msgid "Not Equal"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:397
+msgid "MATH_PLUS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:397
+msgid "Plus"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:400
+msgid "MOON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:400
+msgid "Moon"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:403
+msgid "NO_SYMBOL"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:403
+msgid "\"No\" symbol"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:406
+msgid "NON_ISOSCELES_TRAPEZOID"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:406
+msgid "Non-isosceles Trapezoid"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:409
+msgid "NOTCHED_RIGHT_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:409
+msgid "Notched block arrow that points right"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:412
+msgid "OCTAGON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:412
+msgid "Octagon"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:415
+msgid "OVAL"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:415
+msgid "Oval"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:418
+msgid "OVAL_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:418
+msgid "Oval-shaped callout"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:421
+msgid "PARALLELOGRAM"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:421
+msgid "Parallelogram"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:424
+msgid "PENTAGON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:424
+#: ../../api/enum/MsoAutoShapeType.rst:451
+msgid "Pentagon"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:427
+msgid "PIE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:427
+#: ../../api/enum/MsoAutoShapeType.rst:430
+msgid "Pie"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:430
+msgid "PIE_WEDGE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:433
+msgid "PLAQUE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:433
+msgid "Plaque"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:436
+msgid "PLAQUE_TABS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:436
+msgid "Plaque Tabs"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:439
+msgid "QUAD_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:439
+msgid "Block arrows that point up, down, left, and right"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:442
+msgid "QUAD_ARROW_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:442
+msgid "Callout with arrows that point up, down, left, and right"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:445
+msgid "RECTANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:445
+msgid "Rectangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:448
+msgid "RECTANGULAR_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:448
+msgid "Rectangular callout"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:451
+msgid "REGULAR_PENTAGON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:454
+msgid "RIGHT_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:454
+msgid "Block arrow that points right"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:457
+msgid "RIGHT_ARROW_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:457
+msgid "Callout with arrow that points right"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:460
+msgid "RIGHT_BRACE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:460
+msgid "Right brace"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:463
+msgid "RIGHT_BRACKET"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:463
+msgid "Right bracket"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:466
+msgid "RIGHT_TRIANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:466
+msgid "Right triangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:469
+msgid "ROUND_1_RECTANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:469
+msgid "Round Single Corner Rectangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:472
+msgid "ROUND_2_DIAG_RECTANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:472
+msgid "Round Diagonal Corner Rectangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:475
+msgid "ROUND_2_SAME_RECTANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:475
+msgid "Round Same Side Corner Rectangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:478
+msgid "ROUNDED_RECTANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:478
+msgid "Rounded rectangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:481
+msgid "ROUNDED_RECTANGULAR_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:481
+msgid "Rounded rectangle-shaped callout"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:484
+msgid "SMILEY_FACE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:484
+msgid "Smiley face"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:487
+msgid "SNIP_1_RECTANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:487
+msgid "Snip Single Corner Rectangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:490
+msgid "SNIP_2_DIAG_RECTANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:490
+msgid "Snip Diagonal Corner Rectangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:493
+msgid "SNIP_2_SAME_RECTANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:493
+msgid "Snip Same Side Corner Rectangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:496
+msgid "SNIP_ROUND_RECTANGLE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:496
+msgid "Snip and Round Single Corner Rectangle"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:499
+msgid "SQUARE_TABS"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:499
+msgid "Square Tabs"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:502
+msgid "STAR_10_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:502
+msgid "10-Point Star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:505
+msgid "STAR_12_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:505
+msgid "12-Point Star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:508
+msgid "STAR_16_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:508
+msgid "16-point star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:511
+msgid "STAR_24_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:511
+msgid "24-point star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:514
+msgid "STAR_32_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:514
+msgid "32-point star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:517
+msgid "STAR_4_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:517
+msgid "4-point star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:520
+msgid "STAR_5_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:520
+msgid "5-point star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:523
+msgid "STAR_6_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:523
+msgid "6-Point Star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:526
+msgid "STAR_7_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:526
+msgid "7-Point Star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:529
+msgid "STAR_8_POINT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:529
+msgid "8-point star"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:532
+msgid "STRIPED_RIGHT_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:532
+msgid "Block arrow that points right with stripes at the tail"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:535
+msgid "SUN"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:535
+msgid "Sun"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:538
+msgid "SWOOSH_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:538
+msgid "Swoosh Arrow"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:541
+msgid "TEAR"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:541
+msgid "Teardrop"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:544
+msgid "TRAPEZOID"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:544
+msgid "Trapezoid"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:547
+msgid "U_TURN_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:547
+msgid "Block arrow forming a U shape"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:550
+msgid "UP_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:550
+msgid "Block arrow that points up"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:553
+msgid "UP_ARROW_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:553
+msgid "Callout with arrow that points up"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:556
+msgid "UP_DOWN_ARROW"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:556
+msgid "Block arrow that points up and down"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:559
+msgid "UP_DOWN_ARROW_CALLOUT"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:559
+msgid "Callout with arrows that point up and down"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:562
+msgid "UP_RIBBON"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:562
+msgid "Ribbon banner with center area above ribbon ends"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:565
+msgid "VERTICAL_SCROLL"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:565
+msgid "Vertical scroll"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:569
+msgid "WAVE"
+msgstr ""
+
+#: ../../api/enum/MsoAutoShapeType.rst:568
+msgid "Wave"
+msgstr ""
+

@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-chart-data.rst:3
+msgid "Chart Data"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-data.rst:5
+msgid ""
+"The data behind a chart--its category labels and its series names and "
+"values--turns out to be a pivotal object in both the construction of a "
+"new chart and updating the data behind an existing chart."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-data.rst:9
+msgid ""
+"The first role of |ChartData| is to act as a data transfer object, "
+"allowing the data for a chart to be accumulated over multiple calls such "
+"as `.add_series()`. This avoids the need to assemble and send a complex "
+"nested structure of primitives to method calls."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-data.rst:14
+msgid ""
+"In addition to this, |ChartData| also takes on the role of broker to "
+"|ChartXmlWriter| and |WorkbookWriter| which know how to assemble the "
+"``<c:chartSpace>`` XML and Excel workbook for a chart, respectively. This"
+" is sensible because neither of these objects can operate without a chart"
+" data instance to provide the data they need and doing so concentrates "
+"the coupling to the latter two objects into one place."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-data.rst:23
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-data.rst:25
+msgid ""
+"A |ChartData| object is constructed directly as needed, and used for "
+"either creating a new chart or for replacing the data behind an existing "
+"one."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-data.rst:28
+msgid "Creating a new chart::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-data.rst:41
+msgid "Changing the data behind an existing chart::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-data.rst:51
+msgid ""
+"Note that the dimensions of the replacement data can differ from that of "
+"the existing chart."
+msgstr ""
+

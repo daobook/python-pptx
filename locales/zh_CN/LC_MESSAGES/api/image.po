@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/image.rst:4
+msgid "Image"
+msgstr ""
+
+#: ../../api/image.rst:6
+msgid ""
+"An image depicted in a |Picture| shape can be accessed using its "
+":attr:`~.Picture.image` property. The |Image| object provides access to "
+"detailed properties of the image itself, including the bytes of the image"
+" file itself."
+msgstr ""
+
+#: ../../api/image.rst:13
+msgid "|Image| objects"
+msgstr ""
+
+#: ../../api/image.rst:15
+msgid ""
+"The |Image| object is encountered as the :attr:`~Picture.image` property "
+"of |Picture|."
+msgstr ""
+
+#: of pptx.parts.image.Image:1
+msgid "Immutable value object representing an image such as a JPEG, PNG, or GIF."
+msgstr ""
+
+#: of pptx.parts.image.Image.blob:1
+msgid "The binary image bytestream of this image."
+msgstr ""
+
+#: ../../docstring of pptx.parts.image.Image.content_type:1
+msgid "MIME-type of this image, e.g. ``'image/jpeg'``."
+msgstr ""
+
+#: ../../docstring of pptx.parts.image.Image.dpi:1
+msgid ""
+"A (horz_dpi, vert_dpi) 2-tuple specifying the dots-per-inch resolution of"
+" this image. A default value of (72, 72) is used if the dpi is not "
+"specified in the image file."
+msgstr ""
+
+#: ../../docstring of pptx.parts.image.Image.ext:1
+msgid ""
+"Canonical file extension for this image e.g. ``'png'``. The returned "
+"extension is all lowercase and is the canonical extension for the content"
+" type of this image, regardless of what extension may have been used in "
+"its filename, if any."
+msgstr ""
+
+#: of pptx.parts.image.Image.filename:1
+msgid ""
+"The filename from the path from which this image was loaded, if loaded "
+"from the filesystem. |None| if no filename was used in loading, such as "
+"when loaded from an in-memory stream."
+msgstr ""
+
+#: ../../docstring of pptx.parts.image.Image.sha1:1
+msgid "SHA1 hash digest of the image blob"
+msgstr ""
+
+#: ../../docstring of pptx.parts.image.Image.size:1
+msgid ""
+"A (width, height) 2-tuple specifying the dimensions of this image in "
+"pixels."
+msgstr ""
+

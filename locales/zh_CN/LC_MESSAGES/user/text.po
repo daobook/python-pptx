@@ -1,0 +1,165 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../user/text.rst:3
+msgid "Working with text"
+msgstr ""
+
+#: ../../user/text.rst:5
+msgid ""
+"Auto shapes and table cells can contain text. Other shapes can't. Text is"
+" always manipulated the same way, regardless of its container."
+msgstr ""
+
+#: ../../user/text.rst:8
+msgid "Text exists in a hierarchy of three levels:"
+msgstr ""
+
+#: ../../user/text.rst:10
+msgid ":attr:`.Shape.text_frame`"
+msgstr ""
+
+#: ../../user/text.rst:11
+msgid ":attr:`.TextFrame.paragraphs`"
+msgstr ""
+
+#: ../../user/text.rst:12
+msgid ":attr:`._Paragraph.runs`"
+msgstr ""
+
+#: ../../user/text.rst:14
+msgid ""
+"All the text in a shape is contained in its *text frame*. A text frame "
+"has vertical alignment, margins, wrapping and auto-fit behavior, a "
+"rotation angle, some possible 3D visual features, and can be set to "
+"format its text into multiple columns. It also contains a sequence of "
+"paragraphs, which always contains at least one paragraph, even when "
+"empty."
+msgstr ""
+
+#: ../../user/text.rst:20
+msgid ""
+"A paragraph has line spacing, space before, space after, available bullet"
+" formatting, tabs, outline/indentation level, and horizontal alignment. A"
+" paragraph can be empty, but if it contains any text, that text is "
+"contained in one or more runs."
+msgstr ""
+
+#: ../../user/text.rst:25
+msgid ""
+"A run exists to provide character level formatting, including font "
+"typeface, size, and color, an optional hyperlink target URL, bold, "
+"italic, and underline styles, strikethrough, kerning, and a few "
+"capitalization styles like all caps."
+msgstr ""
+
+#: ../../user/text.rst:29
+msgid ""
+"Let's run through these one by one. Only features available in the "
+"current release are shown."
+msgstr ""
+
+#: ../../user/text.rst:34
+msgid "Accessing the text frame"
+msgstr ""
+
+#: ../../user/text.rst:36
+msgid ""
+"As mentioned, not all shapes have a text frame. So if you're not sure and"
+" you don't want to catch the possible exception, you'll want to check "
+"before attempting to access it::"
+msgstr ""
+
+#: ../../user/text.rst:49
+msgid "Accessing paragraphs"
+msgstr ""
+
+#: ../../user/text.rst:51
+msgid ""
+"A text frame always contains at least one paragraph. This causes the "
+"process of getting multiple paragraphs into a shape to be a little "
+"clunkier than one might like. Say for example you want a shape with three"
+" paragraphs::"
+msgstr ""
+
+#: ../../user/text.rst:73
+msgid "Adding text"
+msgstr ""
+
+#: ../../user/text.rst:75
+msgid ""
+"Only runs can actually contain text. Assigning a string to the ``.text`` "
+"attribute on a shape, text frame, or paragraph is a shortcut method for "
+"placing text in a run contained by those objects. The following two "
+"snippets produce the same result::"
+msgstr ""
+
+#: ../../user/text.rst:92
+msgid "Applying text frame-level formatting"
+msgstr ""
+
+#: ../../user/text.rst:94
+msgid ""
+"The following produces a shape with a single paragraph, a slightly wider "
+"bottom than top margin (these default to 0.05\"), no left margin, text "
+"aligned top, and word wrapping turned off. In addition, the auto-size "
+"behavior is set to adjust the width and height of the shape to fit its "
+"text. Note that vertical alignment is set on the text frame. Horizontal "
+"alignment is set on each paragraph::"
+msgstr ""
+
+#: ../../user/text.rst:112
+msgid ""
+"The possible values for ``TextFrame.auto_size`` and "
+"``TextFrame.vertical_anchor`` are specified by the enumeration "
+":ref:`MsoAutoSize` and :ref:`MsoVerticalAnchor` respectively."
+msgstr ""
+
+#: ../../user/text.rst:118
+msgid "Applying paragraph formatting"
+msgstr ""
+
+#: ../../user/text.rst:120
+msgid ""
+"The following produces a shape containing three left-aligned paragraphs, "
+"the second and third indented (like sub-bullets) under the first::"
+msgstr ""
+
+#: ../../user/text.rst:146
+msgid "Applying character formatting"
+msgstr ""
+
+#: ../../user/text.rst:148
+msgid ""
+"Character level formatting is applied at the run level, using the "
+"``.font`` attribute. The following formats a sentence in 18pt Calibri "
+"Bold and applies the theme color Accent 1."
+msgstr ""
+
+#: ../../user/text.rst:172
+msgid ""
+"If you prefer, you can set the font color to an absolute RGB value. Note "
+"that this will not change color when the theme is changed::"
+msgstr ""
+
+#: ../../user/text.rst:177
+msgid "A run can also be made into a hyperlink by providing a target URL::"
+msgstr ""
+

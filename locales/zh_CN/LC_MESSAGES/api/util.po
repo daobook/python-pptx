@@ -1,0 +1,93 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/util.rst:4
+msgid ":mod:`util` Module"
+msgstr ""
+
+#: of pptx.util:1
+msgid "Utility functions and classes."
+msgstr ""
+
+#: of pptx.util.Length:1
+msgid "基类：:py:class:`int`"
+msgstr ""
+
+#: of pptx.util.Length:1
+msgid ""
+"Base class for length classes Inches, Emu, Cm, Mm, Pt, and Px. Provides "
+"properties for converting length values to convenient units."
+msgstr ""
+
+#: of pptx.util.Length.inches:1
+msgid "Floating point length in inches"
+msgstr ""
+
+#: of pptx.util.Length.centipoints:1
+msgid ""
+"Integer length in hundredths of a point (1/7200 inch). Used internally "
+"because PowerPoint stores font size in centipoints."
+msgstr ""
+
+#: of pptx.util.Length.cm:1
+msgid "Floating point length in centimeters"
+msgstr ""
+
+#: of pptx.util.Length.emu:1
+msgid "Integer length in English Metric Units"
+msgstr ""
+
+#: of pptx.util.Length.mm:1
+msgid "Floating point length in millimeters"
+msgstr ""
+
+#: of pptx.util.Length.pt:1
+msgid "Floating point length in points"
+msgstr ""
+
+#: of pptx.util.Centipoints:1 pptx.util.Cm:1 pptx.util.Emu:1 pptx.util.Inches:1
+#: pptx.util.Mm:1 pptx.util.Pt:1
+msgid "基类：:py:class:`pptx.util.Length`"
+msgstr ""
+
+#: of pptx.util.Inches:1
+msgid "Convenience constructor for length in inches"
+msgstr ""
+
+#: of pptx.util.Centipoints:1
+msgid "Convenience constructor for length in hundredths of a point"
+msgstr ""
+
+#: of pptx.util.Cm:1
+msgid "Convenience constructor for length in centimeters"
+msgstr ""
+
+#: of pptx.util.Emu:1
+msgid "Convenience constructor for length in english metric units"
+msgstr ""
+
+#: of pptx.util.Mm:1
+msgid "Convenience constructor for length in millimeters"
+msgstr ""
+
+#: of pptx.util.Pt:1
+msgid "Convenience value class for specifying a length in points"
+msgstr ""
+

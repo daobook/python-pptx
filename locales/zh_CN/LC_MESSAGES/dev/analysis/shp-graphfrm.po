@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-graphfrm.rst:3
+msgid "Graphic Frame"
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:5
+msgid ""
+"A *graphic frame* is a shape that contains a graphical object such as a "
+"table, chart, or SmartArt object. While often referred to as a shape in "
+"common parlance, a table or chart is not a shape. The graphic frame "
+"container is the shape and the table, chart, or SmartArt object is a "
+"DrawingML (DML) object within it."
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:11
+msgid ""
+"A chart, for example, is a shared DML object. It can appear in a Word, "
+"Excel, or PowerPoint file, virtually unchanged except for the container "
+"in which it appears."
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:15
+msgid ""
+"The graphical content is contained in the "
+"``p:graphicFrame/a:graphic/a:graphicData`` grandchild element. The type "
+"of graphical object contained is specified by an XML namespace contained "
+"in the ``uri`` attribute of the ``<a:graphicData>`` element. The "
+"graphical content may appear directly in the ``<p:graphicFrame>`` element"
+" or may be in a separate part related by an rId. XML for a table is "
+"embedded inline. Chart XML is stored in a related Chart part."
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:25
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:51
+msgid "Specimen XML"
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:55
+msgid "Table in a graphic frame::"
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:79
+msgid "Chart in a graphic frame::"
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:109
+msgid "Related Schema Definitions"
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:113
+msgid ""
+"A ``<p:graphicFrame>`` element appears in a ``CT_GroupShape`` element, "
+"typically a ``<p:spTree>`` (shape tree) element::"
+msgstr ""
+
+#: ../../dev/analysis/shp-graphfrm.rst:133
+msgid "Graphic frame-related elements::"
+msgstr ""
+

@@ -1,0 +1,201 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/xmlchemy.rst:3
+msgid "Understanding ``xmlchemy``"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:5
+msgid ""
+"``xmlchemy`` is an object-XML mapping layer somewhat reminiscent of "
+"SQLAlchemy, hence the name. Mapping XML elements to objects is not nearly"
+" as challenging as mapping to a relational database, so this layer is "
+"substantially more modest. Nevertheless, it provides a powerful and very "
+"useful abstraction layer around ``lxml``, particularly well-suited to "
+"providing access to the broad schema of XML elements involved in the Open"
+" XML standard."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:15
+msgid "Additional topics to add ..."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:17
+msgid "understanding complex types in Open XML"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:18
+msgid "understanding attribute definitions Open XML"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:19
+msgid "understanding simple types in Open XML"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:23
+msgid "Adding support for a new element type"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:25
+msgid "add a new custom element mapping to ``pptx.oxml.__init__``"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:26
+msgid ""
+"add a new custom element class in the appropriate ``pptx.oxml`` "
+"subpackage module"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:28
+msgid "Add element definition members to the class"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:29
+msgid "Add attribute definition members to the class"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:30
+msgid "Add simple type definitions to ``pptx.oxml.simpletype``"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:34
+msgid "Example"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:64 ../../dev/xmlchemy.rst:114
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:93
+msgid "``OneAndOnlyOne`` element declaration"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:95
+msgid ""
+"The ``OneAndOnlyOne`` callable generates the API for a required child "
+"element::"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:100
+msgid ""
+"Unlike the other element declarations, the call does not include a "
+"``successors`` argument. Since no API for inserting a new element is "
+"generated, a successors list is not required."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:106 ../../dev/xmlchemy.rst:131
+#: ../../dev/xmlchemy.rst:155
+msgid "Generated API"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:111 ../../dev/xmlchemy.rst:159
+msgid "``childElement`` property (read-only)"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:109
+msgid ""
+"Holds a reference to the child element object. Raises |InvalidXmlError| "
+"on access if the required child element is not present."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:123
+msgid "``RequiredAttribute`` attribute declaration"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:142
+msgid "``childElement`` property (read/write)"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:134
+msgid ""
+"Referencing the property returns the type-converted value of the "
+"attribute as determined by the ``from_xml()`` method of the simple type "
+"class appearing in the declaration (e.g. ST_SimpleType above). "
+"Assignments to the property are validated by the ``validate()`` method of"
+" the simple type class, potentially raising ``TypeError`` or "
+"``ValueError``. Values are assigned in their natural Python type and are "
+"encoded to the appropriate string value by the ``to_xml()`` method of the"
+" simple type class."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:145
+msgid "``ZeroOrOne`` element declaration"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:158
+msgid ""
+"Holds a reference to the child element object, or None if the element is "
+"not present."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:162
+msgid "``get_or_add_childElement()`` method"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:162
+msgid "Returns the child element object, newly added if not present."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:169
+msgid "``_add_childElement()`` empty element adder method"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:165
+msgid ""
+"Returns a newly added empty child element having the declared tag name. "
+"Adding is unconditional and assumes the element is not already present. "
+"This method is called by the ``get_or_add_childElement()`` method as "
+"needed and may be called by a hand-coded ``add_childElement()`` method as"
+" needed. May be overridden to produce customized behavior."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:174
+msgid "``_new_childElement()`` empty element creator method"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:172
+msgid ""
+"Returns a new \"loose\" child element of the declared tag name. Called by"
+" ``_add_childElement()`` to obtain a new child element, it may be "
+"overridden to customize the element creation process."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:180
+msgid "``_insert_childElement(childElement)`` element inserter method"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:177
+msgid ""
+"Returns the passed ``childElement`` after inserting it before any "
+"successor elements, as listed in the ``successors`` argument of the "
+"declaration. Called by ``_add_childElement()`` to insert the new element "
+"it creates using ``_new_childElement()``."
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:185
+msgid "``_remove_childElement()`` element remover method"
+msgstr ""
+
+#: ../../dev/xmlchemy.rst:183
+msgid ""
+"Removes all instances of the child element. Does not raise an error if no"
+" matching child elements are present."
+msgstr ""
+

@@ -1,0 +1,156 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/PpActionType.rst:4
+msgid "``PP_ACTION_TYPE``"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:6
+msgid "Specifies the type of a mouse action (click or hover action)."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:8
+msgid "Alias: ``PP_ACTION``"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:10
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:19
+msgid "END_SHOW"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:19
+msgid "Slide show ends."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:22
+msgid "FIRST_SLIDE"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:22
+msgid "Returns to the first slide."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:25
+msgid "HYPERLINK"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:25
+msgid "Hyperlink."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:28
+msgid "LAST_SLIDE"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:28
+msgid "Moves to the last slide."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:31
+msgid "LAST_SLIDE_VIEWED"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:31
+msgid "Moves to the last slide viewed."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:34
+msgid "NAMED_SLIDE"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:34
+msgid "Moves to slide specified by slide number."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:37
+msgid "NAMED_SLIDE_SHOW"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:37
+msgid "Runs the slideshow."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:40
+msgid "NEXT_SLIDE"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:40
+msgid "Moves to the next slide."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:43
+msgid "NONE"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:43
+msgid "No action is performed."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:46
+msgid "OPEN_FILE"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:46
+msgid "Opens the specified file."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:49
+msgid "OLE_VERB"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:49
+msgid "OLE Verb."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:52
+msgid "PLAY"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:52
+msgid "Begins the slideshow."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:55
+msgid "PREVIOUS_SLIDE"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:55
+msgid "Moves to the previous slide."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:58
+msgid "RUN_MACRO"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:58
+msgid "Runs a macro."
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:62
+msgid "RUN_PROGRAM"
+msgstr ""
+
+#: ../../api/enum/PpActionType.rst:61
+msgid "Runs a program."
+msgstr ""
+

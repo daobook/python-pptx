@@ -1,0 +1,264 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../user/placeholders-using.rst:4
+msgid "Working with placeholders"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:6
+msgid ""
+"Placeholders can make adding content a lot easier. If you've ever added a"
+" new textbox to a slide from scratch and noticed how many adjustments it "
+"took to get it the way you wanted you understand why. The placeholder is "
+"in the right position with the right font size, paragraph alignment, "
+"bullet style, etc., etc. Basically you can just click and type in some "
+"text and you've got a slide."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:13
+msgid ""
+"A placeholder can be also be used to place a rich-content object on a "
+"slide. A picture, table, or chart can each be inserted into a placeholder"
+" and so take on the position and size of the placeholder, as well as "
+"certain of its formatting attributes."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:20
+msgid "Access a placeholder"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:22
+msgid ""
+"Every placeholder is also a shape, and so can be accessed using the "
+":attr:`~.Slide.shapes` property of a slide. However, when looking for a "
+"particular placeholder, the :attr:`~.Slide.placeholders` property can "
+"make things easier."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:27
+msgid ""
+"The most reliable way to access a known placeholder is by its "
+":attr:`~.PlaceholderFormat.idx` value. The :attr:`idx` value of a "
+"placeholder is the integer key of the slide layout placeholder it "
+"inherits properties from. As such, it remains stable throughout the life "
+"of the slide and will be the same for any slide created using that "
+"layout."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:33
+msgid ""
+"It's usually easy enough to take a look at the placeholders on a slide "
+"and pick out the one you want::"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:45
+msgid "... then, having the known index in hand, to access it directly::"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:52
+msgid ""
+"Item access on the placeholders collection is like that of a dictionary "
+"rather than a list. While the key used above is an integer, the lookup is"
+" on `idx` values, not position in a sequence. If the provided value does "
+"not match the `idx` value of one of the placeholders, |KeyError| will be "
+"raised. `idx` values are not necessarily contiguous."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:58
+msgid ""
+"In general, the :attr:`idx` value of a placeholder from a built-in slide "
+"layout (one provided with PowerPoint) will be between 0 and 5. The title "
+"placeholder will always have :attr:`idx` 0 if present and any other "
+"placeholders will follow in sequence, top to bottom and left to right. A "
+"placeholder added to a slide layout by a user in PowerPoint will receive "
+"an :attr:`idx` value starting at 10."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:67
+msgid "Identify and Characterize a placeholder"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:69
+msgid ""
+"A placeholder behaves differently that other shapes in some ways. In "
+"particular, the value of its :attr:`~.BaseShape.shape_type` attribute is "
+"unconditionally ``MSO_SHAPE_TYPE.PLACEHOLDER`` regardless of what type of"
+" placeholder it is or what type of content it contains::"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:83
+msgid ""
+"To find out more, it's necessary to inspect the contents of the "
+"placeholder's :attr:`~.BaseShape.placeholder_format` attribute. All "
+"shapes have this attribute, but accessing it on a non-placeholder shape "
+"raises |ValueError|. The :attr:`~.BaseShape.is_placeholder` attribute can"
+" be used to determine whether a shape is a placeholder::"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:98
+msgid ""
+"Another way a placeholder acts differently is that it inherits its "
+"position and size from its layout placeholder. This inheritance is "
+"overridden if the position and size of a placeholder are changed."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:104
+msgid "Insert content into a placeholder"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:106
+msgid ""
+"Certain placeholder types have specialized methods for inserting content."
+" In the current release, the `picture`, `table`, and `chart` placeholders"
+" have content insertion methods. Text can be inserted into `title` and "
+"`body` placeholders in the same way text is inserted into an auto shape."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:112
+msgid ":meth:`.PicturePlaceholder.insert_picture`"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:114
+msgid ""
+"The picture placeholder has an "
+":meth:`~.PicturePlaceholder.insert_picture` method::"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:126
+msgid ""
+"A reference to a picture placeholder becomes invalid after its "
+":meth:`~.PicturePlaceholder.insert_picture` method is called. This is "
+"because the process of inserting a picture replaces the original `p:sp` "
+"XML element with a new `p:pic` element containing the picture. Any "
+"attempt to use the original placeholder reference after the call will "
+"raise |AttributeError|. The new placeholder is the return value of the "
+":meth:`insert_picture` call and may also be obtained from the "
+"placeholders collection using the same `idx` key."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:135
+msgid ""
+"A picture inserted in this way is stretched proportionately and cropped "
+"to fill the entire placeholder. Best results are achieved when the aspect"
+" ratio of the source image and placeholder are the same. If the picture "
+"is taller in aspect than the placeholder, its top and bottom are cropped "
+"evenly to fit. If it is wider, its left and right sides are cropped "
+"evenly. Cropping can be adjusted using the crop properties on the "
+"placeholder, such as :attr:`~.PlaceholderPicture.crop_bottom`."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:144
+msgid ":meth:`.TablePlaceholder.insert_table`"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:146
+msgid ""
+"The table placeholder has an :meth:`~.TablePlaceholder.insert_table` "
+"method. The built-in template has no layout containing a table "
+"placeholder, so this example assumes a starting presentation named "
+"``having-table-placeholder.pptx`` having a table placeholder with idx 10 "
+"on its second slide layout::"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:164
+msgid ""
+"A table inserted in this way has the position and width of the original "
+"placeholder. Its height is proportional to the number of rows."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:167
+msgid ""
+"Like all rich-content insertion methods, a reference to a table "
+"placeholder becomes invalid after its "
+":meth:`~.TablePlaceholder.insert_table` method is called. This is because"
+" the process of inserting rich content replaces the original `p:sp` XML "
+"element with a new element, a `p:graphicFrame` in this case, containing "
+"the rich-content object. Any attempt to use the original placeholder "
+"reference after the call will raise |AttributeError|. The new placeholder"
+" is the return value of the :meth:`insert_table` call and may also be "
+"obtained from the placeholders collection using the original `idx` key, "
+"10 in this case."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:177
+msgid ""
+"The return value of the :meth:`~.TablePlaceholder.insert_table` method is"
+" a |PlaceholderGraphicFrame| object, which has all the properties and "
+"methods of a |GraphicFrame| object along with those specific to "
+"placeholders. The inserted table is contained in the graphic frame and "
+"can be obtained using its :attr:`~.PlaceholderGraphicFrame.table` "
+"property."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:184
+msgid ":meth:`.ChartPlaceholder.insert_chart`"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:186
+msgid ""
+"The chart placeholder has an :meth:`~.ChartPlaceholder.insert_chart` "
+"method. The presentation template built into |pp| has no layout "
+"containing a chart placeholder, so this example assumes a starting "
+"presentation named ``having-chart-placeholder.pptx`` having a chart "
+"placeholder with idx 10 on its second slide layout::"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:213
+msgid ""
+"A chart inserted in this way has the position and size of the original "
+"placeholder."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:216
+msgid ""
+"Note the return value from :meth:`~.ChartPlaceholder.insert_chart` is a "
+"|PlaceholderGraphicFrame| object, not the chart itself. A "
+"|PlaceholderGraphicFrame| object has all the properties and methods of a "
+"|GraphicFrame| object along with those specific to placeholders. The "
+"inserted chart is contained in the graphic frame and can be obtained "
+"using its :attr:`~.PlaceholderGraphicFrame.chart` property."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:223
+msgid ""
+"Like all rich-content insertion methods, a reference to a chart "
+"placeholder becomes invalid after its "
+":meth:`~.ChartPlaceholder.insert_chart` method is called. This is because"
+" the process of inserting rich content replaces the original `p:sp` XML "
+"element with a new element, a `p:graphicFrame` in this case, containing "
+"the rich-content object. Any attempt to use the original placeholder "
+"reference after the call will raise |AttributeError|. The new placeholder"
+" is the return value of the :meth:`insert_chart` call and may also be "
+"obtained from the placeholders collection using the original `idx` key, "
+"10 in this case."
+msgstr ""
+
+#: ../../user/placeholders-using.rst:235
+msgid "Setting the slide title"
+msgstr ""
+
+#: ../../user/placeholders-using.rst:237
+msgid ""
+"Almost all slide layouts have a title placeholder, which any slide based "
+"on the layout inherits when the layout is applied. Accessing a slide's "
+"title is a common operation and there's a dedicated attribute on the "
+"shape tree for it::"
+msgstr ""
+

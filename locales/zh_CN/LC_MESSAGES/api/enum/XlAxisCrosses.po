@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/XlAxisCrosses.rst:4
+msgid "``XL_AXIS_CROSSES``"
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:6
+msgid "Specifies the point on the specified axis where the other axis crosses."
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:8
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:17
+msgid "AUTOMATIC"
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:17
+msgid "The axis crossing point is set automatically, often at zero."
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:20
+msgid "CUSTOM"
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:20
+msgid "The `.crosses_at` property specifies the axis crossing point."
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:23
+msgid "MAXIMUM"
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:23
+msgid "The axis crosses at the maximum value."
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:27
+msgid "MINIMUM"
+msgstr ""
+
+#: ../../api/enum/XlAxisCrosses.rst:26
+msgid "The axis crosses at the minimum value."
+msgstr ""
+

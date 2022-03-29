@@ -1,0 +1,336 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/chart-data.rst:4
+msgid "ChartData objects"
+msgstr ""
+
+#: ../../api/chart-data.rst:6
+msgid ""
+"A ChartData object is used to specify the data depicted in a chart. It is"
+" used when creating a new chart and when replacing the data for an "
+"existing chart. Most charts are created using a |CategoryChartData| "
+"object, however the data for XY and bubble chart types is different "
+"enough that those each require a distinct chart data object."
+msgstr ""
+
+#: of pptx.chart.data.ChartData:1
+msgid ""
+"|ChartData| is simply an alias for |CategoryChartData| and may be removed"
+" in a future release. All new development should use |CategoryChartData| "
+"for creating or replacing the data in chart types other than XY and "
+"Bubble."
+msgstr ""
+
+#: of pptx.chart.data.CategoryChartData:1
+msgid ""
+"Accumulates data specifying the categories and series values for a chart "
+"and acts as a proxy for the chart data table that will be written to an "
+"Excel worksheet. Used as a parameter in :meth:`shapes.add_chart` and "
+":meth:`Chart.replace_data`."
+msgstr ""
+
+#: of pptx.chart.data.CategoryChartData:6
+msgid ""
+"This object is suitable for use with category charts, i.e. all those "
+"having a discrete set of label values (categories) as the range of their "
+"independent variable (X-axis) values. Unlike the ChartData types for "
+"charts supporting a continuous range of independent variable values (such"
+" as XyChartData), CategoryChartData has a single collection of category "
+"(X) values and each data point in its series specifies only the Y value. "
+"The corresponding X value is inferred by its position in the sequence."
+msgstr ""
+
+#: of pptx.chart.data.CategoryChartData.add_category:1
+msgid ""
+"Return a newly created |data.Category| object having *label* and appended"
+" to the end of the category collection for this chart. *label* can be a "
+"string, a number, a datetime.date, or datetime.datetime object. All "
+"category labels in a chart must be the same type. All category labels in "
+"a chart having multi-level categories must be strings."
+msgstr ""
+
+#: of pptx.chart.data.CategoryChartData.add_series:1
+msgid ""
+"Add a series to this data set entitled *name* and having the data points "
+"specified by *values*, an iterable of numeric values. *number_format* "
+"specifies how the series values will be displayed, and may be a string, "
+"e.g. '#,##0' corresponding to an Excel number format."
+msgstr ""
+
+#: of pptx.chart.data.CategoryChartData.categories:1
+msgid "|data.Categories| object providing access to category-object hierarchy."
+msgstr ""
+
+#: of pptx.chart.data.CategoryChartData.categories:3
+msgid ""
+"Assigning an iterable of category labels (strings, numbers, or dates) "
+"replaces the |data.Categories| object with a new one containing a "
+"category for each label in the sequence."
+msgstr ""
+
+#: of pptx.chart.data.Categories.add_category:7
+#: pptx.chart.data.CategoryChartData.categories:7
+msgid ""
+"Creating a chart from chart data having date categories will cause the "
+"chart to have a |DateAxis| for its category axis."
+msgstr ""
+
+#: of pptx.chart.data.CategoryChartData.values_ref:1
+msgid ""
+"The Excel worksheet reference to the values for *series* (not including "
+"the column heading)."
+msgstr ""
+
+#: of pptx.chart.data.BubbleChartData.number_format:1
+#: pptx.chart.data.CategoryChartData.number_format:1
+#: pptx.chart.data.XyChartData.number_format:1
+msgid ""
+"The formatting template string, e.g. '#,##0.0', that determines how X and"
+" Y values are formatted in this chart and in the Excel spreadsheet. A "
+"number format specified on a series will override this value for that "
+"series. Likewise, a distinct number format can be specified for a "
+"particular data point within a series."
+msgstr ""
+
+#: of pptx.chart.data.Categories:1
+msgid ""
+"A sequence of |data.Category| objects, also having certain hierarchical "
+"graph behaviors for support of multi-level (nested) categories."
+msgstr ""
+
+#: of pptx.chart.data.Categories.add_category:1
+msgid ""
+"Return a newly created |data.Category| object having *label* and appended"
+" to the end of this category sequence. *label* can be a string, a number,"
+" a datetime.date, or datetime.datetime object. All category labels in a "
+"chart must be the same type. All category labels in a chart having multi-"
+"level categories must be strings."
+msgstr ""
+
+#: of pptx.chart.data.Categories.are_dates:1
+msgid ""
+"Return |True| if the first category in this collection has a date label "
+"(as opposed to str or numeric). A date label is one of type datetime.date"
+" or datetime.datetime. Returns |False| otherwise, including when this "
+"category collection is empty. It also returns False when this category "
+"collection is hierarchical, because hierarchical categories can only be "
+"written as string labels."
+msgstr ""
+
+#: of pptx.chart.data.Categories.are_numeric:1
+msgid ""
+"Return |True| if the first category in this collection has a numeric "
+"label (as opposed to a string label), including if that value is a "
+"datetime.date or datetime.datetime object (as those are converted to "
+"integers for storage in Excel). Returns |False| otherwise, including when"
+" this category collection is empty. It also returns False when this "
+"category collection is hierarchical, because hierarchical categories can "
+"only be written as string labels."
+msgstr ""
+
+#: of pptx.chart.data.Categories.depth:1
+msgid ""
+"The number of hierarchy levels in this category graph. Returns 0 if it "
+"contains no categories."
+msgstr ""
+
+#: of pptx.chart.data.Categories.index:1
+msgid ""
+"The offset of *category* in the overall sequence of leaf categories. A "
+"non-leaf category gets the index of its first sub-category."
+msgstr ""
+
+#: of pptx.chart.data.Categories.leaf_count:1
+msgid ""
+"The number of leaf-level categories in this hierarchy. The return value "
+"is the same as that of `len()` only when the hierarchy is single level."
+msgstr ""
+
+#: of pptx.chart.data.Categories.levels:1
+msgid ""
+"A generator of (idx, label) sequences representing the category hierarchy"
+" from the bottom up. The first level contains all leaf categories, and "
+"each subsequent is the next level up."
+msgstr ""
+
+#: of pptx.chart.data.Categories.number_format:1
+msgid ""
+"Read/write. Return a string representing the number format used in Excel "
+"to format these category values, e.g. '0.0' or 'mm/dd/yyyy'. This string "
+"is only relevant when the categories are numeric or date type, although "
+"it returns 'General' without error when the categories are string labels."
+" Assigning |None| causes the default number format to be used, based on "
+"the type of the category labels."
+msgstr ""
+
+#: of pptx.chart.data.Category:1
+msgid ""
+"A chart category, primarily having a label to be displayed on the "
+"category axis, but also able to be configured in a hierarchy for support "
+"of multi-level category charts."
+msgstr ""
+
+#: of pptx.chart.data.Category.add_sub_category:1
+msgid ""
+"Return a newly created |data.Category| object having *label* and appended"
+" to the end of the sub-category sequence for this category."
+msgstr ""
+
+#: of pptx.chart.data.Category.label:1
+msgid ""
+"The value that appears on the axis for this category. The label can be a "
+"string, a number, or a datetime.date or datetime.datetime object."
+msgstr ""
+
+#: of pptx.chart.data.Category.numeric_str_val:1
+msgid ""
+"The string representation of the numeric (or date) label of this "
+"category, suitable for use in the XML `c:pt` element for this category. "
+"The optional *date_1904* parameter specifies the epoch used for "
+"calculating Excel date numbers."
+msgstr ""
+
+#: of pptx.chart.data.Category.sub_categories:1
+msgid "The sequence of child categories for this category."
+msgstr ""
+
+#: of pptx.chart.data.XyChartData:1
+msgid ""
+"A specialized ChartData object suitable for use with an XY (aka. scatter)"
+" chart. Unlike ChartData, it has no category sequence. Rather, each data "
+"point of each series specifies both an X and a Y value."
+msgstr ""
+
+#: of pptx.chart.data.XyChartData.add_series:1
+msgid ""
+"Return an |XySeriesData| object newly created and added at the end of "
+"this sequence, identified by *name* and values formatted with "
+"*number_format*."
+msgstr ""
+
+#: of pptx.chart.data.BubbleChartData:1
+msgid ""
+"A specialized ChartData object suitable for use with a bubble chart. A "
+"bubble chart is essentially an XY chart where the markers are scaled to "
+"provide a third quantitative dimension to the exhibit."
+msgstr ""
+
+#: of pptx.chart.data.BubbleChartData.add_series:1
+msgid ""
+"Return a |BubbleSeriesData| object newly created and added at the end of "
+"this sequence, and having series named *name* and values formatted with "
+"*number_format*."
+msgstr ""
+
+#: of pptx.chart.data.XySeriesData:1
+msgid ""
+"The data specific to a particular XY chart series. It provides access to "
+"the series label, the series data points, and an optional number format "
+"to be applied to each data point not having a specified number format."
+msgstr ""
+
+#: of pptx.chart.data.XySeriesData:5
+msgid ""
+"The sequence of data points in an XY series is significant; lines are "
+"plotted following the sequence of points, even if that causes a line "
+"segment to \"travel backward\" (implying a multi-valued function). The "
+"data points are not automatically sorted into increasing order by X "
+"value."
+msgstr ""
+
+#: of pptx.chart.data.XySeriesData.add_data_point:1
+msgid ""
+"Return an XyDataPoint object newly created with values *x* and *y*, and "
+"appended to this sequence."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData.index:1
+#: pptx.chart.data.XySeriesData.index:1
+msgid ""
+"Zero-based integer indicating the sequence position of this series in its"
+" chart. For example, the second of three series would return `1`."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData.name:1
+#: pptx.chart.data.XySeriesData.name:1
+msgid ""
+"The name of this series, e.g. 'Series 1'. This name is used as the column"
+" heading for the y-values of this series and may also appear in the chart"
+" legend and perhaps other chart locations."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData.number_format:1
+#: pptx.chart.data.XySeriesData.number_format:1
+msgid ""
+"The formatting template string that determines how a number in this "
+"series is formatted, both in the chart and in the Excel spreadsheet; for "
+"example '#,##0.0'. If not specified for this series, it is inherited from"
+" the parent chart data object."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData.x_values:1
+#: pptx.chart.data.XySeriesData.x_values:1
+msgid ""
+"A sequence containing the X value of each datapoint in this series, in "
+"data point order."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData.y_values:1
+#: pptx.chart.data.XySeriesData.y_values:1
+msgid ""
+"A sequence containing the Y value of each datapoint in this series, in "
+"data point order."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData:1
+msgid ""
+"The data specific to a particular Bubble chart series. It provides access"
+" to the series label, the series data points, and an optional number "
+"format to be applied to each data point not having a specified number "
+"format."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData:6
+msgid ""
+"The sequence of data points in a bubble chart series is maintained "
+"throughout the chart building process because a data point has no unique "
+"identifier and can only be retrieved by index."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData.add_data_point:1
+msgid ""
+"Append a new BubbleDataPoint object having the values *x*, *y*, and "
+"*size*. The optional *number_format* is used to format the Y value. If "
+"not provided, the number format is inherited from the series data."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData.bubble_sizes:1
+msgid ""
+"A sequence containing the bubble size for each datapoint in this series, "
+"in data point order."
+msgstr ""
+
+#: of pptx.chart.data.BubbleSeriesData.data_point_offset:1
+msgid ""
+"The integer count of data points that appear in all chart series prior to"
+" this one."
+msgstr ""
+

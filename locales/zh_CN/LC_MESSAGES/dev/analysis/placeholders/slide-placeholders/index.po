@@ -1,0 +1,287 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:3
+msgid "Slide Placeholders"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:14
+msgid "Candidate protocol"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:44
+msgid "Inheritance behaviors"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:46
+msgid ""
+"A placeholder shape on a slide is initially little more than a reference "
+"to its \"parent\" placeholder shape on the slide layout. If it is a "
+"placeholder shape that can accept text, it contains a `<p:txBody>` "
+"element. Position, size, and even geometry are inherited from the layout "
+"placeholder, which may in turn inherit one or more of those properties "
+"from a master placeholder."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:54
+msgid "Substitution behaviors"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:56
+msgid ""
+"Content may be placed into a placeholder shape two ways, by *insertion* "
+"and by *substitution*. Insertion is simply placing the text insertion "
+"point in the placeholder and typing or pasting in text. Substitution "
+"occurs when an object such as a table or picture is inserted into a "
+"placeholder by clicking on a placeholder button."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:62
+msgid ""
+"An empty placeholder is always a `<p:sp>` (autoshape) element. When an "
+"object such as a table is inserted into the placehoder by clicking on a "
+"placeholder button, the `<p:sp>` element is replaced with the appropriate"
+" new shape element, a table element in this case. The `<p:ph>` element is"
+" retained in the new shape element and preserves the linkage to the "
+"layout placeholder such that the 'empty' placeholder shape can be "
+"restored if the inserted object is deleted."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:72
+msgid "Operations"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:74
+msgid "clone on slide create"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:75
+msgid "query inherited property values"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:76
+msgid "substitution"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:80
+msgid "Example XML"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:84
+msgid "Baseline textbox shape::"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:118
+msgid "Content placeholder::"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:141
+msgid "Notable differences:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:143
+msgid "placeholder has `<a:spLocks>` element"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:144
+msgid "placeholder has `<p:ph>` element"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:145
+msgid "placeholder has no `<p:spPr>` child elements, implying both that:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:147
+msgid ""
+"all shape properties are initially inherited from the layout placeholder,"
+" including position, size, and geometry"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:149
+msgid ""
+"any specific shape property value may be overridden by specifying it on "
+"the inheriting shape"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:153
+msgid "Matching slide layout placeholder::"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:184
+msgid "Behaviors"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:186
+msgid ""
+"A placeholder is accessed through a slide-type object's shape collection,"
+" e.g. ``slide.shapes.placeholders``. The contents of the placeholders "
+"collection is a subset of the shapes in the shape collection."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:190
+msgid ""
+"The title placeholder, if it exists, always appears first in the "
+"placeholders collection."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:193
+msgid ""
+"Placeholders can only be top-level shapes, they cannot be nested in a "
+"group shape."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:196
+msgid ""
+"A slide placeholder may be either an `<p:sp>` (autoshape) element or a "
+"`<p:pic>` or `<p:graphicFrame>` element. In either case, its relationship"
+" to its layout placeholder is preserved."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:200
+msgid "Slide inherits from layout strictly on idx value."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:202
+msgid ""
+"The placeholder with idx=\"0\" is the title placeholder. \"0\" is the "
+"default for the *idx* attribute on <p:ph>, so one with no idx attribute "
+"is the title placeholder."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:206
+msgid ""
+"The document order of placeholders signifies their z-order and has no "
+"bearing on their index order. :attr:`_ShapeCollection.placeholders` "
+"contains the placeholders in order of *idx* value, which means the title "
+"placeholder always appears first in the sequence, if it is present."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:212
+msgid "Automatic naming"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:214
+msgid ""
+"Most placeholders are automatically named '{root_name} Placeholder {num}'"
+" where *root_name* is something like ``Chart`` and num is a positive "
+"integer. A typical example is ``Table Placeholder 3``."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:218
+msgid ""
+"A placeholder with vertical orientation, i.e. ``<p:ph orient=\"vert\">``,"
+" is prefixed with ``'Vertical '``, e.g. ``Vertical Text Placeholder 2``."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:221
+msgid ""
+"The word ``'Placeholder'`` is omitted when the type is 'title', "
+"'ctrTitle', or 'subTitle'."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:225
+msgid "On slide creation"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:227
+msgid ""
+"When a new slide is added to a presentation, empty placeholders are added"
+" to it based on the placeholders present in the specified slide layout."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:230
+msgid ""
+"Only content placeholders are created automatically. Special placeholders"
+" must be created individually with additional calls. Special placeholders"
+" include header, footer, page numbers, date, and slide number; and "
+"perhaps others. In this respect, it seems like special placeholders on a "
+"slide layout are simply default settings for those placeholders in case "
+"they are added later."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:238
+msgid "During slide life-cycle"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:240
+msgid ""
+"Placeholders can be deleted from slides and can be restored by calling "
+"methods like AddTitle on the shape collection. AddTitle raises if there's"
+" already a title placeholder, so need to call .hasTitle() beforehand."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:246
+msgid "Experimental findings -- Applying layouts"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:248
+msgid ""
+"Switching the layout of an empty title slide to the blank layout resulted"
+" in the placeholder shapes (title, subtitle) being removed."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:250
+msgid ""
+"The same switch when the shapes had content (text), resulted in the "
+"shapes being preserved, complete with their `<p:ph>` element. Position "
+"and dimension values were added that preserve the height, width, top "
+"position but set the left position to zero."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:254
+msgid ""
+"Restoring the original layout caused those position and dimension values "
+"to be removed (and \"re-inherited\")."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:256
+msgid ""
+"Applying a new (or the same) style to a slide appears to reset selected "
+"properties such that they are re-inherited from the new layout. Size and "
+"position are both reset. Background color and font, at least, are not "
+"reset."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:260
+msgid ""
+"The \"Reset Layout to Default Settings\" option appears to reset all "
+"shape properties to inherited, without exception."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:262
+msgid ""
+"Content of a placeholder shape is retained and displayed, even when the "
+"slide layout is changed to one without a matching layout placeholder."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:264
+msgid ""
+"The behavior when placeholders are added to a slide layout (from the "
+"slide master) may also be worth characterizing."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:267
+msgid "... show master placeholder ..."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/index.rst:268
+msgid "... add (arbitrary) placeholder ..."
+msgstr ""
+

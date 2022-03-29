@@ -1,0 +1,301 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-movie.rst:3 ../../dev/analysis/shp-movie.rst:100
+msgid "Movie"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:5
+msgid ""
+"PowerPoint allows a video to be inserted into a slide and run in slide "
+"show mode. In the PowerPoint UI, a shape of this type is called a "
+"*movie*."
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:8
+msgid ""
+"A movie is implemented as a variant form of a `p:pic` element, which "
+"makes it closely related to a `Picture` object. This close relationship "
+"makes sense, because a movie acts very much like an image when it is not "
+"playing and the two shapes therefore share much of their behavior. When "
+"not playing, a movie shape displays a static image, called a *poster "
+"frame*."
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:16
+msgid "Candidate Protocol"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:18
+msgid ""
+"A video can be added to a slide by specifying a video file, position, "
+"size, and optional poster frame::"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:40
+msgid "Animation/timing resources"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:42
+msgid ""
+"Working with animation (Open XML SDK) https://msdn.microsoft.com/en-"
+"us/library/office/gg278329.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:45
+msgid ""
+"AnimationBehaviors (Collection) Members (PowerPoint) "
+"https://msdn.microsoft.com/en-us/library/office/ff746028.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:48
+msgid ""
+"AnimationBehavior Members (PowerPoint) https://msdn.microsoft.com/en-"
+"us/library/office/ff746141.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:51
+msgid ""
+"<p:par> stands for *parallel*, and is one of the available time "
+"containers (like \"parallel\" timing, or executing at the same time). "
+"https://folk.uio.no/annembek/inf3210/how_2_SMIL.html"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:55
+msgid "https://technet.microsoft.com/en-au/library/gg278329.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:57
+msgid "http://openxmldeveloper.org/discussions/formats/f/15/t/6838.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:61
+msgid "Possibly interesting resources"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:65
+msgid ""
+"`Apache POI discussion <http://apache-"
+"poi.1045710.n5.nabble.com/Question-a bout-embedded-video-in-PPTX-files-"
+"td5718461.html>`_"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:68
+msgid "`Apache POI discussion on inserting video`_"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:76
+msgid "MS API"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:78
+msgid ""
+"Slide.Timeline https://msdn.microsoft.com/en-"
+"us/library/office/ff745382.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:81
+msgid ""
+"TimeLine Object https://msdn.microsoft.com/en-"
+"us/library/office/ff743965.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:84
+msgid ""
+"Shapes.AddMediaObject() (deprecated in PowerPoint 2013, see "
+"AddMediaObject2) https://msdn.microsoft.com/EN-"
+"US/library/office/ff745385.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:87
+msgid ""
+"Shapes.AddMediaObject2() https://msdn.microsoft.com/en-"
+"us/library/office/ff744080.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:90
+msgid "MediaFormat https://msdn.microsoft.com/en-us/library/office/ff745983.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:95
+msgid "Enumerations"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:97
+msgid ""
+"PP_MEDIA_TYPE - https://msdn.microsoft.com/en-"
+"us/library/office/ff746008.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:100
+msgid "PP_MEDIA_TYPE.MOVIE"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:100
+msgid "3"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:102
+msgid "PP_MEDIA_TYPE.SOUND"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:102
+msgid "2"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:102
+msgid "Sound"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:104
+msgid "PP_MEDIA_TYPE.OTHER"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:104
+msgid "1"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:104
+msgid "Others"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:106
+msgid "PP_MEDIA_TYPE.MIXED"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:106
+msgid "-2"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:106
+msgid "Mixed"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:111
+msgid "Click Behavior"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:113
+msgid ""
+"The video's \"play on click\" behavior in slideshow mode is implemented "
+"by the use of a `<p:timing>` element in the `<p:sld>` element. No "
+"\"play\" button or slider control appears when this element is not "
+"present."
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:119
+msgid "Poster Frame"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:121
+msgid ""
+"A *poster frame* is the static image displayed in the video location when"
+" the video is not playing. Each image that appears on the YouTube home "
+"page representing a video is an example of a poster frame."
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:125
+msgid ""
+"The poster frame is perhaps most frequently a frame from the video "
+"itself. In some contexts, the first frame is used by default. The poster "
+"frame can be undefined, or empty, and it can also be an unrelated image."
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:129
+msgid ""
+"Some of the example videos for this feature get a poster frame upon "
+"insertion; however at least one does not. In that case, a media "
+"\"speaker\" icon (stretched to fit) is shown instead."
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:135 ../../dev/analysis/shp-movie.rst:446
+msgid "XML Semantics"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:137
+msgid ""
+"`id=` of p:cTn element just needs to be unique among `p:cTn` elements, "
+"apparently."
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:142
+msgid "Example XML"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:146
+msgid "Inserted MPEG-4 H.264 video::"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:186
+msgid "Regular picture shape, for comparison::"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:438
+msgid "p:video element"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:440
+msgid "Provides playback controls."
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:442
+msgid "http://openxmldeveloper.org/discussions/formats/f/15/p/1124/2842.aspx#2842"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:448
+msgid ""
+"Extension DAA4B4D4-6D71-4841-9C94-3DE7FCFB9230 is described as a `media "
+"extension`_. It appears to allow:"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:451
+msgid "\"cropping\" the video period (set start and stop time markers)"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:452
+msgid "provide for \"fade-in\""
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:453
+msgid ""
+"allow for setting bookmarks in the video for fast jumps to a particular "
+"location"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:459
+msgid "This and other extensions are documented in `this PDF <media_pdf>`_."
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:466
+msgid "Related Schema Definitions"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:470
+msgid "The root element of a picture shape is a `p:pic (CT_Picture)` element::"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:687
+msgid "`p:timing` related Schema Definitions"
+msgstr ""
+
+#: ../../dev/analysis/shp-movie.rst:691
+msgid "The `p:timing` element is a child of the `p:sld (CT_Slide)` element::"
+msgstr ""
+

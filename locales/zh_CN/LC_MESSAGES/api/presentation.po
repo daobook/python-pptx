@@ -1,0 +1,241 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/presentation.rst:3
+msgid "Presentations"
+msgstr ""
+
+#: ../../api/presentation.rst:5
+msgid ""
+"A presentation is opened using the :func:`Presentation` function, "
+"provided directly by the :mod:`pptx` package::"
+msgstr ""
+
+#: ../../api/presentation.rst:11
+msgid ""
+"This function returns a :class:`.Presentation` object which is the root "
+"of a graph containing the components that constitute a presentation, e.g."
+" slides, shapes, etc. All existing presentation components are referenced"
+" by traversing the graph and new objects are added to the graph by "
+"calling a method on that object's container. Consequently, |pp| objects "
+"are generally not constructed directly."
+msgstr ""
+
+#: ../../api/presentation.rst:18
+msgid "Example::"
+msgstr ""
+
+#: ../../api/presentation.rst:31
+msgid "|Presentation| function"
+msgstr ""
+
+#: ../../api/presentation.rst:33
+msgid ""
+"This function is the only reference that must be imported to work with "
+"presentation files. Typical use interacts with many other classes, but "
+"there is no need to construct them as they are accessed using a property "
+"or method of their containing object."
+msgstr ""
+
+#: of pptx.api.Presentation:1
+msgid ""
+"Return a |Presentation| object loaded from *pptx*, where *pptx* can be "
+"either a path to a ``.pptx`` file (a string) or a file-like object. If "
+"*pptx* is missing or ``None``, the built-in default presentation "
+"\"template\" is loaded."
+msgstr ""
+
+#: ../../api/presentation.rst:42
+msgid "|Presentation| objects"
+msgstr ""
+
+#: of pptx.presentation.Presentation:1
+msgid "PresentationML (PML) presentation."
+msgstr ""
+
+#: of pptx.presentation.Presentation:3
+msgid ""
+"Not intended to be constructed directly. Use :func:`pptx.Presentation` to"
+" open or create a presentation."
+msgstr ""
+
+#: of pptx.presentation.Presentation.core_properties:1
+msgid ""
+"Instance of |CoreProperties| holding the read/write Dublin Core document "
+"properties for this presentation."
+msgstr ""
+
+#: of pptx.presentation.Presentation.notes_master:1
+msgid ""
+"Instance of |NotesMaster| for this presentation. If the presentation does"
+" not have a notes master, one is created from a default template and "
+"returned. The same single instance is returned on each call."
+msgstr ""
+
+#: of pptx.presentation.Presentation.save:1
+msgid ""
+"Save this presentation to *file*, where *file* can be either a path to a "
+"file (a string) or a file-like object."
+msgstr ""
+
+#: of pptx.presentation.Presentation.slide_height:1
+msgid ""
+"Height of slides in this presentation, in English Metric Units (EMU). "
+"Returns |None| if no slide width is defined. Read/write."
+msgstr ""
+
+#: of pptx.presentation.Presentation.slide_layouts:1
+msgid ""
+"Sequence of |SlideLayout| instances belonging to the first |SlideMaster| "
+"of this presentation. A presentation can have more than one slide master "
+"and each master will have its own set of layouts. This property is a "
+"convenience for the common case where the presentation has only a single "
+"slide master."
+msgstr ""
+
+#: of pptx.presentation.Presentation.slide_master:1
+msgid ""
+"First |SlideMaster| object belonging to this presentation. Typically, "
+"presentations have only a single slide master. This property provides "
+"simpler access in that common case."
+msgstr ""
+
+#: ../../docstring of pptx.presentation.Presentation.slide_masters:1
+msgid "Sequence of |SlideMaster| objects belonging to this presentation"
+msgstr ""
+
+#: of pptx.presentation.Presentation.slide_width:1
+msgid ""
+"Width of slides in this presentation, in English Metric Units (EMU). "
+"Returns |None| if no slide width is defined. Read/write."
+msgstr ""
+
+#: ../../docstring of pptx.presentation.Presentation.slides:1
+msgid "|Slides| object containing the slides in this presentation."
+msgstr ""
+
+#: ../../api/presentation.rst:52
+msgid "|CoreProperties| objects"
+msgstr ""
+
+#: ../../api/presentation.rst:54
+msgid ""
+"Each |Presentation| object has a |CoreProperties| object accessed via its"
+" :attr:`core_properties` attribute that provides read/write access to the"
+" so-called *core properties* for the document. The core properties are "
+"author, category, comments, content_status, created, identifier, "
+"keywords, language, last_modified_by, last_printed, modified, revision, "
+"subject, title, and version."
+msgstr ""
+
+#: ../../api/presentation.rst:61
+msgid ""
+"Each property is one of three types, |str|, |datetime|, or |int|. String "
+"properties are limited in length to 255 characters and return an empty "
+"string ('') if not set. Date properties are assigned and returned as "
+"|datetime| objects without timezone, i.e. in UTC. Any timezone "
+"conversions are the responsibility of the client. Date properties return "
+"|None| if not set."
+msgstr ""
+
+#: ../../api/presentation.rst:67
+msgid ""
+"|pp| does not automatically set any of the document core properties other"
+" than to add a core properties part to a presentation that doesn't have "
+"one (very uncommon). If |pp| adds a core properties part, it contains "
+"default values for the title, last_modified_by, revision, and modified "
+"properties. Client code should change properties like revision and "
+"last_modified_by explicitly if that behavior is desired."
+msgstr ""
+
+#: ../../api/presentation.rst:78
+msgid ""
+"*string* -- An entity primarily responsible for making the content of the"
+" resource."
+msgstr ""
+
+#: ../../api/presentation.rst:83
+msgid ""
+"*string* -- A categorization of the content of this package. Example "
+"values might include: Resume, Letter, Financial Forecast, Proposal, or "
+"Technical Presentation."
+msgstr ""
+
+#: ../../api/presentation.rst:89
+msgid "*string* -- An account of the content of the resource."
+msgstr ""
+
+#: ../../api/presentation.rst:93
+msgid "*string* -- completion status of the document, e.g. 'draft'"
+msgstr ""
+
+#: ../../api/presentation.rst:97
+msgid "*datetime* -- time of intial creation of the document"
+msgstr ""
+
+#: ../../api/presentation.rst:101
+msgid ""
+"*string* -- An unambiguous reference to the resource within a given "
+"context, e.g. ISBN."
+msgstr ""
+
+#: ../../api/presentation.rst:106
+msgid ""
+"*string* -- descriptive words or short phrases likely to be used as "
+"search terms for this document"
+msgstr ""
+
+#: ../../api/presentation.rst:111
+msgid "*string* -- language the document is written in"
+msgstr ""
+
+#: ../../api/presentation.rst:115
+msgid ""
+"*string* -- name or other identifier (such as email address) of person "
+"who last modified the document"
+msgstr ""
+
+#: ../../api/presentation.rst:120
+msgid "*datetime* -- time the document was last printed"
+msgstr ""
+
+#: ../../api/presentation.rst:124
+msgid "*datetime* -- time the document was last modified"
+msgstr ""
+
+#: ../../api/presentation.rst:128
+msgid ""
+"*int* -- number of this revision, incremented by the PowerPoint® client "
+"once each time the document is saved. Note however that the revision "
+"number is not automatically incremented by |pp|."
+msgstr ""
+
+#: ../../api/presentation.rst:134
+msgid "*string* -- The topic of the content of the resource."
+msgstr ""
+
+#: ../../api/presentation.rst:138
+msgid "*string* -- The name given to the resource."
+msgstr ""
+
+#: ../../api/presentation.rst:142
+msgid "*string* -- free-form version string"
+msgstr ""
+

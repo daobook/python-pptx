@@ -1,0 +1,108 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/action.rst:4
+msgid "Click Action-related Objects"
+msgstr ""
+
+#: ../../api/action.rst:6
+msgid ""
+"The following classes represent click and hover mouse actions, typically "
+"a hyperlink. Other actions such as navigating to another slide in the "
+"presentation or running a macro are also possible."
+msgstr ""
+
+#: ../../api/action.rst:12
+msgid "|ActionSetting| objects"
+msgstr ""
+
+#: of pptx.action.ActionSetting:1
+msgid "Properties specifying how a shape or run reacts to mouse actions."
+msgstr ""
+
+#: of pptx.action.ActionSetting.action:1
+msgid "Member of :ref:`PpActionType` enumeration, such as `PP_ACTION.HYPERLINK`."
+msgstr ""
+
+#: of pptx.action.ActionSetting.action:3
+msgid ""
+"The returned member indicates the type of action that will result when "
+"the specified shape or text is clicked or the mouse pointer is positioned"
+" over the shape during a slide show."
+msgstr ""
+
+#: of pptx.action.ActionSetting.action:7
+msgid ""
+"If there is no click-action or the click-action value is not recognized "
+"(is not one of the official `MsoPpAction` values) then `PP_ACTION.NONE` "
+"is returned."
+msgstr ""
+
+#: ../../docstring of pptx.action.ActionSetting.hyperlink:1
+msgid ""
+"A |Hyperlink| object representing the hyperlink action defined on this "
+"click or hover mouse event. A |Hyperlink| object is always returned, even"
+" if no hyperlink or other click action is defined."
+msgstr ""
+
+#: of pptx.action.ActionSetting.part:1 pptx.action.Hyperlink.part:1
+msgid "The package part containing this object"
+msgstr ""
+
+#: of pptx.action.ActionSetting.target_slide:1
+msgid ""
+"A reference to the slide in this presentation that is the target of the "
+"slide jump action in this shape. Slide jump actions include "
+"`PP_ACTION.FIRST_SLIDE`, `LAST_SLIDE`, `NEXT_SLIDE`, `PREVIOUS_SLIDE`, "
+"and `NAMED_SLIDE`. Returns |None| for all other actions. In particular, "
+"the `LAST_SLIDE_VIEWED` action and the `PLAY` (start other presentation) "
+"actions are not supported."
+msgstr ""
+
+#: of pptx.action.ActionSetting.target_slide:8
+msgid ""
+"A slide object may be assigned to this property, which makes the shape an"
+" \"internal hyperlink\" to the assigened slide::"
+msgstr ""
+
+#: of pptx.action.ActionSetting.target_slide:15
+msgid ""
+"Assigning |None| removes any slide jump action. Note that this is "
+"accomplished by removing any action present (such as a hyperlink), "
+"without first checking that it is a slide jump action."
+msgstr ""
+
+#: ../../api/action.rst:21
+msgid "|Hyperlink| objects"
+msgstr ""
+
+#: of pptx.action.Hyperlink:1
+msgid "Represents a hyperlink action on a shape or text run."
+msgstr ""
+
+#: of pptx.action.Hyperlink.address:1
+msgid ""
+"Read/write. The URL of the hyperlink. URL can be on http, https, mailto, "
+"or file scheme; others may work. Returns |None| if no hyperlink is "
+"defined, including when another action such as `RUN_MACRO` is defined on "
+"the object. Assigning |None| removes any action defined on the object, "
+"whether it is a hyperlink action or not."
+msgstr ""
+

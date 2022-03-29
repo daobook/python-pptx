@@ -1,0 +1,402 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:3
+msgid "Placeholders in new slide"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:6
+msgid "Topic of inquiry"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:8
+msgid ""
+"What placeholder shapes are added to a new slide when it is added to a "
+"presentation?"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:13
+msgid "Abstract"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:15
+msgid ""
+"Slides were created based on a variety of slide layouts so their "
+"placeholder elements could be inspected to reveal slide construction "
+"behaviors that depend on the slide layout chosen. A placeholder shape "
+"appeared in each slide corresponding to each of the placeholder shapes in"
+" the slide layout, excepting those of footer, date, and slide number "
+"type. Placeholder shapes were ``<p:sp>`` elements for all placeholder "
+"types rather than matching the element type of the shape they hold a "
+"place for. Each slide-side placeholder had a ``<p:ph>`` element that "
+"exactly matched the corresponding element in the slide layout, with the "
+"exception that a *hasCustomPrompt* attribute, if present in the slide "
+"layout, did not appear in the slide. Placeholders in the slide were named"
+" and numbered differently. All placeholders in the slide layout had a "
+"``<p:txBody>`` element, but only certain types had one in the slide. All "
+"placeholders were locked against grouping."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:31
+msgid "Procedure"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:33
+msgid ""
+"This procedure was run using PowerPoint for Mac 2011 running on an Intel-"
+"based Mac Pro running Mountain Lion 10.8.2."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:36
+msgid "Create a new presentation based on the \"White\" theme."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:38
+msgid ""
+"Add a new slide layout and add placeholders of the following types. The "
+"new slide layout is (automatically) named *Custom Layout*."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:41
+msgid "Chart"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:42
+msgid "Table"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:43
+msgid "SmartArt Graphic"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:44
+msgid "Media"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:45
+msgid "Clip Art"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:47
+msgid ""
+"Add a new slide for each of the following layouts. Do not enter any "
+"content into the placeholders."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:50
+msgid "Title Slide (added automatically on File > New)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:51
+msgid "Title and Content"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:52
+msgid "Two Content"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:53
+msgid "Comparison"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:54
+msgid "Content with Caption"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:55
+msgid "Picture with Caption"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:56
+msgid "Vertical Title and Text"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:57
+msgid "Custom Layout"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:59
+msgid ""
+"Save and unpack the presentation. This command works on OS X: ``unzip "
+"white.pptx -d white``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:62
+msgid ""
+"Inspect the slide.xml files and compare placeholders with those present "
+"in their corresponding slideLayout.xml file."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:67
+msgid "Observations"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:69
+msgid "Typical XML for a placeholder::"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:93
+msgid "elements"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:95
+msgid ""
+"Placeholder shapes **WERE** created corresponding to layout placeholders "
+"of the following types in the slide layout:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:98
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:128
+msgid "``'title'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:99
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:129
+msgid "``'body'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:100
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:130
+msgid "``'ctrTitle'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:101
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:131
+msgid "``'subTitle'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:102
+msgid "``'obj'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:103
+msgid "``'chart'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:104
+msgid "``'tbl'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:105
+msgid "``'clipArt'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:106
+msgid "``'dgm'`` (SmartArt Graphic, perhaps abbreviation of 'diagram')"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:107
+msgid "``'media'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:108
+msgid "``'pic'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:109
+msgid "``None`` (type attribute default is ``'obj'``)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:111
+msgid ""
+"Placeholder shapes **WERE NOT** created corresponding to layout "
+"placeholders of these types in the slide layout:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:114
+msgid "``'dt'`` (date)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:115
+msgid "``'sldNum'`` (slide number)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:116
+msgid "``'ftr'`` (footer)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:118
+msgid ""
+"The following placeholder types do not apply to slides (they apply to "
+"notes pages and/or handouts)."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:121
+msgid "``'hdr'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:122
+msgid "``'sldImg'``"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:124
+msgid ""
+"**<p:txBody> element**. Placeholder shapes of the following types had a "
+"``<p:txBody>`` element. Placeholders of all other types did not have a "
+"``<p:txBody>`` element."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:132
+msgid "``'obj'`` (and those without a ``type`` attribute)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:134
+msgid ""
+"**<p:cNvPr> element**. Each placeholder shape in each slide had a "
+"``<p:cNvPr>`` element (it is a required element) populated with *id* and "
+"*name* attributes."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:138
+msgid ""
+"The value of the *id* attribute of ``p:cNvPr`` does not correspond to its"
+" value in the slide layout. Shape ids were renumbered starting from 2 and"
+" proceeding in sequence (e.g. 2, 3, 4, 5, ...). Note that id=\"1\" "
+"belongs to the spTree element, at "
+"``/p:sld/p:cSld/p:spTree/p:nvGrpSpPr/p:cNvPr@id``."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:143
+#, python-format
+msgid ""
+"The value of the *name* attribute is of the form '%s %d' % (type_name, "
+"num), where type_name is determined by the placeholder type (e.g. 'Media "
+"Placeholder') and num appears to default to ``id - 1``. The assigned name"
+" in each case was similar to its counterpart in the slide layout (same "
+"*type_name*), but its number was generally different."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:149
+msgid ""
+"**<p:cNvSpPr>** element. Placeholder shapes of all types had the element "
+"``<a:spLocks noGrp=\"1\"/>`` specifying the placeholder could not be "
+"grouped with any other shapes."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:153
+msgid ""
+"**<p:spPr>** element. All placeholder shapes had an empty ``<p:spPr>`` "
+"element."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:158
+msgid "attributes"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:160
+msgid ""
+"**type**. The ``type`` attribute of the ``<p:ph>`` element was copied "
+"without change. Where no ``type`` attribute appeared (defaults to "
+"\"obj\", indicating a \"content\" placeholder), no ``type`` attribute was"
+" added to the ``<p:ph>`` element."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:165
+msgid ""
+"**orient**. The ``orient`` attribute of the ``<p:ph>`` element was copied"
+" without change. Where no ``orient`` attribute appeared (defaults to "
+"\"horz\"), no ``orient`` attribute was added to the ``<p:ph>`` element."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:169
+msgid ""
+"**sz**. The ``sz`` (size) attribute of the ``<p:ph>`` element was copied "
+"without change. Where no ``sz`` attribute appeared (defaults to "
+"\"full\"), no ``sz`` attribute was added to the ``<p:ph>`` element."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:173
+msgid ""
+"**idx**. The ``idx`` attribute of the ``<p:ph>`` element was copied "
+"without change. Where no ``idx`` attribute appeared (defaults to \"0\", "
+"indicating the singleton title placeholder), no ``idx`` attribute was "
+"added to the ``<p:ph>`` element."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:178
+msgid ""
+"**hasCustomPrompt**. The ``hasCustomPrompt`` attribute of the ``<p:ph>`` "
+"element was NOT copied from the slide layout to the slide."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:183
+msgid "Other observations"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:185
+msgid ""
+"Placeholders created from the slide layout were always ``<p:sp>`` "
+"elements, even when they were a placeholder for a shape of another type, "
+"e.g. ``<p:graphicFrame>``. When the on-screen placeholder for a table was"
+" clicked to add a table, the ``<p:sp`` element was replaced by a "
+"``<p:graphicFrame>`` element containing the table. The ``<p:ph>`` element"
+" was retained in the new shape. Reapplying the layout to the slide caused"
+" the table to move to the original location of the placeholder (the idx "
+"may have been used for matching). Deleting the table caused the original "
+"placeholder to reappear in its original position."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:197
+msgid "Conclusions"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:199
+msgid ""
+"Placeholder shapes are added to new slides based on the placeholders "
+"present in the slide layout specified on slide creation."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:201
+msgid "Placeholders for footer, slide number, and date are excluded."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:202
+msgid ""
+"Each new placeholder is assigned an id starting from 2 and proceeding in "
+"increments of 1 (e.g. 2, 3, 4, ...)."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:204
+msgid "Each new placeholder is named based on its type and the id assigned."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:205
+msgid "Placeholders are locked against grouping."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:206
+msgid "Placeholders of selected types get a minimal ``<p:txBody>`` element."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:207
+msgid ""
+"Slide placeholders receive an exact copy of the ``<p:ph>`` element in the"
+" corresponding slide layout placeholder, except that the optional "
+"``hasCustomPrompt`` attribute, if present, is not copied."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:212
+msgid "Open Questions"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/placeholders-in-new-slide.rst:214
+msgid "None."
+msgstr ""
+

@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:3
+msgid "Chart - InvertIfNegative"
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:5
+msgid ""
+"Can be set on a bar series or on a data point. It's not clear what its "
+"meaning is on a non-bar data point. ``c:barSer/c:invertIfNegative`` is "
+"the target element. Also valid on a bubble series."
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:11
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:27
+msgid "Semantics"
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:29
+msgid "Defaults to |True| if the ``<c:invertIfNegative>`` element is not present."
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:30
+msgid ""
+"Defaults to |True| if the parent element is present but the `val` "
+"attribute is not."
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:35
+msgid "PowerPoint® behavior"
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:37
+msgid ""
+"In my tests, the ``<c:invertIfNegative>`` element is always present in a "
+"new bar chart and always explicitly initialized to False."
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:42
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:46
+msgid "A series element from a simple column chart (single series)::"
+msgstr ""
+
+#: ../../dev/analysis/cht-invert-if-negative.rst:68
+msgid "Related Schema Definitions"
+msgstr ""
+

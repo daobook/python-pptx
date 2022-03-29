@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/PpMediaType.rst:4
+msgid "``PP_MEDIA_TYPE``"
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:6
+msgid "Indicates the OLE media type."
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:8
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:18
+msgid "MOVIE"
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:18
+msgid "Video media such as MP4."
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:21
+msgid "OTHER"
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:21
+msgid "Other media types"
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:24
+msgid "SOUND"
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:24
+msgid "Audio media such as MP3."
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:28
+msgid "MIXED"
+msgstr ""
+
+#: ../../api/enum/PpMediaType.rst:27
+msgid "Return value only; indicates multiple media types."
+msgstr ""
+

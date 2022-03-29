@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-categories.rst:4
+msgid "Chart - Categories"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:6
+msgid ""
+"A category can be |None|, meaning the category exists, but there is no "
+"label for it."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:9
+msgid ""
+"The string value of it can be '', since it needs to be a string. But the "
+".label value will be |None|."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:13
+msgid "Caveats"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:15
+msgid ""
+"Categories are read from the first series in the plot. In all normal "
+"situations I've ever encountered, all series have exactly the same set of"
+" categories."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:19
+msgid ""
+"I'm not sure why the category labels are redundantly applied to each "
+"series, but the fact that they are leads me to believe I must be missing "
+"something; I don't believe they would repeat them like that if there "
+"wasn't a situation in which they could be different between two series in"
+" the same plot."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:24
+#, python-format
+msgid ""
+"Consequently, there might be some edge cases where this won't work quite "
+"as expected. At the same time, I expect it will work exactly as expected "
+"for 99.9% of the cases, maybe 99.99%."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:28
+msgid ""
+"Categories are not enforced to be strictly hierarchical. So if a higher-"
+"level category \"breaks\" (gets a new value) without also a new value at "
+"the next level, the results might be a little weird. Like changing from "
+"USA to Canada, but leaving NY as the state (by leaving that cell blank)."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:33
+msgid ""
+"Basically, the meaning of a structure like this is ambiguous. PowerPoint "
+"interprets it without error and python-pptx interprets it without error, "
+"but the results might not exactly match up. PowerPoint seems to take the "
+"senior category break and show the intermediate category as blank or "
+"'None'. But I suppose it could be interpreted as the senior category just"
+" splits a subordinate one; it's open to some question."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:42
+msgid "Multilevel Categories"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:44
+msgid ""
+"A category chart can have more than one level of categories, where each "
+"individual category is nested in a higher-level category."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:47
+msgid "https://www.youtube.com/watch?v=KbyQpzA7fLo"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:51
+msgid "Acceptance Tests"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:55
+msgid "cht-plot-props.feature::"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:61
+msgid "cht-categories.feature::"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:83
+msgid "cht-category.feature::"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:91
+msgid "XML semantics"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:93
+msgid "The hierarchy of the levels is indicated by their document order."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:95
+msgid ""
+"The scope of non-leaf category entries is indicated by the 'idx' "
+"attribute value. A non-leaf category spans from the leaf node having the "
+"matching idx to the last leaf node not contained in its subsequent "
+"sibling."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:99
+msgid ""
+"The idx value on each `<c:pt>` element identifies the element for "
+"possible overrides, like manual positioning or deletion (hiding). It may "
+"also key it to the values in the series and/or other items; the spec is "
+"silent on these details."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:104
+msgid ""
+"I can't find a way to set the `c:noMultiLvlLbl` element truthy using the "
+"UI. I suspect this is only an Excel option."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:107
+msgid ""
+"The `c:lvl` element does not appear when there is only a single level of "
+"categories. Also in that case, a `c:strCache` element contains the `c:pt`"
+" elements rather than a `c:multiLvlStrCache` element."
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:111
+msgid ""
+"What behavior is produced by a truthy value in "
+"`c:catAx/c:noMultiLvlLbl/@val` when there are multiple levels of "
+"categories defined?"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:118
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:122
+msgid "Single-level categories (common case)::"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:145
+msgid "Multi-level categories::"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:212
+msgid "Related Schema Definitions"
+msgstr ""
+
+#: ../../dev/analysis/cht-categories.rst:216
+msgid ""
+"A ``<c:cat>`` element is a child of a ``<c:ser>`` (series) element and is"
+" of the ``CT_AxDataSource`` type::"
+msgstr ""
+

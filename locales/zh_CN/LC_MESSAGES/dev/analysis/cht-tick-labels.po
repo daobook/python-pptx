@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-tick-labels.rst:3
+msgid "Chart - Tick Labels"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:5
+msgid ""
+"The vertical and horizontal divisions of a chart axis may be labeled with"
+" *tick labels*, text that describes the division, most commonly its "
+"category name or value. A tick labels object is not a collection. There "
+"is no object that represents in individual tick label."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:10
+msgid ""
+"Tick label text for a category axis comes from the name of each category."
+" The default tick label text for a category axis is the number that "
+"indicates the position of the category relative to the low end of this "
+"axis. To change the number of unlabeled tick marks between tick-mark "
+"labels, you must change the TickLabelSpacing property for the category "
+"axis."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:16
+msgid ""
+"Tick label text for the value axis is calculated based on the "
+"`major_unit`, `minimum_scale`, and `maximum_scale` properties of the "
+"value axis. To change the tick label text for the value axis, you must "
+"change the values of these properties."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:23
+msgid "Candidate protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:54
+msgid "Feature Summary"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:56
+msgid "**TickLabels.font** -- Read/only Font object for tick labels."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:57
+msgid "**TickLabels.number_format** -- Read/write string."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:58
+msgid "**TickLabels.number_format_is_linked** -- Read/write boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:59
+msgid "**TickLabels.offset** -- Read/write int between 0 and 1000, inclusive."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:63
+msgid "Microsoft API"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:66
+msgid "Font"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:66
+msgid "Returns the font of the specified object. Read-only ChartFont."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:69
+msgid "NumberFormat"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:69
+msgid "Returns or sets the format code for the object. Read/write String."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:74
+msgid "NumberFormatLinked"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:72
+msgid ""
+"True if the number format is linked to the cells (so that the number "
+"format changes in the labels when it changes in the cells). Read/write "
+"Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:79
+msgid "Offset"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:77
+msgid ""
+"Returns or sets the distance between the levels of labels, and the "
+"distance between the first level and the axis line. Read/write Long."
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:82
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:86
+msgid "Example category axis XML showing tick label-related elements::"
+msgstr ""
+
+#: ../../dev/analysis/cht-tick-labels.rst:115
+msgid "Related Schema Definitions"
+msgstr ""
+

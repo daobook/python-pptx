@@ -1,0 +1,525 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/dml-gradient.rst:4
+msgid "Gradient Fill"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:6
+msgid ""
+"A gradient fill is a smooth gradual transition between two or more "
+"colors. A gradient fill can mimic the shading of real-life objects and "
+"allow a graphic to look less \"flat\"."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:10
+msgid ""
+"Each \"anchor\" color and its relative location in the overall transition"
+" is known as a *stop*. A gradient definition gathers these in a sequence "
+"known as the *stop list*, which contains two or more stops (a gradient "
+"with only one stop would be a solid color)."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:15
+msgid ""
+"A gradient also has a *path*, which specifies the direction of the color "
+"transition. Perhaps most common is a *linear path*, where the transition "
+"is along a straight line, perhaps top-left to bottom-right. Other "
+"gradients like *radial* and *rectangular* are possible. The initial "
+"implementation supports only a linear path."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:23
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:25
+msgid ""
+"**Staring with a newly-created shape** A newly created shape has a fill "
+"of |None|, indicating it's fill is inherited::"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:35
+msgid ""
+"**Apply a gradient fill** A gradient fill is applied by calling the "
+"`.gradient()` method on the `FillFormat` object. This applies a two-stop "
+"linear gradient in the bottom-to-top direction (90-degrees in UI)::"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:61
+msgid "**Change angle of linear gradient.**::"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:69
+msgid ""
+"**Access a stop.** The `GradientStops` sequence provides access to an "
+"individual gradient stop.::"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:83
+msgid ""
+"**Manipulate gradient stop color.** The `.color` property of a gradient "
+"stop is a `ColorFormat` object, which may be manipulated like any other "
+"color to achieve the desired effect::"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:92
+msgid "**Manipulate gradient stop position.**::"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:100
+msgid "**Remove a gradient stop position.**::"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:108
+msgid "PowerPoint UI features and behaviors"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:110
+msgid ""
+"Gradient dialog enforces a two-stop minimum in the stops list. A stop "
+"that is one of only two stops cannot be deleted."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:113
+msgid "Gradient Gallery ..."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:117
+msgid "Related items from Microsoft VBA API"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:119
+msgid "`GradientAngle`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:120
+msgid "`GradientColorType`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:121
+msgid "`GradientDegree`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:122
+msgid "`GradientStops`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:123
+msgid "`GradientStyle`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:124
+msgid "`GradientVariant`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:126
+msgid "`OneColorGradient()`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:128
+msgid "`PresetGradient()`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:130
+msgid "`TwoColorGradient()`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:164
+msgid "Enumerations"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:167
+msgid "MsoFillType"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:169
+msgid "http://msdn.microsoft.com/EN-US/library/office/ff861408.aspx"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:172
+msgid "**msoFillBackground**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:172
+msgid "5 -- Fill is the same as the background."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:175
+msgid "**msoFillGradient**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:175
+msgid "3 -- Gradient fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:178
+msgid "**msoFillPatterned**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:178
+msgid "2 -- Patterned fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:181
+msgid "**msoFillPicture**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:181
+msgid "6 -- Picture fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:184
+msgid "**msoFillSolid**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:184
+msgid "1 -- Solid fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:187
+msgid "**msoFillTextured**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:187
+msgid "4 -- Textured fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:191
+msgid "**msoFillMixed**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:190
+msgid "-2 -- Mixed fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:194
+msgid "MsoGradientStyle"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:196
+msgid ""
+"https://msdn.microsoft.com/en-us/vba/office-shared-"
+"vba/articles/msogradient\\ style-enumeration-office"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:200
+msgid "**msoGradientDiagonalDown**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:200
+msgid ""
+"4    Diagonal gradient moving from a top corner down to the opposite "
+"corner."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:203
+msgid "**msoGradientDiagonalUp**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:203
+msgid ""
+"3    Diagonal gradient moving from a bottom corner up to the opposite "
+"corner."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:206
+msgid "**msoGradientFromCenter**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:206
+msgid "7    Gradient running from the center out to the corners."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:209
+msgid "**msoGradientFromCorner**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:209
+msgid "5    Gradient running from a corner to the other three corners."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:212
+msgid "**msoGradientFromTitle**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:212
+msgid "6    Gradient running from the title outward."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:215
+msgid "**msoGradientHorizontal**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:215
+msgid "1    Gradient running horizontally across the shape."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:218
+msgid "**msoGradientVertical**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:218
+msgid "2    Gradient running vertically down the shape."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:222
+msgid "**msoGradientMixed**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:221
+msgid "\\-2    Gradient is mixed."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:225
+msgid "MsoPresetGradientType"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:228
+msgid "**msoGradientBrass**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:228
+msgid "20    Brass gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:231
+msgid "**msoGradientCalmWater**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:231
+msgid "8    Calm Water gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:234
+msgid "**msoGradientChrome**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:234
+msgid "21    Chrome gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:237
+msgid "**msoGradientChromeII**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:237
+msgid "22    Chrome II gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:240
+msgid "**msoGradientDaybreak**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:240
+msgid "4    Daybreak gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:243
+msgid "**msoGradientDesert**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:243
+msgid "6    Desert gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:246
+msgid "**msoGradientEarlySunset**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:246
+msgid "1    Early Sunset gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:249
+msgid "**msoGradientFire**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:249
+msgid "9    Fire gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:252
+msgid "**msoGradientFog**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:252
+msgid "10    Fog gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:255
+msgid "**msoGradientGold**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:255
+msgid "18    Gold gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:258
+msgid "**msoGradientGoldII**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:258
+msgid "19    Gold II gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:261
+msgid "**msoGradientHorizon**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:261
+msgid "5    Horizon gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:264
+msgid "**msoGradientLateSunset**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:264
+msgid "2    Late Sunset gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:267
+msgid "**msoGradientMahogany**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:267
+msgid "15    Mahogany gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:270
+msgid "**msoGradientMoss**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:270
+msgid "11         Moss gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:273
+msgid "**msoGradientNightfall**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:273
+msgid "3    Nightfall gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:276
+msgid "**msoGradientOcean**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:276
+msgid "7         Ocean gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:279
+msgid "**msoGradientParchment**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:279
+msgid "14    Parchment gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:282
+msgid "**msoGradientPeacock**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:282
+msgid "12    Peacock gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:285
+msgid "**msoGradientRainbow**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:285
+msgid "16    Rainbow gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:288
+msgid "**msoGradientRainbowII**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:288
+msgid "17    Rainbow II gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:291
+msgid "**msoGradientSapphire**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:291
+msgid "24    Sapphire gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:294
+msgid "**msoGradientSilver**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:294
+msgid "23    Silver gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:297
+msgid "**msoGradientWheat**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:297
+msgid "13    Wheat gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:301
+msgid "**msoPresetGradientMixed**"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:300
+msgid "Mixed gradient."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:304
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:308
+msgid "Gradient fill (preset selected from gallery on PowerPoint 2014)::"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:335
+msgid "Gradient fill (simple created with gradient dialog)::"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:358
+msgid "XML semantics"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:360
+msgid "Each `a:gs` element is a fill format"
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:362
+msgid ""
+"`a:lin@ang` is angle in 1/60,000ths of a degree. Zero degrees is the "
+"vector (1, 0), pointing directly to the right. Degrees are measured "
+"**counter-clockwise** from that origin."
+msgstr ""
+
+#: ../../dev/analysis/dml-gradient.rst:368
+msgid "Related Schema Definitions"
+msgstr ""
+

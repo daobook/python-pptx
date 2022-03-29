@@ -1,0 +1,344 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-connector.rst:3
+msgid "Line/Connector Shape"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:5
+msgid ""
+"Lines are a sub-category of auto shape that differ in certain properties "
+"and behaviors. In particular, they have a start point and end point in "
+"addition to extents (left, top, width, height)."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:9
+msgid ""
+"Connectors are based on the ``<p:cxnSp>`` element and have one of a "
+"handful of different preset geometry values, such as ``line``. Freeform "
+"connectors, despite the name, are not connectors, and are a custom "
+"geometry shape based on the p:sp element."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:14
+msgid ""
+"Connectors can be \"connected\" to an auto shape such that a connected "
+"end point remains connected when the auto shape is moved. This relies on "
+"a concept of \"connection points\" on the auto shape. These connections "
+"points are preset features of the auto shape, similar to how adjustment "
+"points are pre-defined. Connection points are identified by index."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:20
+msgid ""
+"Connector shapes do not have a text frame and cannot have text that is "
+"anchored to the shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:25
+msgid "Design Issues"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:27
+msgid ""
+"See how PowerPoint interprets the remaining connector types like "
+"bentConnector2"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:32
+msgid "Unimplemented Scope"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:34
+msgid "Connector.shape_type = MSO_LINE"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:35
+msgid "BaseShape.is_connector + ConnectorShape.is_connector (not yet implemented)"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:37
+msgid "[ ] see how a connector returns for `connector.AutoShapeType` in MS API."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:41
+msgid "PowerPoint behaviors"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:43
+msgid ""
+"Once connected, moving the target shape moves the connector the same "
+"amount, however, the relative position of the connector end-point is not "
+"adjusted to align to the connection point; rather, the relative offset is"
+" maintained."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:48
+msgid ""
+"Also, when the connector is selected, the connected point is highlighted "
+"in red, even though it is not coincident with the connection point."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:51
+msgid ""
+"Arrow heads are not a direct property of a connector, despite perhaps "
+"appearing so in the UI. Line endings are a property of the line style of "
+"the connector (and other shapes)."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:57
+msgid "MS API"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:59
+msgid ""
+"`Shapes Object Members <https://msdn.microsoft.com/en-"
+"us/library/office/ff745286.aspx>`_"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:61
+msgid "AddConnector(Type, BeginX, BeginY, EndX, EndY)"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:64
+msgid ""
+"`MsoConnectorType Enumeration <https://msdn.microsoft.com/en-"
+"us/library/office/ff860918.aspx>`_"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:67
+#: ../../dev/analysis/shp-connector.rst:134
+msgid "msoConnectorCurve"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:67
+#: ../../dev/analysis/shp-connector.rst:134
+msgid "3"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:67
+#: ../../dev/analysis/shp-connector.rst:134
+msgid "Curved connector."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:69
+#: ../../dev/analysis/shp-connector.rst:135
+msgid "msoConnectorElbow"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:69
+#: ../../dev/analysis/shp-connector.rst:135
+msgid "2"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:69
+#: ../../dev/analysis/shp-connector.rst:135
+msgid "Elbow connector."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:71
+#: ../../dev/analysis/shp-connector.rst:136
+msgid "msoConnectorStraight"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:71
+#: ../../dev/analysis/shp-connector.rst:136
+msgid "1"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:71
+#: ../../dev/analysis/shp-connector.rst:136
+msgid "Straight line connector."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:73
+#: ../../dev/analysis/shp-connector.rst:137
+msgid "msoConnectorTypeMixed"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:73
+#: ../../dev/analysis/shp-connector.rst:137
+msgid "-2"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:73
+msgid "Return only; indicates combination of states."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:78
+msgid "Protocols"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:80
+msgid "Properties::"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:93
+msgid "Creation protocol::"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:101
+msgid "MS API Protocol"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:105
+msgid "Behaviors"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:108
+msgid "UI display"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:110
+msgid ""
+"Connector shapes do not display a bounding box when selected in the UI. "
+"Rather their start and end points are highlighted with a small gray "
+"circle that can be moved. If there is an adjustment, such as a mid-point,"
+" it is indicated in the normal way with a small yellow diamond. These "
+"endpoints and adjustment diamond cannot be individually selected."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:118
+msgid "Naming"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:120
+msgid ""
+"What determines the name automatically applied to a line or connector "
+"shape? Can it change after shape creation, for example by applying an "
+"arrowhead?"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:125
+msgid "Enumerations"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:127
+msgid "MsoConnectorType"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:129
+msgid "http://msdn.microsoft.com/en-us/library/office/ff860918(v=office.15).aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:132
+msgid "Name"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:132
+msgid "Value"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:132
+msgid "Description"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:137
+msgid "Return value only; indicates a combination of the other states."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:143
+msgid "Specimen XML"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:147
+msgid "Default connector shapes inserted from PowerPoint UI."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:149
+msgid "Straight line (Connector)::"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:182
+msgid "Straight arrow Connector::"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:218
+msgid "Straight segment jointed connector::"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:251
+msgid "Curved (S-like) connector::"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:284
+msgid "Freeform connector::"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:363
+msgid "Completely free-form line::"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:475
+msgid "Analysis"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:477
+msgid ""
+"The p:style element represents indirection of the connector visual "
+"attributes to the theme part."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:480
+msgid ""
+"What's up with the p:style element? Does that have to be there? What "
+"happens if we just leave that out? Is the `accent1` default universal "
+"enough to pop in there without consideration?"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:484
+msgid "Seems like the most common lines are connectors"
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:485
+msgid ""
+"Connectors are a distinct shape type. They are very similar to regular "
+"``<p:sp>``-based auto shapes, but lack a text frame."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:487
+msgid "Hypothesis: There are really two types, connectors and free-form."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:489
+msgid ""
+"Connectors are based on the ``<p:cxnSp>`` element and have a preset "
+"geometry (``<a:prstGeom>`` child of ``<p:spPr>``)."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:491
+msgid ""
+"Free-form lines are based on the ``<p:sp>`` element and have a custom "
+"geometry (``<a:custGeom>`` child of ``<p:spPr>``)."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:494
+msgid ""
+"Connectors don't have a fill. Free-form shapes do. Fill of free-form "
+"shapes extends between the line and a line connecting the end points, "
+"whether present or not. Since the lines can cross, this produces some "
+"possibly surprising fill behaviors; there is no clear concept of inside "
+"and outside for such a shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-connector.rst:502
+msgid "Related Schema Definitions"
+msgstr ""
+

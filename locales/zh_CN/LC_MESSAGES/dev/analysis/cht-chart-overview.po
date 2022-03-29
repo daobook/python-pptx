@@ -1,0 +1,727 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-chart-overview.rst:3
+msgid "Charts - Overview"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:6
+msgid "Adding a new chart - steps and tests"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:8
+msgid ""
+"Analysis - add chart type page with schema for each new chart element and"
+" see if there's anything distinctive about the chart type series"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:11
+msgid "feature/sld-add-chart .. add new chart types, steps/chart.py"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:13
+msgid "pptx/chart/xmlwriter.py add new type to ChartXmlWriter"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:15
+msgid "pptx/chart/xmlwriter.py add _AreaChartXmlWriter, one per new element type"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:17
+msgid "pptx/chart/series.py add AreaSeries, one per new element type"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:20
+msgid ""
+"There are 73 different possible chart types, but only 16 distinct XML "
+"chart-type elements. The implementation effort is largely proportional to"
+" the number of new XML chart-type elements."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:24
+msgid "Here is an accounting of the implementation status of the 73 chart types:"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:28
+msgid "29 - supported for creation so far"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:31
+msgid "areaChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:33
+msgid "AREA"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:34
+msgid "AREA_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:35
+msgid "AREA_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:38
+msgid "barChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:40
+msgid "BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:41
+msgid "BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:42
+msgid "BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:43
+msgid "COLUMN_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:44
+msgid "COLUMN_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:45
+msgid "COLUMN_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:48
+msgid "bubbleChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:50
+msgid "BUBBLE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:51
+msgid "BUBBLE_THREE_D_EFFECT"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:54
+msgid "doughnutChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:56
+msgid "DOUGHNUT"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:57
+msgid "DOUGHNUT_EXPLODED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:60
+msgid "lineChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:62
+msgid "LINE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:63
+msgid "LINE_MARKERS"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:64
+msgid "LINE_MARKERS_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:65
+msgid "LINE_MARKERS_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:66
+msgid "LINE_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:67
+msgid "LINE_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:70
+msgid "pieChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:72
+msgid "PIE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:73
+msgid "PIE_EXPLODED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:76
+msgid "radarChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:78
+msgid "RADAR"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:79
+msgid "RADAR_FILLED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:80
+msgid "RADAR_MARKERS"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:83
+msgid "scatterChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:85
+msgid "XY_SCATTER"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:86
+msgid "XY_SCATTER_LINES"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:87
+msgid "XY_SCATTER_LINES_NO_MARKERS"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:88
+msgid "XY_SCATTER_SMOOTH"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:89
+msgid "XY_SCATTER_SMOOTH_NO_MARKERS"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:92
+msgid "44 remaining:"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:95
+msgid "area3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:97
+msgid "THREE_D_AREA"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:98
+msgid "THREE_D_AREA_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:99
+msgid "THREE_D_AREA_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:102
+msgid "bar3DChart (28 types)"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:104
+msgid "THREE_D_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:105
+msgid "THREE_D_BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:106
+msgid "THREE_D_BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:107
+msgid "THREE_D_COLUMN"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:108
+msgid "THREE_D_COLUMN_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:109
+msgid "THREE_D_COLUMN_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:110
+msgid "THREE_D_COLUMN_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:112
+msgid "CONE_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:113
+msgid "CONE_BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:114
+msgid "CONE_BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:115
+msgid "CONE_COL"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:116
+msgid "CONE_COL_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:117
+msgid "CONE_COL_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:118
+msgid "CONE_COL_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:120
+msgid "CYLINDER_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:121
+msgid "CYLINDER_BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:122
+msgid "CYLINDER_BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:123
+msgid "CYLINDER_COL"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:124
+msgid "CYLINDER_COL_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:125
+msgid "CYLINDER_COL_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:126
+msgid "CYLINDER_COL_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:128
+msgid "PYRAMID_BAR_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:129
+msgid "PYRAMID_BAR_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:130
+msgid "PYRAMID_BAR_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:131
+msgid "PYRAMID_COL"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:132
+msgid "PYRAMID_COL_CLUSTERED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:133
+msgid "PYRAMID_COL_STACKED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:134
+msgid "PYRAMID_COL_STACKED_100"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:137
+msgid "line3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:139
+msgid "THREE_D_LINE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:142
+msgid "pie3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:144
+msgid "THREE_D_PIE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:145
+msgid "THREE_D_PIE_EXPLODED"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:148
+msgid "ofPieChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:150
+msgid "BAR_OF_PIE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:151
+msgid "PIE_OF_PIE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:154
+msgid "stockChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:156
+msgid "STOCK_HLC"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:157
+msgid "STOCK_OHLC"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:158
+msgid "STOCK_VHLC"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:159
+msgid "STOCK_VOHLC"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:162
+msgid "surfaceChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:164
+msgid "SURFACE"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:165
+msgid "SURFACE_WIREFRAME"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:168
+msgid "surface3DChart"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:170
+msgid "SURFACE_TOP_VIEW"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:171
+msgid "SURFACE_TOP_VIEW_WIREFRAME"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:175
+msgid "Chart parts glossary"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:179
+msgid "**data point (point)**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:178
+msgid ""
+"An individual numeric value, represented by a bar, point, column, or pie "
+"slice."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:183
+msgid "**data series (series)**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:182
+msgid ""
+"A group of related data points. For example, the columns of a series will"
+" all be the same color."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:186
+msgid "**category axis (X axis)**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:186
+msgid "The horizontal axis of a two-dimensional or three-dimensional chart."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:189
+msgid "**value axis (Y axis)**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:189
+msgid "The vertical axis of a two-dimensional or three-dimensional chart."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:192
+msgid "**depth axis (Z axis)**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:192
+msgid "The front-to-back axis of a three-dimensional chart."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:196
+msgid "**grid lines**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:195
+msgid ""
+"Horizontal or vertical lines that may be added to an axis to aid "
+"comparison of a data point to an axis value."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:199
+msgid "**legend**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:199
+msgid "A key that explains which data series each color or pattern represents."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:202
+msgid "**floor**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:202
+msgid "The bottom of a three-dimensional chart."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:206
+msgid "**walls**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:205
+msgid ""
+"The background of a chart. Three-dimensional charts have a back wall and "
+"a side wall, which can be formatted separately."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:210
+msgid "**data labels**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:209
+msgid ""
+"Numeric labels on each data point. A data label can represent the actual "
+"value or a percentage."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:213
+msgid "**axis title**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:213
+msgid "Explanatory text label associated with an axis"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:218
+msgid "**data table**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:216
+msgid ""
+"A optional tabular display within the *plot area* of the values on which "
+"the chart is based. Not to be confused with the Excel worksheet holding "
+"the chart values."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:221
+msgid "**chart title**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:221
+msgid "A label explaining the overall purpose of the chart."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:225
+msgid "**chart area**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:224
+msgid ""
+"Overall chart object, containing the chart and all its auxiliary pieces "
+"such as legends and titles."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:230
+msgid "**plot area**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:228
+msgid ""
+"Region of the chart area that contains the actual plots, bounded by but "
+"not including the axes. May contain more than one plot, each with its own"
+" distinct set of series. A plot is known as a *chart group* in the MS "
+"API."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:238
+msgid "**axis**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:233
+msgid ""
+"... may be either a *category axis* or a *value axis* ... on a two-"
+"dimensional chart, either the horizontal (*x*) axis or the vertical (*y*)"
+" axis. A 3-dimensional chart also has a depth (*z*) axis. Pie, doughnut, "
+"and radar charts have a radial axis."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:238
+msgid "How many axes do each of the different chart types have?"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:241
+msgid "**series categories**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:241
+#: ../../dev/analysis/cht-chart-overview.rst:244
+msgid "..."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:245
+msgid "**series values**"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:248
+msgid "Chart types"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:250
+msgid "column"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:252
+msgid "2-D column"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:254
+msgid "clustered column"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:255
+msgid "stacked column"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:256
+#, python-format
+msgid "100% stacked column"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:258
+#: ../../dev/analysis/cht-chart-overview.rst:263
+msgid "3-D column"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:260
+msgid "3-D clustered column"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:261
+msgid "3-D stacked column"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:262
+#, python-format
+msgid "3-D 100% stacked column"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:265
+#: ../../dev/analysis/cht-chart-overview.rst:283
+msgid "cylinder"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:266
+#: ../../dev/analysis/cht-chart-overview.rst:284
+msgid "cone"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:267
+#: ../../dev/analysis/cht-chart-overview.rst:285
+msgid "pyramid"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:269
+msgid "line"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:271
+msgid "2-D line"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:272
+msgid "3-D line"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:274
+msgid "pie"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:276
+msgid "2-D pie"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:277
+msgid "3-D pie"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:279
+msgid "bar"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:281
+msgid "2-D bar"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:282
+msgid "3-D bar"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:287
+msgid "area"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:289
+msgid "scatter"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:291
+msgid "other"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:293
+msgid "stock (e.g. open-high-low-close)"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:294
+msgid "surface"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:295
+msgid "doughnut"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:296
+msgid "bubble"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:297
+msgid "radar"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-overview.rst:301
+msgid "Related Schema Definitions"
+msgstr ""
+

@@ -1,0 +1,258 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/dml-fill.rst:3
+msgid "Fill (for shapes)"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:6
+msgid "Overview"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:8
+msgid ""
+"In simple terms, *fill* is the color of a shape. The term *fill* is used "
+"to distinguish from *line*, the border around a shape, which can have a "
+"different color. It turns out that a line has a fill all its own, but "
+"that's another topic."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:13
+msgid ""
+"While having a solid color fill is perhaps most common, it is just one of"
+" several possible fill types. A shape can have the following types of "
+"fill:"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:16
+msgid "solid (color)"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:17
+msgid ""
+"gradient -- a smooth transition between multiple colors (see "
+":ref:`gradientfill`)"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:19
+msgid ""
+"picture -- in which an image \"shows through\" and is cropped by the "
+"boundaries of the shape"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:21
+msgid ""
+"pattern -- in which a small square of pixels (tile) is repeated to fill "
+"the shape"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:23
+msgid ""
+"background (no fill) -- the body of the shape is transparent, allowing "
+"whatever is behind it to show through."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:26
+msgid ""
+"Elements that can have a fill include autoshape, line, text (treating "
+"each glyph as a shape), table, table cell, and slide background."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:31
+msgid "Scope"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:33
+msgid ""
+"This analysis initially focused on solid fill for an autoshape (including"
+" text box). Later, pattern fills were added and then analysis for "
+"gradient fills. Picture fills are still outstanding."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:37
+msgid "``FillFormat.type`` -- ``MSO_FILL.SOLID`` or |None| for a start"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:38
+msgid "``FillFormat.solid()`` -- changes fill type to `<a:solidFill>`"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:39
+msgid "``FillFormat.patterned()`` -- changes fill type to `<a:pattFill>`"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:40
+msgid "``FillFormat.fore_color`` -- read/write foreground color"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:42
+msgid "**maybe later:**"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:44
+msgid "``FillFormat.transparency`` -- adds/changes <a:alpha> or something"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:48
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:50
+msgid ""
+"**Accessing fill.** A shape object has a `.fill` property that returns a "
+"`FillFormat` object. The `.fill` property is idempotent; it always "
+"returns the same `FillFormat` object for a given shape object::"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:57
+msgid ""
+"**Fill type.** A fill has a type, indicated by a member of `MSO_FILL` on "
+"`FillFormat.type`::"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:63
+msgid ""
+"The fill type may also be |None|, indicating the shape's fill is "
+"inherited from the style hierarchy (generally the theme linked to the "
+"slide master). This is the default for a new shape::"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:71
+msgid "The fill type partially determines the valid calls on the fill::"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:100
+msgid "**Pattern Fill.** ::"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:113
+msgid "Related items from Microsoft VBA API"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:115
+msgid "`MSDN FillFormat Object`_"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:123
+msgid "Enumerations"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:126
+msgid "MsoFillType"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:128
+msgid "http://msdn.microsoft.com/EN-US/library/office/ff861408.aspx"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:131
+msgid "**msoFillBackground**"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:131
+msgid "5 -- Fill is the same as the background."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:134
+msgid "**msoFillGradient**"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:134
+msgid "3 -- Gradient fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:137
+msgid "**msoFillPatterned**"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:137
+msgid "2 -- Patterned fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:140
+msgid "**msoFillPicture**"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:140
+msgid "6 -- Picture fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:143
+msgid "**msoFillSolid**"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:143
+msgid "1 -- Solid fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:146
+msgid "**msoFillTextured**"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:146
+msgid "4 -- Textured fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:150
+msgid "**msoFillMixed**"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:149
+msgid "-2 -- Mixed fill."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:153
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:157
+msgid "Inherited fill on autoshape::"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:167
+msgid "Solid RGB color on autoshape::"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:179
+msgid "Patterned fill::"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:193
+msgid "XML semantics"
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:195
+msgid ""
+"**No `prst` attribute.** When an `a:pattFill` element contains no `prst` "
+"attribute, the pattern defaults to 5% (dotted). This is the first one in "
+"the pattern gallery in the PowerPoint UI."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:199
+msgid ""
+"**No `fgClr` or `bgClr` elements.** When an `a:pattFill` element contains"
+" no `fgClr` or `bgClr` chile elements, the colors default to black and "
+"white respectively."
+msgstr ""
+
+#: ../../dev/analysis/dml-fill.rst:205
+msgid "Related Schema Definitions"
+msgstr ""
+

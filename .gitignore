@@ -1,12 +1,12 @@
 .cache
 .coverage
-/.tox/
+.tox/
 *.egg-info
 *.pyc
-/dist/
-/docs/.build
+dist/
+docs/build
 out.txt
 _scratch/
-/spec/gen_spec/spec*.db
+spec/gen_spec/spec*.db
 tags
-/tests/debug.py
+tests/debug.py

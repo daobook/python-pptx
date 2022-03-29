@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-xy-chart.rst:5
+msgid "X-Y Chart"
+msgstr ""
+
+#: ../../dev/analysis/cht-xy-chart.rst:7
+msgid ""
+"An X-Y chart, also known as a *scatter* chart, depending on the version "
+"of PowerPoint, is distinguished by having two value axes rather than one "
+"category axis and one value axis."
+msgstr ""
+
+#: ../../dev/analysis/cht-xy-chart.rst:14
+msgid "XML specimen"
+msgstr ""
+
+#: ../../dev/analysis/cht-xy-chart.rst:18
+msgid "XML for default XY chart::"
+msgstr ""
+
+#: ../../dev/analysis/cht-xy-chart.rst:234
+msgid "Related Schema Definitions"
+msgstr ""
+
+#: ../../dev/analysis/cht-xy-chart.rst:238
+msgid "XY (scatter) chart elements::"
+msgstr ""
+

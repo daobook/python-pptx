@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/placeholders/slide-placeholders/picture-placeholder.rst:3
+msgid "Picture placeholder"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/picture-placeholder.rst:5
+msgid ""
+"A picture placeholder is an unpopulated placeholder into which an image "
+"can be inserted. This comprises three concrete placeholder types, a "
+"picture placeholder, a clip art placeholder, and a content placeholder. "
+"Each of these, and indeed any unpopulated placeholder, take the form of a"
+" `p:sp` element in the XML. Once populated with an image, these "
+"placeholders become a *placeholder picture* and take the form of a "
+"`p:pic` element."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/picture-placeholder.rst:14
+msgid "Candidate protocol"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/picture-placeholder.rst:16
+msgid "Placeholder access::"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/picture-placeholder.rst:24
+msgid "PicturePlaceholder.insert_picture()::"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/picture-placeholder.rst:34
+msgid "Example XML"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/picture-placeholder.rst:38
+msgid "A picture-only layout placholder::"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/picture-placeholder.rst:67
+msgid "An unpopulated picture-only placeholder on a slide::"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/slide-placeholders/picture-placeholder.rst:82
+msgid "A picture-only placeholder populated with an image::"
+msgstr ""
+

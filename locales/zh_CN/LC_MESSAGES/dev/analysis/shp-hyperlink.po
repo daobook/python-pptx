@@ -1,0 +1,800 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-hyperlink.rst:3
+msgid "Shape hyperlink"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:5
+msgid ""
+"In addition to hyperlinks in text, PowerPoint supports hyperlinks on "
+"shapes. This feature is a subset of the more general *click action* "
+"functionality on shapes."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:9
+msgid ""
+"A run or shape can have two distinct mouse event behaviors, one for "
+"(left) clicking and another for rolling over with the mouse (hover). "
+"These are independent; a run or shape can have one, the other, both, or "
+"neither."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:13
+msgid ""
+"A \"true\" hyperlink in PowerPoint is indicated by having no `action` "
+"attribute on the `a:hlinkClick` element. The general hyperlink mechanism "
+"of storing a URL in a mapped relationship is used by other verbs such as "
+"`hlinkfile` and `program`, but these are considered distinct from "
+"hyperlinks for the sake of this analysis. That distinction is reflected "
+"in the API."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:19
+msgid "See also: _Run.hyperlink, `pptx.text._Hyperlink`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:23
+msgid "Candidate Protocol"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:27
+msgid "`Shape`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:29
+msgid ""
+"`.click_action` - unconditionally returns an `ActionSetting` object, "
+"regardless of whether a click action is defined. Returns an "
+"`ActionSetting` object even when the shape type does not support a click "
+"action (such as a table)."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:34
+msgid "`ActionSetting`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:36
+msgid ""
+"`.action` - returns a member of the `PP_ACTION_TYPE` (`PP_ACTION`) "
+"enumeration"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:39
+msgid ""
+"`.action_url` - returns the `ppaction://` URL as a string, in its "
+"entirety, or None if no action attribute is present. Maybe this should do"
+" XML character entity decoding."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:43
+msgid ""
+"`.action_verb` - returns the verb in the `ppaction://` URL, or None if no"
+" action URL is present. e.g. `'hlinksldjump'`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:46
+msgid ""
+"`.action_fields` - returns a dictionary containing the fields in the "
+"query string of the action URL."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:49
+msgid ""
+"`.hyperlink` - returns a Hyperlink object that represents the hyperlink "
+"defined for the shape. A Hyperlink object is always returned."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:52
+msgid ""
+"`.target_slide` - returns a Slide object when the action is a jump to "
+"another slide in the same presentation. This is the case when action is "
+"`FIRST_SLIDE`, `LAST_SLIDE`, `PREVIOUS_SLIDE`, `NEXT_SLIDE`, or "
+"`NAMED_SLIDE`."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:57
+msgid ""
+"Supports assignment of a slide object, after which `.action` returns "
+"`NAMED_SLIDE`."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:60
+msgid "Hyperlink"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:62
+msgid ""
+"`.address` - returns the URL contained in the relationship for this "
+"hyperlink."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:65
+msgid ""
+"`.screen_tip` - tool-tip text displayed on mouse rollover is slideshow "
+"mode. Put in the XML hooks for this but API call is second priority"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:68
+msgid "Detect that a shape has a hyperlink::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:76
+msgid "Add a hyperlink::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:84
+msgid "Delete a hyperlink::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:92
+msgid ""
+"A Hyperlink instance is lazy-created on first reference. The object "
+"persists until garbage collected once created. The link XML is not "
+"written until .address is specified. Setting ``hlink.address`` to None or"
+" '' causes the `hlink` entry to be removed if present."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:97
+msgid "Add \"Jump to slide\" click action::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:106
+msgid "Future Scope"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:108
+msgid "`ActionSetting.action` supports these alternate assignments::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:118
+msgid ""
+"Each of these assignments takes immediate effect and is \"self-"
+"contained\"; no further assignments are necessary to produce the "
+"specified behavior."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:121
+msgid ""
+"Assigning `NAMED_SLIDE` to `ActionSetting.action` raises an exception. "
+"This action is created by assigning a `Slide` object."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:126
+msgid "Glossary"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:132
+msgid "**click action**"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:129
+msgid ""
+"The behavior to be executed when the user clicks on a shape. There are 14"
+" possible behaviors, such as navigate to a different slide, open a web "
+"page, and run a macro. The possible behaviors are described by the "
+"members of the `PP_ACTION_TYPE` enumeration."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:136
+msgid "**hover action**"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:135
+msgid ""
+"All click action behaviors can also be triggered by a mouse-over (hover) "
+"event."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:143
+msgid "**hyperlink**"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:139
+msgid ""
+"A hyperlink is a particular class of click action that roughly "
+"corresponds to opening a web page, although it can also be used to send "
+"an email. While a similar mechanism is used to specify other actions, "
+"such as open a file, this term here is reserved for the action of "
+"navigating to a web URL (including `mailto://`)."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:149
+msgid "**action**"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:146
+msgid ""
+"The click or hover action is specified in the XML using a URL on the "
+"`ppaction://` protocol contained in the `action` attribute of the "
+"`a:hlinkClick` (or `a:hlinkHover`) element. A hyperlink action is implied"
+" when no `action` attribute is present."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:155
+msgid "**action verb**"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:152
+msgid ""
+"The specific action to be performed is contained in the *host* field of "
+"the `ppaction://` URL. For instance, `customshow` appears in "
+"`ppaction://customshow?id=0&return=true` to indicate a "
+"`PP_ACTION.NAMED_SLIDE_SHOW` action."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:160
+msgid "**OLE verb**"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:158
+msgid ""
+"The term *verb* also appears in this context to indicate an OLE verb such"
+" as `Open` or `Edit`. This is not to be confused with an `action verb`."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:163
+msgid "`PP_ACTION_TYPE` mapping logic"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:200
+msgid "PowerPoint® application behavior"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:202
+msgid ""
+"The general domain here is mouse event behaviors, with respect to a "
+"shape. So far, the only two mouse events are (left) click and hover "
+"(mouse over). These can trigger a variety of actions. I'm not sure if all"
+" actions can be triggered by either event, but the XML appears to support"
+" it."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:208
+msgid "Action inventory"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:210
+msgid "The following behaviors can be triggered by a click:"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:212
+msgid ""
+"Jump to a relative slide in same presentation (first, last, next, "
+"previous, etc.)."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:214
+msgid ""
+"Jump to specific slide in same presentation (by slide index, perhaps "
+"title as fallback)"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:216
+msgid "Jump to a slide in different presentation (by slide index)"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:217
+msgid "End the slide show"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:218
+msgid "Jump to bookmark in Microsoft Word document"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:219
+#: ../../dev/analysis/shp-hyperlink.rst:342
+#: ../../dev/analysis/shp-hyperlink.rst:475
+msgid "Open an arbitrary file on the same computer"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:220
+msgid "Web link - Open a browser and navigate to a specified web page"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:221
+msgid "Run a macro"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:222
+msgid "Run an arbitrary program"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:223
+#: ../../dev/analysis/shp-hyperlink.rst:519
+msgid "Execute an OLE action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:225
+msgid ""
+"In addition to performing one of these actions, zero, one, or both of two"
+" auxiliary actions can be triggered by clicking:"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:228
+#: ../../dev/analysis/shp-hyperlink.rst:576
+msgid "Play a sound"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:229
+msgid "Highlight the shape with a dashed line for a short time"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:232
+msgid "Hyperlinkable shapes"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:234
+msgid "These shape types can have hyperlinks:"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:236
+msgid "`Autoshapes`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:237
+msgid "`Textbox`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:238
+msgid "`Picture`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:239
+msgid "`Connector`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:240
+msgid "`Chart`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:242
+msgid "These shape types cannot:"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:244
+msgid "`Table`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:245
+msgid "`Group Shape`"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:249
+msgid "UI procedures"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:252
+msgid "Hyperlink autoshape to other slide by title"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:254
+msgid "Right-click > Hyperlink... (Cmd-K)"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:255
+msgid "Select Document panel"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:256
+msgid "Anchor: > Locate... > Slide Titles"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:257
+msgid "select slide by number and title, e.g. \"2"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:260
+msgid "Add Anchor point in a document (or perhaps a slide)"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:262
+msgid "A hyperlink can link to a bookmark in a Word document"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:263
+msgid ""
+"It appears that maximum granularity in PowerPoint is to an entire slide "
+"(not to a range of text in a shape, for example)"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:268
+msgid "MS API"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:271
+msgid "Shape.ActionSettings(ppMouseClick | ppMouseOver)"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:273
+msgid ""
+"The Shape object has an ActionSettings property, which is a collection of"
+" two ActionSetting objects, one for click and the other for hover. "
+"https://msdn.microsoft.com/EN-US/library/office/ff745656.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:278
+msgid "ActionSetting"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:280
+msgid "Shape.ActionSettings(ppMouseClick | ppMouseOver) => ActionSetting"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:282
+msgid "ActionSetting.Action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:284
+msgid ""
+"one of: ppActionHyperlink, ppActionFirstSlide, ppActionPlay, or several "
+"others: https://msdn.microsoft.com/EN-US/library/office/ff744511.aspx"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:287
+msgid "ActionSetting.Hyperlink => Hyperlink"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:289
+msgid "Hyperlink members:"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:291
+msgid "Address"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:292
+msgid "SubAddress"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:293
+msgid "TextToDisplay"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:294
+msgid "ScreenTip"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:295
+msgid "EmailSubject"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:296
+msgid "Type (read-only, one of msoHyperlinkRange (run) or msoHyperlinkShape)"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:300
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:304
+msgid ""
+"These are representative samples of shape XML showing the hyperlinks "
+"associated the shape (as opposed to text contained by the shape)."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:307
+msgid "The `a:hlinkClick` element can be present or absent."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:309
+msgid "Its parent, `p:cNvPr` is always present (is a required element)."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:311
+msgid ""
+"All of its attributes are optional, but an `a:hlinkClick` having no "
+"attributes has no meaning (or may trigger an error)."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:314
+msgid ""
+"Its `r:id` element is always present on click actions created by "
+"PowerPoint. Its value is an empty string when the action is first, last, "
+"next, previous, macro, and perhaps others."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:318
+msgid ""
+"Adding a `highlightClick` attribute set True causes the shape to get a "
+"dashed line border for a short time when it is clicked."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:321
+msgid ""
+"There are some more obscure attributes like \"stop playing sound before "
+"navigating\" that are available on `CT_Hyperlink`, perhaps meant for "
+"kiosk-style applications."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:326
+msgid "Summary"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:328
+msgid ""
+"The action to perform on a mouse click is specified by the `action` "
+"attribute of the `a:hlinkClick` element. Its value is a URL having the "
+"`ppaction://` protocol, a verb, and an optional query string."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:332
+msgid ""
+"Some actions reference a relationship that specifies the target of the "
+"action."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:336
+msgid "verb"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:336
+msgid "rId"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:336
+msgid "behavior"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:338
+#: ../../dev/analysis/shp-hyperlink.rst:339
+#: ../../dev/analysis/shp-hyperlink.rst:343
+#: ../../dev/analysis/shp-hyperlink.rst:344
+#: ../../dev/analysis/shp-hyperlink.rst:345
+msgid "none"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:338
+#: ../../dev/analysis/shp-hyperlink.rst:341
+#: ../../dev/analysis/shp-hyperlink.rst:342
+#: ../../dev/analysis/shp-hyperlink.rst:346
+msgid "external"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:338
+msgid "Open a browser and navigate to URL in relationship"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:339
+msgid "hlinkshowjump"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:339
+msgid "Jump to a relative slide in the same presentation"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:340
+msgid "hlinksldjump"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:340
+msgid "internal"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:340
+msgid "Jump to a specified slide in the same presentation"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:341
+msgid "hlinkpres"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:341
+msgid "Jump to a specified slide in another presentation"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:342
+msgid "hlinkfile"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:343
+msgid "customshow"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:343
+msgid "Start a custom slide show, option to return after"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:344
+msgid "ole"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:344
+msgid "Execute an OLE action (open, edit)"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:345
+msgid "macro"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:345
+msgid "Run an embedded VBA macro"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:346
+msgid "program"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:346
+msgid "Execute an arbitrary program on same computer"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:350
+msgid "Jump to relative slide within presentation"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:352
+msgid "**hlinkshowjump** action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:386
+msgid ""
+"`jump` key can have value `firstslide`, `lastslide`, `previousslide`, "
+"`nextslide`, `lastslideviewed`, `endshow`."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:388
+msgid ""
+"Note that `r:id` attribute is empty string; no relationship is required "
+"to determine target slide."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:392
+msgid "Jump to specific slide within presentation"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:394
+msgid "**hlinksldjump** action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:406
+msgid ""
+"The corresponding `Relationship` element must be of type `slide`, be "
+"internal, and point to the target slide in the package::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:415
+msgid "Jump to slide in another presentation"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:417
+msgid "**hlinkpres** action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:429
+msgid ""
+"The corresponding `Relationship` element must be of type `hyperlink`, be "
+"*external*, and point to the target presentation with a URL (using the "
+"`file://` protocol for a local file). The slide number and slide title "
+"are provided in the `ppaction://` URL in the `a:hlinkClick` element::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:441
+msgid "Web link (hyperlink)"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:443
+msgid "Note: The `action` attribute of `a:hlinkClick` has no value in this case."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:454
+msgid ""
+"The corresponding `Relationship` element must be of type `hyperlink`, be "
+"*external*, and point to the target URL (using a web protocol)."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:457
+msgid ""
+"The target is often a web URL, such as https://github/scanny/python-pptx,"
+" including an optional anchor (e.g. #sub-heading suffix to jump mid-"
+"page). The target can also be an email address, launching the local email"
+" client. A mailto: URI is used in this case, with subject specifiable "
+"using a '?subject=xyz' suffix."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:463
+msgid ""
+"An optional ScreenTip, a roll-over tool-tip sort of message, can also be "
+"specified for a hyperlink. The XML schema does not limit its use to "
+"hyperlinks, although the PowerPoint UI may not provide access to this "
+"field in non-hyperlink cases.::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:477
+msgid "**hlinkfile** action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:488
+msgid ""
+"PowerPoint opens the file (after a warning dialog) using the default "
+"application for the file."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:491
+msgid ""
+"The corresponding `Relationship` element must be of type `hyperlink`, be "
+"*external*, and point to the target file with a `file://` protocol URL::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:501
+msgid "Run Custom SlideShow"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:503
+msgid "**customshow** action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:514
+msgid ""
+"The `return` query field determines whether focus returns to the current "
+"show after running the linked show. This field can be omitted, and "
+"defaults to `false`."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:521
+msgid "**ole** action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:533
+msgid ""
+"This option is only available on an embedded (OLE) object. The verb field"
+" is '0' for Edit and '1' for Open."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:537
+msgid "Run macro"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:539
+msgid "**macro** action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:552
+msgid "Run a program"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:554
+msgid "**program** action"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:565
+msgid ""
+"The corresponding `Relationship` element must be of type `hyperlink`, be "
+"*external*, and point to the target application with a `file://` protocol"
+" URL. ::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:578
+msgid ""
+"Playing a sound is not a distinct action; rather, like highlighting, it "
+"is an optional additional action to be performed on a click or hover "
+"event."
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:592
+msgid ""
+"The corresponding `Relationship` element must be of type `audio`, be "
+"internal, and point to a sound file embedded in the presentation::"
+msgstr ""
+
+#: ../../dev/analysis/shp-hyperlink.rst:602
+msgid "Related Schema Definitions"
+msgstr ""
+

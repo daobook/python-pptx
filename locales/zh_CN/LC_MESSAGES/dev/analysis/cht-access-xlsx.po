@@ -1,0 +1,104 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-access-xlsx.rst:3
+msgid "Chart - Embedded Worksheet"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:5
+msgid ""
+"The data for a chart in PowerPoint is stored in an embedded Excel "
+"spreadsheet."
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:10
+msgid "Spike approach"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:12
+msgid "[ ] driver with one blank slide, builder column chart single series."
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:13
+msgid "[ ] Can edit Excel data in resulting file"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:14
+msgid "[ ] resulting file has an embedded Excel package of expected name"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:15
+msgid "[ ] XML uses worksheet references, not just cached data"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:19
+msgid "Proposed protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:32
+msgid "MS API Protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:43
+msgid "ChartData objects"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:47
+msgid "BreakLink"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:46
+msgid ""
+"Removes the link between the data for a chart and a Microsoft Excel "
+"workbook."
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:51
+msgid "IsLinked"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:50
+msgid ""
+"True if the data for the chart is linked to an external Microsoft Excel "
+"workbook. Read-only Boolean."
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:56
+msgid "Workbook"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:54
+msgid ""
+"Returns the workbook that contains the chart data associated with the "
+"chart. Read-only Object."
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:59
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:63
+msgid "simple column chart::"
+msgstr ""
+
+#: ../../dev/analysis/cht-access-xlsx.rst:103
+msgid "Related Schema Definitions"
+msgstr ""
+

@@ -1,0 +1,190 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/MsoTextUnderlineType.rst:4
+msgid "``MSO_TEXT_UNDERLINE_TYPE``"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:6
+msgid ""
+"Indicates the type of underline for text. Used with "
+":attr:`.Font.underline` to specify the style of text underlining."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:9
+msgid "Alias: ``MSO_UNDERLINE``"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:11
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:20
+msgid "NONE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:20
+msgid "Specifies no underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:23
+msgid "DASH_HEAVY_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:23
+msgid "Specifies a dash underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:26
+msgid "DASH_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:26
+msgid "Specifies a dash line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:29
+msgid "DASH_LONG_HEAVY_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:29
+msgid "Specifies a long heavy line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:32
+msgid "DASH_LONG_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:32
+msgid "Specifies a dashed long line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:35
+msgid "DOT_DASH_HEAVY_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:35
+msgid "Specifies a dot dash heavy line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:38
+msgid "DOT_DASH_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:38
+msgid "Specifies a dot dash line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:41
+msgid "DOT_DOT_DASH_HEAVY_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:41
+msgid "Specifies a dot dot dash heavy line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:44
+msgid "DOT_DOT_DASH_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:44
+msgid "Specifies a dot dot dash line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:47
+msgid "DOTTED_HEAVY_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:47
+msgid "Specifies a dotted heavy line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:50
+msgid "DOTTED_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:50
+msgid "Specifies a dotted line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:53
+msgid "DOUBLE_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:53
+msgid "Specifies a double line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:56
+msgid "HEAVY_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:56
+msgid "Specifies a heavy line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:59
+msgid "SINGLE_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:59
+msgid "Specifies a single line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:62
+msgid "WAVY_DOUBLE_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:62
+msgid "Specifies a wavy double line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:65
+msgid "WAVY_HEAVY_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:65
+msgid "Specifies a wavy heavy line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:68
+msgid "WAVY_LINE"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:68
+msgid "Specifies a wavy line underline."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:71
+msgid "WORDS"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:71
+msgid "Specifies underlining words."
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:75
+msgid "MIXED"
+msgstr ""
+
+#: ../../api/enum/MsoTextUnderlineType.rst:74
+msgid "Specifies a mixed of underline types."
+msgstr ""
+

@@ -1,0 +1,182 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/MsoThemeColorIndex.rst:4
+msgid "``MSO_THEME_COLOR_INDEX``"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:6
+msgid ""
+"Indicates the Office theme color, one of those shown in the color gallery"
+" on the formatting ribbon."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:9
+msgid "Alias: ``MSO_THEME_COLOR``"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:11
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:21
+msgid "NOT_THEME_COLOR"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:21
+msgid "Indicates the color is not a theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:24
+msgid "ACCENT_1"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:24
+msgid "Specifies the Accent 1 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:27
+msgid "ACCENT_2"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:27
+msgid "Specifies the Accent 2 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:30
+msgid "ACCENT_3"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:30
+msgid "Specifies the Accent 3 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:33
+msgid "ACCENT_4"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:33
+msgid "Specifies the Accent 4 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:36
+msgid "ACCENT_5"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:36
+msgid "Specifies the Accent 5 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:39
+msgid "ACCENT_6"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:39
+msgid "Specifies the Accent 6 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:42
+msgid "BACKGROUND_1"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:42
+msgid "Specifies the Background 1 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:45
+msgid "BACKGROUND_2"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:45
+msgid "Specifies the Background 2 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:48
+msgid "DARK_1"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:48
+msgid "Specifies the Dark 1 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:51
+msgid "DARK_2"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:51
+msgid "Specifies the Dark 2 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:54
+msgid "FOLLOWED_HYPERLINK"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:54
+msgid "Specifies the theme color for a clicked hyperlink."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:57
+msgid "HYPERLINK"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:57
+msgid "Specifies the theme color for a hyperlink."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:60
+msgid "LIGHT_1"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:60
+msgid "Specifies the Light 1 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:63
+msgid "LIGHT_2"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:63
+msgid "Specifies the Light 2 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:66
+msgid "TEXT_1"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:66
+msgid "Specifies the Text 1 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:69
+msgid "TEXT_2"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:69
+msgid "Specifies the Text 2 theme color."
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:73
+msgid "MIXED"
+msgstr ""
+
+#: ../../api/enum/MsoThemeColorIndex.rst:72
+msgid "Indicates multiple theme colors are used, such as in a group shape."
+msgstr ""
+

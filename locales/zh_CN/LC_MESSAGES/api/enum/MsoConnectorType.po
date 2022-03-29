@@ -1,0 +1,68 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/enum/MsoConnectorType.rst:4
+msgid "``MSO_CONNECTOR_TYPE``"
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:6
+msgid "Specifies a type of connector."
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:8
+msgid "Alias: ``MSO_CONNECTOR``"
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:10
+msgid "Example::"
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:24
+msgid "CURVE"
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:24
+msgid "Curved connector."
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:27
+msgid "ELBOW"
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:27
+msgid "Elbow connector."
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:30
+msgid "STRAIGHT"
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:30
+msgid "Straight line connector."
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:34
+msgid "MIXED"
+msgstr ""
+
+#: ../../api/enum/MsoConnectorType.rst:33
+msgid "Return value only; indicates a combination of other states."
+msgstr ""
+

@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-autofit.rst:3
+msgid "Autofit setting"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:6
+msgid "Overview"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:8
+msgid ""
+"PowerPoint provides the *autofit* property to specify how to handle text "
+"that is too big to fit within its shape. The three possible settings are:"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:11
+msgid "resize shape to fit text"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:12
+msgid "resize text to fit shape"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:13
+msgid ""
+"resize neither the shape nor the text, allowing the text to extend beyond"
+" the bounding box"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:16
+msgid "Auto size is closely related to word wrap."
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:18
+msgid ""
+"There are certain constraining settings for resizing the text, not sure "
+"if those are supported in PowerPoint or not."
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:23
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:47
+msgid "Scenarios"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:49
+msgid ""
+"**Default new textbox.**  When adding a new texbox from the PowerPoint "
+"toolbar, the new textbox sizes itself to fit the entered text. This "
+"corresponds to the setting MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT and "
+"``word_wrap = None``."
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:54
+msgid ""
+"``MSO_AUTO_SIZE.NONE``, ``word_wrap = False``. Text is free form, with "
+"PowerPoint exhibiting no formatting behavior. Text appears just as "
+"entered and lines are broken only where hard breaks are inserted."
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:58
+msgid ""
+"``MSO_AUTO_SIZE.NONE``, ``word_wrap = True``. Text is wrapped into a "
+"column the width of the shape, but is not constrained vertically."
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:61
+msgid ""
+"``MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT``, ``word_wrap = False``. The width of "
+"the shape expands as new text is entered. Line breaks occur only where "
+"hard breaks are entered.  The height of the shape grows to accommodate "
+"the number of lines of entered text.  Width and height shrink as extents "
+"of the text are reduced by deleting text or reducing font size."
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:67
+msgid ""
+"``MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT``, ``word_wrap = True``. Text is "
+"wrapped into a column the width of the shape, with the height of the "
+"shape growing to accommodate the resulting number of lines."
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:71
+msgid "``MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE``, ``word_wrap = False``. Experiment ..."
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:74
+msgid "``MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE``, ``word_wrap = True``. Experiment ..."
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:78
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:82
+msgid "Default new textbox::"
+msgstr ""
+
+#: ../../dev/analysis/shp-autofit.rst:111
+msgid "Related Schema Definitions"
+msgstr ""
+

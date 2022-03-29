@@ -1,0 +1,370 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-axis-title.rst:5
+msgid "Axis Title"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:7
+msgid ""
+"A chart axis can have a title. Theoretically, the title text can be drawn"
+" from a cell in the spreadsheet behind the chart; however, there is no "
+"mechanism for specifying this from the PowerPoint 2011 UI (Mac) and "
+"there's no mention of such a procedure I could find on search. So only "
+"the \"manually applied\" axis title text will be discussed here, other "
+"than how to remove any elements associated with \"linked\" text, however "
+"they may have gotten there."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:14
+msgid ""
+"The title is a rich text container, and can contain arbitrary text with "
+"arbitrary formatting (font, size, color, etc.). There is little but one "
+"thing to distinquish an axis title from an independent text box; its "
+"position is automatically adjusted by the chart to account for resizing "
+"and movement."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:19
+msgid ""
+"An axis title is visible whenever present. The only way to \"hide\" it is"
+" to delete it, along with its contents."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:22
+msgid ""
+"Although it will not be supported, it appears that axis title text can be"
+" specified in the XML as a cell reference in the Excel worksheet. This is"
+" a so-called \"linked\" title, and in general, any constructive "
+"operations on the axis title will remove any linked title present."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:29
+msgid "Proposed Scope"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:32
+msgid "Completed"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:34
+msgid "Axis.has_title"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:35
+msgid "Axis.axis_title"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:36
+msgid "AxisTitle.has_text_frame"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:37
+#: ../../dev/analysis/cht-axis-title.rst:108
+msgid "AxisTitle.text_frame"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:38
+msgid "AxisTitle.format"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:41
+msgid "Pending"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:43
+msgid "AxisTitle.orientation (this may require text frame rotation)"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:44
+msgid "XL_ORIENTATION enumeration"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:48
+msgid "Candidate protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:51
+msgid "Typical usage"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:53
+msgid ""
+"I expect the most typical use is simply to set the text of the axis "
+"title::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:60
+msgid "Axis title access"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:62
+msgid ""
+"``Axis.has_axis_title`` is used to non-destructively test for the "
+"presence of an axis title and may also be used to add an axis title."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:65
+msgid "An axis on a newly created chart has no axis title::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:71
+msgid ""
+"Assigning |True| to ``.has_title`` causes an empty axis title element to "
+"be added along with its text frame elements (when not already present)::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:78
+msgid ""
+"``Axis.axis_title`` is used to access the ``AxisTitle`` object for an "
+"axis. It will always return an ``AxisTitle`` object, but it may be "
+"destructive in the sense that it adds an axis title if there is none::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:90
+msgid ""
+"Assigning |False| to ``.has_title`` removes the title element from the "
+"XML along with its contents::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:97
+msgid ""
+"Assigning |None| to ``Axis.axis_title`` has the same effect (not sure "
+"we'll actually implement this as a priority)::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:110
+msgid ""
+"According to the schema and the MS API, the ``AxisTitle`` object can "
+"contain either a text frame or an Excel cell reference (``<c:strRef>``). "
+"However, the only operation on the `c:strRef` element the library will "
+"support (for now anyway) is to delete it when adding a text frame."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:115
+msgid ""
+"A newly added axis title will already have a text frame, but for the sake"
+" of completeness, ``AxisTitle.has_text_frame`` will allow the client to "
+"test for, add, and remove an axis title text frame. Assigning |True| to "
+"``.has_text_frame`` causes any Excel reference (``<c:strRef>``) element "
+"to be removed and an empty text frame to be inserted. If a text frame is "
+"already present, no changes are made::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:128
+msgid ""
+"The text frame can be accessed using ``AxisTitle.text_frame``. This call "
+"always returns a text frame object, newly created if not already "
+"present::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:140
+msgid "AxisTitle.orientation"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:142
+msgid ""
+"By default, the PowerPoint UI adds an axis title for a vertical axis at "
+"90° counterclockwise rotation. The MS API provides for rotation to be "
+"specified as an integer number of degrees between -90 and 90. Positive "
+"angles are interpreted as counterclockwise from the horizontal. "
+"Orientation can also be specified as one of the members of the "
+"`XlOrientation` enumeration. The enumeration includes values for "
+"horizontal, 90° (upward), -90° (downward), and (vertically) stacked::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:159
+msgid "MS API"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:162
+msgid "Axis object"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:165
+msgid "Axis.AxisTitle"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:165
+msgid "Provides access to the AxisTitle object for this axis."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:170
+msgid "Axis.HasTitle"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:168
+msgid ""
+"Getting indicates presence of axis title. Setting ensures presence or "
+"absence of axis title."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:173
+msgid "AxisTitle object"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:176
+msgid "AxisTitle.Format"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:176
+msgid "Provides access to fill and line formatting."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:179
+msgid "AxisTitle.FormulaLocal"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:179
+msgid "Returns or sets the cell reference for the axis title text."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:182
+msgid "AxisTitle.HorizontalAlignment"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:182
+msgid "Not terrifically useful AFAICT unless title extends to multiple lines."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:186
+msgid "AxisTitle.IncludeInLayout"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:185
+msgid ""
+"Might not be available via UI; no such option present on PowerPoint 2011 "
+"for Mac."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:190
+msgid "AxisTitle.Orientation"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:189
+msgid ""
+"An integer value from –90 to 90 degrees or one of the XlOrientation "
+"constants."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:194
+msgid "AxisTitle.Text"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:193
+msgid ""
+"Returns or sets the axis title text. Setting removes any existing "
+"directly-applied formatting, but not title-level formatting."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:199
+msgid "AxisTitle.VerticalAlignment"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:197
+msgid ""
+"Perhaps not terrifically useful since the textbox is automatically "
+"positioned and sized, so no difference is visible in the typical cases."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:202
+msgid "PowerPoint UI Behaviors"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:204
+msgid "To add an axis title from the PowerPoint UI:"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:206
+msgid ""
+"*Chart Layout (ribbon) > Axis Titles > Vertical Axis Title > Rotated "
+"Title*"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:208
+msgid "The default title \"Axis Title\" appears when no text has been entered."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:210
+msgid ""
+"The default orientation of a vertical axis title inserted by the UI is "
+"rotated 90 degrees counterclockwise. This is initially (before text is "
+"present) implemented using the `c:txPr` element. That element is removed "
+"when explicit title text is added."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:217
+msgid "XlOrientation Enumeration"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:219
+msgid "https://msdn.microsoft.com/en-us/library/office/ff746480.aspx"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:222
+msgid "xlDownward (-4170)"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:222
+msgid "Text runs downward."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:225
+msgid "xlHorizontal (-4128)"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:225
+msgid "Text runs horizontally."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:228
+msgid "xlUpward (-4171)"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:228
+msgid "Text runs upward."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:232
+msgid "xlVertical (-4166)"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:231
+msgid "Text runs downward and is centered in the cell."
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:235
+msgid "Specimen XML"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:239
+msgid "Add axis title in UI (but don't set text)::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:264
+msgid ""
+"Edit text directly in UI. Note that `c:txPr` element is removed when text"
+" is added::"
+msgstr ""
+
+#: ../../dev/analysis/cht-axis-title.rst:290
+msgid "Related Schema Definitions"
+msgstr ""
+

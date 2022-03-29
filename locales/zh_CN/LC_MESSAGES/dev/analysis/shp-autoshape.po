@@ -1,0 +1,208 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-autoshape.rst:4
+msgid "Auto Shape"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:8
+msgid "Summary"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:10
+msgid ""
+"*AutoShape* is the name the MS Office API uses for a shape with preset "
+"geometry, those referred to in the PowerPoint UI simply as *shape*. "
+"Typical examples are a rectangle, a circle, or a star shape. An auto "
+"shape has a type (preset geometry), an outline line style, a fill, and an"
+" effect, in addition to a position and size. The outline, fill, and "
+"effect can each be None."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:16
+msgid "Each auto shape is contained in an ``<p:sp>`` element."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:20
+msgid "Auto shape type"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:22
+msgid ""
+"There are 187 pre-defined auto shape types, each corresponding to a "
+"distinct preset geometry. Some types have one or more *adjustment value*,"
+" which corresponds to the position of an adjustment handle (small yellow "
+"diamond) on the shape in the UI that changes an aspect of the shape "
+"geometry, for example the corner radius of a rounded rectangle."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:28
+msgid "`MsoAutoShapeType Enumeration`_ page on MSDN"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:32
+msgid "Adjustment values"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:34
+msgid ""
+"Many auto shapes may be adjusted to change their shape beyond just their "
+"width, height, and rotation. In the PowerPoint application, this is "
+"accomplished by dragging small yellow diamond-shaped handles that appear "
+"on the shape when it is selected."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:39
+msgid ""
+"In the XML, the position of these adjustment handles is reflected in the "
+"contents of the ``<a:avLst>`` element::"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:48
+msgid ""
+"The |avLst| element can be empty, even if the shape has available "
+"adjustments."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:54
+msgid "guide"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:51
+msgid ""
+"a guide is essentially a variable within DrawingML. Its value is the "
+"result of a simple expression like ``\"*/ 100000 w ss\"``. Its value may "
+"then be used in other expressions or directly to specify a point, by "
+"referring to it by name."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:56
+msgid "``<a:gd>`` stands for *guide* ..."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:62
+msgid "Where are the custom geometries defined?"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:59
+msgid ""
+"The geometries for autoshapes are defined in "
+"``presetShapeDefinitions.xml``, located in:"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:62
+msgid ""
+"``pptx/ref/ISO-IEC-29500-1/schemas/dml-geometries/OfficeOpenXML-"
+"DrawingMLGeometries/``."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:72
+msgid "What is the range of the formula values?"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:65
+msgid ""
+"In general, the nominal adjustment value range for the preset shapes is 0"
+" to 100000. However, the actual value stored can be outside that range, "
+"depending on the formulas involved. For example, in the case of the "
+"chevron shape, the range is from 0 to 100000 * width / short-side. When "
+"the shape is taller than it is wide, width is the short side and the "
+"range is 0 to 100000. However, when the shape is wider than it is tall, "
+"the range can be much larger. Required values are probably best "
+"discovered via experimentation or calculation based on the preset "
+"formula."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:74
+msgid ""
+"The |gd| element does not appear initially when the shape is inserted. "
+"However, if the adjustment handle is moved and then moved back to the "
+"default value, the |gd| element is not removed. The default value becomes"
+" the effective value for the guide if the |gd| element is not present."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:79
+msgid ""
+"The adjustment value is preserved over scaling of the object. Its "
+"effective value can change however, depending on the formula. In the case"
+" of the chevron shape, the effective value is a function of ``ss``, the "
+"\"short side\", and the adjustment handle moves on screen when the "
+"chevron is made wider than it is tall."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:85
+msgid ""
+"A certain level of documentation for auto shapes could be generated from "
+"the XML shape definition file. The preset name and the number of "
+"adjustment values it has (guide definitions) and the adjustment value "
+"name can readily be determined by inspection of the XML."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:97
+msgid "What coordinate system are the formula values expressed in?"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:91
+msgid ""
+"There appear to be two coordinate systems at work. The 0 to 100000 bit "
+"the adjustment handles are expressed in appears to be the (arbitrary) "
+"shape coordinate system. The built-in values like ``w``, ``ss``, etc., "
+"appear to be in the slide coordinate system, the one the ``xfrm`` element"
+" traffics in."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:96
+msgid ""
+"Probably worth experimenting with some custom shapes to find out (edit "
+"and rezip with bash one-liner)."
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:103
+msgid "useful web resources"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:100
+msgid "What useful web resources are out there on DrawingML?"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:102
+msgid "http://officeopenxml.com/drwSp-custGeom.php"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:106
+msgid "XML produced by PowerPoint® client"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:159
+msgid "Resources"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:161
+msgid "`DrawingML Shapes`_ on officeopenxml.com"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:163
+msgid "`Shape Object MSDN page`_"
+msgstr ""
+
+#: ../../dev/analysis/shp-autoshape.rst:165
+msgid "`MsoShapeType Enumeration`_"
+msgstr ""
+

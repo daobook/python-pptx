@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/sld-slide.rst:4
+msgid "Slide"
+msgstr ""
+
+#: ../../dev/analysis/sld-slide.rst:6
+msgid ""
+"A slide is the fundamental visual content container in a presentation, "
+"that content taking the form of shape objects."
+msgstr ""
+
+#: ../../dev/analysis/sld-slide.rst:9
+msgid ""
+"The slides in a presentation are owned by the presentation object. In "
+"particular, the unique identifier of a slide, the slide id, is assigned "
+"and managed by the presentation part, and is not recorded in the slide "
+"XML."
+msgstr ""
+
+#: ../../dev/analysis/sld-slide.rst:13
+msgid ""
+"A slide master and slide layout are both closely related to slide and the"
+" three share the majority of their properties and behaviors."
+msgstr ""
+
+#: ../../dev/analysis/sld-slide.rst:18
+msgid "Slide ID"
+msgstr ""
+
+#: ../../dev/analysis/sld-slide.rst:20
+msgid ""
+"PowerPoint assigns a unique integer identifier to a slide when it is "
+"created. Note that this identifier is only present in the presentation "
+"part, and maps to a relationship ID; it is not recorded in the XML of the"
+" slide itself. Therefore the identifier is only unique within a "
+"presentation. The ID takes the form of an integer starting at 256 and "
+"incrementing by one for each new slide. Changing the ordering of the "
+"slides does not change the id. The id of a deleted slide is not reused, "
+"although I'm not sure whether it's clever enough not to reuse the id of "
+"the last added slide when it's been deleted as there doesn't seem to be "
+"any record in the XML of the max value assigned."
+msgstr ""
+
+#: ../../dev/analysis/sld-slide.rst:32
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/sld-slide.rst:37
+msgid "Example presentation XML showing sldIdLst::"
+msgstr ""
+
+#: ../../dev/analysis/sld-slide.rst:56
+msgid "Example slide contents::"
+msgstr ""
+
+#: ../../dev/analysis/sld-slide.rst:99
+msgid "Schema excerpt"
+msgstr ""
+

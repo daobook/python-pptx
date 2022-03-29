@@ -1,0 +1,1201 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/chart.rst:4
+msgid "Charts"
+msgstr ""
+
+#: ../../api/chart.rst:6
+msgid ""
+"|pp| provides an API for adding and manipulating charts. A chart object, "
+"like a table, is not a shape. Rather it is a graphical object contained "
+"in a |GraphicFrame| shape. The shape API, such as position, size, shape "
+"id, and name, are provided by the graphic frame shape. The chart itself "
+"is accessed using the :attr:`chart` property on the graphic frame shape."
+msgstr ""
+
+#: ../../api/chart.rst:14
+msgid "|Chart| objects"
+msgstr ""
+
+#: ../../api/chart.rst:16
+msgid ""
+"The |Chart| object is the root of a generally hierarchical graph of "
+"component objects that together provide access to the properties and "
+"methods required to specify and format a chart."
+msgstr ""
+
+#: of pptx.chart.chart.Chart:1
+msgid "A chart object."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.category_axis:1
+msgid ""
+"The category axis of this chart. In the case of an XY or Bubble chart, "
+"this is the X axis. Raises |ValueError| if no category axis is defined "
+"(as is the case for a pie chart, for example)."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.chart_style:1
+msgid ""
+"Read/write integer index of chart style used to format this chart. Range "
+"is from 1 to 48. Value is |None| if no explicit style has been assigned, "
+"in which case the default chart style is used. Assigning |None| causes "
+"any explicit setting to be removed. The integer index corresponds to the "
+"style's position in the chart style gallery in the PowerPoint UI."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.chart_title:1
+msgid "A |ChartTitle| object providing access to title properties."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.chart_title:3
+msgid ""
+"Calling this property is destructive in the sense it adds a chart title "
+"element (`c:title`) to the chart XML if one is not already present. Use "
+":attr:`has_title` to test for presence of a chart title non-"
+"destructively."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.chart_type:1
+msgid "Member of :ref:`XlChartType` enumeration specifying type of this chart."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.chart_type:3
+msgid ""
+"If the chart has two plots, for example, a line plot overlayed on a bar "
+"plot, the type reported is for the first (back-most) plot. Read-only."
+msgstr ""
+
+#: ../../docstring of pptx.chart.chart.Chart.font:1
+msgid "Font object controlling text format defaults for this chart."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.has_legend:1
+msgid ""
+"Read/write boolean, |True| if the chart has a legend. Assigning |True| "
+"causes a legend to be added to the chart if it doesn't already have one. "
+"Assigning False removes any existing legend definition along with any "
+"existing legend settings."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.has_title:1
+msgid "Read/write boolean, specifying whether this chart has a title."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.has_title:3
+msgid ""
+"Assigning |True| causes a title to be added if not already present. "
+"Assigning |False| removes any existing title along with its text and "
+"settings."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.legend:1
+msgid ""
+"A |Legend| object providing access to the properties of the legend for "
+"this chart."
+msgstr ""
+
+#: ../../docstring of pptx.chart.chart.Chart.plots:1
+msgid ""
+"The sequence of plots in this chart. A plot, called a *chart group* in "
+"the Microsoft API, is a distinct sequence of one or more series depicted "
+"in a particular charting type. For example, a chart having a series "
+"plotted as a line overlaid on three series plotted as columns would have "
+"two plots; the first corresponding to the three column series and the "
+"second to the line series. Plots are sequenced in the order drawn, i.e. "
+"back-most to front-most. Supports *len()*, membership (e.g. ``p in "
+"plots``), iteration, slicing, and indexed access (e.g. ``plot = "
+"plots[i]``)."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.replace_data:1
+msgid ""
+"Use the categories and series values in the |ChartData| object "
+"*chart_data* to replace those in the XML and Excel worksheet for this "
+"chart."
+msgstr ""
+
+#: ../../docstring of pptx.chart.chart.Chart.series:1
+msgid ""
+"A |SeriesCollection| object containing all the series in this chart. When"
+" the chart has multiple plots, all the series for the first plot appear "
+"before all those for the second, and so on. Series within a plot have an "
+"explicit ordering and appear in that sequence."
+msgstr ""
+
+#: of pptx.chart.chart.Chart.value_axis:1
+msgid ""
+"The |ValueAxis| object providing access to properties of the value axis "
+"of this chart. Raises |ValueError| if the chart has no value axis."
+msgstr ""
+
+#: of pptx.chart.chart.ChartTitle:1
+msgid "Provides properties for manipulating a chart title."
+msgstr ""
+
+#: ../../docstring of pptx.chart.chart.ChartTitle.format:1
+msgid "|ChartFormat| object providing access to line and fill formatting."
+msgstr ""
+
+#: ../../docstring of pptx.chart.chart.ChartTitle.format:3
+msgid ""
+"Return the |ChartFormat| object providing shape formatting properties for"
+" this chart title, such as its line color and fill."
+msgstr ""
+
+#: of pptx.chart.chart.ChartTitle.has_text_frame:1
+msgid "Read/write Boolean specifying whether this title has a text frame."
+msgstr ""
+
+#: of pptx.chart.chart.ChartTitle.has_text_frame:3
+msgid ""
+"Return |True| if this chart title has a text frame, and |False| "
+"otherwise. Assigning |True| causes a text frame to be added if not "
+"already present. Assigning |False| causes any existing text frame to be "
+"removed along with its text and formatting."
+msgstr ""
+
+#: of pptx.chart.chart.ChartTitle.text_frame:1
+msgid "|TextFrame| instance for this chart title."
+msgstr ""
+
+#: of pptx.chart.chart.ChartTitle.text_frame:3
+msgid ""
+"Return a |TextFrame| instance allowing read/write access to the text of "
+"this chart title and its text formatting properties. Accessing this "
+"property is destructive in the sense it adds a text frame if one is not "
+"present. Use :attr:`has_text_frame` to test for the presence of a text "
+"frame non-destructively."
+msgstr ""
+
+#: ../../api/chart.rst:31
+msgid "|Legend| objects"
+msgstr ""
+
+#: ../../api/chart.rst:33
+msgid ""
+"A legend provides a visual key relating each series of data points to "
+"their assigned meaning by mapping a color, line type, or point shape to "
+"each series name. A legend is optional, but there can be at most one. "
+"Most aspects of a legend are determined automatically, but aspects of its"
+" position may be specified via the API."
+msgstr ""
+
+#: of pptx.chart.legend.Legend:1
+msgid "Represents the legend in a chart. A chart can have at most one legend."
+msgstr ""
+
+#: ../../docstring of pptx.chart.legend.Legend.font:1
+msgid ""
+"The |Font| object that provides access to the text properties for this "
+"legend, such as bold, italic, etc."
+msgstr ""
+
+#: of pptx.chart.chart.Legend.horz_offset:1
+msgid ""
+"Adjustment of the x position of the legend from its default. Expressed as"
+" a float between -1.0 and 1.0 representing a fraction of the chart width."
+" Negative values move the legend left, positive values move it to the "
+"right. |None| if no setting is specified."
+msgstr ""
+
+#: of pptx.chart.chart.Legend.include_in_layout:1
+msgid "|True| if legend should be located inside plot area."
+msgstr ""
+
+#: of pptx.chart.chart.Legend.include_in_layout:3
+msgid ""
+"Read/write boolean specifying whether legend should be placed inside the "
+"plot area. In many cases this will cause it to be superimposed on the "
+"chart itself. Assigning |None| to this property causes any `c:overlay` "
+"element to be removed, which is interpreted the same as |True|. This use "
+"case should rarely be required and assigning a boolean value is "
+"recommended."
+msgstr ""
+
+#: of pptx.chart.chart.Legend.position:1
+msgid ""
+"Read/write :ref:`XlLegendPosition` enumeration value specifying the "
+"general region of the chart in which to place the legend."
+msgstr ""
+
+#: ../../api/chart.rst:46
+msgid "|Axis| objects"
+msgstr ""
+
+#: ../../api/chart.rst:48
+msgid ""
+"A chart typically has two axes, a category axis and a value axis. In "
+"general, one of these is horizontal and the other is vertical, where "
+"which is which depends on the chart type. For example, the category axis "
+"is horizontal on a column chart, but vertical on a bar chart."
+msgstr ""
+
+#: ../../api/chart.rst:53
+msgid ""
+"A chart where the independent variable is in a continuous (numeric) "
+"range, such as an XY/scatter chart, does not have a category axis. Rather"
+" it has two value axes."
+msgstr ""
+
+#: ../../api/chart.rst:57
+msgid ""
+"A category is perhaps most commonly a string label, such as ``'East'`` or"
+" ``'Revenue'``; however a category can also be a number or a date "
+"(although all categories in a chart must be the same type)."
+msgstr ""
+
+#: ../../api/chart.rst:61
+msgid ""
+"When a chart's categories are dates, the category axis is generally, but "
+"not necessarily a |DateAxis| object."
+msgstr ""
+
+#: ../../api/chart.rst:64
+msgid ""
+"A Chart may have zero to four axes. A pie chart, for example, has neither"
+" a category nor a value axis."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis:1
+msgid ""
+"Base class for chart axis objects. All axis objects share these "
+"properties."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.axis_title:1
+msgid "An |AxisTitle| object providing access to title properties."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.axis_title:3
+msgid ""
+"Calling this property is destructive in the sense that it adds an axis "
+"title element (`c:title`) to the axis XML if one is not already present. "
+"Use :attr:`has_title` to test for presence of axis title non-"
+"destructively."
+msgstr ""
+
+#: ../../docstring of pptx.chart.axis._BaseAxis.format:1
+msgid ""
+"The |ChartFormat| object providing access to the shape formatting "
+"properties of this axis, such as its line color and fill."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.has_major_gridlines:1
+msgid ""
+"Read/write boolean value specifying whether this axis has gridlines at "
+"its major tick mark locations. Assigning |True| to this property causes "
+"major gridlines to be displayed. Assigning |False| causes them to be "
+"removed."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.has_minor_gridlines:1
+msgid ""
+"Read/write boolean value specifying whether this axis has gridlines at "
+"its minor tick mark locations. Assigning |True| to this property causes "
+"minor gridlines to be displayed. Assigning |False| causes them to be "
+"removed."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.has_title:1
+msgid "Read/write boolean specifying whether this axis has a title."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.has_title:3
+msgid ""
+"|True| if this axis has a title, |False| otherwise. Assigning |True| "
+"causes an axis title to be added if not already present. Assigning "
+"|False| causes any existing title to be deleted."
+msgstr ""
+
+#: ../../docstring of pptx.chart.axis._BaseAxis.major_gridlines:1
+msgid ""
+"The |MajorGridlines| object representing the major gridlines for this "
+"axis."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.major_tick_mark:1
+msgid ""
+"Read/write :ref:`XlTickMark` value specifying the type of major tick mark"
+" to display on this axis."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.maximum_scale:1
+msgid ""
+"Read/write float value specifying the upper limit of the value range for "
+"this axis, the number at the top or right of the vertical or horizontal "
+"value scale, respectively. The value |None| indicates the upper limit "
+"should be determined automatically based on the range of data point "
+"values associated with the axis."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.minimum_scale:1
+msgid ""
+"Read/write float value specifying lower limit of value range, the number "
+"at the bottom or left of the value scale. |None| if no minimum scale has "
+"been set. The value |None| indicates the lower limit should be determined"
+" automatically based on the range of data point values associated with "
+"the axis."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.minor_tick_mark:1
+msgid ""
+"Read/write :ref:`XlTickMark` value specifying the type of minor tick mark"
+" for this axis."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.reverse_order:1
+msgid ""
+"Read/write bool value specifying whether to reverse plotting order for "
+"axis."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.reverse_order:3
+msgid ""
+"For a category axis, this reverses the order in which the categories are "
+"displayed. This may be desired, for example, on a (horizontal) bar-chart "
+"where by default the first category appears at the bottom. Since we read "
+"from top-to-bottom, many viewers may find it most natural for the first "
+"category to appear on top."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.reverse_order:9
+msgid ""
+"For a value axis, it reverses the direction of increasing value from "
+"bottom-to-top to top-to-bottom."
+msgstr ""
+
+#: ../../docstring of pptx.chart.axis._BaseAxis.tick_labels:1
+msgid ""
+"The |TickLabels| instance providing access to axis tick label formatting "
+"properties. Tick labels are the numbers appearing on a value axis or the "
+"category names appearing on a category axis."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.tick_label_position:1
+msgid ""
+"Read/write :ref:`XlTickLabelPosition` value specifying where the tick "
+"labels for this axis should appear."
+msgstr ""
+
+#: of pptx.chart.axis._BaseAxis.visible:1
+msgid "Read/write. |True| if axis is visible, |False| otherwise."
+msgstr ""
+
+#: of pptx.chart.axis.CategoryAxis:1
+msgid "A category axis of a chart."
+msgstr ""
+
+#: of pptx.chart.axis.CategoryAxis.category_type:1
+msgid ""
+"A member of :ref:`XlCategoryType` specifying the scale type of this axis."
+" Unconditionally ``CATEGORY_SCALE`` for a |CategoryAxis| object."
+msgstr ""
+
+#: of pptx.chart.axis.DateAxis:1
+msgid "A category axis with dates as its category labels."
+msgstr ""
+
+#: of pptx.chart.axis.DateAxis:3
+msgid ""
+"This axis-type has some special display behaviors such as making length "
+"of equal periods equal and normalizing month start dates despite unequal "
+"month lengths."
+msgstr ""
+
+#: of pptx.chart.axis.DateAxis.category_type:1
+msgid ""
+"A member of :ref:`XlCategoryType` specifying the scale type of this axis."
+" Unconditionally ``TIME_SCALE`` for a |DateAxis| object."
+msgstr ""
+
+#: of pptx.chart.axis.AxisTitle:1
+msgid "Provides properties for manipulating axis title."
+msgstr ""
+
+#: ../../docstring of pptx.chart.axis.AxisTitle.format:1
+msgid "|ChartFormat| object providing access to shape formatting."
+msgstr ""
+
+#: ../../docstring of pptx.chart.axis.AxisTitle.format:3
+msgid ""
+"Return the |ChartFormat| object providing shape formatting properties for"
+" this axis title, such as its line color and fill."
+msgstr ""
+
+#: of pptx.chart.axis.AxisTitle.has_text_frame:1
+msgid "Read/write Boolean specifying presence of a text frame."
+msgstr ""
+
+#: of pptx.chart.axis.AxisTitle.has_text_frame:3
+msgid ""
+"Return |True| if this axis title has a text frame, and |False| otherwise."
+" Assigning |True| causes a text frame to be added if not already present."
+" Assigning |False| causes any existing text frame to be removed along "
+"with any text contained in the text frame."
+msgstr ""
+
+#: of pptx.chart.axis.AxisTitle.text_frame:1
+msgid "|TextFrame| instance for this axis title."
+msgstr ""
+
+#: of pptx.chart.axis.AxisTitle.text_frame:3
+msgid ""
+"Return a |TextFrame| instance allowing read/write access to the text of "
+"this axis title and its text formatting properties. Accessing this "
+"property is destructive as it adds a new text frame if not already "
+"present."
+msgstr ""
+
+#: ../../api/chart.rst:85
+msgid "Value Axes"
+msgstr ""
+
+#: ../../api/chart.rst:87
+msgid ""
+"Some axis properties are only relevant to value axes, in particular, "
+"those related to numeric values rather than text category labels."
+msgstr ""
+
+#: of pptx.chart.axis.ValueAxis:1
+msgid "An axis having continuous (as opposed to discrete) values."
+msgstr ""
+
+#: of pptx.chart.axis.ValueAxis:3
+msgid ""
+"The vertical axis is generally a value axis, however both axes of an XY-"
+"type chart are value axes."
+msgstr ""
+
+#: of pptx.chart.axis.ValueAxis.crosses:1
+msgid ""
+"Member of :ref:`XlAxisCrosses` enumeration specifying the point on this "
+"axis where the other axis crosses, such as auto/zero, minimum, or "
+"maximum. Returns `XL_AXIS_CROSSES.CUSTOM` when a specific numeric "
+"crossing point (e.g. 1.5) is defined."
+msgstr ""
+
+#: of pptx.chart.axis.ValueAxis.crosses_at:1
+msgid ""
+"Numeric value on this axis at which the perpendicular axis crosses. "
+"Returns |None| if no crossing value is set."
+msgstr ""
+
+#: of pptx.chart.axis.ValueAxis.major_unit:1
+msgid ""
+"The float number of units between major tick marks on this value axis. "
+"|None| corresponds to the 'Auto' setting in the UI, and specifies the "
+"value should be calculated by PowerPoint based on the underlying chart "
+"data."
+msgstr ""
+
+#: of pptx.chart.axis.ValueAxis.minor_unit:1
+msgid ""
+"The float number of units between minor tick marks on this value axis. "
+"|None| corresponds to the 'Auto' setting in the UI, and specifies the "
+"value should be calculated by PowerPoint based on the underlying chart "
+"data."
+msgstr ""
+
+#: ../../api/chart.rst:97
+msgid "|MajorGridlines| objects"
+msgstr ""
+
+#: ../../api/chart.rst:99
+msgid ""
+"Gridlines are the vertical and horizontal lines that extend major tick "
+"marks of an axis across the chart to ease comparison of a data point with"
+" the axis divisions."
+msgstr ""
+
+#: of pptx.chart.axis.MajorGridlines:1
+msgid ""
+"Provides access to the properties of the major gridlines appearing on an "
+"axis."
+msgstr ""
+
+#: ../../docstring of pptx.chart.axis.MajorGridlines.format:1
+#: pptx.chart.point.Point.format:1
+msgid ""
+"The |ChartFormat| object providing access to the shape formatting "
+"properties of this data point, such as line and fill."
+msgstr ""
+
+#: ../../api/chart.rst:110
+msgid "|TickLabels| objects"
+msgstr ""
+
+#: ../../api/chart.rst:112
+msgid ""
+"Tick labels are the numbers appearing on a value axis or the category "
+"names appearing on a category axis. Certain formatting options are "
+"available for changing how these labels are displayed."
+msgstr ""
+
+#: of pptx.chart.axis.TickLabels:1
+msgid "A service class providing access to formatting of axis tick mark labels."
+msgstr ""
+
+#: ../../docstring of pptx.chart.axis.TickLabels.font:1
+msgid ""
+"The |Font| object that provides access to the text properties for these "
+"tick labels, such as bold, italic, etc."
+msgstr ""
+
+#: of pptx.chart.axis.TickLabels.number_format:1
+msgid ""
+"Read/write string (e.g. \"$#,##0.00\") specifying the format for the "
+"numbers on this axis. The syntax for these strings is the same as it "
+"appears in the PowerPoint or Excel UI. Returns 'General' if no number "
+"format has been set. Note that this format string has no effect on "
+"rendered tick labels when :meth:`number_format_is_linked` is |True|. "
+"Assigning a format string to this property automatically sets "
+":meth:`number_format_is_linked` to |False|."
+msgstr ""
+
+#: of pptx.chart.axis.TickLabels.number_format_is_linked:1
+#: pptx.chart.datalabel.DataLabels.number_format_is_linked:1
+msgid ""
+"Read/write boolean specifying whether number formatting should be taken "
+"from the source spreadsheet rather than the value of "
+":meth:`number_format`."
+msgstr ""
+
+#: of pptx.chart.axis.TickLabels.offset:1
+msgid ""
+"Read/write int value in range 0-1000 specifying the spacing between the "
+"tick mark labels and the axis as a percentange of the default value. 100 "
+"if no label offset setting is present."
+msgstr ""
+
+#: ../../api/chart.rst:123
+msgid "|_BasePlot| objects"
+msgstr ""
+
+#: ../../api/chart.rst:125
+msgid ""
+"A *plot* is a group of series all depicted using the same charting type, "
+"e.g. bar, column, line, etc. Most charts have only a single plot; "
+"however, a chart may have multiple, as in where a line plot appears "
+"overlaid on a bar plot in the same chart. In the Microsoft API, this "
+"concept has the name *chart group*. The term *plot* was chosen for |pp| "
+"to avoid the common mistake of understanding a chart group to be a group "
+"of chart objects."
+msgstr ""
+
+#: ../../api/chart.rst:132
+msgid ""
+"Certain properties must be set at the plot level. Some of those "
+"properties are not present on plots of all chart types. For example, "
+":attr:`gap_width` is only present on a bar or column plot."
+msgstr ""
+
+#: of pptx.chart.plot._BasePlot:1
+msgid ""
+"A distinct plot that appears in the plot area of a chart. A chart may "
+"have more than one plot, in which case they appear as superimposed "
+"layers, such as a line plot appearing on top of a bar chart."
+msgstr ""
+
+#: ../../docstring of pptx.chart.plot._BasePlot.categories:1
+msgid ""
+"Returns a |category.Categories| sequence object containing a "
+"|category.Category| object for each of the category labels associated "
+"with this plot. The |category.Category| class derives from ``str``, so "
+"the returned value can be treated as a simple sequence of strings for the"
+" common case where all you need is the labels in the order they appear on"
+" the chart. |category.Categories| provides additional properties for "
+"dealing with hierarchical categories when required."
+msgstr ""
+
+#: of pptx.chart.plot._BasePlot.chart:1
+msgid "The |Chart| object containing this plot."
+msgstr ""
+
+#: of pptx.chart.plot._BasePlot.data_labels:1
+msgid ""
+"|DataLabels| instance providing properties and methods on the collection "
+"of data labels associated with this plot."
+msgstr ""
+
+#: of pptx.chart.plot._BasePlot.has_data_labels:1
+msgid ""
+"Read/write boolean, |True| if the series has data labels. Assigning "
+"|True| causes data labels to be added to the plot. Assigning False "
+"removes any existing data labels."
+msgstr ""
+
+#: ../../docstring of pptx.chart.plot._BasePlot.series:1
+msgid ""
+"A sequence of |Series| objects representing the series in this plot, in "
+"the order they appear in the plot."
+msgstr ""
+
+#: of pptx.chart.plot._BasePlot.vary_by_categories:1
+msgid ""
+"Read/write boolean value specifying whether to use a different color for "
+"each of the points in this plot. Only effective when there is a single "
+"series; PowerPoint automatically varies color by series when more than "
+"one series is present."
+msgstr ""
+
+#: ../../api/chart.rst:143
+msgid "|BarPlot| objects"
+msgstr ""
+
+#: ../../api/chart.rst:145
+msgid ""
+"The following properties are only present on bar-type plots, which "
+"includes both bar and column charts."
+msgstr ""
+
+#: of pptx.chart.plot.BarPlot:1
+msgid "A bar chart-style plot."
+msgstr ""
+
+#: of pptx.chart.plot.BarPlot.gap_width:1
+#, python-format
+msgid ""
+"Width of gap between bar(s) of each category, as an integer percentage of"
+" the bar width. The default value for a new bar chart is 150, "
+"representing 150% or 1.5 times the width of a single bar."
+msgstr ""
+
+#: of pptx.chart.plot.BarPlot.overlap:1
+msgid ""
+"Read/write int value in range -100..100 specifying a percentage of the "
+"bar width by which to overlap adjacent bars in a multi-series bar chart. "
+"Default is 0. A setting of -100 creates a gap of a full bar width and a "
+"setting of 100 causes all the bars in a category to be superimposed. A "
+"stacked bar plot has overlap of 100 by default."
+msgstr ""
+
+#: ../../api/chart.rst:155
+msgid "|BubblePlot| objects"
+msgstr ""
+
+#: ../../api/chart.rst:157
+msgid "The following properties are only present on bubble-type plots."
+msgstr ""
+
+#: of pptx.chart.plot.BubblePlot:1
+msgid "A bubble chart plot."
+msgstr ""
+
+#: of pptx.chart.plot.BubblePlot.bubble_scale:1
+msgid ""
+"An integer between 0 and 300 inclusive indicating the percentage of the "
+"default size at which bubbles should be displayed. Assigning |None| "
+"produces the same behavior as assigning `100`."
+msgstr ""
+
+#: ../../api/chart.rst:166
+msgid "|category.Categories| objects"
+msgstr ""
+
+#: ../../api/chart.rst:168
+msgid ""
+"Category plots provide access to a |category.Categories| object with "
+"their `.categories` property."
+msgstr ""
+
+#: of pptx.chart.category.Categories:1
+msgid ""
+"A sequence of |category.Category| objects, each representing a category "
+"label on the chart. Provides properties for dealing with hierarchical "
+"categories."
+msgstr ""
+
+#: of pptx.chart.category.Categories.depth:1
+msgid ""
+"Return an integer representing the number of hierarchical levels in this "
+"category collection. Returns 1 for non-hierarchical categories and 0 if "
+"no categories are present (generally meaning no series are present)."
+msgstr ""
+
+#: of pptx.chart.category.Categories.flattened_labels:1
+msgid ""
+"Return a sequence of tuples, each containing the flattened hierarchy of "
+"category labels for a leaf category. Each tuple is in parent -> child "
+"order, e.g. ``('US', 'CA', 'San Francisco')``, with the leaf category "
+"appearing last. If this categories collection is non-hierarchical, each "
+"tuple will contain only a leaf category label. If the plot has no series "
+"(and therefore no categories), an empty tuple is returned."
+msgstr ""
+
+#: of pptx.chart.category.Categories.levels:1
+msgid ""
+"Return a sequence of |CategoryLevel| objects representing the hierarchy "
+"of this category collection. The sequence is empty when the category "
+"collection is not hierarchical, that is, contains only leaf-level "
+"categories. The levels are ordered from the leaf level to the root level;"
+" so the first level will contain the same categories as this category "
+"collection."
+msgstr ""
+
+#: ../../api/chart.rst:178
+msgid "|category.Category| objects"
+msgstr ""
+
+#: of pptx.chart.category.Category:1
+msgid ""
+"An extension of `str` that provides the category label as its string "
+"value, and additional attributes representing other aspects of the "
+"category."
+msgstr ""
+
+#: of pptx.chart.category.Category.idx:1
+msgid ""
+"Return an integer representing the index reference of this category. For "
+"a leaf node, the index identifies the category. For a parent (or other "
+"ancestor) category, the index specifies the first leaf category that "
+"ancestor encloses."
+msgstr ""
+
+#: of pptx.chart.category.Category.label:1
+msgid "Return the label of this category as a string."
+msgstr ""
+
+#: ../../api/chart.rst:187
+msgid "|CategoryLevel| objects"
+msgstr ""
+
+#: of pptx.chart.category.CategoryLevel:1
+msgid ""
+"A sequence of |category.Category| objects representing a single level in "
+"a hierarchical category collection. This object is only used when the "
+"categories are hierarchical, meaning they have more than one level and "
+"higher level categories group those at lower levels."
+msgstr ""
+
+#: ../../api/chart.rst:196
+msgid "|DataLabels| objects"
+msgstr ""
+
+#: ../../api/chart.rst:198
+msgid ""
+"A *data label* is text that labels a particular data point, usually with "
+"its value, allowing the point to be interpreted more clearly than just "
+"visually comparing its marker with its axis."
+msgstr ""
+
+#: ../../api/chart.rst:202
+msgid ""
+"A |DataLabels| object is not a collection, such as a sequence, and it "
+"does not provide access to individual data points. Rather, it provides "
+"properties that allow all the data labels in its scope to be formatted at"
+" once."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels:1
+msgid "Provides access to properties of data labels for a plot or a series."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels:3
+msgid ""
+"This is not a collection and does not provide access to individual data "
+"labels. Access to individual labels is via the |Point| object. The "
+"properties this object provides control formatting of *all* the data "
+"labels in its scope."
+msgstr ""
+
+#: ../../docstring of pptx.chart.datalabel.DataLabels.font:1
+msgid ""
+"The |Font| object that provides access to the text properties for these "
+"data labels, such as bold, italic, etc."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels.number_format:1
+msgid ""
+"Read/write string specifying the format for the numbers on this set of "
+"data labels. Returns 'General' if no number format has been set. Note "
+"that this format string has no effect on rendered data labels when "
+":meth:`number_format_is_linked` is |True|. Assigning a format string to "
+"this property automatically sets :meth:`number_format_is_linked` to "
+"|False|."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels.position:1
+msgid ""
+"Read/write :ref:`XlDataLabelPosition` enumeration value specifying the "
+"position of the data labels with respect to their data point, or |None| "
+"if no position is specified. Assigning |None| causes PowerPoint to choose"
+" the default position, which varies by chart type."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels.show_category_name:1
+msgid "Read/write. True when name of category should appear in label."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels.show_legend_key:1
+msgid "Read/write. True when data label displays legend-color swatch."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels.show_percentage:1
+msgid "Read/write. True when data label displays percentage."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels.show_percentage:3
+msgid ""
+"This option is not operative on all chart types. Percentage appears on "
+"polar charts such as pie and donut."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels.show_series_name:1
+msgid "Read/write. True when data label displays series name."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabels.show_value:1
+msgid "Read/write. True when label displays numeric value of datapoint."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabel:1
+msgid "The data label associated with an individual data point."
+msgstr ""
+
+#: ../../docstring of pptx.chart.datalabel.DataLabel.font:1
+msgid "The |Font| object providing text formatting for this data label."
+msgstr ""
+
+#: ../../docstring of pptx.chart.datalabel.DataLabel.font:3
+msgid ""
+"This font object is used to customize the appearance of automatically "
+"inserted text, such as the data point value. The font applies to the "
+"entire data label. More granular control of the appearance of custom data"
+" label text is controlled by a font object on runs in the text frame."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabel.has_text_frame:1
+msgid ""
+"Return |True| if this data label has a text frame (implying it has custom"
+" data label text), and |False| otherwise. Assigning |True| causes a text "
+"frame to be added if not already present. Assigning |False| causes any "
+"existing text frame to be removed along with any text contained in the "
+"text frame."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabel.position:1
+msgid ""
+"Read/write :ref:`XlDataLabelPosition` member specifying the position of "
+"this data label with respect to its data point, or |None| if no position "
+"is specified. Assigning |None| causes PowerPoint to choose the default "
+"position, which varies by chart type."
+msgstr ""
+
+#: of pptx.chart.datalabel.DataLabel.text_frame:1
+msgid ""
+"|TextFrame| instance for this data label, containing the text of the data"
+" label and providing access to its text formatting properties."
+msgstr ""
+
+#: ../../api/chart.rst:218
+msgid "|Series| objects"
+msgstr ""
+
+#: ../../api/chart.rst:220
+msgid ""
+"A *series* is a sequence of data points that represent a coherent set of "
+"observations across each of the categories in the chart. For example, on "
+"a chart having regional categories \"West\", \"East\", and \"Mid-west\", "
+"a series might be \"Q1 Sales\" and have values 42, 120, and 34. The "
+"series in this case coheres around the first quarter time period."
+msgstr ""
+
+#: ../../api/chart.rst:226
+msgid ""
+"In general, the type (class) of a series object depends upon the chart "
+"type. The following properties are available on series objects of all "
+"types."
+msgstr ""
+
+#: of pptx.chart.series._BaseSeries:1
+msgid "Base class for |BarSeries| and other series classes."
+msgstr ""
+
+#: ../../docstring of pptx.chart.series._BaseSeries.format:1
+msgid ""
+"The |ChartFormat| instance for this series, providing access to shape "
+"properties such as fill and line."
+msgstr ""
+
+#: of pptx.chart.series.AreaSeries.index:1 pptx.chart.series.BarSeries.index:1
+#: pptx.chart.series.BubbleSeries.index:1 pptx.chart.series.LineSeries.index:1
+#: pptx.chart.series.PieSeries.index:1 pptx.chart.series.RadarSeries.index:1
+#: pptx.chart.series.XySeries.index:1 pptx.chart.series._BaseSeries.index:1
+msgid ""
+"The zero-based integer index of this series as reported in its "
+"`c:ser/c:idx` element."
+msgstr ""
+
+#: of pptx.chart.series.AreaSeries.name:1 pptx.chart.series.BarSeries.name:1
+#: pptx.chart.series.BubbleSeries.name:1 pptx.chart.series.LineSeries.name:1
+#: pptx.chart.series.PieSeries.name:1 pptx.chart.series.RadarSeries.name:1
+#: pptx.chart.series.XySeries.name:1 pptx.chart.series._BaseSeries.name:1
+msgid ""
+"The string label given to this series, appears as the title of the column"
+" for this series in the Excel worksheet. It also appears as the label for"
+" this series in the legend."
+msgstr ""
+
+#: ../../api/chart.rst:236
+msgid "|AreaSeries| objects"
+msgstr ""
+
+#: ../../api/chart.rst:238
+msgid ""
+"These properties are available on a series belonging to an area-type plot"
+" such as AREA_STACKED."
+msgstr ""
+
+#: of pptx.chart.series.AreaSeries:1
+msgid "A data point series belonging to an area plot."
+msgstr ""
+
+#: ../../docstring of pptx.chart.series._BaseCategorySeries.data_labels:1
+msgid "|DataLabels| object controlling data labels for this series."
+msgstr ""
+
+#: ../../docstring of pptx.chart.series._BaseCategorySeries.points:1
+msgid ""
+"The |CategoryPoints| object providing access to individual data points in"
+" this series."
+msgstr ""
+
+#: of pptx.chart.series.AreaSeries.values:1
+#: pptx.chart.series.BarSeries.values:1 pptx.chart.series.BubbleSeries.values:1
+#: pptx.chart.series.LineSeries.values:1 pptx.chart.series.PieSeries.values:1
+#: pptx.chart.series.RadarSeries.values:1 pptx.chart.series.XySeries.values:1
+msgid ""
+"Read-only. A sequence containing the float values for this series, in the"
+" order they appear on the chart."
+msgstr ""
+
+#: ../../api/chart.rst:248
+msgid "|BarSeries| objects"
+msgstr ""
+
+#: ../../api/chart.rst:250
+msgid ""
+"These properties are available on a series belonging to a bar-type plot. "
+"Note that column charts are also bar-type charts."
+msgstr ""
+
+#: of pptx.chart.series.BarSeries:1
+msgid "A data point series belonging to a bar plot."
+msgstr ""
+
+#: of pptx.chart.series.BarSeries.invert_if_negative:1
+msgid ""
+"|True| if a point having a value less than zero should appear with a fill"
+" different than those with a positive value. |False| if the fill should "
+"be the same regardless of the bar's value. When |True|, a bar with a "
+"solid fill appears with white fill; in a bar with gradient fill, the "
+"direction of the gradient is reversed, e.g. dark -> light instead of "
+"light -> dark. The term \"invert\" here should be understood to mean "
+"\"invert the *direction* of the *fill gradient*\"."
+msgstr ""
+
+#: ../../api/chart.rst:260
+msgid "|BubbleSeries| objects"
+msgstr ""
+
+#: ../../api/chart.rst:262
+msgid "These properties are available on series belonging to a bubble chart."
+msgstr ""
+
+#: of pptx.chart.series.BubbleSeries:1
+msgid "A data point series belonging to a bubble plot."
+msgstr ""
+
+#: ../../docstring of pptx.chart.series.BubbleSeries.points:1
+msgid ""
+"The |BubblePoints| object providing access to individual data point "
+"objects used to discover and adjust the formatting and data labels of a "
+"data point."
+msgstr ""
+
+#: of pptx.chart.series.XySeries.iter_values:1
+msgid ""
+"Generate each float Y value in this series, in the order they appear on "
+"the chart. A value of `None` represents a missing Y value (corresponding "
+"to a blank Excel cell)."
+msgstr ""
+
+#: ../../docstring of pptx.chart.series._MarkerMixin.marker:1
+msgid ""
+"The |Marker| instance for this series, providing access to data point "
+"marker properties such as fill and line. Setting these properties "
+"determines the appearance of markers for all points in this series that "
+"are not overridden by settings at the point level."
+msgstr ""
+
+#: ../../api/chart.rst:271
+msgid "|LineSeries| objects"
+msgstr ""
+
+#: ../../api/chart.rst:273
+msgid "These properties are available on a series belonging to a line-type plot."
+msgstr ""
+
+#: of pptx.chart.series.LineSeries:1
+msgid "A data point series belonging to a line plot."
+msgstr ""
+
+#: of pptx.chart.series.LineSeries.smooth:1
+msgid ""
+"Read/write boolean specifying whether to use curve smoothing to form the "
+"line connecting the data points in this series into a continuous curve. "
+"If |False|, a series of straight line segments are used to connect the "
+"points."
+msgstr ""
+
+#: ../../api/chart.rst:282
+msgid "|Marker| objects"
+msgstr ""
+
+#: ../../api/chart.rst:284
+msgid ""
+"A marker is the small shape (e.g. diamond or circle) that \"marks\" each "
+"individual data point connected by a series line in a line-type plot."
+msgstr ""
+
+#: of pptx.chart.marker.Marker:1
+msgid ""
+"Represents a data point marker, such as a diamond or circle, on a line-"
+"type chart."
+msgstr ""
+
+#: ../../docstring of pptx.chart.marker.Marker.format:1
+msgid ""
+"The |ChartFormat| instance for this marker, providing access to shape "
+"properties such as fill and line."
+msgstr ""
+
+#: of pptx.chart.marker.Marker.size:1
+msgid ""
+"An integer between 2 and 72 inclusive indicating the size of this marker "
+"in points. A value of |None| indicates no explicit value is set and the "
+"size is inherited from a higher-level setting or the PowerPoint default "
+"(which may be 9). Assigning |None| removes any explicitly assigned size, "
+"causing this value to be inherited."
+msgstr ""
+
+#: of pptx.chart.marker.Marker.element:1
+msgid "The lxml element proxied by this object."
+msgstr ""
+
+#: of pptx.chart.marker.Marker.style:1
+msgid ""
+"A member of the :ref:`XlMarkerStyle` enumeration indicating the shape of "
+"this marker. Returns |None| if no explicit style has been set, which "
+"corresponds to the \"Automatic\" option in the PowerPoint UI."
+msgstr ""
+
+#: ../../api/chart.rst:294
+msgid "|PieSeries| objects"
+msgstr ""
+
+#: ../../api/chart.rst:296
+msgid "These properties are available on a series belonging to a pie chart."
+msgstr ""
+
+#: of pptx.chart.series.PieSeries:1
+msgid "A data point series belonging to a pie plot."
+msgstr ""
+
+#: ../../api/chart.rst:305
+msgid "|RadarSeries| objects"
+msgstr ""
+
+#: ../../api/chart.rst:307
+msgid "These properties are available on a series belonging to a radar chart."
+msgstr ""
+
+#: of pptx.chart.series.RadarSeries:1
+msgid "A data point series belonging to a radar plot."
+msgstr ""
+
+#: ../../api/chart.rst:316
+msgid "|XySeries| objects"
+msgstr ""
+
+#: ../../api/chart.rst:318
+msgid "These properties are available on series belonging to an XY plot."
+msgstr ""
+
+#: of pptx.chart.series.XySeries:1
+msgid "A data point series belonging to an XY (scatter) plot."
+msgstr ""
+
+#: ../../docstring of pptx.chart.series.XySeries.points:1
+msgid ""
+"The |XyPoints| object providing access to individual data points in this "
+"series."
+msgstr ""
+
+#: ../../api/chart.rst:328
+msgid "|Point| objects"
+msgstr ""
+
+#: ../../api/chart.rst:330
+msgid ""
+"An XY or bubble chart has a :attr:`points` attribute providing access to "
+"a sequence of |Point| objects. That sequence supports iteration, indexed "
+"access, and ``len()``."
+msgstr ""
+
+#: of pptx.chart.point.CategoryPoints:1
+msgid ""
+"Sequence providing access to individual |Point| objects, each "
+"representing the visual properties of a data point in the specified "
+"category series."
+msgstr ""
+
+#: of pptx.chart.point.BubblePoints:1
+msgid ""
+"Sequence providing access to the individual data points in a "
+"|BubbleSeries| object."
+msgstr ""
+
+#: of pptx.chart.point.XyPoints:1
+msgid ""
+"Sequence providing access to the individual data points in an |XySeries| "
+"object."
+msgstr ""
+
+#: of pptx.chart.point.Point:1
+msgid ""
+"Provides access to the properties of an individual data point in a "
+"series, such as the visual properties of its marker and the text and font"
+" of its data label."
+msgstr ""
+
+#: ../../docstring of pptx.chart.point.Point.data_label:1
+msgid "The |DataLabel| object representing the label on this data point."
+msgstr ""
+
+#: ../../docstring of pptx.chart.point.Point.marker:1
+msgid ""
+"The |Marker| instance for this point, providing access to the visual "
+"properties of the data point marker, such as fill and line. Setting these"
+" properties overrides any value set at the series level."
+msgstr ""
+

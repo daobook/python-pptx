@@ -1,0 +1,258 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../user/autoshapes.rst:3
+msgid "Working with AutoShapes"
+msgstr ""
+
+#: ../../user/autoshapes.rst:5
+msgid ""
+"Auto shapes are regular shape shapes. Squares, circles, triangles, stars,"
+" that sort of thing. There are 182 different auto shapes to choose from. "
+"120 of these have adjustment \"handles\" you can use to change the shape,"
+" sometimes dramatically."
+msgstr ""
+
+#: ../../user/autoshapes.rst:10
+msgid ""
+"Many shape types share a common set of properties. We'll introduce many "
+"of them here because several of those shapes are just a specialized form "
+"of AutoShape."
+msgstr ""
+
+#: ../../user/autoshapes.rst:16
+msgid "Adding an auto shape"
+msgstr ""
+
+#: ../../user/autoshapes.rst:18
+msgid ""
+"The following code adds a rounded rectangle shape, one inch square, and "
+"positioned one inch from the top-left corner of the slide::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:29
+msgid ""
+"See the :ref:`MsoAutoShapeType` enumeration page for a list of all 182 "
+"auto shape types."
+msgstr ""
+
+#: ../../user/autoshapes.rst:36
+msgid "Understanding English Metric Units"
+msgstr ""
+
+#: ../../user/autoshapes.rst:38
+msgid ""
+"In the prior example we set the position and dimension values to the "
+"expression ``Inches(1.0)``. What's that about?"
+msgstr ""
+
+#: ../../user/autoshapes.rst:41
+msgid ""
+"Internally, PowerPoint stores length values in *English Metric Units* "
+"(EMU). This term might be worth a quick Googling, but the short story is "
+"EMU is an integer unit of length, 914400 to the inch. Most lengths in "
+"Office documents are stored in EMU. 914400 has the great virtue that it "
+"is evenly divisible by a great many common factors, allowing exact "
+"conversion between inches and centimeters, for example. Being an integer,"
+" it can be represented exactly across serializations and across "
+"platforms."
+msgstr ""
+
+#: ../../user/autoshapes.rst:49
+msgid ""
+"As you might imagine, working directly in EMU is inconvenient. To make it"
+" easier, python-pptx provides a collection of value types to allow easy "
+"specification and conversion into convenient units::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:67
+msgid ""
+"More details are available in the :ref:`API documentation for pptx.util "
+"<util>`"
+msgstr ""
+
+#: ../../user/autoshapes.rst:72
+msgid "Shape position and dimensions"
+msgstr ""
+
+#: ../../user/autoshapes.rst:74
+msgid ""
+"All shapes have a position on their slide and have a size. In general, "
+"position and size are specified when the shape is created. Position and "
+"size can also be read from existing shapes and changed::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:93
+msgid "Fill"
+msgstr ""
+
+#: ../../user/autoshapes.rst:95
+msgid ""
+"AutoShapes have an outline around their outside edge. What appears within"
+" that outline is called the shape's *fill*."
+msgstr ""
+
+#: ../../user/autoshapes.rst:98
+msgid ""
+"The most common type of fill is a solid color. A shape may also be filled"
+" with a gradient, a picture, a pattern (like cross-hatching for example),"
+" or may have no fill (transparent)."
+msgstr ""
+
+#: ../../user/autoshapes.rst:102
+msgid ""
+"When a color is used, it may be specified as a specific RGB value or a "
+"color from the theme palette."
+msgstr ""
+
+#: ../../user/autoshapes.rst:105
+msgid ""
+"Because there are so many options, the API for fill is a bit complex. "
+"This code sets the fill of a shape to red::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:112
+msgid ""
+"This sets it to the theme color that appears as 'Accent 1 - 25% Darker' "
+"in the toolbar palette::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:121
+msgid ""
+"This sets the shape fill to transparent, or 'No Fill' as it's called in "
+"the PowerPoint UI::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:126
+msgid ""
+"As you can see, the first step is to specify the desired fill type by "
+"calling the corresponding method on fill. Doing so actually changes the "
+"properties available on the fill object. For example, referencing "
+"``.fore_color`` on a fill object after calling its ``.background()`` "
+"method will raise an exception::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:144
+msgid "Line"
+msgstr ""
+
+#: ../../user/autoshapes.rst:146
+msgid ""
+"The outline of an AutoShape can also be formatted, including setting its "
+"color, width, dash (solid, dashed, dotted, etc.), line style (single, "
+"double, thick-thin, etc.), end cap, join type, and others. At the time of"
+" writing, color and width can be set using python-pptx::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:156
+msgid "Theme colors can be used on lines too::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:160
+msgid ""
+"``Shape.line`` has the attribute ``.color``. This is essentially a "
+"shortcut for::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:166
+msgid ""
+"This makes sense for line formatting because a shape outline is most "
+"frequently set to a solid color. Accessing the fill directly is required,"
+" for example, to set the line to transparent::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:174
+msgid "Line width"
+msgstr ""
+
+#: ../../user/autoshapes.rst:176
+msgid "The shape outline also has a read/write width property::"
+msgstr ""
+
+#: ../../user/autoshapes.rst:188
+msgid "Adjusting an autoshape"
+msgstr ""
+
+#: ../../user/autoshapes.rst:190
+msgid ""
+"Many auto shapes have adjustments. In PowerPoint, these show up as little"
+" yellow diamonds you can drag to change the look of the shape. They're a "
+"little fiddly to work with via a program, but if you have the patience to"
+" get them right, you can achieve some remarkable effects with great "
+"precision."
+msgstr ""
+
+#: ../../user/autoshapes.rst:197
+msgid "Shape Adjustment Concepts"
+msgstr ""
+
+#: ../../user/autoshapes.rst:199
+msgid ""
+"There are a few concepts it's worthwhile to grasp before trying to do "
+"serious work with adjustments."
+msgstr ""
+
+#: ../../user/autoshapes.rst:202
+msgid ""
+"First, adjustments are particular to a specific auto shape type. Each "
+"auto shape has between zero and eight adjustments. What each of them does"
+" is arbitrary and depends on the shape design."
+msgstr ""
+
+#: ../../user/autoshapes.rst:206
+msgid ""
+"Conceptually, adjustments are guides, in many ways like the light blue "
+"ones you can align to in the PowerPoint UI and other drawing apps. These "
+"don't show, but they operate in a similar way, each defining an x or y "
+"value that part of the shape will align to, changing the proportions of "
+"the shape."
+msgstr ""
+
+#: ../../user/autoshapes.rst:211
+msgid ""
+"Adjustment values are large integers, each based on a nominal value of "
+"100,000. The effective value of an adjustment is proportional to the "
+"width or height of the shape. So a value of 50,000 for an x-coordinate "
+"adjustment corresponds to half the width of the shape; a value of 75,000 "
+"for a y-coordinate adjustment corresponds to 3/4 of the shape height."
+msgstr ""
+
+#: ../../user/autoshapes.rst:217
+msgid ""
+"Adjustment values can be negative, generally indicating the coordinate is"
+" to the left or above the top left corner (origin) of the shape. Values "
+"can also be subject to limits, meaning their effective value cannot be "
+"outside a prescribed range. In practice this corresponds to a point not "
+"being able to extend beyond the left side of the shape, for example."
+msgstr ""
+
+#: ../../user/autoshapes.rst:223
+msgid ""
+"Spending some time fooling around with shape adjustments in PowerPoint is"
+" time well spent to build an intuitive sense of how they behave. You also"
+" might want to have ``opc-diag`` installed so you can look at the XML "
+"values that are generated by different adjustments as a head start on "
+"developing your adjustment code."
+msgstr ""
+
+#: ../../user/autoshapes.rst:230
+msgid "The following code formats a callout shape using its adjustments::"
+msgstr ""
+

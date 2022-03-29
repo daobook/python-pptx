@@ -1,0 +1,378 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/placeholders/index.rst:4
+msgid "Placeholders"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:13
+msgid ""
+"From a user perspective, a placeholder is a container into which content "
+"can be inserted. The position, size, and formatting of content inserted "
+"into the placeholder is determined by the placeholder, allowing those key"
+" presentation design characteristics to be determined at design time and "
+"kept consistent across presentations created from a particular template."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:19
+msgid ""
+"The placeholder appearing on a slide is only part of the overall "
+"placeholder mechanism however. Placeholder behavior requires three "
+"different categories of placeholder shape; those that exist on a slide "
+"master, those on a slide layout, and those that ultimately appear on a "
+"slide in a presentation."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:24
+msgid ""
+"These three categories of placeholder participate in a property "
+"inheritance hierarchy, either as an inheritor, an inheritee, or both. "
+"Placeholder shapes on masters are inheritees only. Conversely placeholder"
+" shapes on slides are inheritors only. Placeholders on slide layouts are "
+"both, a possible inheritor from a slide master placeholder and an "
+"inheritee to placeholders on slides linked to that layout."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:31
+msgid ""
+"A layout inherits from its master differently than a slide inherits from "
+"its layout. A layout placeholder inherits from the master placeholder "
+"sharing the same type. A slide placeholder inherits from the layout "
+"placeholder having the same `idx` value."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:37
+msgid "Glossary"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:40
+msgid "placeholder shape"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:40
+msgid "A shape on a slide that inherits from a layout placeholder."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:44
+msgid "layout placeholder"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:43
+msgid ""
+"a shorthand name for the placeholder shape on the slide layout from which"
+" a particular placeholder on a slide inherits shape properties"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:49
+msgid "master placeholder"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:47
+msgid ""
+"the placeholder shape on the slide master which a layout placeholder "
+"inherits from, if any."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:52
+msgid "Schema excerpt"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:132
+msgid "Notes on footer item placeholders"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:135
+msgid "Recommendation and Argumentation"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:137
+msgid ""
+"Place page number (and perhaps copyright, date) on master in plain text "
+"boxes. Use \"Hide Background Graphics\" option on title slide to prevent "
+"them showing there if desired."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:141
+msgid ""
+"In the slide placeholder method, an individually selectable footer item "
+"placeholder is present on the slide:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:144
+msgid ""
+"It can be moved accidentally, losing the placement consistency originally"
+" imposed by the master. Recovering exact placement requires reapplying "
+"the layout which may make other, unwanted changes."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:147
+msgid "It can be deleted, which could be a plus or minus depending."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:148
+msgid "It can be formatted inconsistently."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:149
+msgid ""
+"In can be accidentally selected and generally pollutes the shape space of"
+" the slide."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:152
+msgid ""
+"I'm not sure python-pptx does the right thing when adding slides from "
+"layouts containing footer items, at least not the same thing as "
+"PowerPoint does in automatically working out which footer items to copy "
+"over."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:156
+msgid "Also, there's no method to copy over footer items from the layout."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:158
+msgid "Alternatives:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:160
+msgid ""
+"A page number can be placed on the master as a text box. This causes it "
+"to appear on every layout and every slide. No refreshing is necessary as "
+"this item is inherited, not copied at slide or layout create time."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:164
+msgid ""
+"It can be excluded from an individual layout (such as a title slide "
+"layout) by setting the `Hide Background Graphics` flag on a layout-by-"
+"layout basis. Unfortunately, this also hides other items such as a logo, "
+"copyright text, and slide background, but these can be reapplied "
+"individually directly to that slide layout. Since the title slide layout "
+"is generally the only one folks want to hide a slide number from, this is"
+" perhaps not a great burden. Others, like perhaps closing slides, might "
+"have their own background anyway."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:175
+msgid "Hypothesis:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:177
+msgid ""
+"There is a class of placeholders known as \"footer elements\", comprising"
+" date and time, footer text, and slide number."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:180
+msgid ""
+"These placeholders can only be directly added to a master. They are not "
+"available as options to add directly to a layout or to a slide."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:183
+msgid ""
+"In every case, these placeholders are copied, although some attributes "
+"may be inherited at run time (not sure). Footer items are copied from the"
+" master to a new layout. Likewise, items are copied from a layout to a "
+"slide, but only when explicitly asked for using Insert > Header and "
+"Footer. PowerPoint sometimes adds these automatically when they're "
+"already present on other slides (don't know the rules it uses)."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:192
+msgid "Intended procedure"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:194
+msgid "This is how slide footer items are designed to be used:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:196
+msgid ""
+"Add footer placeholders to master with intended standard position and "
+"formatting."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:199
+msgid ""
+"Available by default on each layout. Can be disabled for individual "
+"layouts, for example, the title slide layout using the Slide Master "
+"Ribbon > Edit Layout > Allow Footers checkbox. Also can be deleted and "
+"formatting changed individually on a layout-by-layout basis."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:204
+msgid ""
+"Hidden by default on new slides. Use Insert > Header and Footer dialog to"
+" add which items to show. Can be applied to all slides. Under certain "
+"circumstances, PowerPoint adds selected footer items to new slides "
+"automatically, based on them being present on other slides already in the"
+" presentation."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:212
+msgid "PowerPoint Behaviors"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:214
+msgid "Layout: Slide Master (ribbon) > Edit Layout > Allow Footers (checkbox)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:216
+msgid ""
+"Adding or removing a footer item from a layout, does not automatically "
+"reflect that change on existing slides based on that layout. The change "
+"is also not reflected when you reapply the layout, at least for deleting "
+"case."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:220
+msgid ""
+"It does not appear when you reapply the layout ('Reset Layout to Default "
+"Settings' on Mac)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:223
+msgid ""
+"Position appears to be inherited as long as you haven't moved the "
+"placeholder on the slide. This applies at master -> layout as well as "
+"layout -> slide level."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:227
+msgid ""
+"Refreshing the layout after the page number item has been deleted leaves "
+"the page number item, but repositions it to a default (right justified to"
+" right slide edge) position. Apparently it attempts to inherit the "
+"position from the layout but not presence (or not)."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:232
+msgid ""
+"The `Allow Footers` checkbox is inactive (not greyed out but can't be set"
+" on) when there are no footer placeholder items on the master."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:235
+msgid ""
+"Allow footers seems to be something of a one-way street. You can't clear "
+"the checkbox once it's set. However, if you delete the footer "
+"placeholder(s), the checkbox clears all by itself."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:239
+msgid ""
+"The placeholder copied from master to layout can be repositioned and "
+"formatted (font etc.)."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:242
+msgid ""
+"Menu > Insert > Header and Footer ... Is available on individual slides "
+"and can be applied to all slides. It also works for removing footer "
+"items. This applies to *slides*, not to slide layouts."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:246
+msgid "This dialog is also available from the Page Setup dialog."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:248
+msgid ""
+"Hide background graphics flag does not control footer items. It does "
+"however control visibility of all non-placeholder items on the layout (or"
+" slide). It's available at both the layout and slide level. Not sure how "
+"that's reflected in the XML."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:253
+msgid ""
+"When creating a new slide layout, the footer placeholders from the master"
+" are all automatically shown. This is to say that the \"Allow Footers\" "
+"ribbon option defaults to True when adding a new slide layout."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:257
+msgid ""
+"Clicking Allow Footers off hides all the footer items. They can also be "
+"deleted or formatted individually."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:260
+msgid "In order to appear (at create time anyway), footer items need to be:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:262
+msgid "Present on the master"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:263
+msgid "Present on the layout ('Allow Footers' turned on, ph not deleted)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:264
+msgid ""
+"Insert Header and Footer turned on for each ph element to be shown. This "
+"is applied on a slide-by-slide basis."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:269
+msgid "Notes"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:271
+msgid ""
+"Header is a misnomer as far as slides are concerned. There are no header "
+"items for a slide. A notes page can have a header though, which I expect "
+"is why it appears, since the same dialog is used for slides and notes "
+"pages (and handouts)."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:276
+msgid "A master is intended only to contain certain items:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:278
+msgid "Title"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:279
+msgid "Body"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:280
+msgid "Footer placeholders (date/time, footer text, slide number)"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:281
+msgid "Background and theme items, perhaps logos and static text"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:284
+msgid ""
+"http://www.powerpointninja.com/templates/powerpoint-templates-beware-of-"
+"the-footers/"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/index.rst:286
+msgid "https://github.com/scanny/python-pptx/issues/64"
+msgstr ""
+

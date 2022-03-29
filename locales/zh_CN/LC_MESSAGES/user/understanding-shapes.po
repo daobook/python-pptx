@@ -1,0 +1,188 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../user/understanding-shapes.rst:3
+msgid "Understanding Shapes"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:5
+msgid ""
+"Pretty much anything on a slide is a shape; the only thing I can think of"
+" that can appear on a slide that's not a shape is a slide background. "
+"There are between six and ten different types of shape, depending how you"
+" count. I'll explain some of the general shape concepts you'll need to "
+"make sense of how to work with them and then we'll jump right into "
+"working with the specific types."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:11
+msgid ""
+"Technically there are six and only six different types of shapes that can"
+" be placed on a slide:"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:21
+msgid "auto shape"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:15
+msgid ""
+"This is a regular shape, like a rectangle, an ellipse, or a block arrow. "
+"They come in a large variety of preset shapes, in the neighborhood of 180"
+" different ones. An auto shape can have a fill and an outline, and can "
+"contain text. Some auto shapes have adjustments, the little yellow "
+"diamonds you can drag to adjust how round the corners of a rounded "
+"rectangle are for example. A text box is also an autoshape, a rectangular"
+" one, just by default without a fill and without an outline."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:28
+msgid "picture"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:24
+msgid ""
+"A raster image, like a photograph or clip art is referred to as a "
+"*picture* in PowerPoint. It's its own kind of shape with different "
+"behaviors than an autoshape. Note that an auto shape can have a picture "
+"fill, in which an image \"shows through\" as the background of the shape "
+"instead of a fill color or gradient. That's a different thing. But cool."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:34
+msgid "graphic frame"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:31
+msgid ""
+"This is the technical name for the container that holds a table, a chart,"
+" a smart art diagram, or media clip. You can't add one of these by "
+"itself, it just shows up in the file when you add a graphical object. You"
+" probably won't need to know anything more about these."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:41
+msgid "group shape"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:37
+msgid ""
+"In PowerPoint, a set of shapes can be *grouped*, allowing them to be "
+"selected, moved, resized, and even filled as a unit. When you group a set"
+" of shapes a group shape gets created to contain those member shapes. You"
+" can't actually see these except by their bounding box when the group is "
+"selected."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:48
+msgid "line/connector"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:44
+msgid ""
+"Lines are different from auto shapes because, well, they're linear. Some "
+"lines can be connected to other shapes and stay connected when the other "
+"shape is moved. These aren't supported yet either so I don't know much "
+"more about them. I'd better get to these soon though, they seem like "
+"they'd be very handy."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:54
+msgid "content part"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:51
+msgid ""
+"I actually have only the vaguest notion of what these are. It has "
+"something to do with embedding \"foreign\" XML like SVG in with the "
+"presentation. I'm pretty sure PowerPoint itself doesn't do anything with "
+"these. My strategy is to ignore them. Working good so far."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:56
+msgid "As for real-life shapes, there are these nine types:"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:58
+msgid "shape shapes -- auto shapes with fill and an outline"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:59
+msgid "text boxes -- auto shapes with no fill and no outline"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:60
+msgid ""
+"placeholders -- auto shapes that can appear on a slide layout or master "
+"and be inherited on slides that use that layout, allowing content to be "
+"added that takes on the formatting of the placeholder"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:63
+msgid "line/connector -- as described above"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:64
+msgid "picture -- as described above"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:65
+msgid "table -- that row and column thing"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:66
+msgid "chart -- pie chart, line chart, etc."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:67
+msgid "smart art -- not supported yet, although preserved if present"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:68
+msgid "media clip -- video or audio"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:72
+msgid "Accessing the shapes on a slide"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:74
+msgid ""
+"Each slide has a *shape tree* that holds its shapes. It's called a tree "
+"because it's hierarchical in the general case; a node in the shape tree "
+"can be a group shape which itself can contain shapes and has the same "
+"semantics as the shape tree. For most purposes the shape tree has list "
+"semantics. You gain access to it like so::"
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:82
+msgid "We'll see a lot more of the shape tree in the next few sections."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:86
+msgid "Up next ..."
+msgstr ""
+
+#: ../../user/understanding-shapes.rst:88
+msgid ""
+"Okay. That should be enough noodle work to get started. Let's move on to "
+"working with AutoShapes."
+msgstr ""
+

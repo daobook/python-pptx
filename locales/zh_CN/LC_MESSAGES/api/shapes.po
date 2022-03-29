@@ -1,0 +1,1076 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../api/shapes.rst:4
+msgid "Shapes"
+msgstr ""
+
+#: ../../api/shapes.rst:6
+msgid ""
+"The following classes provide access to the shapes that appear on a slide"
+" and the collections that contain them."
+msgstr ""
+
+#: ../../api/shapes.rst:11
+msgid "|SlideShapes| objects"
+msgstr ""
+
+#: ../../api/shapes.rst:13
+msgid ""
+"The |SlideShapes| object is encountered as the :attr:`~BaseSlide.shapes` "
+"property of |Slide|."
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes:1
+msgid "Sequence of shapes appearing on a slide."
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes:3
+msgid ""
+"The first shape in the sequence is the backmost in z-order and the last "
+"shape is topmost. Supports indexed access, len(), index(), and iteration."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_chart:1
+msgid "Add a new chart of *chart_type* to the slide."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_chart:3
+msgid ""
+"The chart is positioned at (*x*, *y*), has size (*cx*, *cy*), and depicts"
+" *chart_data*. *chart_type* is one of the :ref:`XlChartType` enumeration "
+"values. *chart_data* is a |ChartData| object populated with the "
+"categories and series values for the chart."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_chart:8
+msgid ""
+"Note that a |GraphicFrame| shape object is returned, not the |Chart| "
+"object contained in that graphic frame shape. The chart object may be "
+"accessed using the :attr:`chart` property of the returned |GraphicFrame| "
+"object."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_connector:1
+msgid "Add a newly created connector shape to the end of this shape tree."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_connector:3
+msgid ""
+"*connector_type* is a member of the :ref:`MsoConnectorType` enumeration "
+"and the end-point values are specified as EMU values. The returned "
+"connector is of type *connector_type* and has begin and end points as "
+"specified."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_group_shape:1
+msgid "Return a |GroupShape| object newly appended to this shape tree."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_group_shape:3
+msgid ""
+"The group shape is empty and must be populated with shapes using methods "
+"on its shape tree, available on its `.shapes` property. The position and "
+"extents of the group shape are determined by the shapes it contains; its "
+"position and extents are recalculated each time a shape is added to it."
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes.add_movie:1
+msgid "Return newly added movie shape displaying video in *movie_file*."
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes.add_movie:3
+msgid "**EXPERIMENTAL.** This method has important limitations:"
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes.add_movie:5
+msgid ""
+"The size must be specified; no auto-scaling such as that provided by "
+":meth:`add_picture` is performed."
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes.add_movie:7
+msgid ""
+"The MIME type of the video file should be specified, e.g. 'video/mp4'. "
+"The provided video file is not interrogated for its type. The MIME type "
+"`video/unknown` is used by default (and works fine in tests as of this "
+"writing)."
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes.add_movie:11
+msgid ""
+"A poster frame image must be provided, it cannot be automatically "
+"extracted from the video file. If no poster frame is provided, the "
+"default \"media loudspeaker\" image will be used."
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes.add_movie:15
+msgid ""
+"Return a newly added movie shape to the slide, positioned at (*left*, "
+"*top*), having size (*width*, *height*), and containing *movie_file*. "
+"Before the video is started, *poster_frame_image* is displayed as a "
+"placeholder for the video."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_ole_object:1
+msgid "Return newly-created GraphicFrame shape embedding `object_file`."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_ole_object:3
+msgid ""
+"The returned graphic-frame shape contains `object_file` as an embedded "
+"OLE object. It is displayed as an icon at `left`, `top` with size "
+"`width`, `height`. `width` and `height` may be omitted when `prog_id` is "
+"a member of `PROG_ID`, in which case the default icon size is used. This "
+"is advised for best appearance where applicable because it avoids an icon"
+" with a \"stretched\" appearance."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_ole_object:9
+msgid ""
+"`object_file` may either be a str path to the file or a file-like object "
+"(such as `io.BytesIO`) containing the bytes of the object file."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_ole_object:12
+msgid ""
+"`prog_id` can be either a member of `pptx.enum.shapes.PROG_ID` or a str "
+"value like `\"Adobe.Exchange.7\"` determined by inspecting the XML "
+"generated by PowerPoint for an object of the desired type."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_ole_object:16
+msgid ""
+"`icon_file` may either be a str path to an image file or a file-like "
+"object containing the image. The image provided will be displayed in lieu"
+" of the OLE object; double-clicking on the image opens the object "
+"(subject to operating-system limitations). The image file can be any "
+"supported image file. Those produced by PowerPoint itself are generally "
+"EMF and can be harvested from a PPTX package that embeds such an object. "
+"PNG and JPG also work fine."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_picture:1
+msgid "Add picture shape displaying image in *image_file*."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_picture:3
+msgid ""
+"*image_file* can be either a path to a file (a string) or a file-like "
+"object. The picture is positioned with its top-left corner at (*top*, "
+"*left*). If *width* and *height* are both |None|, the native size of the "
+"image is used. If only one of *width* or *height* is used, the "
+"unspecified dimension is calculated to preserve the aspect ratio of the "
+"image. If both are specified, the picture is stretched to fit, without "
+"regard to its native aspect ratio."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_shape:1
+msgid "Return new |Shape| object appended to this shape tree."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_shape:3
+msgid ""
+"*autoshape_type_id* is a member of :ref:`MsoAutoShapeType` e.g. "
+"``MSO_SHAPE.RECTANGLE`` specifying the type of shape to be added. The "
+"remaining arguments specify the new shape's position and size."
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes.add_table:1
+msgid ""
+"Add a |GraphicFrame| object containing a table with the specified number "
+"of *rows* and *cols* and the specified position and size. *width* is "
+"evenly distributed between the columns of the new table. Likewise, "
+"*height* is evenly distributed between the rows. Note that the ``.table``"
+" property on the returned |GraphicFrame| shape must be used to access the"
+" enclosed |Table| object."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_textbox:1
+msgid "Return newly added text box shape appended to this shape tree."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.add_textbox:3
+msgid ""
+"The text box is of the specified size, located at the specified position "
+"on the slide."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.build_freeform:1
+msgid "Return |FreeformBuilder| object to specify a freeform shape."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.build_freeform:3
+msgid ""
+"The optional *start_x* and *start_y* arguments specify the starting pen "
+"position in local coordinates. They will be rounded to the nearest "
+"integer before use and each default to zero."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.build_freeform:7
+msgid ""
+"The optional *scale* argument specifies the size of local coordinates "
+"proportional to slide coordinates (EMU). If the vertical scale is "
+"different than the horizontal scale (local coordinate units are "
+"\"rectangular\"), a pair of numeric values can be provided as the *scale*"
+" argument, e.g. `scale=(1.0, 2.0)`. In this case the first number is "
+"interpreted as the horizontal (X) scale and the second as the vertical "
+"(Y) scale."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.build_freeform:15
+msgid ""
+"A convenient method for calculating scale is to divide a |Length| object "
+"by an equivalent count of local coordinate units, e.g. `scale = "
+"Inches(1)/1000` for 1000 local units per inch."
+msgstr ""
+
+#: of pptx.shapes.shapetree.GroupShapes.element:1
+#: pptx.shapes.shapetree.SlideShapes.element:1
+msgid "The lxml element proxied by this object."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.index:1
+msgid "Return the index of *shape* in this sequence."
+msgstr ""
+
+#: of pptx.shapes.shapetree._BaseGroupShapes.index:3
+msgid "Raises |ValueError| if *shape* is not in the collection."
+msgstr ""
+
+#: of pptx.shapes.shapetree.GroupShapes.parent:1
+#: pptx.shapes.shapetree.SlideShapes.parent:1
+msgid ""
+"The ancestor proxy object to this one. For example, the parent of a shape"
+" is generally the |SlideShapes| object that contains it."
+msgstr ""
+
+#: of pptx.shapes.shapetree.GroupShapes.part:1
+#: pptx.shapes.shapetree.SlideShapes.part:1
+msgid "The package part containing this object"
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes.placeholders:1
+msgid ""
+"Instance of |SlidePlaceholders| containing sequence of placeholder shapes"
+" in this slide."
+msgstr ""
+
+#: of pptx.shapes.shapetree.SlideShapes.title:1
+msgid ""
+"The title placeholder shape on the slide or |None| if the slide has no "
+"title placeholder."
+msgstr ""
+
+#: of pptx.shapes.shapetree.GroupShapes.turbo_add_enabled:1
+#: pptx.shapes.shapetree.SlideShapes.turbo_add_enabled:1
+msgid "True if \"turbo-add\" mode is enabled. Read/Write."
+msgstr ""
+
+#: of pptx.shapes.shapetree.GroupShapes.turbo_add_enabled:3
+#: pptx.shapes.shapetree.SlideShapes.turbo_add_enabled:3
+msgid ""
+"EXPERIMENTAL: This feature can radically improve performance when adding "
+"large numbers (hundreds of shapes) to a slide. It works by caching the "
+"last shape ID used and incrementing that value to assign the next shape "
+"id. This avoids repeatedly searching all shape ids in the slide each time"
+" a new ID is required."
+msgstr ""
+
+#: of pptx.shapes.shapetree.GroupShapes.turbo_add_enabled:9
+#: pptx.shapes.shapetree.SlideShapes.turbo_add_enabled:9
+msgid ""
+"Performance is not noticeably improved for a slide with a relatively "
+"small number of shapes, but because the search time rises with the square"
+" of the shape count, this option can be useful for optimizing generation "
+"of a slide composed of many shapes."
+msgstr ""
+
+#: of pptx.shapes.shapetree.GroupShapes.turbo_add_enabled:14
+#: pptx.shapes.shapetree.SlideShapes.turbo_add_enabled:14
+msgid ""
+"Shape-id collisions can occur (causing a repair error on load) if more "
+"than one |Slide| object is used to interact with the same slide in the "
+"presentation. Note that the |Slides| collection creates a new |Slide| "
+"object each time a slide is accessed (e.g. `slide = prs.slides[0]`, so "
+"you must be careful to limit use to a single |Slide| object."
+msgstr ""
+
+#: ../../api/shapes.rst:24
+msgid "|GroupShapes| objects"
+msgstr ""
+
+#: ../../api/shapes.rst:26
+msgid ""
+"The |GroupShapes| object is encountered as the :attr:`~GroupShape.shapes`"
+" property of |GroupShape|."
+msgstr ""
+
+#: of pptx.shapes.shapetree.GroupShapes:1
+msgid "The sequence of child shapes belonging to a group shape."
+msgstr ""
+
+#: of pptx.shapes.shapetree.GroupShapes:3
+msgid ""
+"Note that this collection can itself contain a group shape, making this "
+"part of a recursive, tree data structure (acyclic graph)."
+msgstr ""
+
+#: ../../api/shapes.rst:36
+msgid "Shape objects in general"
+msgstr ""
+
+#: ../../api/shapes.rst:38
+msgid "The following properties and methods are common to all shapes."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape:1
+msgid "Base class for shape objects."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape:3
+msgid "Subclasses include |Shape|, |Picture|, and |GraphicFrame|."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.base.BaseShape.click_action:1
+msgid "|ActionSetting| instance providing access to click behaviors."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.base.BaseShape.click_action:3
+msgid ""
+"Click behaviors are hyperlink-like behaviors including jumping to a "
+"hyperlink (web page) or to another slide in the presentation. The click "
+"action is that defined on the overall shape, not a run of text within the"
+" shape. An |ActionSetting| object is always returned, even when no click "
+"behavior is defined on the shape."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.element:1
+#: pptx.shapes.graphfrm.GraphicFrame.element:1
+#: pptx.shapes.group.GroupShape.element:1 pptx.shapes.picture.Picture.element:1
+msgid "`lxml` element for this shape, e.g. a CT_Shape instance."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.element:3
+#: pptx.shapes.graphfrm.GraphicFrame.element:3
+#: pptx.shapes.group.GroupShape.element:3 pptx.shapes.picture.Picture.element:3
+msgid ""
+"Note that manipulating this element improperly can produce an invalid "
+"presentation file. Make sure you know what you're doing if you use this "
+"to change the underlying XML."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.has_chart:1
+#: pptx.shapes.picture.Picture.has_chart:1
+msgid ""
+"|True| if this shape is a graphic frame containing a chart object. "
+"|False| otherwise. When |True|, the chart object can be accessed using "
+"the ``.chart`` property."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.has_table:1
+#: pptx.shapes.picture.Picture.has_table:1
+msgid ""
+"|True| if this shape is a graphic frame containing a table object. "
+"|False| otherwise. When |True|, the table object can be accessed using "
+"the ``.table`` property."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.has_text_frame:1
+#: pptx.shapes.picture.Picture.has_text_frame:1
+msgid "|True| if this shape can contain text."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.height:1
+#: pptx.shapes.graphfrm.GraphicFrame.height:1
+#: pptx.shapes.group.GroupShape.height:1 pptx.shapes.picture.Picture.height:1
+msgid ""
+"Read/write. Integer distance between top and bottom extents of shape in "
+"EMUs"
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.is_placeholder:1
+#: pptx.shapes.picture.Picture.is_placeholder:1
+msgid ""
+"True if this shape is a placeholder. A shape is a placeholder if it has a"
+" <p:ph> element."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.left:1
+#: pptx.shapes.graphfrm.GraphicFrame.left:1 pptx.shapes.group.GroupShape.left:1
+#: pptx.shapes.picture.Picture.left:1
+msgid ""
+"Read/write. Integer distance of the left edge of this shape from the left"
+" edge of the slide, in English Metric Units (EMU)"
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.name:1
+#: pptx.shapes.graphfrm.GraphicFrame.name:1 pptx.shapes.group.GroupShape.name:1
+#: pptx.shapes.picture.Picture.name:1
+msgid "Name of this shape, e.g. 'Picture 7'"
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.placeholder_format:1
+#: pptx.shapes.picture.Picture.placeholder_format:1
+msgid ""
+"A |_PlaceholderFormat| object providing access to placeholder-specific "
+"properties such as placeholder type. Raises |ValueError| on access if the"
+" shape is not a placeholder."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.rotation:1
+#: pptx.shapes.graphfrm.GraphicFrame.rotation:1
+#: pptx.shapes.group.GroupShape.rotation:1
+#: pptx.shapes.picture.Picture.rotation:1
+msgid ""
+"Read/write float. Degrees of clockwise rotation. Negative values can be "
+"assigned to indicate counter-clockwise rotation, e.g. assigning -45.0 "
+"will change setting to 315.0."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.base.BaseShape.shadow:1
+msgid "|ShadowFormat| object providing access to shadow for this shape."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.base.BaseShape.shadow:3
+msgid ""
+"A |ShadowFormat| object is always returned, even when no shadow is "
+"explicitly defined on this shape (i.e. it inherits its shadow behavior)."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.shape_id:1
+#: pptx.shapes.graphfrm.GraphicFrame.shape_id:1
+#: pptx.shapes.group.GroupShape.shape_id:1
+#: pptx.shapes.picture.Picture.shape_id:1
+msgid "Read-only positive integer identifying this shape."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.shape_id:3
+#: pptx.shapes.graphfrm.GraphicFrame.shape_id:3
+#: pptx.shapes.group.GroupShape.shape_id:3
+#: pptx.shapes.picture.Picture.shape_id:3
+msgid "The id of a shape is unique among all shapes on a slide."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.shape_type:1
+msgid ""
+"Unique integer identifying the type of this shape, like "
+"``MSO_SHAPE_TYPE.CHART``. Must be implemented by subclasses."
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.top:1 pptx.shapes.graphfrm.GraphicFrame.top:1
+#: pptx.shapes.group.GroupShape.top:1 pptx.shapes.picture.Picture.top:1
+msgid ""
+"Read/write. Integer distance of the top edge of this shape from the top "
+"edge of the slide, in English Metric Units (EMU)"
+msgstr ""
+
+#: of pptx.shapes.base.BaseShape.width:1
+#: pptx.shapes.graphfrm.GraphicFrame.width:1
+#: pptx.shapes.group.GroupShape.width:1 pptx.shapes.picture.Picture.width:1
+msgid ""
+"Read/write. Integer distance between left and right extents of shape in "
+"EMUs"
+msgstr ""
+
+#: ../../api/shapes.rst:48
+msgid "|Shape| objects (AutoShapes)"
+msgstr ""
+
+#: ../../api/shapes.rst:50
+msgid ""
+"The following properties and methods are defined for AutoShapes, which "
+"include text boxes and placeholders."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape:1
+msgid "A shape that can appear on a slide."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape:3
+msgid ""
+"Corresponds to the ``<p:sp>`` element that can appear in any of the "
+"slide-type parts (slide, slideLayout, slideMaster, notesPage, "
+"notesMaster, handoutMaster)."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.autoshape.Shape.adjustments:1
+msgid "Read-only reference to |AdjustmentCollection| instance for this shape"
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.auto_shape_type:1
+msgid ""
+"Enumeration value identifying the type of this auto shape, like "
+"``MSO_SHAPE.ROUNDED_RECTANGLE``. Raises |ValueError| if this shape is not"
+" an auto shape."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.autoshape.Shape.fill:1
+msgid ""
+"|FillFormat| instance for this shape, providing access to fill properties"
+" such as fill color."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.has_text_frame:1
+msgid "|True| if this shape can contain text. Always |True| for an AutoShape."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.autoshape.Shape.line:1
+msgid ""
+"|LineFormat| instance for this shape, providing access to line properties"
+" such as line color."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.shape_type:1
+msgid ""
+"Unique integer identifying the type of this shape, like "
+"``MSO_SHAPE_TYPE.TEXT_BOX``."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.text:1
+msgid "Read/write. Unicode (str in Python 3) representation of shape text."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.text:3
+msgid ""
+"The returned string will contain a newline character (``\"\\n\"``) "
+"separating each paragraph and a vertical-tab (``\"\\v\"``) character for "
+"each line break (soft carriage return) in the shape's text."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.text:7
+msgid ""
+"Assignment to *text* replaces all text previously contained in the shape,"
+" along with any paragraph or font formatting applied to it. A newline "
+"character (``\"\\n\"``) in the assigned text causes a new paragraph to be"
+" started. A vertical-tab (``\"\\v\"``) character in the assigned text "
+"causes a line-break (soft carriage-return) to be inserted. (The vertical-"
+"tab character appears in clipboard text copied from PowerPoint as its "
+"encoding of line-breaks.)"
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.text:14
+msgid ""
+"Either bytes (Python 2 str) or unicode (Python 3 str) can be assigned. "
+"Bytes can be 7-bit ASCII or UTF-8 encoded 8-bit bytes. Bytes values are "
+"converted to unicode assuming UTF-8 encoding (which also works for "
+"ASCII)."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.text_frame:1
+msgid "|TextFrame| instance for this shape."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Shape.text_frame:3
+msgid ""
+"Contains the text of the shape and provides access to text formatting "
+"properties."
+msgstr ""
+
+#: ../../api/shapes.rst:61
+msgid "|AdjustmentCollection| objects"
+msgstr ""
+
+#: ../../api/shapes.rst:63
+msgid ""
+"An AutoShape is distinctive in that it can have *adjustments*, "
+"represented in the PowerPoint user interface as small yellow diamonds "
+"that each allow a parameter of the shape, such as the angle of an "
+"arrowhead, to be adjusted. The |AdjustmentCollection| object holds these "
+"adjustment values for an AutoShape, each of which is an |Adjustment| "
+"instance."
+msgstr ""
+
+#: ../../api/shapes.rst:69
+msgid ""
+"The |AdjustmentCollection| instance for an AutoShape is accessed using "
+"the ``Shape.adjustments`` property (read-only)."
+msgstr ""
+
+#: of pptx.shapes.autoshape.AdjustmentCollection:1
+msgid ""
+"Sequence of |Adjustment| instances for an auto shape, each representing "
+"an available adjustment for a shape of its type. Supports ``len()`` and "
+"indexed access, e.g. ``shape.adjustments[1] = 0.15``."
+msgstr ""
+
+#: ../../api/shapes.rst:79
+msgid "|Adjustment| objects"
+msgstr ""
+
+#: of pptx.shapes.autoshape.Adjustment:1
+msgid "An adjustment value for an autoshape."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Adjustment:3
+msgid ""
+"An adjustment value corresponds to the position of an adjustment handle "
+"on an auto shape. Adjustment handles are the small yellow diamond-shaped "
+"handles that appear on certain auto shapes and allow the outline of the "
+"shape to be adjusted. For example, a rounded rectangle has an adjustment "
+"handle that allows the radius of its corner rounding to be adjusted."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Adjustment:9
+msgid ""
+"Values are |float| and generally range from 0.0 to 1.0, although the "
+"value can be negative or greater than 1.0 in certain circumstances."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Adjustment.effective_value:1
+msgid ""
+"Read/write |float| representing normalized adjustment value for this "
+"adjustment. Actual values are a large-ish integer expressed in shape "
+"coordinates, nominally between 0 and 100,000. The effective value is "
+"normalized to a corresponding value nominally between 0.0 and 1.0. "
+"Intuitively this represents the proportion of the width or height of the "
+"shape at which the adjustment value is located from its starting point. "
+"For simple shapes such as a rounded rectangle, this intuitive "
+"correspondence holds. For more complicated shapes and at more extreme "
+"shape proportions (e.g. width is much greater than height), the value can"
+" become negative or greater than 1.0."
+msgstr ""
+
+#: of pptx.shapes.autoshape.Adjustment.val:1
+msgid ""
+"Denormalized effective value (expressed in shape coordinates), suitable "
+"for using in the XML."
+msgstr ""
+
+#: ../../api/shapes.rst:88
+msgid "|Connector| objects"
+msgstr ""
+
+#: ../../api/shapes.rst:90
+msgid "The following properties and methods are defined for Connector shapes:"
+msgstr ""
+
+#: of pptx.shapes.connector.Connector:1
+msgid "Connector (line) shape."
+msgstr ""
+
+#: of pptx.shapes.connector.Connector:3
+msgid ""
+"A connector is a linear shape having end-points that can be connected to "
+"other objects (but not to other connectors). A connector can be straight,"
+" have elbows, or can be curved."
+msgstr ""
+
+#: of pptx.shapes.connector.Connector.begin_connect:1
+#: pptx.shapes.connector.Connector.end_connect:1
+msgid ""
+"**EXPERIMENTAL** - *The current implementation only works properly with "
+"rectangular shapes, such as pictures and rectangles. Use with other shape"
+" types may cause unexpected visual alignment of the connected end-point "
+"and could lead to a load error if cxn_pt_idx exceeds the connection point"
+" count available on the connected shape. That said, a quick test should "
+"reveal what to expect when using this method with other shape types.*"
+msgstr ""
+
+#: of pptx.shapes.connector.Connector.begin_connect:9
+msgid ""
+"Connect the beginning of this connector to *shape* at the connection "
+"point specified by *cxn_pt_idx*. Each shape has zero or more connection "
+"points and they are identified by index, starting with 0. Generally, the "
+"first connection point of a shape is at the top center of its bounding "
+"box and numbering proceeds counter-clockwise from there. However this is "
+"only a convention and may vary, especially with non built-in shapes."
+msgstr ""
+
+#: of pptx.shapes.connector.Connector.begin_x:1
+msgid ""
+"Return the X-position of the begin point of this connector, in English "
+"Metric Units (as a |Length| object)."
+msgstr ""
+
+#: of pptx.shapes.connector.Connector.begin_y:1
+msgid ""
+"Return the Y-position of the begin point of this connector, in English "
+"Metric Units (as a |Length| object)."
+msgstr ""
+
+#: of pptx.shapes.connector.Connector.end_connect:9
+msgid ""
+"Connect the ending of this connector to *shape* at the connection point "
+"specified by *cxn_pt_idx*."
+msgstr ""
+
+#: of pptx.shapes.connector.Connector.end_x:1
+msgid ""
+"Return the X-position of the end point of this connector, in English "
+"Metric Units (as a |Length| object)."
+msgstr ""
+
+#: of pptx.shapes.connector.Connector.end_y:1
+msgid ""
+"Return the Y-position of the end point of this connector, in English "
+"Metric Units (as a |Length| object)."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.connector.Connector.line:1
+msgid "|LineFormat| instance for this connector."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.connector.Connector.line:3
+msgid ""
+"Provides access to line properties such as line color, width, and line "
+"style."
+msgstr ""
+
+#: of pptx.shapes.connector.Connector.shape_type:1
+msgid "Member of `MSO_SHAPE_TYPE` identifying the type of this shape."
+msgstr ""
+
+#: of pptx.shapes.connector.Connector.shape_type:3
+msgid "Unconditionally `MSO_SHAPE_TYPE.LINE` for a `Connector` object."
+msgstr ""
+
+#: ../../api/shapes.rst:99
+msgid "|FreeformBuilder| objects"
+msgstr ""
+
+#: ../../api/shapes.rst:101
+msgid ""
+"The following properties and methods are defined for FreeformBuilder "
+"objects. A freeform builder is used to create a shape with custom "
+"geometry:"
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder:1
+msgid "Allows a freeform shape to be specified and created."
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder:3
+msgid ""
+"The initial pen position is provided on construction. From there, drawing"
+" proceeds using successive calls to draw line segments. The freeform "
+"shape may be closed by calling the :meth:`close` method."
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder:7
+msgid ""
+"A shape may have more than one contour, in which case overlapping areas "
+"are \"subtracted\". A contour is a sequence of line segments beginning "
+"with a \"move-to\" operation. A move-to operation is automatically "
+"inserted in each new freeform; additional move-to ops can be inserted "
+"with the `.move_to()` method."
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder.add_line_segments:1
+msgid "Add a straight line segment to each point in *vertices*."
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder.add_line_segments:3
+msgid ""
+"*vertices* must be an iterable of (x, y) pairs (2-tuples). Each x and y "
+"value is rounded to the nearest integer before use. The optional *close* "
+"parameter determines whether the resulting contour is *closed* or left "
+"*open*."
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder.add_line_segments:8
+#: pptx.shapes.freeform.FreeformBuilder.move_to:3
+msgid "Returns this |FreeformBuilder| object so it can be used in chained calls."
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder.convert_to_shape:1
+msgid "Return new freeform shape positioned relative to specified offset."
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder.convert_to_shape:3
+msgid ""
+"*origin_x* and *origin_y* locate the origin of the local coordinate "
+"system in slide coordinates (EMU), perhaps most conveniently by use of a "
+"|Length| object."
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder.convert_to_shape:7
+msgid ""
+"Note that this method may be called more than once to add multiple shapes"
+" of the same geometry in different locations on the slide."
+msgstr ""
+
+#: of pptx.shapes.freeform.FreeformBuilder.move_to:1
+msgid "Move pen to (x, y) (local coordinates) without drawing line."
+msgstr ""
+
+#: ../../api/shapes.rst:112
+msgid "``Picture`` objects"
+msgstr ""
+
+#: ../../api/shapes.rst:114
+msgid "The following properties and methods are defined for picture shapes."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture:1
+msgid "A picture shape, one that places an image on a slide."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture:3
+msgid "Based on the `p:pic` element."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.crop_bottom:1
+msgid "|float| representing relative portion cropped from shape bottom."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.crop_bottom:3
+#, python-format
+msgid ""
+"Read/write. 1.0 represents 100%. For example, 25% is represented by 0.25."
+" Negative values are valid as are values greater than 1.0."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.crop_left:1
+msgid "|float| representing relative portion cropped from left of shape."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.crop_left:3
+msgid ""
+"Read/write. 1.0 represents 100%. A negative value extends the side beyond"
+" the image boundary."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.crop_right:1
+msgid "|float| representing relative portion cropped from right of shape."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.crop_right:3
+#: pptx.shapes.picture.Picture.crop_top:3
+msgid "Read/write. 1.0 represents 100%."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.crop_top:1
+msgid "|float| representing relative portion cropped from shape top."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.picture._BasePicture.line:1
+msgid ""
+"An instance of |LineFormat|, providing access to the properties of the "
+"outline bordering this shape, such as its color and width."
+msgstr ""
+
+#: of pptx.shapes.group.GroupShape.part:1 pptx.shapes.picture.Picture.part:1
+msgid "The package part containing this shape."
+msgstr ""
+
+#: of pptx.shapes.group.GroupShape.part:3 pptx.shapes.picture.Picture.part:3
+msgid ""
+"A |BaseSlidePart| subclass in this case. Access to a slide part should "
+"only be required if you are extending the behavior of |pp| API objects."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.auto_shape_type:1
+msgid "Member of MSO_SHAPE indicating masking shape."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.auto_shape_type:3
+msgid ""
+"A picture can be masked by any of the so-called \"auto-shapes\" available"
+" in PowerPoint, such as an ellipse or triangle. When a picture is masked "
+"by a shape, the shape assumes the same dimensions as the picture and the "
+"portion of the picture outside the shape boundaries does not appear. Note"
+" the default value for a newly-inserted picture is "
+"`MSO_AUTO_SHAPE_TYPE.RECTANGLE`, which performs no cropping because the "
+"extents of the rectangle exactly correspond to the extents of the "
+"picture."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.auto_shape_type:12
+msgid "The available shapes correspond to the members of :ref:`MsoAutoShapeType`."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.auto_shape_type:15
+msgid ""
+"The return value can also be |None|, indicating the picture either has no"
+" geometry (not expected) or has custom geometry, like a freeform shape. A"
+" picture with no geometry will have no visible representation on the "
+"slide, although it can be selected. This is because without geometry, "
+"there is no \"inside-the-shape\" for it to appear in."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.image:1
+msgid ""
+"An |Image| object providing access to the properties and bytes of the "
+"image in this picture shape."
+msgstr ""
+
+#: of pptx.shapes.picture.Picture.shape_type:1
+msgid ""
+"Unique integer identifying the type of this shape, unconditionally "
+"``MSO_SHAPE_TYPE.PICTURE`` in this case."
+msgstr ""
+
+#: ../../api/shapes.rst:124
+msgid "|GraphicFrame| objects"
+msgstr ""
+
+#: ../../api/shapes.rst:126
+msgid ""
+"The following properties and methods are defined for graphic frame "
+"shapes. A graphic frame is the shape containing a table, chart, or smart "
+"art."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame:1 pptx.shapes.group.GroupShape:1
+msgid "基类：:py:class:`pptx.shapes.base.BaseShape`"
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame:1
+msgid "Container shape for table, chart, smart art, and media objects."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame:3
+msgid "Corresponds to a ``<p:graphicFrame>`` element in the shape tree."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.chart:1
+msgid "The |Chart| object containing the chart in this graphic frame."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.chart:3
+msgid "Raises |ValueError| if this graphic frame does not contain a chart."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.has_chart:1
+msgid "|True| if this graphic frame contains a chart object. |False| otherwise."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.has_chart:3
+msgid ""
+"When |True|, the chart object can be accessed using the ``.chart`` "
+"property."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.has_table:1
+msgid "|True| if this graphic frame contains a table object, |False| otherwise."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.has_table:3
+msgid "When |True|, the table object can be accessed using the `.table` property."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.ole_format:1
+msgid "Optional _OleFormat object for this graphic-frame shape."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.ole_format:3
+msgid ""
+"Raises `ValueError` on a GraphicFrame instance that does not contain an "
+"OLE object."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.ole_format:6
+msgid ""
+"An shape that contains an OLE object will have `.shape_type` of either "
+"`EMBEDDED_OLE_OBJECT` or `LINKED_OLE_OBJECT`."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.shadow:1
+msgid "Unconditionally raises |NotImplementedError|."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.shadow:3
+msgid ""
+"Access to the shadow effect for graphic-frame objects is content-specific"
+" (i.e. different for charts, tables, etc.) and has not yet been "
+"implemented."
+msgstr ""
+
+#: of pptx.shapes.graphfrm.GraphicFrame.table:1
+msgid ""
+"The |Table| object contained in this graphic frame. Raises |ValueError| "
+"if this graphic frame does not contain a table."
+msgstr ""
+
+#: ../../api/shapes.rst:139
+msgid "|GroupShape| objects"
+msgstr ""
+
+#: ../../api/shapes.rst:141
+msgid ""
+"The following properties and methods are defined for group shapes. A "
+"group shape acts as a container for other shapes."
+msgstr ""
+
+#: ../../api/shapes.rst:144
+msgid "Note that:"
+msgstr ""
+
+#: ../../api/shapes.rst:146
+msgid "A group shape has no text frame and cannot have one."
+msgstr ""
+
+#: ../../api/shapes.rst:147
+msgid "A group shape cannot have a click action, such as a hyperlink."
+msgstr ""
+
+#: of pptx.shapes.group.GroupShape:1
+msgid "A shape that acts as a container for other shapes."
+msgstr ""
+
+#: of pptx.shapes.group.GroupShape.click_action:1
+msgid "Unconditionally raises `TypeError`."
+msgstr ""
+
+#: of pptx.shapes.group.GroupShape.click_action:3
+msgid "A group shape cannot have a click action or hover action."
+msgstr ""
+
+#: of pptx.shapes.group.GroupShape.has_text_frame:1
+msgid "Unconditionally |False|."
+msgstr ""
+
+#: of pptx.shapes.group.GroupShape.has_text_frame:3
+msgid ""
+"A group shape does not have a textframe and cannot itself contain text. "
+"This does not impact the ability of shapes contained by the group to each"
+" have their own text."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.group.GroupShape.shadow:1
+msgid "|ShadowFormat| object representing shadow effect for this group."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.group.GroupShape.shadow:3
+msgid ""
+"A |ShadowFormat| object is always returned, even when no shadow is "
+"explicitly defined on this group shape (i.e. when the group inherits its "
+"shadow behavior)."
+msgstr ""
+
+#: of pptx.shapes.group.GroupShape.shape_type:1
+msgid "Member of :ref:`MsoShapeType` identifying the type of this shape."
+msgstr ""
+
+#: of pptx.shapes.group.GroupShape.shape_type:3
+msgid "Unconditionally `MSO_SHAPE_TYPE.GROUP` in this case"
+msgstr ""
+
+#: ../../docstring of pptx.shapes.group.GroupShape.shapes:1
+msgid "|GroupShapes| object for this group."
+msgstr ""
+
+#: ../../docstring of pptx.shapes.group.GroupShape.shapes:3
+msgid ""
+"The |GroupShapes| object provides access to the group's member shapes and"
+" provides methods for adding new ones."
+msgstr ""
+

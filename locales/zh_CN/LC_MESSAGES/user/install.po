@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../user/install.rst:4
+msgid "Installing"
+msgstr ""
+
+#: ../../user/install.rst:6
+msgid "|pp| is hosted on PyPI, so installing with `pip` is simple::"
+msgstr ""
+
+#: ../../user/install.rst:10
+msgid ""
+"|pp| depends on the ``lxml`` package and ``Pillow``, the modern version "
+"of the Python Imaging Library (``PIL``). The charting features depend on "
+"``XlsxWriter``. Both ``pip`` and ``easy_install`` will take care of "
+"satisfying these dependencies for you, but if you use the ``setup.py`` "
+"installation method you will need to install the dependencies yourself."
+msgstr ""
+
+#: ../../user/install.rst:16
+msgid ""
+"Currently |pp| requires Python 2.7, 3.3, 3.4, or 3.6. The tests are run "
+"against 2.7 and 3.6 on Travis CI."
+msgstr ""
+
+#: ../../user/install.rst:20
+msgid "Dependencies"
+msgstr ""
+
+#: ../../user/install.rst:22
+msgid "Python 2.6, 2.7, 3.3, 3.4, or 3.6"
+msgstr ""
+
+#: ../../user/install.rst:23
+msgid "lxml"
+msgstr ""
+
+#: ../../user/install.rst:24
+msgid "Pillow"
+msgstr ""
+
+#: ../../user/install.rst:25
+msgid "XlsxWriter (to use charting features)"
+msgstr ""
+

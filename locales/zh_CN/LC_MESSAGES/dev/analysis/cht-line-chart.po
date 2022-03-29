@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-line-chart.rst:3
+msgid "Line Chart"
+msgstr ""
+
+#: ../../dev/analysis/cht-line-chart.rst:5
+msgid "A line chart is one of the fundamental plot types."
+msgstr ""
+
+#: ../../dev/analysis/cht-line-chart.rst:9
+msgid "XML Semantics"
+msgstr ""
+
+#: ../../dev/analysis/cht-line-chart.rst:11
+msgid ""
+"c:lineChart/c:marker{val=0|1} doesn't seem to have any effect one way or "
+"the other. Default line charts inserted using PowerPoint always have it "
+"set to 1 (True). But even if it's set to 0 or removed, markers still "
+"appear. Hypothesis is that c:lineChart/c:ser/c:marker/c:symbol{val=none} "
+"and the like are the operative settings."
+msgstr ""
+
+#: ../../dev/analysis/cht-line-chart.rst:19
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-line-chart.rst:23
+msgid ""
+"Minimal working XML for a line plot. Note this does not reference values "
+"in a spreadsheet.::"
+msgstr ""
+
+#: ../../dev/analysis/cht-line-chart.rst:90
+msgid "Related Schema Definitions"
+msgstr ""
+
+#: ../../dev/analysis/cht-line-chart.rst:94
+msgid "Line chart elements::"
+msgstr ""
+

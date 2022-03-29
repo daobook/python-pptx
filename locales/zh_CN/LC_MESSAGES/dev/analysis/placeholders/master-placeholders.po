@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:3
+msgid "Master Placeholders"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:7
+msgid "Candidate protocol"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:33
+msgid "Example XML"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:35
+msgid "Slide master placeholder::"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:77
+msgid "Behaviors"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:79
+msgid ""
+"Master placeholder specifies size, position, geometry, and text body "
+"properties, such as margins (inset) and autofit"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:82
+msgid ""
+"It appears a slide master permits at most five placeholders, at most one "
+"each of title, body, date, footer, and slide number"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:85
+msgid ""
+"A master placeholder is always a `<p:sp>` (autoshape) element. It does "
+"not allow the insertion of content, although text entered in the shape "
+"somehow becomes the prompt text for inheriting placeholders."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:89
+msgid "Hypothesis:"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:91
+msgid ""
+"Layout inherits properties from master based only on type (e.g. body, "
+"dt), with no bearing on idx value."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:93
+msgid "Slide inherits from layout strictly on idx value."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:95
+msgid ""
+"Need to experiment to see if position and size are inherited on body "
+"placeholder by type or if idx has any effect"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:98
+msgid ""
+"expanded/repackaged, change body ph idx on layout and see if still "
+"inherits position."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:100
+msgid ""
+"result: slide layout still appears with the proper position and size, "
+"however the slide placeholder appears at (0, 0) and apparently with size "
+"of (0, 0)."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:104
+msgid ""
+"What behavior is exhibited when a slide layout contains two body "
+"placeholders, neither of which has a matching idx value and neither of "
+"which has a specified size or position?"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:108
+msgid ""
+"result: both placeholders are present, directly superimposed upon each "
+"other. They both inherit position and fill."
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:111
+msgid ""
+"GUI doesn't seem to provide a way to add additional \"footer\" "
+"placeholders"
+msgstr ""
+
+#: ../../dev/analysis/placeholders/master-placeholders.rst:113
+msgid ""
+"Does the MS API include populated object placeholders in the Placeholders"
+" collection?"
+msgstr ""
+

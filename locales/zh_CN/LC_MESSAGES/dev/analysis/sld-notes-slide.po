@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/sld-notes-slide.rst:3
+msgid "Notes Slide"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:5
+msgid ""
+"A slide may have an associated notes page. The notes it contains are "
+"displayed under the slide in the PowerPoint UI when in edit mode. The "
+"slide notes are also shown in presenter mode, are displayed in Notes "
+"Pages view, and are printed on those notes pages."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:10
+msgid ""
+"Internally, a notes page is referred to as a *notes slide*. This is "
+"sensible because it is actually a specialized instance of a slide. It "
+"contains shapes, many of which are placeholders, and allows inserting of "
+"new shapes such as auto shapes, tables, and charts (although it is "
+"probably not common). Much of the functionality for a notes slide is "
+"inherited from existing base classes."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:16
+msgid ""
+"A notes slide is created using the notes master as a template. A "
+"presentation has no notes master when created from a template in "
+"PowerPoint. One is created according to a PowerPoint-internal preset "
+"default the first time it is needed, which is generally when a notes "
+"slide is created. It's possible one can also be created by entering the "
+"Notes Master view and almost certainly is created by editing the master "
+"found there (haven't tried it though). A presentation can have at most "
+"one notes master."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:24
+msgid ""
+"On creation, certain placeholders (slide image, notes, slide number) are "
+"copied from the notes master onto the new notes slide (if they have not "
+"been removed from the master). These \"cloned\" placeholders inherit "
+"position, size, and formatting from their corresponding notes master "
+"placeholder. If the position, size, or formatting of a notes slide "
+"placeholder is changed, the changed property is no long inherited "
+"(unchanged properties, however, continue to be inherited)."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:32
+msgid ""
+"The remaining three placeholders that can appear on the notes master "
+"(date, header text, footer text) can optionally be made to appear on an "
+"individual notes slide using the Header and Footer... dialog. This dialog"
+" also has a button allowing all notes slides to be updated with the "
+"selected options. There appears to be some heuristic logic that "
+"automatically propagates these settings to notes for new slides as they "
+"are created."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:39
+msgid ""
+"A notes slide is not automatically created for each slide. Rather it is "
+"created the first time it is needed, perhaps most commonly when notes "
+"text is typed into the notes area under the slide in the UI."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:45
+msgid "Candidate Protocol"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:47
+msgid ""
+"A notes slide is created on first access if one doesn't exist. "
+"Consequently, Slide.has_notes_slide is provided to detect the presence of"
+" an existing notes slide, avoiding creation of unwanted notes slide "
+"objects::"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:54
+msgid ""
+"Because a notes slide is created on first access, Slide.notes_slide "
+"unconditionally returns a |NotesSlide| object. Once created, the same "
+"instance is returned on each call::"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:64
+msgid ""
+"Like any slide (slide, slide layout, slide master, etc.), a notes slide "
+"has shapes and placeholders, as well as other standard properties::"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:72
+msgid ""
+"The distinctive characteristic of a notes slide is the notes it contains."
+" These notes are contained in the text frame of the notes placeholder and"
+" are manipulated using the same properties and methods as any shape "
+"textframe::"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:86
+msgid "PowerPoint behavior"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:88
+msgid "Notes page has its own view (View > Notes Page)"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:90
+msgid "Notes can be edited from there too"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:91
+msgid "It has a hide background graphics option and the other background settings"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:92
+msgid ""
+"Notes have richer edit capabilities (such as ruler for tabs and indents) "
+"in the Notes view."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:95
+msgid ""
+"A notes slide, once created, doesn't disappear when its notes content is "
+"deleted."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:98
+msgid ""
+"NotesSlide placeholders inherit properties from the NotesMaster "
+"placeholder *of the same type*."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:101
+msgid ""
+"For some reason PowerPoint adds a second theme for the NotesMaster, not "
+"sure what that's all about. I'll just add the default theme2.xml, then "
+"folks can avoid that if they encounter problems just by pre-loading a "
+"notesMaster of their own in their template."
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:108
+msgid "Example XML"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:112
+msgid "Empty notes page element::"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:139
+msgid "Default notes page populated with three base placeholders::"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:233
+msgid "Related Schema Definitions"
+msgstr ""
+
+#: ../../dev/analysis/sld-notes-slide.rst:237
+msgid "The root element of a notesSlide part is a `p:notes` element::"
+msgstr ""
+

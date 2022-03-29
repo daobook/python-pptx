@@ -1,0 +1,299 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/shp-shadow.rst:4
+msgid "Shadow"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:6
+msgid ""
+"Shadow is inherited, and a shape often appears with a shadow without "
+"explicitly applying a shadow format."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:9
+msgid ""
+"The only difference in a shape with shadow turned off is the presence of "
+"an empty `<a:effectLst/>` child in its `<p:spPr>` element. Inherited "
+"shadow is turned off when `p:spPr/a:effectLst` is present with no "
+"`a:outerShdw` child element. Other effect child elements may be present."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:14
+msgid ""
+"A shadow is one type of \"effect\". The others are glow/soft-edges and "
+"reflection."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:17
+msgid ""
+"Shadow may be of type *outer* (perhaps most common), *inner*, or "
+"*perspective*."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:24
+msgid "Scope"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:26
+msgid "`Shape.shadow` is a `ShadowFormat` object (all shape types)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:28
+msgid ""
+"`shape.shadow.inherit = True` removes any explicitly applied effects "
+"(including glow/soft-edge and reflection, not just shadow). This restores"
+" the \"inherit\" state for effects and makes the shape sensitive to "
+"changes in theme."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:33
+msgid ""
+"`shape.shadow.inherit = False` overrides any default (theme) effects. Any"
+" inherited shadow, glow, and/or reflection will no longer appear. This "
+"operation adds an empty effects element, which causes no effects to be "
+"applied, regardless of theme settings."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:39
+msgid "**Out-of-scope**"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:41
+msgid "Minimum for specifying a basic shadow"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:43
+msgid "`ShadowFormat.visible` - applies a reasonable standard shadow override."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:44
+msgid "`ShadowFormat.shadow_type` (inner, outer, perspective)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:45
+msgid "`ShadowFormat.alignment` (shadow anchor, automatic based on angle)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:46
+msgid "`ShadowFormat.angle` (0-degrees is to the right, increasing CCW)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:47
+msgid "`ShadowFormat.blur_radius` (generally a few points, maybe 3-5)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:48
+msgid "`ShadowFormat.color` (theme or RGB color)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:49
+msgid "`ColorFormat.transparency` (needed for proper shadow rendering)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:50
+msgid "`ShadowFormat.distance` (generally a couple points, maybe 1-3)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:51
+msgid ""
+"`shape.shadow.style` (MSO_SHADOW_STYLE) indicates whether shadow is "
+"inner, outer, or perspective (or None)."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:54
+msgid "Nice to have for finer tuning"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:56
+msgid "`ShadowFormat.rotate_with_shape` (boolean)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:57
+msgid "`ShadowFormat.scale` (shadow bigger/smaller than shape, default 100%)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:59
+msgid ""
+"Retaining non-shadow effects when turning off shadow. This requires the "
+"ability to \"clone\" the currently enabled defaults. Effects are not "
+"inherited separately; making explicit the currently active default is how"
+" PowerPoint works around the \"all-or-nothing\" inheritance behavior."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:64
+msgid "Clone effective shadow, glow, and/or reflection."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:68
+msgid "Protocol"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:72
+msgid ""
+"The `.shadow` property on a shape *always* returns *the* `ShadowFormat` "
+"object for that shape, regardless of whether its shadow is explicit or "
+"inherited::"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:81
+msgid ""
+"The `.shadow` property is idempotent, meaning the same `ShadowFormat` "
+"object (verified by comparing ID) is returned on every call, for the "
+"lifetime of the shape object::"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:90
+msgid ""
+"The `ShadowFormat.inherit` property indicates whether the shape inherits "
+"its shadow effect or overrides it with an explicitly defined setting. The"
+" default setting for a new shape is `True`::"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:97
+msgid ""
+"Assigning `False` breaks the inheritance link by explicitly defining a "
+"\"no-shadow\" setting for the shape. This causes the shape to appear "
+"without a shadow, regardless of the applied theme::"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:105
+msgid ""
+"Note that this has the side-effect of disabling inheritance of **all** "
+"effects for that shape."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:110
+msgid "PowerPoint behaviors"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:112
+msgid ""
+"All 5 shape-types can display a shadow, but graphics-frame objects like "
+"chart and table use a different mechanism than the other shapes. Those "
+"won't be supported initially."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:116
+msgid "AutoShape"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:117
+msgid "Connector"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:118
+msgid "Picture"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:119
+msgid "Group Shape (parent is `p:grpSpPr` rather than `p:spPr`)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:120
+msgid "Graphics Frame (UI allows, but uses a different mechanism)"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:122
+msgid ""
+"Adding shadow to a group shape adds that shadow to each component shape "
+"in the group."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:125
+msgid ""
+"There is a \"new-shape format\" concept. This format determines what a "
+"new shape looks like, but does not change the appearance of shapes "
+"already in place. It's basically a template imprinted on new shapes when "
+"they are added."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:130
+msgid "*Theme Effects* are a thing here. They are Subtle, Moderate, and Intense."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:132
+msgid "There are 40 built-in theme effects. Each of these have ..."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:134
+msgid ""
+"Setting visible off (Format Shape > Shadow > Clear Shadow checkbox) for a"
+" customized shadow removes all customized settings and they are not "
+"recoverable by setting the shadow visible again (clicking the shadow "
+"checkbox)."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:141
+msgid "MS API"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:144
+msgid "ShadowFormat object"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:146
+msgid "`ShadowFormat.Visible`"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:150
+msgid "Specimen XML"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:154
+msgid ""
+"Shape inheriting shadow. Note the absence of `p:spPr/a:effectLst`, "
+"causing all effects to be inherited::"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:196
+msgid "Shape with inherited shadow turned off::"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:240
+msgid "XML Semantics"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:242
+msgid "**Effect inheritance is \"all-or-nothing\"**"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:244
+msgid ""
+"If `p:spPr/a:effectLst` is present, all desired effects must be specified"
+" explicitly as its children; a missing child, such as `a:outerShdw`, will"
+" cause that effect to be turned off. PowerPoint automatically adds those "
+"populated with inherited values when one of the effects is customized, "
+"necessitating that addition of an `a:effectLst` element."
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:250
+msgid ""
+"Theme sub-tree "
+"`a:theme/a:objectDefaults/a:spDef/a:style/a:effectRef/idx=2` specifies "
+"that new objects will get the second effect in "
+"`a:theme/a:themeElements/a:fmtScheme/a:effectStyleLst`. That effect looks"
+" like this::"
+msgstr ""
+
+#: ../../dev/analysis/shp-shadow.rst:268
+msgid "Schema excerpt"
+msgstr ""
+

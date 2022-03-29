@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/cht-chart-title.rst:5
+msgid "Chart - Chart Title"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:7
+msgid ""
+"A chart can have a title. The title is a rich text container, and can "
+"contain arbitrary text with arbitrary formatting (font, size, color, "
+"etc.). There is little but one thing to distinquish a chart title from an"
+" independent text box; its position is automatically adjusted by the "
+"chart to account for resizing and movement."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:13
+msgid ""
+"A title is visible whenever present. The only way to \"hide\" it is to "
+"delete it, along with its contents."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:16
+msgid ""
+"Although it will not yet be supported, the chart title can be specified "
+"in the XML as a cell reference in the Excel worksheet. In general, any "
+"constructive operations on the title will remove this."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:22
+msgid "Proposed Scope"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:24
+msgid "Chart.has_title"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:25
+msgid "Chart.chart_title"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:26
+msgid "ChartTitle.has_text_frame"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:27
+#: ../../dev/analysis/cht-chart-title.rst:81
+msgid "ChartTitle.text_frame"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:28
+msgid "ChartTitle.format"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:32
+msgid "Candidate protocol"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:35
+msgid "Chart title presence"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:37
+msgid ""
+"The presence of a chart title is reported by ``Chart.has_title``. Reading"
+" this property is non-destructive. Starting with a newly-created chart, "
+"which has no title::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:45
+msgid ""
+"Assigning |True| to ``.has_title`` causes an empty title element to be "
+"added along with its text frame elements (when not already present). This"
+" assignment is idempotent, such that assigning |True| when a chart title "
+"is present leaves the chart unchanged::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:54
+msgid ""
+"Assigning |False| to ``.has_title`` removes the title element from the "
+"XML along with its contents. This assignment is also idempotent::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:63
+msgid "Chart title access"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:65
+msgid ""
+"Access to the chart title is provided by ``Chart.chart_title``. This "
+"property always provides a |ChartTitle| object; a new one is created if "
+"not present. This behavior produces cleaner code for the common \"get or "
+"add\" case; ``Chart.has_title`` is provided to avoid this potentially "
+"destructive behavior when required::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:83
+msgid ""
+"The ``ChartTitle`` object can contain either a text frame or an Excel "
+"cell reference (``<c:strRef>``). However, the only operation on the "
+"`c:strRef` element the library will support (for now anyway) is to delete"
+" it when adding a text frame."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:88
+msgid ""
+"``ChartTitle.has_text_frame`` is used to determine whether a text frame "
+"is present. Assigning |True| to ``.has_text_frame`` causes any Excel "
+"reference to be removed and an empty text frame to be inserted. If a text"
+" frame is already present, no changes are made::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:99
+msgid ""
+"Assigning |False| to ``.has_text_frame`` removes the text frame element "
+"from the XML along with its contents. This assignment is also "
+"idempotent::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:106
+msgid ""
+"The text frame can be accessed using ``ChartTitle.text_frame``. This "
+"property always provides a |TextFrame| object; one is added if not "
+"present and any ``c:strRef`` element is removed::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:119
+msgid "XML semantics"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:121
+msgid ""
+"``c:autoTitleDeleted`` set True has no effect on the visibility of a "
+"default chart title (no actual text, 'placeholder' display: 'Chart "
+"Title'. It also seems to have no effect on an actual title, having a text"
+" frame and actual text."
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:128
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:132
+msgid ""
+"Default when clicking *Chart Title > Title Above Chart* from ribbon "
+"(before changing the text of the title)::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:146
+msgid "Text 'Foobar' typed into chart title just after adding it from ribbon::"
+msgstr ""
+
+#: ../../dev/analysis/cht-chart-title.rst:171
+msgid "Related Schema Definitions"
+msgstr ""
+

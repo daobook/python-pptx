@@ -1,0 +1,168 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../dev/analysis/txt-fit-text.rst:3
+msgid "Text - Fit text to shape"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:5
+msgid ""
+"An AutoShape has a text frame, referred to in the PowerPoint UI as the "
+"shape's *Text Box*. One of the settings provided is *Autofit*, which can "
+"be one of \"Do not autofit\", \"Resize text to fit shape\", or \"Resize "
+"shape to fit text\". The scope of this analysis is how best to provide an"
+" alternative to the \"Resize text to fit shape\" behavior that simply "
+"resizes the text to the largest point size that will fit entirely within "
+"the shape extents."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:12
+msgid ""
+"This produces a similar visual effect, but the \"auto-size\" behavior "
+"does not persist to later changes to the text or shape. It is just as "
+"though the user had reduced the font size just until all the text fit "
+"within the shape."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:18
+msgid "Candidate Protocol"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:20
+msgid "Shape size and text are set before calling :meth:`.TextFrame.fit_text`::"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:28
+msgid ""
+"Calling :meth:`TextFrame.fit_text` sets auto-size to MSO_AUTO_SIZE.NONE, "
+"turns word-wrap on, and sets the font size of all text in the shape to "
+"the maximum size that will fit entirely within the shape, not to exceed "
+"the optional *max_size*. The default *max_size* is 18pt. The font size is"
+" applied directly on each run-level element in the shape. The path to the"
+" matching font file must be specified::"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:43
+msgid "Current constraints"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:46
+msgid ":meth:`.TextFrame.fit_text`"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:48
+msgid "Path to font file must be provided manually."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:49
+msgid "Bold and italic variant is selected unconditionally."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:50
+msgid "Calibri typeface name is selected unconditionally."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:51
+msgid ""
+"User must manually set the font typeface of all shape text to match the "
+"provided font file."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:53
+msgid "Font typeface and variant is assumed to be uniform."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:54
+msgid ""
+"Font size is made uniform, without regard to existing differences in font"
+" size in the shape text."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:56
+msgid "Line breaks are replaced with a single space."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:60
+msgid "Incremental enhancements"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:62
+msgid ""
+"**Allow font file to be specified.** This allows "
+":meth:`.TextFrame.fit_text` to be run from `pip` installed version. OS-"
+"specific file locations and names can be determined by client."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:66
+msgid ""
+"**Allow bold and italic to be specified.** This allows the client to "
+"determine whether to apply the bold and/or italic typeface variant to the"
+" text."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:70
+msgid ""
+"**Allow typeface name to be specified.** This allows the client to "
+"determine which base typeface is applied to the text."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:73
+msgid ""
+"**Auto-locate font file based on typeface and variants.** Relax "
+"requirement for client to specify font file, looking it up in current "
+"system based on system type, typeface name, and variants."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:79
+msgid "PowerPoint behavior"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:81
+msgid "PowerPoint shrinks text in whole-number font sizes."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:83
+msgid ""
+"When assigning a font size to a shape, PowerPoint applies that font size "
+"at the run level, adding a `sz` attribute to the `<a:rPr>` element for "
+"every content child of every `<a:p>` element in the shape. The "
+"`<a:endParaRPr>` element in each paragraph also gets a `sz` attribute set"
+" to that size."
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:90
+msgid "XML specimens"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:94
+msgid "``<p:txBody>`` for default new textbox::"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:104
+msgid ""
+"8\" x 0.5\" text box, default margins, defaulting to 18pt \"full-size\" "
+"text, auto-reduced to 12pt. ``<a:t>`` element text wrapped for compact "
+"display::"
+msgstr ""
+
+#: ../../dev/analysis/txt-fit-text.rst:127
+msgid "Related Schema Definitions"
+msgstr ""
+

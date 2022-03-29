@@ -1,0 +1,211 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2012, 2013, Steve Canny
+# This file is distributed under the same license as the python-pptx
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: python-pptx 0.6.21\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-29 20:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../user/charts.rst:3
+msgid "Working with charts"
+msgstr ""
+
+#: ../../user/charts.rst:5
+msgid ""
+"|pp| supports adding charts and modifying existing ones. Most chart types"
+" other than 3D types are supported."
+msgstr ""
+
+#: ../../user/charts.rst:10
+msgid "Adding a chart"
+msgstr ""
+
+#: ../../user/charts.rst:12
+msgid ""
+"The following code adds a single-series column chart in a new "
+"presentation::"
+msgstr ""
+
+#: ../../user/charts.rst:40
+msgid "Customizing things a bit"
+msgstr ""
+
+#: ../../user/charts.rst:42
+msgid ""
+"The remaining code will leave out code we've already seen and only show "
+"imports, for example, when they're used for the first time, just to keep "
+"the focus on the new bits. Let's create a multi-series chart to use for "
+"these examples::"
+msgstr ""
+
+#: ../../user/charts.rst:61
+msgid ""
+"Notice that we captured the shape reference returned by the "
+":meth:`~.SlideShapes.add_chart` call as ``graphic_frame`` and then "
+"extracted the chart object from the graphic frame using its "
+":attr:`~.GraphicFrame.chart` property. We'll need the chart reference to "
+"get to the properties we'll need in the next steps. The "
+":meth:`~.SlideShapes.add_chart` method doesn't directly return the chart "
+"object. That's because a chart is not itself a shape. Rather it's a "
+"graphical (DrawingML) object *contained* in the graphic frame shape. "
+"Tables work this way too, also being contained in a graphic frame shape."
+msgstr ""
+
+#: ../../user/charts.rst:73
+msgid "XY and Bubble charts"
+msgstr ""
+
+#: ../../user/charts.rst:75
+msgid ""
+"The charts so far use a *discrete* set of values for the independent "
+"variable (the X axis, roughly speaking). These are perfect when your "
+"values fall into a well-defined set of categories. However, there are "
+"many cases, particularly in science and engineering, where the "
+"independent variable is a continuous value, such as temperature or "
+"frequency. These are supported in PowerPoint by XY (aka. scatter) charts."
+" A bubble chart is essentially an XY chart where the marker size is used "
+"to reflect an additional value, effectively adding a third dimension to "
+"the chart."
+msgstr ""
+
+#: ../../user/charts.rst:84
+msgid ""
+"Because the independent variable is continuous, in general, the series do"
+" not all share the same X values. This requires a somewhat different data"
+" structure and that is provided for by distinct |XyChartData| and "
+"|BubbleChartData| objects used to specify the data behind charts of these"
+" types::"
+msgstr ""
+
+#: ../../user/charts.rst:108
+msgid ""
+"Creation of a bubble chart is very similar, having an additional value "
+"for each data point that specifies the bubble size::"
+msgstr ""
+
+#: ../../user/charts.rst:126
+msgid "Axes"
+msgstr ""
+
+#: ../../user/charts.rst:128
+msgid "Let's change up the category and value axes a bit::"
+msgstr ""
+
+#: ../../user/charts.rst:151
+msgid ""
+"Okay, that was probably going a bit too far. But it gives us an idea of "
+"the kinds of things we can do with the value and category axes. Let's "
+"undo this part and go back to the version we had before."
+msgstr ""
+
+#: ../../user/charts.rst:157
+msgid "Data Labels"
+msgstr ""
+
+#: ../../user/charts.rst:159
+msgid ""
+"Let's add some data labels so we can see exactly what the value for each "
+"bar is::"
+msgstr ""
+
+#: ../../user/charts.rst:175
+msgid ""
+"Here we needed to access a Plot object to gain access to the data labels."
+" A plot is like a sub-chart, containing one or more series and drawn as a"
+" particular chart type, like column or line. This distinction is needed "
+"for charts that combine more than one type, like a line chart appearing "
+"on top of a column chart. A chart like this would have two plot objects, "
+"one for the series appearing as columns and the other for the lines. Most"
+" charts only have a single plot and |pp| doesn't yet support creating "
+"multi-plot charts, but you can access multiple plots on a chart that "
+"already has them."
+msgstr ""
+
+#: ../../user/charts.rst:184
+msgid ""
+"In the Microsoft API, the name *ChartGroup* is used for this object. I "
+"found that term confusing for a long time while I was learning about MS "
+"Office charts so I chose the name Plot for that object in |pp|."
+msgstr ""
+
+#: ../../user/charts.rst:190
+msgid "Legend"
+msgstr ""
+
+#: ../../user/charts.rst:192
+msgid ""
+"A legend is often useful to have on a chart, to give a name to each "
+"series and help a reader tell which one is which::"
+msgstr ""
+
+#: ../../user/charts.rst:203
+msgid "Nice! Okay, let's try some other chart types."
+msgstr ""
+
+#: ../../user/charts.rst:207
+msgid "Line Chart"
+msgstr ""
+
+#: ../../user/charts.rst:209
+msgid ""
+"A line chart is added pretty much the same way as a bar or column chart, "
+"the main difference being the chart type provided in the "
+":meth:`add_chart` call::"
+msgstr ""
+
+#: ../../user/charts.rst:229
+msgid ""
+"I switched the categories and series data here to better suit a line "
+"chart. You can see the line for the \"West\" region is *smoothed* into a "
+"curve while the other two have their points connected with straight line "
+"segments."
+msgstr ""
+
+#: ../../user/charts.rst:235
+msgid "Pie Chart"
+msgstr ""
+
+#: ../../user/charts.rst:237
+msgid ""
+"A pie chart is a little special in that it only ever has a single series "
+"and doesn't have any axes::"
+msgstr ""
+
+#: ../../user/charts.rst:261
+msgid "Odds & Ends"
+msgstr ""
+
+#: ../../user/charts.rst:263
+msgid ""
+"This should be enough to get you started with adding charts to your "
+"presentation with |pp|. There are more details in the API documentation "
+"for charts here: :ref:`chart-api`"
+msgstr ""
+
+#: ../../user/charts.rst:269
+msgid "About colors"
+msgstr ""
+
+#: ../../user/charts.rst:271
+msgid ""
+"By default, the colors assigned to each series in a chart are the theme "
+"colors Accent 1 through Accent 6, in that order. If you have more than "
+"six series, darker and lighter versions of those same colors are used. "
+"While it's possible to assign specific colors to data points (bar, line, "
+"pie segment, etc.) for at least some chart types, the best strategy to "
+"start with is changing the theme colors in your starting \"template\" "
+"presentation."
+msgstr ""
+
