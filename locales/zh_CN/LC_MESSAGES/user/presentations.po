@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../user/presentations.rst:3
 msgid "Working with Presentations"
-msgstr ""
+msgstr "使用演示文稿"
 
 #: ../../user/presentations.rst:5
 msgid ""
@@ -30,6 +30,8 @@ msgid ""
 "doesn't have any slides, it feels at first like you're creating one from "
 "scratch."
 msgstr ""
+"|pp| 允许您创建新的演示文稿，以及对现有的演示文稿进行更改。"
+"实际上，它只允许您更改现有的演示文稿；只是，如果你一开始的演讲没有任何幻灯片，你会觉得你是在从零开始。"
 
 #: ../../user/presentations.rst:10
 msgid ""
@@ -39,16 +41,19 @@ msgid ""
 "walk through it a step at a time using examples, starting with the two "
 "things you can do with a presentation, open it and save it."
 msgstr ""
+"然而，演示文稿的外观在很大程度上是由删除所有幻灯片后剩下的部分决定的，特别是主题、幻灯片母片和从幻灯片母片派生出来的幻灯片布局。"
+"让我们通过例子一步一步地来了解它，从你可以对演示文稿做的两件事开始，打开并保存它。"
 
 #: ../../user/presentations.rst:18
 msgid "Opening a presentation"
-msgstr ""
+msgstr "打开演示文稿"
 
 #: ../../user/presentations.rst:20
 msgid ""
 "The simplest way to get started is to open a new presentation without "
 "specifying a file to open::"
 msgstr ""
+"最简单的方法是打开新的演示文稿，而不需要指定要打开的文件::"
 
 #: ../../user/presentations.rst:28
 msgid ""

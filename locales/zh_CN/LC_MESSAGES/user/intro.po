@@ -20,13 +20,14 @@ msgstr ""
 
 #: ../../user/intro.rst:4
 msgid "Introduction"
-msgstr ""
+msgstr "简介"
 
 #: ../../user/intro.rst:6
 msgid ""
 "*python-pptx* is a Python library for creating and updating PowerPoint "
 "(.pptx) files."
 msgstr ""
+"*python-pptx* 是用于创建和更新 PowerPoint (.pptx) 文件的 Python 库。"
 
 #: ../../user/intro.rst:9
 msgid ""
@@ -38,6 +39,9 @@ msgid ""
 "updates to a library of presentations or simply to automate the "
 "production of a slide or two that would be tedious to get right by hand."
 msgstr ""
+"典型的应用是从数据库内容生成定制的 PowerPoint 演示文稿，点击网页应用中的链接就可以下载。"
+"一些开发人员已经使用它来根据工作管理系统中保存的信息自动生成可用于演示的工程状态报告。"
+"它还可以用于对演示库进行批量更新，或者简单地自动生成一两张用手操作会很繁琐的幻灯片。"
 
 #: ../../user/intro.rst:17
 msgid ""
@@ -45,6 +49,7 @@ msgid ""
 "code examples that I hope will allow you to learn what you need while "
 "addressing the real-life PowerPoint challenges you're working on."
 msgstr ""
+"这本用户指南本质上是教程，介绍了一些概念和代码示例，我希望它能让你在解决现实生活中遇到的 PowerPoint 挑战时学到你需要的东西。"
 
 #: ../../user/intro.rst:23
 msgid "python-pptx License"
@@ -66,6 +71,8 @@ msgid ""
 " persons to whom the Software is furnished to do so, subject to the "
 "following conditions:"
 msgstr ""
+"兹允许任何获得本软件和相关文档文件（\"Software\"）的人免费经营本软件，不受任何限制，包括但不限于使用、复制、修改、合并、发布的权利。"
+"分发、再许可和/或出售“软件”的副本，并允许被提供软件以这样做的人，受下面的条件："
 
 #: ../../../LICENSE:11
 msgid ""

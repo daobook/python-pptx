@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../user/install.rst:4
 msgid "Installing"
-msgstr ""
+msgstr "安装"
 
 #: ../../user/install.rst:6
 msgid "|pp| is hosted on PyPI, so installing with `pip` is simple::"
-msgstr ""
+msgstr "|pp| 托管在 PyPI 上，所以用 ``pip`` 安装很简单 ::"
 
 #: ../../user/install.rst:10
 msgid ""
@@ -34,6 +34,9 @@ msgid ""
 "satisfying these dependencies for you, but if you use the ``setup.py`` "
 "installation method you will need to install the dependencies yourself."
 msgstr ""
+"|pp| 依赖于 ``lxml`` 包和 ``Pillow``，现代版本的 Python 图像库（``PIL``）。"
+"图表功能依赖于 ``XlsxWriter``。``pip`` 和 ``easy_install`` 都会为你满足这些依赖，"
+"但如果你使用 ``setup.py`` 安装方法，你需要自己安装这些依赖。"
 
 #: ../../user/install.rst:16
 msgid ""

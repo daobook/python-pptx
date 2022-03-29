@@ -20,27 +20,29 @@ msgstr ""
 
 #: ../../user/quickstart.rst:4
 msgid "Getting Started"
-msgstr ""
+msgstr "快速上手"
 
 #: ../../user/quickstart.rst:6
 msgid ""
 "A quick way to get started is by trying out some of the examples below to"
 " get a feel for how to use |pp|."
 msgstr ""
+"快速入门的方法是尝试下面的一些例子，以获得如何使用 |pp| 的感觉。"
 
 #: ../../user/quickstart.rst:9
 msgid ""
 "The :ref:`API documentation <api>` can help you with the fine details of "
 "calling signatures and behaviors."
 msgstr ""
+":ref:`API 文档 <api>` 可以帮助您调用签名和行为的详细信息。"
 
 #: ../../user/quickstart.rst:18
 msgid "Hello World! example"
-msgstr ""
+msgstr "你好世界！例子"
 
 #: ../../user/quickstart.rst:43
 msgid "Bullet slide example"
-msgstr ""
+msgstr "子弹幻灯片的例子"
 
 #: ../../user/quickstart.rst:77
 msgid ""
@@ -56,6 +58,12 @@ msgid ""
 "the same thing. Note that these last two calls delete all the shape's "
 "paragraphs except the first one before setting the text it contains."
 msgstr ""
+"并不是所有的形状都可以包含文本，但那些包含文本的形状总是至少有一个段落，即使该段落为空，且在形状中没有文本可见。"
+"``_BaseShape.has_text_frame`` 可用于确定形状是否可以包含文本。（所有形状的子类 ``_BaseShape``）"
+"当 ``_BaseShape.has_text_frame`` 是 ``True``， ``_BaseShape.text_frame.paragraphs[0]`` 返回第一段。"
+"第一段的文本可以使用 ``text_frame.paragraphs[0].text`` 设置。"
+"作为快捷方式，可写属性 ``_BaseShape.text`` 和 ``_TextFrame.text`` 来完成同样的事情。"
+"请注意，这最后两个调用删除了除了第一个段落之外的所有段落，然后再设置它所包含的文本。"
 
 #: ../../user/quickstart.rst:92
 msgid "``add_textbox()`` example"
@@ -75,6 +83,7 @@ msgid ""
 "MSO_SHAPE.ROUNDED_RECT, MSO_SHAPE.CHEVRON, etc.) are listed on the :ref"
 ":`autoshape-types <MsoAutoShapeType>` page."
 msgstr ""
+"常量表示每个可用的自动形状（如 MSO_SHAPE.ROUNDED_RECT，MSO_SHAPE.CHEVRON 等）在 :ref:`autoshape-types <MsoAutoShapeType>` 页面上列出。"
 
 #: ../../user/quickstart.rst:205
 msgid "``add_table()`` example"
@@ -82,5 +91,4 @@ msgstr ""
 
 #: ../../user/quickstart.rst:248
 msgid "Extract all text from slides in presentation"
-msgstr ""
-
+msgstr "从幻灯片中提取所有文本"

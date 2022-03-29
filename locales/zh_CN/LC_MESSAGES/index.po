@@ -31,6 +31,7 @@ msgid ""
 "*python-pptx* is a Python library for creating and updating PowerPoint "
 "(.pptx) files."
 msgstr ""
+"*python-pptx* 是用于创建和更新 PowerPoint (.pptx) 文件的 Python 库。"
 
 #: ../../../README.rst:7
 msgid ""
@@ -42,38 +43,43 @@ msgid ""
 "updates to a library of presentations or simply to automate the "
 "production of a slide or two that would be tedious to get right by hand."
 msgstr ""
+"典型的应用是，从数据库内容生成定制的 PowerPoint 演示文稿，点击 web 应用程序中的链接就可以下载。"
+"一些开发人员已经使用它来根据工作管理系统中保存的信息自动生成可用于演示的工程状态报告。"
+"它还可以用于对演示库进行批量更新，或者简单地自动生成一两张用手操作会很繁琐的幻灯片。"
 
 #: ../../../README.rst:15
 msgid "More information is available in the `python-pptx documentation`_."
-msgstr ""
+msgstr "更多信息可以在 `python-pptx documentation`_ 中找到。"
 
 #: ../../../README.rst:17
 msgid ""
 "Browse `examples with screenshots`_ to get a quick idea what you can do "
 "with python-pptx."
 msgstr ""
+"浏览 `带有截图的例子`_ 快速了解你可以用 python-pptx 做什么。"
 
 #: ../../index.rst:11
 msgid "Feature Support"
-msgstr ""
+msgstr "功能支持"
 
 #: ../../index.rst:13
 msgid "|pp| has the following capabilities, with many more on the roadmap:"
-msgstr ""
+msgstr "|pp| 具有以下功能，路线图中还有更多功能："
 
 #: ../../index.rst:15
 msgid ""
 "Round-trip any Open XML presentation (.pptx file) including all its "
 "elements"
 msgstr ""
+"包括所有元素的任何 Open XML 表示 (.pptx 文件) 的往返"
 
 #: ../../index.rst:16
 msgid "Add slides"
-msgstr ""
+msgstr "添加幻灯片"
 
 #: ../../index.rst:17
 msgid "Populate text placeholders, for example to create a bullet slide"
-msgstr ""
+msgstr "填充文本占位符，例如创建 bullet 幻灯片"
 
 #: ../../index.rst:18
 msgid "Add image to slide at arbitrary position and size"
