@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Group Shape &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Auto Shape" href="shp-autoshape.html" />
+    <link rel="prev" title="Autofit setting" href="shp-autofit.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="shp-autoshape.html" title="Auto Shape"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="shp-autofit.html" title="Autofit setting"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Group Shape</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="group-shape">
+<span id="groupshape"></span><h1>Group Shape<a class="headerlink" href="#group-shape" title="Permalink to this headline">¶</a></h1>
+<p>A <em>group shape</em> is a container for other shapes.</p>
+<p>In the PowerPoint UI, a group shape may be selected and moved as a unit, such
+that the contained shapes retain their relative position to one another.</p>
+<p>Certain operations can also be applied to all the shapes in a group by
+applying that operation to the group shape.</p>
+<p>The <em>grouping</em> notion is <em>recursive</em>; a group shape can itself contain one or
+more group shapes. The “root” shape tree of a slide is itself a group,
+although it has a few distinctive behaviors. The XML element for a slide’s
+shape tree (<cite>p:spTree</cite>) is the same XML type as that for a group shape
+(<cite>p:grpSp</cite>), namely <cite>CT_GroupShape</cite>.</p>
+<section id="powerpoint-behaviors">
+<h2>PowerPoint Behaviors<a class="headerlink" href="#powerpoint-behaviors" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>A group shape can have no click action.</p></li>
+</ul>
+</section>
+<section id="xml-semantics">
+<h2>XML Semantics<a class="headerlink" href="#xml-semantics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><cite>chOff</cite> and <cite>chExt</cite> represent child offset and child extents, respectively.
+These are used if the group itself is transformed, in particular when it is
+scaled.</p></li>
+</ul>
+</section>
+<section id="ms-api">
+<h2>MS API<a class="headerlink" href="#ms-api" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><cite>Shape.GroupItems</cite> - corresponds to <cite>GroupShape.shapes</cite></p></li>
+</ul>
+</section>
+<section id="xml-specimens">
+<h2>XML Specimens<a class="headerlink" href="#xml-specimens" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:grpSp&gt;</span>
+  <span class="nt">&lt;p:nvGrpSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;5&quot;</span> <span class="na">name=</span><span class="s">&quot;Group 4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvGrpSpPr/&gt;</span>
+    <span class="nt">&lt;p:nvPr/&gt;</span>
+  <span class="nt">&lt;/p:nvGrpSpPr&gt;</span>
+  <span class="nt">&lt;p:grpSpPr&gt;</span>
+    <span class="nt">&lt;a:xfrm&gt;</span>
+      <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;3347864&quot;</span> <span class="na">y=</span><span class="s">&quot;2204864&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;3506688&quot;</span> <span class="na">cy=</span><span class="s">&quot;2930624&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:chOff</span> <span class="na">x=</span><span class="s">&quot;3347864&quot;</span> <span class="na">y=</span><span class="s">&quot;2204864&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:chExt</span> <span class="na">cx=</span><span class="s">&quot;3506688&quot;</span> <span class="na">cy=</span><span class="s">&quot;2930624&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:xfrm&gt;</span>
+  <span class="nt">&lt;/p:grpSpPr&gt;</span>
+  <span class="nt">&lt;p:sp&gt;</span>
+    <span class="nt">&lt;p:nvSpPr&gt;</span>
+      <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;p:cNvSpPr/&gt;</span>
+      <span class="nt">&lt;p:nvPr/&gt;</span>
+    <span class="nt">&lt;/p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:spPr&gt;</span>
+      <span class="nt">&lt;a:xfrm&gt;</span>
+        <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;3347864&quot;</span> <span class="na">y=</span><span class="s">&quot;2204864&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;914400&quot;</span> <span class="na">cy=</span><span class="s">&quot;914400&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:xfrm&gt;</span>
+      <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;roundRect&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:avLst/&gt;</span>
+      <span class="nt">&lt;/a:prstGeom&gt;</span>
+    <span class="nt">&lt;/p:spPr&gt;</span>
+    <span class="nt">&lt;p:style&gt;</span>
+      <span class="nt">&lt;a:lnRef</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:lnRef&gt;</span>
+      <span class="nt">&lt;a:fillRef</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:fillRef&gt;</span>
+      <span class="nt">&lt;a:effectRef</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:effectRef&gt;</span>
+      <span class="nt">&lt;a:fontRef</span> <span class="na">idx=</span><span class="s">&quot;minor&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;lt1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:fontRef&gt;</span>
+    <span class="nt">&lt;/p:style&gt;</span>
+    <span class="nt">&lt;p:txBody&gt;</span>
+      <span class="nt">&lt;a:bodyPr</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span> <span class="na">anchor=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:lstStyle/&gt;</span>
+      <span class="nt">&lt;a:p&gt;</span>
+        <span class="nt">&lt;a:pPr</span> <span class="na">algn=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:p&gt;</span>
+    <span class="nt">&lt;/p:txBody&gt;</span>
+  <span class="nt">&lt;/p:sp&gt;</span>
+  <span class="nt">&lt;p:sp&gt;</span>
+    <span class="nt">&lt;p:nvSpPr&gt;</span>
+      <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">name=</span><span class="s">&quot;Oval 2&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;p:cNvSpPr/&gt;</span>
+      <span class="nt">&lt;p:nvPr/&gt;</span>
+    <span class="nt">&lt;/p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:spPr&gt;</span>
+      <span class="nt">&lt;a:xfrm&gt;</span>
+        <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;5940152&quot;</span> <span class="na">y=</span><span class="s">&quot;2708920&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;914400&quot;</span> <span class="na">cy=</span><span class="s">&quot;914400&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:xfrm&gt;</span>
+      <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;ellipse&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:avLst/&gt;</span>
+      <span class="nt">&lt;/a:prstGeom&gt;</span>
+    <span class="nt">&lt;/p:spPr&gt;</span>
+    <span class="nt">&lt;p:style&gt;</span>
+      <span class="nt">&lt;a:lnRef</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:lnRef&gt;</span>
+      <span class="nt">&lt;a:fillRef</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:fillRef&gt;</span>
+      <span class="nt">&lt;a:effectRef</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:effectRef&gt;</span>
+      <span class="nt">&lt;a:fontRef</span> <span class="na">idx=</span><span class="s">&quot;minor&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;lt1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:fontRef&gt;</span>
+    <span class="nt">&lt;/p:style&gt;</span>
+    <span class="nt">&lt;p:txBody&gt;</span>
+      <span class="nt">&lt;a:bodyPr</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span> <span class="na">anchor=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:lstStyle/&gt;</span>
+      <span class="nt">&lt;a:p&gt;</span>
+        <span class="nt">&lt;a:pPr</span> <span class="na">algn=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:p&gt;</span>
+    <span class="nt">&lt;/p:txBody&gt;</span>
+  <span class="nt">&lt;/p:sp&gt;</span>
+  <span class="nt">&lt;p:sp&gt;</span>
+    <span class="nt">&lt;p:nvSpPr&gt;</span>
+      <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;4&quot;</span> <span class="na">name=</span><span class="s">&quot;Isosceles Triangle 3&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;p:cNvSpPr/&gt;</span>
+      <span class="nt">&lt;p:nvPr/&gt;</span>
+    <span class="nt">&lt;/p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:spPr&gt;</span>
+      <span class="nt">&lt;a:xfrm&gt;</span>
+        <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;4355976&quot;</span> <span class="na">y=</span><span class="s">&quot;4221088&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;1060704&quot;</span> <span class="na">cy=</span><span class="s">&quot;914400&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:xfrm&gt;</span>
+      <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;triangle&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:avLst/&gt;</span>
+      <span class="nt">&lt;/a:prstGeom&gt;</span>
+    <span class="nt">&lt;/p:spPr&gt;</span>
+    <span class="nt">&lt;p:style&gt;</span>
+      <span class="nt">&lt;a:lnRef</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:lnRef&gt;</span>
+      <span class="nt">&lt;a:fillRef</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:fillRef&gt;</span>
+      <span class="nt">&lt;a:effectRef</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:effectRef&gt;</span>
+      <span class="nt">&lt;a:fontRef</span> <span class="na">idx=</span><span class="s">&quot;minor&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;lt1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:fontRef&gt;</span>
+    <span class="nt">&lt;/p:style&gt;</span>
+    <span class="nt">&lt;p:txBody&gt;</span>
+      <span class="nt">&lt;a:bodyPr</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span> <span class="na">anchor=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:lstStyle/&gt;</span>
+      <span class="nt">&lt;a:p&gt;</span>
+        <span class="nt">&lt;a:pPr</span> <span class="na">algn=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:p&gt;</span>
+    <span class="nt">&lt;/p:txBody&gt;</span>
+  <span class="nt">&lt;/p:sp&gt;</span>
+<span class="nt">&lt;/p:grpSp&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GroupShape&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nvGrpSpPr&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_GroupShapeNonVisual&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grpSpPr&quot;</span>        <span class="na">type=</span><span class="s">&quot;a:CT_GroupShapeProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sp&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_Shape&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grpSp&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_GroupShape&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;graphicFrame&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GraphicalObjectFrame&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cxnSp&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Connector&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pic&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Picture&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;contentPart&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Rel&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GroupShapeNonVisual&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cNvPr&quot;</span>      <span class="na">type=</span><span class="s">&quot;a:CT_NonVisualDrawingProps&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cNvGrpSpPr&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_NonVisualGroupDrawingShapeProps&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nvPr&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_ApplicationNonVisualDrawingProps&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GroupShapeProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;xfrm&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_GroupTransform2D&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_FillProperties&quot;</span>                         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_EffectProperties&quot;</span>                       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scene3d&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Scene3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bwMode&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_BlackWhiteMode&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GroupTransform2D&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;off&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Point2D&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ext&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_PositiveSize2D&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;chOff&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Point2D&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;chExt&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_PositiveSize2D&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rot&quot;</span>   <span class="na">type=</span><span class="s">&quot;ST_Angle&quot;</span>    <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;flipH&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;flipV&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_EffectProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectList&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectDag&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectContainer&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_FillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noFill&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_NoFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;solidFill&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SolidColorFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gradFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_GradientFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;blipFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_BlipFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pattFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PatternFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grpFill&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_GroupFillProperties&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Group Shape</a><ul>
+<li><a class="reference internal" href="#powerpoint-behaviors">PowerPoint Behaviors</a></li>
+<li><a class="reference internal" href="#xml-semantics">XML Semantics</a></li>
+<li><a class="reference internal" href="#ms-api">MS API</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML Specimens</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="shp-autofit.html"
+                          title="previous chapter">Autofit setting</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="shp-autoshape.html"
+                          title="next chapter">Auto Shape</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="shp-autoshape.html" title="Auto Shape"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="shp-autofit.html" title="Autofit setting"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Group Shape</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

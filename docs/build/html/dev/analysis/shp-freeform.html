@@ -1,0 +1,1022 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Freeform Shapes &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Line/Connector Shape" href="shp-connector.html" />
+    <link rel="prev" title="Shadow" href="shp-shadow.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="shp-connector.html" title="Line/Connector Shape"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="shp-shadow.html" title="Shadow"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Freeform Shapes</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="freeform-shapes">
+<h1>Freeform Shapes<a class="headerlink" href="#freeform-shapes" title="Permalink to this headline">¶</a></h1>
+<p>PowerPoint AutoShapes, such as rectangles, circles, and triangles, have
+a <em>preset</em> geometry. The user simply picks from a selection of some 160
+pre-defined shapes to place one on the slide, at which point they can be
+scaled. Many shapes allow their geometry to be adjusted in certain ways using
+adjustment points (by dragging the small yellow diamonds).</p>
+<p>PowerPoint also supports a much less commonly used but highly flexible sort
+of shape having <em>custom geometry</em>. Whereas a shape with preset geometry has
+that geometry defined internally to PowerPoint and simply referred to by
+a keyname (such as ‘rect’), a shape with custom geometry spells out the
+custom geometry step-by-step in an XML subtree, using a sequence of moveTo,
+lineTo, and other drawing commands.</p>
+<section id="vocabulary">
+<h2>Vocabulary<a class="headerlink" href="#vocabulary" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>A freeform shape is composed of one or more <em>paths</em>. Each path may be
+configured to get a stroke, a fill, both, or neither. This allows drawing
+some shapes such as call-outs where, say, a reference line should be
+stroked but not filled, and the callout balloon contour should be filled
+but not stroked.</p>
+<p>Each path also has its own local coordinate system, which may come in handy
+when using guides. I haven’t seen any clear examples of this yet but
+I haven’t gone looking either.</p>
+<p>In any case, only a single path will be supported in the initial
+implementation.</p>
+</li>
+<li><p>A path is composed of one or more <em>contours</em>. A contour can be a <em>closed
+contour</em> or and <em>open contour</em>. The closure state only affects the
+continuity of the contour outline (although it also adds a straight line
+between start and end if needed).</p></li>
+<li><p>A contour is specified by a starting point (<cite>&lt;a:moveTo&gt;</cite>) followed by
+a sequence of line segments, each of which can be a straight or curved.
+Curve segments will not be supported in the initial implementation.</p>
+<p>The term <em>contour</em> is not “official”, but there are behaviors that depend
+on “continuous pen-down strokes”, such as “cut-out” behavior. Consequently,
+a term is needed.</p>
+</li>
+</ul>
+</section>
+<section id="scope">
+<h2>Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Move to, line to, and close, initially.</p></li>
+<li><p>Line style (solid, dashed, etc.)</p></li>
+<li><p>Fill pattern (solid, dashed, etc.)</p></li>
+</ul>
+<section id="limits-of-scope">
+<h3>Limits of scope<a class="headerlink" href="#limits-of-scope" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Curve segments will not be implemented initially.</p>
+<p>Curves wouldn’t be that hard to add, but until anyone cares about the
+control points and we have some live example about how those would be
+calculated etc., we don’t have a requirement to design to.</p>
+</li>
+<li><p>Multiple-path freeforms are out of scope for now.</p>
+<p>It’s not immediately apparent what they would be good for, and they don’t
+seem to be required to fulfill present requirements.</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="use-case-1-specify-all-points-in-slide-coordinates">
+<h2>Use Case 1 - Specify all points in slide coordinates<a class="headerlink" href="#use-case-1-specify-all-points-in-slide-coordinates" title="Permalink to this headline">¶</a></h2>
+<p>A very simple case can be had by specifying the verticies in slide
+coordinates:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">build_freeform</span><span class="p">(</span><span class="n">Inches</span><span class="p">(</span><span class="mf">1.5</span><span class="p">),</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span><span class="o">.</span><span class="n">add_line_segments</span><span class="p">((</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="n">Inches</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>   <span class="n">Inches</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>   <span class="n">Inches</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="n">Inches</span><span class="p">(</span><span class="mf">1.5</span><span class="p">),</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span>
+<span class="gp">... </span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_shape</span> <span class="o">=</span> <span class="n">freeform_builder</span><span class="o">.</span><span class="n">convert_to_shape</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_shape</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">inches</span><span class="p">,</span> <span class="n">freeform_shape</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">inches</span>
+<span class="go">1.0, 1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_shape</span><span class="o">.</span><span class="n">width</span><span class="o">.</span><span class="n">inches</span><span class="p">,</span> <span class="n">freeform_shape</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">inches</span>
+<span class="go">1.0, 1.0</span>
+</pre></div>
+</div>
+<p>This method may be used to place a freeform shape when you know exactly where
+you want the vertices to be positioned on the slide. The position and size of
+the shape (its bounding box) is worked out automatically from the minimum and
+maximum x and y positions of the points specified.</p>
+<p>The shape is automatically closed if the last vertex is the same as the
+beginning vertex; otherwise the shape is left open.</p>
+<p>The library automatically subtracts the top-left corner (origin) coordinates
+from each point to write the XML.</p>
+</section>
+<section id="use-case-2-specify-points-in-custom-coordinates">
+<h2>Use Case 2 - Specify points in custom coordinates<a class="headerlink" href="#use-case-2-specify-points-in-custom-coordinates" title="Permalink to this headline">¶</a></h2>
+<p>The next step up in complexity is where a custom coordinate system is to be
+used to specify vertices for a single shape.</p>
+<p>In this alternative, all the verticies are specified in custom coordinates
+and a scaling factor is provided:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">build_freeform</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="mi">1500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1000</span><span class="o">/</span><span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span><span class="o">.</span><span class="n">add_line_segments</span><span class="p">((</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_shape</span> <span class="o">=</span> <span class="n">freeform_builder</span><span class="o">.</span><span class="n">convert_to_shape</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_shape</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">inches</span><span class="p">,</span> <span class="n">freeform_shape</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">inches</span>
+<span class="go">1.0, 1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_shape</span><span class="o">.</span><span class="n">width</span><span class="o">.</span><span class="n">inches</span><span class="p">,</span> <span class="n">freeform_shape</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">inches</span>
+<span class="go">1.0, 1.0</span>
+</pre></div>
+</div>
+<p>This method creates a shape of exactly the same appearance as the prior
+example. It’s probably not the most natural approach because all coordinates
+have to be translated to their position on the slide. However, it is an
+option and it’s more compact. It could also be made to work with floating
+point values.</p>
+<p>This could also work by creating the shape at (0, 0) on the slide and then
+simply moving the shape to where you wanted using its <cite>.top</cite> and <cite>.left</cite>
+properties.</p>
+</section>
+<section id="use-case-3-specify-origin-for-custom-coordinates">
+<h2>Use Case 3 - Specify origin for custom coordinates<a class="headerlink" href="#use-case-3-specify-origin-for-custom-coordinates" title="Permalink to this headline">¶</a></h2>
+<p>This is perhaps the most natural approach for doing something fancy, like
+creating individual shapes for each of the 50 US states within a particular
+area of the slide such that their boundaries all align with adjacent states
+to make a map of the United States.</p>
+<p>Like in the prior use case, verticies are specified in custom coordinates
+and a scaling factor is provided. In addition, an origin in provided in slide
+coordinates (EMU). This would correspond to the origin of the entire map of
+the US in our example and represents where you want the top-left corner of
+the map to be on the slide.</p>
+<p>It is up to the client code to adjust the vertices provided such that they
+represent their position relative to this origin in the custom coordinates
+provided. It is also up to the client to get the scaling factor right such
+that the entire map fits in the intended area of the slide.</p>
+<p>In this scenario, <cite>top</cite> and <cite>left</cite> arguments are added to the
+<cite>.build_freeform()</cite> call. These arguments should be given the same values for
+each of the “interlocking” shapes. These two arguments each independently
+take on the value of zero when omitted, which produces the behavior of the
+prior use case:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">build_freeform</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">start_x</span><span class="o">=</span><span class="mi">1500</span><span class="p">,</span> <span class="n">start_y</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1000</span><span class="o">/</span><span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">top</span><span class="o">=</span><span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">left</span><span class="o">=</span><span class="n">Inches</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span><span class="o">.</span><span class="n">add_line_segments</span><span class="p">((</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_shape</span> <span class="o">=</span> <span class="n">freeform_builder</span><span class="o">.</span><span class="n">convert_to_shape</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_shape</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">inches</span><span class="p">,</span> <span class="n">freeform_shape</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">inches</span>
+<span class="go">3.0, 2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_shape</span><span class="o">.</span><span class="n">width</span><span class="o">.</span><span class="n">inches</span><span class="p">,</span> <span class="n">freeform_shape</span><span class="o">.</span><span class="n">height</span><span class="o">.</span><span class="n">inches</span>
+<span class="go">1.0, 1.0</span>
+</pre></div>
+</div>
+<p>As we can see here, the size of the shape is exactly the same, but it has
+been translated to be relative to the slide coordinates provided in the
+<cite>.build_freeform()</cite> call.</p>
+</section>
+<section id="use-case-4-specify-position-on-conversion">
+<h2>Use Case 4 - Specify position on conversion<a class="headerlink" href="#use-case-4-specify-position-on-conversion" title="Permalink to this headline">¶</a></h2>
+<p>Another use case is where you want to specify a shape entirely in terms of
+its local coordinates, relative to its local origin (top-left corner). This
+might be used when you want a custom shape that is not one of the 168
+provided preset geometry shapes, say an orthoganal projection cube or
+something like that, and then place that in a variety of locations around the
+slide.</p>
+<p>For this you build the shape as in Use Case 2, allowing the origin to default
+to (0, 0), and then specify a position for the shape in the
+<cite>.convert_to_shape()</cite> call. You can even call <cite>.convert_to_shape()</cite> multiple
+times to “rubber stamp” the shape in various positions around the slide.</p>
+<p>Can you call <cite>.convert_to_shape()</cite> multiple times? Maybe that would be good!</p>
+</section>
+<section id="usage-notes">
+<h2>Usage Notes<a class="headerlink" href="#usage-notes" title="Permalink to this headline">¶</a></h2>
+<p><strong>Closing a contour.</strong> A contour is only <em>truly</em> closed if it ends with
+a <cite>&lt;a:close&gt;</cite> element. It can <em>appear</em> closed if its end point is the same as
+its start point, but close inspection of the line-ends will reveal there is
+no smooth transition around the starting corner. This is more apparent when
+a wide line style is used for the outline.</p>
+<p>A <cite>&lt;a:close&gt;</cite> element will cause a straight line segment to be drawn between
+the last point point of the contour and the first. So it’s not necessary to
+repeat the first point as the last one if a straight line segment suits. The
+advantage is small however, and might only be an optimization to consider
+when thousands of freeform shapes were being drawn in a single presentation.</p>
+</section>
+<section id="candidate-protocol">
+<h2>Candidate Protocol<a class="headerlink" href="#candidate-protocol" title="Permalink to this headline">¶</a></h2>
+<p>Obtain a FreeformBuilder object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">build_freeform</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">100</span><span class="o">/</span><span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span>
+<span class="go">&lt;pptx.shapes.freeform.FreeformBuilder objext at 0x...&gt;</span>
+</pre></div>
+</div>
+<p>The <cite>x</cite> and <cite>y</cite> arguments specify the starting pen location in local
+coordinates. The <cite>scale</cite> argument determines the rendered size of the shape
+relative to the values specified for the vertices. The <cite>scale</cite> argument can
+be an <cite>(x_scale, y_scale)</cite> pair to specify a shape coordinate system that is
+rectangular rather than square.</p>
+<p><strong>Add vertices to the freeform shape</strong> an arbitrary number of straight line
+segments can be added to the shape using the <cite>add_line_segments()</cite> method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vertices</span> <span class="o">=</span> <span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span><span class="o">.</span><span class="n">add_line_segments</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">close</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The method also specifies whether the contour so generated should be closed
+(<cite>True</cite> by default). Closing a contour causes its end point to be connected
+to its starting point with a straight line segment. It also causes the
+contour to form a smooth perimeter outline. A contour that is not closed will
+have line end caps and may be assigned line ends like arrowheads.</p>
+<p>Although PowerPoint supports a variety of curved line segments, those will
+not be implemented in this initial effort.</p>
+<p><strong>Add second and further contours</strong> A path can have multiple distinct
+contours. These contours can be separate and distinct or they can overlap.
+A contour that is completely enclosed by another contour forms a “cutout” in
+the enclosing contour. Where two contours partially overlap, the fill begins
+at the outermost boundary and stops when it reaches another boundary.</p>
+<img alt="../../_images/freeform-03.png" src="../../_images/freeform-03.png" />
+<p>A new contour is begun by calling the <cite>.move_to()</cite> method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">freeform_builder</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Set freeform coordinate system (extents)</p>
+<p>There is no need to explicitly specify the extents of the coordinate
+system. The position and size of the shape can be calculated from the
+origin provided and the maxima and minima of the vertices provided.</p>
+</li>
+<li><p>Specify the scaled size of the freeform shape</p>
+<p>This is also unnecessary to specify as it is implied by the scaling factor
+provided and the maxima and minima of the vertices specified.</p>
+</li>
+</ul>
+<p><strong>Possible approach:</strong></p>
+<p>Optionally specify an alternate coordinate system in the initial call such
+that parameters are:</p>
+<ul class="simple">
+<li><p><cite>x, y</cite> - X and Y coordinates of initial pen position. If no scaling factor
+is provided, these are interpreted as <cite>Length</cite> values from the top-left
+corner of the slide.</p></li>
+<li><p><cite>scale=1.0</cite> (<em>optional</em>) - Determines the scaling of the x and y values
+used to specify the vertices. This is a proportion to a <cite>Length</cite> unit,
+which is an <cite>Emu</cite>, 914400 to the inch. This value is conveniently formed by
+division with a <cite>Length</cite> subclass, like <cite>1000/Inches(1)</cite> to give “1000
+units per inch” in that case. This could just as easily be <cite>2142/Cm(1)</cite> to
+give “2142 units per centimeter”. The default value of 1.0 means “1 unit
+per Emu”.</p></li>
+<li><p><cite>left</cite> (<em>optional</em>) - X-axis position of top-left corner of freeform shape
+bounding box, specified as a <cite>Length</cite> (not scaled) value relative to
+left edge of slide. If this value is not specified, it is calculated
+from the minimum x position of the points in the shape.</p></li>
+<li><p><cite>top</cite> (<em>optional</em>) - Y-axis position of top-left corner of freeform shape
+bounding box, specified as a <cite>Length</cite> (not scaled) value relative to
+top edge of the slide. If this value is not specified, it is calculated
+from the minimum y position of the points in the shape.</p></li>
+<li><p><cite>y_scale=None</cite> (<em>optional, not implemented</em>) - Y-axis scaling factor
+(defaults to same as X-axis scaling factor)</p></li>
+</ul>
+<p>The shape size (extents) are calculated from max_X and max_Y in given
+coordinates, multiplied by the scaling factor.</p>
+</section>
+<section id="experimentation">
+<h2>Experimentation<a class="headerlink" href="#experimentation" title="Permalink to this headline">¶</a></h2>
+<ol class="upperalpha simple" start="17">
+<li><p>How does PowerPoint behave if we leave out all the “guides” and connection
+points, i.e. if the <cite>a:gdLst</cite> and <cite>a:cxnLst</cite> elements are empty?</p></li>
+</ol>
+<ol class="upperalpha simple">
+<li><p>It likes it just fine. Might not be a bad idea to leave empty <cite>a:gdLst</cite>
+and <cite>a:cxnLst</cite> elements in there though, when creating a new freeform XML
+subtree, just to be a little safer compatibility-wise since PowerPoint
+seems to always put them in there.</p></li>
+</ol>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="17">
+<li><p>What happens if there’s no <cite>a:moveTo</cite> element at the start of a path?</p></li>
+</ol>
+<ol class="upperalpha simple">
+<li><p>The path does not appear; it is not drawn. Note this is contrary to the
+(unofficial) documentation indicating that (0, 0) is used as the starting
+pen location.</p></li>
+</ol>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="17">
+<li><p>What happens if a second path overlaps the first one, i.e. partly in and
+partly out?</p></li>
+</ol>
+<ol class="upperalpha simple">
+<li><p>The “outside” portion of the overlapping contour becomes the outside of
+the shape and the region between that contour and the boundary of the
+first shape is shaded. This produces two (or more) “point” areas on the
+perimeter of the first shape where the width is zero.</p></li>
+</ol>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="17">
+<li><p>What happens if the last point is not the same as the first point and the
+path is closed?</p></li>
+</ol>
+<ol class="upperalpha simple">
+<li><p>A straight-line segment is added between the last point and the starting
+point. The appearance is just as it is when the last point is the same as
+the starting point.</p></li>
+</ol>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="17">
+<li><p>What happens if you do a shape with an <cite>a:moveTo</cite> in the middle (producing
+a gap in the outline) but then close the shape? Does it still get a fill
+or is it considered open then?</p></li>
+</ol>
+<ol class="upperalpha simple">
+<li><p>The <cite>moveTo</cite> operation essentially resets the “starting” point for closure
+purposes. The remainder of the path is closed, but the part before the
+<cite>moveTo</cite> remains an open contour.</p></li>
+</ol>
+<hr class="docutils" />
+<ol class="upperalpha simple" start="17">
+<li><p>What happens when the last point is the same as the first point but there
+is no <cite>a:close</cite> element?</p></li>
+</ol>
+<ol class="upperalpha simple">
+<li><p>The shape outline is discontinuous at the start/end point and does not
+form a smooth contour at that point. The visual appearance depends on the
+line ends and line end caps chosen.</p></li>
+</ol>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>[ ] What happens when negative coordinate values are used?</p></li>
+<li><p>[ ] What happens when you close a contour right after an <cite>a:moveTo</cite>?</p></li>
+<li><dl class="simple">
+<dt>[ ] What is the point of having multiple paths? The only difference I can</dt><dd><p>see is that overlapping areas are not “subtracted” and you can have
+a different coordinate system. I’m inclined to think it’s all about
+needing distinct coordinate systems for some reason, perhaps when
+variables (guides <cite>&lt;a:gd&gt;</cite>) are used.</p>
+</dd>
+</dl>
+</li>
+<li><p>[ ] What is the purpose of the boolean <cite>stroke</cite> attribute on path?</p></li>
+</ul>
+</section>
+<section id="powerpoint-ui-behaviors">
+<h2>PowerPoint UI behaviors<a class="headerlink" href="#powerpoint-ui-behaviors" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>A freeform shape can be created using the ribbon Shape &gt; Lines and
+Connectors &gt; Freeform command. There is also a “Curve” and “Scribble”
+option.</p></li>
+<li><p>A shape is then created by placing points with the mouse. In the freeform
+case, each vertex defines a line segment. In the case of a curve freeform,
+the vertices are control points.</p></li>
+<li><p>Clicking close to the starting point closes the shape. Double-clicking also
+ends the drawing, leaving the shape open.</p></li>
+<li><p>Once created, an “Edit Points” option appears on the context menu when
+right-clicking the shape. This allows the points to be fine-tuned.</p></li>
+<li><p>Hypothesis: PowerPoint uses an arbitrary scale of 10,000 (period, not per
+inch) as the coordinate space for a freeform shape added or edited using
+the UI. The rules are more complicated, not sure what they are, but it
+seems to start with a square of about that and move from there.</p></li>
+</ul>
+</section>
+<section id="ms-api">
+<h2>MS API<a class="headerlink" href="#ms-api" title="Permalink to this headline">¶</a></h2>
+<section id="ms-api-protocol">
+<h3>MS API protocol<a class="headerlink" href="#ms-api-protocol" title="Permalink to this headline">¶</a></h3>
+<p>Example:</p>
+<div class="highlight-vbnet notranslate"><div class="highlight"><pre><span></span><span class="k">Set</span><span class="w"> </span><span class="n">myDocument</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ActivePresentation</span><span class="p">.</span><span class="n">Slides</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+
+<span class="k">With</span><span class="w"> </span><span class="n">myDocument</span><span class="p">.</span><span class="n">Shapes</span><span class="p">.</span><span class="n">BuildFreeform</span><span class="p">(</span><span class="n">msoEditingCorner</span><span class="p">,</span><span class="w"> </span><span class="mi">360</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">AddNodes</span><span class="w"> </span><span class="n">msoSegmentCurve</span><span class="p">,</span><span class="w"> </span><span class="n">msoEditingCorner</span><span class="p">,</span><span class="w"> </span>_<span class="w"></span>
+<span class="w">        </span><span class="mi">380</span><span class="p">,</span><span class="w"> </span><span class="mi">230</span><span class="p">,</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span><span class="w"> </span><span class="mi">450</span><span class="p">,</span><span class="w"> </span><span class="mi">300</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">AddNodes</span><span class="w"> </span><span class="n">msoSegmentCurve</span><span class="p">,</span><span class="w"> </span><span class="n">msoEditingAuto</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">AddNodes</span><span class="w"> </span><span class="n">msoSegmentLine</span><span class="p">,</span><span class="w"> </span><span class="n">msoEditingAuto</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">AddNodes</span><span class="w"> </span><span class="n">msoSegmentLine</span><span class="p">,</span><span class="w"> </span><span class="n">msoEditingAuto</span><span class="p">,</span><span class="w"> </span><span class="mi">360</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">ConvertToShape</span><span class="w"></span>
+<span class="k">End</span><span class="w"> </span><span class="k">With</span><span class="w"></span>
+</pre></div>
+</div>
+<ul>
+<li><p>Specify pen starting point in initial <cite>BuildFreeform</cite> call.</p></li>
+<li><p>All points are specified in slide coordinates.</p></li>
+<li><p>Specify each vertex separately in an <cite>.AddNodes()</cite> method call. It seems
+like it should actually be named <cite>.AddNode()</cite>, but perhaps they consider
+control points to be nodes separate from the vertex point.</p>
+<p>A line segment can be specified by specifying the x, y vertex of the ending
+point.</p>
+<p>A curve segment can be specified by specifying additional control points
+(nodes). The vertex can be specified to be a corner (one control point on
+starting vertex), smooth (tangent at the vertex), or symmetric (we’d have
+to experiment to see what that does exactly, no ready available
+documentation).</p>
+</li>
+<li><p>The path is closed (or not) when the <cite>.ConvertToShape()</cite> method is called
+on the <cite>FreeformBuilder</cite> object. It looks like it’s closed if the last
+point is coincident with the first and open otherwise.</p></li>
+<li><p>There is no way to make a multi-path shape as far as I can tell.</p></li>
+<li><p>The MS API provides no way to “lift the pen” to make a discontinuous path
+as far as I can tell. (And so does not provide a way to make “cutouts” like
+a lake within a landmass shape.)</p></li>
+</ul>
+</section>
+<section id="ms-api-objects">
+<h3>MS API Objects<a class="headerlink" href="#ms-api-objects" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><div class="line-block">
+<div class="line">Shapes.BuildFreeform(x, y)</div>
+<div class="line"><a class="reference external" href="https://msdn.microsoft.com/VBA/PowerPoint-VBA/articles/shapes-buildfreeform-method-powerpoint">https://msdn.microsoft.com/VBA/PowerPoint-VBA/articles/shapes-buildfreeform-method-powerpoint</a></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">FreeformBuilder</div>
+<div class="line"><a class="reference external" href="https://msdn.microsoft.com/VBA/PowerPoint-VBA/articles/freeformbuilder-object-powerpoint">https://msdn.microsoft.com/VBA/PowerPoint-VBA/articles/freeformbuilder-object-powerpoint</a></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">FreeformBuilder.AddNodes()</div>
+<div class="line"><a class="reference external" href="https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles/freeformbuilder-addnodes-method-powerpoint">https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles/freeformbuilder-addnodes-method-powerpoint</a></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">FreeformBuilder.ConvertToShape()</div>
+<div class="line"><a class="reference external" href="https://msdn.microsoft.com/VBA/PowerPoint-VBA/articles/freeformbuilder-converttoshape-method-powerpoint">https://msdn.microsoft.com/VBA/PowerPoint-VBA/articles/freeformbuilder-converttoshape-method-powerpoint</a></div>
+<div class="line">Cannot be called before adding at least one segment to the shape.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">Shape.Nodes</div>
+<div class="line"><br /></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">MsoSegmentType enumeration</div>
+<div class="line"><a class="reference external" href="https://msdn.microsoft.com/VBA/Office-Shared-VBA/articles/msosegmenttype-enumeration-office">https://msdn.microsoft.com/VBA/Office-Shared-VBA/articles/msosegmenttype-enumeration-office</a></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 16%" />
+<col style="width: 38%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Name</p></td>
+<td><p>Value</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>msoSegmentCurve</p></td>
+<td><p>1</p></td>
+<td><p>Curve.</p></td>
+</tr>
+<tr class="row-odd"><td><p>msoSegmentLine</p></td>
+<td><p>0</p></td>
+<td><p>Line.</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><div class="line-block">
+<div class="line">MsoEditingType enumeration</div>
+<div class="line"><a class="reference external" href="https://msdn.microsoft.com/VBA/Office-Shared-VBA/articles/msoeditingtype-enumeration-office">https://msdn.microsoft.com/VBA/Office-Shared-VBA/articles/msoeditingtype-enumeration-office</a></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 10%" />
+<col style="width: 62%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Name</p></td>
+<td><p>Value</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>msoEditingAuto</p></td>
+<td><p>0</p></td>
+<td><p>Editing type is appropriate to the segments
+being connected.</p></td>
+</tr>
+<tr class="row-odd"><td><p>msoEditingCorner</p></td>
+<td><p>1</p></td>
+<td><p>Corner node.</p></td>
+</tr>
+<tr class="row-even"><td><p>msoEditingSmooth</p></td>
+<td><p>2</p></td>
+<td><p>Smooth node.</p></td>
+</tr>
+<tr class="row-odd"><td><p>msoEditingSymmetric</p></td>
+<td><p>3</p></td>
+<td><p>Symmetric node.</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</section>
+</section>
+<section id="xml-semantics">
+<h2>XML Semantics<a class="headerlink" href="#xml-semantics" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>The <cite>w</cite> and <cite>h</cite> attributes of a <cite>a:path</cite> element specify size of the shape
+canvas in local coordinates.</p>
+<ul class="simple">
+<li><p>The <strong>origin of the shape canvas</strong> is at its top left corner and has the
+value (0, 0) in local coordinates. The vertices must be translated by the
+X and Y minima to place the bounding box tightly around the shape.</p></li>
+</ul>
+</li>
+<li><p>The <cite>a:rect</cite> element specifies the text-box extents for the shape.</p></li>
+<li><p>The <cite>a:pathLst</cite> element contains zero or more <cite>a:path</cite> elements, each of
+which specify a <em>path</em>.</p></li>
+<li><p>A path has a <em>private</em> and <em>arbitrary</em> <em>integral</em> coordinate system defined
+by the <cite>w</cite> and <cite>h</cite> attributes on the <cite>a:path</cite> element. This means that each
+path in an <cite>a:custGeom/a:pathLst</cite> has an independent scaling for its
+coordinate system.</p></li>
+<li><p>A path is composed of a sequence of the following possible elements:</p>
+<ul class="simple">
+<li><p><cite>a:moveTo</cite></p></li>
+<li><p><cite>a:lnTo</cite></p></li>
+<li><p><cite>a:arcTo</cite></p></li>
+<li><p><cite>a:quadBezTo</cite></p></li>
+<li><p><cite>a:cubicBezTo</cite></p></li>
+<li><p><cite>a:close</cite></p></li>
+</ul>
+<p>A path may begin with an <cite>a:moveTo</cite> element. This essentially locates the
+starting location of the “pen”. Each subsequent drawing command extends the
+shape by adding a line segment. If the path does not begin with an
+<cite>a:moveTo</cite> element, the path does not appear (it is not drawn). Note this
+is contrary to the (unofficial) documentation indicating that (0, 0) is
+used as the default starting pen location.</p>
+<p>A path can be open or closed. If an <cite>a:close</cite> element is added, a straight
+line segment is drawn from the current pen location to the initial location
+of the drawing sequence and the shape appears with a fill. If the pen is
+already at the starting location, no additional line segment appears. If no
+<cite>a:close</cite> element is added, the shape remains “open” and only the path
+appears (no fill).</p>
+<p>A path can contain more than one drawing sequence, i.e. one sequence can be
+“closed” and another sequence started. If a subsequent drawing sequence is
+entirely enclosed within a prior sequence, it appears as a “cutout”, or an
+interior boundary. This behavior does not occur when the two drawing
+sequences are in separate paths, even within the same shape.</p>
+<p>The pen can be “lifted” using an <cite>a:moveTo</cite> element, in which case no line
+segment is drawn between the prior location and the new location. This can
+be used to produce a discontinuous outline.</p>
+<p>A path has a boolean <cite>stroke</cite> attribute (default True) that specifies
+whether a line should appear on the path.</p>
+</li>
+<li><p>The <cite>a:pathLst</cite> element can contain multiple <cite>a:path</cite> elements. In this
+case, each path is essentially a “sub-shape”, such as a shape that depicts
+the islands of Hawaii.</p>
+<p>If a prior path is not closed, its end point path will be connected to the
+first point of the subsequent path.</p>
+<p>The paths within a shape all have the same z-position, i.e. they appear on
+a single plane such that all outlines appear, even when they intersect.
+There is no cropping behavior such as occurs for individual shapes on
+a slide.</p>
+</li>
+</ul>
+<section id="fill-behavior">
+<h3>Fill behavior<a class="headerlink" href="#fill-behavior" title="Permalink to this headline">¶</a></h3>
+<p>Hypothesis: Any shape can have a fill, even an “open” shape. The question of
+whether a shape has a fill is not determined by whether it is closed, but by
+whether a fill is <em>applied</em> to the shape.</p>
+<p>In the PowerPoint UI, a closed shape is automatically assigned a fill when it
+is drawn. Conversely, an open shape is not assigned a fill. This behavior is
+built into the drawing code and is not dependent solely on the “closed-ness”
+of the shape.</p>
+<p>The XML template for a freeform shape (as of this writing) includes an
+element for a fill and effect, consistent with the PowerPoint defaults for
+a closed shape. The fill would need to be removed from an open shape if the
+user didn’t want it.</p>
+</section>
+<section id="coordinate-system">
+<h3>Coordinate system<a class="headerlink" href="#coordinate-system" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Each path has its own local coordinate system, distinct both from the
+<em>shape</em> coordinate system and the coordinate systems of the other paths in
+the shape.</p></li>
+<li><p>The x and y extents of a path coordinate system are specified by the <cite>w</cite>
+and <cite>h</cite> attributes on the <cite>a:path</cite> element, respectively. The top, left
+corner of the path bounding box is (0, 0) and the bottom, right corner is
+at (<cite>h</cite>, <cite>w</cite>). Coordinates are positive integers in the range 0 to
+27,273,042,316,900 (about 2^44.63).</p></li>
+</ul>
+</section>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Office Open XML - Custom Geometry
+<a class="reference external" href="http://officeopenxml.com/drwSp-custGeom.php">http://officeopenxml.com/drwSp-custGeom.php</a></p></li>
+</ul>
+</section>
+<section id="xml-specimens">
+<h2>XML Specimens<a class="headerlink" href="#xml-specimens" title="Permalink to this headline">¶</a></h2>
+<section id="hand-built-as-written-by-powerpoint">
+<h3>Hand-built, as-written by PowerPoint<a class="headerlink" href="#hand-built-as-written-by-powerpoint" title="Permalink to this headline">¶</a></h3>
+<img alt="../../_images/freeform-01.png" src="../../_images/freeform-01.png" />
+<p>This triangle is hand-built using the ‘Freeform’ shape tool in the PowerPoint
+UI. A couple things to notice:</p>
+<ul class="simple">
+<li><p>The shape includes a full complement of <cite>&lt;a:gd&gt;</cite> and <cite>&lt;a:cxn&gt;</cite> elements.
+The shape works fine without these and providing a way to specify these is
+out of scope for the current effort.</p></li>
+<li><p>The freeform shape itself is specified in <cite>p:sp/p:spPr/a:custGeom</cite>. That’s
+a little interesting that the geometry is considered a shape property
+(spPr) rather than somehow more core to the shape.</p></li>
+<li><p>The <cite>&lt;a:pathLst&gt;</cite> element contains only a single path. I haven’t yet
+discovered how to add a second path to a shape using the UI.</p></li>
+</ul>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">name=</span><span class="s">&quot;Freeform 1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvSpPr/&gt;</span>
+    <span class="nt">&lt;p:nvPr/&gt;</span>
+  <span class="nt">&lt;/p:nvSpPr&gt;</span>
+  <span class="nt">&lt;p:spPr&gt;</span>
+    <span class="nt">&lt;a:xfrm&gt;</span>
+      <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;700718&quot;</span> <span class="na">y=</span><span class="s">&quot;642282&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;897794&quot;</span> <span class="na">cy=</span><span class="s">&quot;773657&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:xfrm&gt;</span>
+    <span class="nt">&lt;a:custGeom&gt;</span>
+      <span class="nt">&lt;a:avLst/&gt;</span>
+      <span class="nt">&lt;a:gdLst&gt;</span>
+        <span class="nt">&lt;a:gd</span> <span class="na">name=</span><span class="s">&quot;connsiteX0&quot;</span> <span class="na">fmla=</span><span class="s">&quot;*/ 423350 w 897794&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:gd</span> <span class="na">name=</span><span class="s">&quot;connsiteY0&quot;</span> <span class="na">fmla=</span><span class="s">&quot;*/ 0 h 773657&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:gd</span> <span class="na">name=</span><span class="s">&quot;connsiteX1&quot;</span> <span class="na">fmla=</span><span class="s">&quot;*/ 897794 w 897794&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:gd</span> <span class="na">name=</span><span class="s">&quot;connsiteY1&quot;</span> <span class="na">fmla=</span><span class="s">&quot;*/ 773657 h 773657&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:gd</span> <span class="na">name=</span><span class="s">&quot;connsiteX2&quot;</span> <span class="na">fmla=</span><span class="s">&quot;*/ 0 w 897794&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:gd</span> <span class="na">name=</span><span class="s">&quot;connsiteY2&quot;</span> <span class="na">fmla=</span><span class="s">&quot;*/ 766359 h 773657&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:gd</span> <span class="na">name=</span><span class="s">&quot;connsiteX3&quot;</span> <span class="na">fmla=</span><span class="s">&quot;*/ 423350 w 897794&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:gd</span> <span class="na">name=</span><span class="s">&quot;connsiteY3&quot;</span> <span class="na">fmla=</span><span class="s">&quot;*/ 0 h 773657&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:gdLst&gt;</span>
+      <span class="nt">&lt;a:ahLst/&gt;</span>
+      <span class="nt">&lt;a:cxnLst&gt;</span>
+        <span class="nt">&lt;a:cxn</span> <span class="na">ang=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:pos</span> <span class="na">x=</span><span class="s">&quot;connsiteX0&quot;</span> <span class="na">y=</span><span class="s">&quot;connsiteY0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:cxn&gt;</span>
+        <span class="nt">&lt;a:cxn</span> <span class="na">ang=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:pos</span> <span class="na">x=</span><span class="s">&quot;connsiteX1&quot;</span> <span class="na">y=</span><span class="s">&quot;connsiteY1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:cxn&gt;</span>
+        <span class="nt">&lt;a:cxn</span> <span class="na">ang=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:pos</span> <span class="na">x=</span><span class="s">&quot;connsiteX2&quot;</span> <span class="na">y=</span><span class="s">&quot;connsiteY2&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:cxn&gt;</span>
+        <span class="nt">&lt;a:cxn</span> <span class="na">ang=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:pos</span> <span class="na">x=</span><span class="s">&quot;connsiteX3&quot;</span> <span class="na">y=</span><span class="s">&quot;connsiteY3&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:cxn&gt;</span>
+      <span class="nt">&lt;/a:cxnLst&gt;</span>
+      <span class="nt">&lt;a:rect</span> <span class="na">l=</span><span class="s">&quot;l&quot;</span> <span class="na">t=</span><span class="s">&quot;t&quot;</span> <span class="na">r=</span><span class="s">&quot;r&quot;</span> <span class="na">b=</span><span class="s">&quot;b&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:pathLst&gt;</span>
+        <span class="nt">&lt;a:path</span> <span class="na">w=</span><span class="s">&quot;897794&quot;</span> <span class="na">h=</span><span class="s">&quot;773657&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:moveTo&gt;</span>
+            <span class="nt">&lt;a:pt</span> <span class="na">x=</span><span class="s">&quot;423350&quot;</span> <span class="na">y=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/a:moveTo&gt;</span>
+          <span class="nt">&lt;a:lnTo&gt;</span>
+            <span class="nt">&lt;a:pt</span> <span class="na">x=</span><span class="s">&quot;897794&quot;</span> <span class="na">y=</span><span class="s">&quot;773657&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/a:lnTo&gt;</span>
+          <span class="nt">&lt;a:lnTo&gt;</span>
+            <span class="nt">&lt;a:pt</span> <span class="na">x=</span><span class="s">&quot;0&quot;</span> <span class="na">y=</span><span class="s">&quot;766359&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/a:lnTo&gt;</span>
+          <span class="nt">&lt;a:lnTo&gt;</span>
+            <span class="nt">&lt;a:pt</span> <span class="na">x=</span><span class="s">&quot;423350&quot;</span> <span class="na">y=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/a:lnTo&gt;</span>
+          <span class="nt">&lt;a:close/&gt;</span>
+        <span class="nt">&lt;/a:path&gt;</span>
+      <span class="nt">&lt;/a:pathLst&gt;</span>
+    <span class="nt">&lt;/a:custGeom&gt;</span>
+    <span class="nt">&lt;a:ln</span> <span class="na">w=</span><span class="s">&quot;57150&quot;</span> <span class="na">cmpd=</span><span class="s">&quot;sng&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:solidFill&gt;</span>
+        <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent6&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:solidFill&gt;</span>
+    <span class="nt">&lt;/a:ln&gt;</span>
+  <span class="nt">&lt;/p:spPr&gt;</span>
+  <span class="nt">&lt;p:style&gt;</span>
+    <span class="nt">&lt;a:lnRef</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:lnRef&gt;</span>
+    <span class="nt">&lt;a:fillRef</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:fillRef&gt;</span>
+    <span class="nt">&lt;a:effectRef</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:effectRef&gt;</span>
+    <span class="nt">&lt;a:fontRef</span> <span class="na">idx=</span><span class="s">&quot;minor&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;lt1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:fontRef&gt;</span>
+  <span class="nt">&lt;/p:style&gt;</span>
+  <span class="nt">&lt;p:txBody&gt;</span>
+    <span class="nt">&lt;a:bodyPr</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span> <span class="na">anchor=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:lstStyle/&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      <span class="nt">&lt;a:pPr</span> <span class="na">algn=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:p&gt;</span>
+  <span class="nt">&lt;/p:txBody&gt;</span>
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>The rest of these shape subtrees have the <cite>&lt;a:gdLst&gt;</cite> and <cite>&lt;a:cxnLst&gt;</cite>
+elements removed for brevity and many focus simply on the <cite>a:pathLst</cite> element
+for compact presentation.</p>
+</section>
+<section id="effect-of-a-close-element">
+<h3>Effect of <cite>&lt;a:close&gt;</cite> element<a class="headerlink" href="#effect-of-a-close-element" title="Permalink to this headline">¶</a></h3>
+<img alt="../../_images/freeform-02.png" src="../../_images/freeform-02.png" />
+<p>This one is a little tricky to see, but if you look closely, you’ll see that
+the outline at the apex of the triangle is not “closed”. This behavior arises
+when there is no <cite>&lt;a:close/&gt;</cite> element at the end of the path, even when the
+end-point is the same as the start-point:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:pathLst&gt;</span>
+  <span class="nt">&lt;a:path</span> <span class="na">w=</span><span class="s">&quot;100&quot;</span> <span class="na">h=</span><span class="s">&quot;100&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:moveTo&gt;&lt;a:pt</span> <span class="na">x=</span><span class="s">&quot;50&quot;</span> <span class="na">y=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;&lt;/a:moveTo&gt;</span>
+    <span class="nt">&lt;a:lnTo&gt;&lt;a:pt</span> <span class="na">x=</span><span class="s">&quot;100&quot;</span> <span class="na">y=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;&lt;/a:lnTo&gt;</span>
+    <span class="nt">&lt;a:lnTo&gt;&lt;a:pt</span> <span class="na">x=</span><span class="s">&quot;0&quot;</span> <span class="na">y=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;&lt;/a:lnTo&gt;</span>
+    <span class="nt">&lt;a:lnTo&gt;&lt;a:pt</span> <span class="na">x=</span><span class="s">&quot;50&quot;</span> <span class="na">y=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;&lt;/a:lnTo&gt;</span>
+  <span class="nt">&lt;/a:path&gt;</span>
+<span class="nt">&lt;/a:pathLst&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="xml-schema-excerpt">
+<h2>XML Schema excerpt<a class="headerlink" href="#xml-schema-excerpt" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Shape&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- p:sp element --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nvSpPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ShapeNonVisual&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;style&quot;</span>  <span class="na">type=</span><span class="s">&quot;a:CT_ShapeStyle&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txBody&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;useBgFill&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ShapeProperties&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;xfrm&quot;</span>                <span class="na">type=</span><span class="s">&quot;CT_Transform2D&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- EG_Geometry --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custGeom&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_CustomGeometry2D&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;prstGeom&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_PresetGeometry2D&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- EG_FillProperties --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noFill&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_NoFillProperties&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;solidFill&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SolidColorFillProperties&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gradFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_GradientFillProperties&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;blipFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_BlipFillProperties&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pattFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PatternFillProperties&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grpFill&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_GroupFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ln&quot;</span>                  <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- EG_EffectProperties --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectList&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectDag&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectContainer&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scene3d&quot;</span>             <span class="na">type=</span><span class="s">&quot;CT_Scene3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sp3d&quot;</span>                <span class="na">type=</span><span class="s">&quot;CT_Shape3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>              <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bwMode&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_BlackWhiteMode&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_CustomGeometry2D&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;avLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_GeomGuideList&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gdLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_GeomGuideList&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ahLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_AdjustHandleList&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cxnLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_ConnectionSiteList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;rect&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_GeomRect&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pathLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Path2DList&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Path2DList&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;path&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Path2D&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Path2D&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;close&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_Path2DClose&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;moveTo&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Path2DMoveTo&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lnTo&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_Path2DLineTo&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;arcTo&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_Path2DArcTo&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;quadBezTo&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Path2DQuadBezierTo&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cubicBezTo&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Path2DCubicBezierTo&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;w&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_PositiveCoordinate&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;h&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_PositiveCoordinate&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span>        <span class="na">type=</span><span class="s">&quot;ST_PathFillMode&quot;</span>       <span class="na">default=</span><span class="s">&quot;norm&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;stroke&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;extrusionOk&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Path2DClose&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Path2DLineTo&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pt&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_AdjPoint2D&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Path2DMoveTo&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pt&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_AdjPoint2D&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_AdjPoint2D&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;x&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_AdjCoordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;y&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_AdjCoordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_GeomGuideName&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_GeomGuideFormula&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GeomGuide&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_GeomGuideName&quot;</span>    <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;fmla&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_GeomGuideFormula&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GeomGuideList&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gd&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GeomGuide&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_AdjCoordinate&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:union</span> <span class="na">memberTypes=</span><span class="s">&quot;ST_Coordinate ST_GeomGuideName&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_AdjCoordinate&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:union</span> <span class="na">memberTypes=</span><span class="s">&quot;ST_Coordinate ST_GeomGuideName&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_PositiveCoordinate&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:long&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;27273042316900&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Coordinate&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:union</span> <span class="na">memberTypes=</span><span class="s">&quot;ST_CoordinateUnqualified s:ST_UniversalMeasure&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_CoordinateUnqualified&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:long&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;-27273042329600&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;27273042316900&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_UniversalMeasure&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:pattern</span> <span class="na">value=</span><span class="s">&quot;-?[0-9]+(\.[0-9]+)?(mm|cm|in|pt|pc|pi)&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Freeform Shapes</a><ul>
+<li><a class="reference internal" href="#vocabulary">Vocabulary</a></li>
+<li><a class="reference internal" href="#scope">Scope</a><ul>
+<li><a class="reference internal" href="#limits-of-scope">Limits of scope</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#use-case-1-specify-all-points-in-slide-coordinates">Use Case 1 - Specify all points in slide coordinates</a></li>
+<li><a class="reference internal" href="#use-case-2-specify-points-in-custom-coordinates">Use Case 2 - Specify points in custom coordinates</a></li>
+<li><a class="reference internal" href="#use-case-3-specify-origin-for-custom-coordinates">Use Case 3 - Specify origin for custom coordinates</a></li>
+<li><a class="reference internal" href="#use-case-4-specify-position-on-conversion">Use Case 4 - Specify position on conversion</a></li>
+<li><a class="reference internal" href="#usage-notes">Usage Notes</a></li>
+<li><a class="reference internal" href="#candidate-protocol">Candidate Protocol</a></li>
+<li><a class="reference internal" href="#experimentation">Experimentation</a></li>
+<li><a class="reference internal" href="#powerpoint-ui-behaviors">PowerPoint UI behaviors</a></li>
+<li><a class="reference internal" href="#ms-api">MS API</a><ul>
+<li><a class="reference internal" href="#ms-api-protocol">MS API protocol</a></li>
+<li><a class="reference internal" href="#ms-api-objects">MS API Objects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xml-semantics">XML Semantics</a><ul>
+<li><a class="reference internal" href="#fill-behavior">Fill behavior</a></li>
+<li><a class="reference internal" href="#coordinate-system">Coordinate system</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resources">Resources</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML Specimens</a><ul>
+<li><a class="reference internal" href="#hand-built-as-written-by-powerpoint">Hand-built, as-written by PowerPoint</a></li>
+<li><a class="reference internal" href="#effect-of-a-close-element">Effect of <cite>&lt;a:close&gt;</cite> element</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xml-schema-excerpt">XML Schema excerpt</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="shp-shadow.html"
+                          title="previous chapter">Shadow</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="shp-connector.html"
+                          title="next chapter">Line/Connector Shape</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="shp-connector.html" title="Line/Connector Shape"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="shp-shadow.html" title="Shadow"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Freeform Shapes</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

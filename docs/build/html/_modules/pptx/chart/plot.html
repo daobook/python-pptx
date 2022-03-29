@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.chart.plot &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.plot</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.chart.plot</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Plot-related objects. A plot is known as a chart group in the MS API. A chart</span>
+<span class="sd">can have more than one plot overlayed on each other, such as a line plot</span>
+<span class="sd">layered over a bar plot.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">.category</span> <span class="kn">import</span> <span class="n">Categories</span>
+<span class="kn">from</span> <span class="nn">.datalabel</span> <span class="kn">import</span> <span class="n">DataLabels</span>
+<span class="kn">from</span> <span class="nn">..enum.chart</span> <span class="kn">import</span> <span class="n">XL_CHART_TYPE</span> <span class="k">as</span> <span class="n">XL</span>
+<span class="kn">from</span> <span class="nn">..oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+<span class="kn">from</span> <span class="nn">..oxml.simpletypes</span> <span class="kn">import</span> <span class="n">ST_BarDir</span><span class="p">,</span> <span class="n">ST_Grouping</span>
+<span class="kn">from</span> <span class="nn">.series</span> <span class="kn">import</span> <span class="n">SeriesCollection</span>
+<span class="kn">from</span> <span class="nn">..util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<div class="viewcode-block" id="_BasePlot"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.plot._BasePlot">[docs]</a><span class="k">class</span> <span class="nc">_BasePlot</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A distinct plot that appears in the plot area of a chart. A chart may</span>
+<span class="sd">    have more than one plot, in which case they appear as superimposed</span>
+<span class="sd">    layers, such as a line plot appearing on top of a bar chart.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xChart</span><span class="p">,</span> <span class="n">chart</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">xChart</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chart</span> <span class="o">=</span> <span class="n">chart</span>
+
+<div class="viewcode-block" id="_BasePlot.categories"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.plot._BasePlot.categories">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a |category.Categories| sequence object containing</span>
+<span class="sd">        a |category.Category| object for each of the category labels</span>
+<span class="sd">        associated with this plot. The |category.Category| class derives from</span>
+<span class="sd">        ``str``, so the returned value can be treated as a simple sequence of</span>
+<span class="sd">        strings for the common case where all you need is the labels in the</span>
+<span class="sd">        order they appear on the chart. |category.Categories| provides</span>
+<span class="sd">        additional properties for dealing with hierarchical categories when</span>
+<span class="sd">        required.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Categories</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">chart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |Chart| object containing this plot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |DataLabels| instance providing properties and methods on the</span>
+<span class="sd">        collection of data labels associated with this plot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dLbls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">dLbls</span>
+        <span class="k">if</span> <span class="n">dLbls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;plot has no data labels, set has_data_labels = True first&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">DataLabels</span><span class="p">(</span><span class="n">dLbls</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_data_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean, |True| if the series has data labels. Assigning</span>
+<span class="sd">        |True| causes data labels to be added to the plot. Assigning False</span>
+<span class="sd">        removes any existing data labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">dLbls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="nd">@has_data_labels</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">has_data_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add, remove, or leave alone the ``&lt;c:dLbls&gt;`` child element depending</span>
+<span class="sd">        on current state and assigned *value*. If *value* is |True| and no</span>
+<span class="sd">        ``&lt;c:dLbls&gt;`` element is present, a new default element is added with</span>
+<span class="sd">        default child elements and settings. When |False|, any existing dLbls</span>
+<span class="sd">        element is removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_dLbls</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">dLbls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dLbls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_add_dLbls</span><span class="p">()</span>
+                <span class="n">dLbls</span><span class="o">.</span><span class="n">showVal</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="_BasePlot.series"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.plot._BasePlot.series">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">series</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A sequence of |Series| objects representing the series in this plot,</span>
+<span class="sd">        in the order they appear in the plot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SeriesCollection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vary_by_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean value specifying whether to use a different color</span>
+<span class="sd">        for each of the points in this plot. Only effective when there is</span>
+<span class="sd">        a single series; PowerPoint automatically varies color by series when</span>
+<span class="sd">        more than one series is present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">varyColors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">varyColors</span>
+        <span class="k">if</span> <span class="n">varyColors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">varyColors</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@vary_by_categories</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">vary_by_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_varyColors</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">AreaPlot</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An area plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">Area3DPlot</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A 3-dimensional area plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="BarPlot"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.plot.BarPlot">[docs]</a><span class="k">class</span> <span class="nc">BarPlot</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A bar chart-style plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">gap_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Width of gap between bar(s) of each category, as an integer</span>
+<span class="sd">        percentage of the bar width. The default value for a new bar chart is</span>
+<span class="sd">        150, representing 150% or 1.5 times the width of a single bar.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gapWidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">gapWidth</span>
+        <span class="k">if</span> <span class="n">gapWidth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">150</span>
+        <span class="k">return</span> <span class="n">gapWidth</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@gap_width</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">gap_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">gapWidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_gapWidth</span><span class="p">()</span>
+        <span class="n">gapWidth</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write int value in range -100..100 specifying a percentage of</span>
+<span class="sd">        the bar width by which to overlap adjacent bars in a multi-series bar</span>
+<span class="sd">        chart. Default is 0. A setting of -100 creates a gap of a full bar</span>
+<span class="sd">        width and a setting of 100 causes all the bars in a category to be</span>
+<span class="sd">        superimposed. A stacked bar plot has overlap of 100 by default.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">overlap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">overlap</span>
+        <span class="k">if</span> <span class="n">overlap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">overlap</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@overlap</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the value of the ``&lt;c:overlap&gt;`` child element to *int_value*,</span>
+<span class="sd">        or remove the overlap element if *int_value* is 0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_overlap</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_overlap</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="BubblePlot"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.plot.BubblePlot">[docs]</a><span class="k">class</span> <span class="nc">BubblePlot</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A bubble chart plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bubble_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An integer between 0 and 300 inclusive indicating the percentage of</span>
+<span class="sd">        the default size at which bubbles should be displayed. Assigning</span>
+<span class="sd">        |None| produces the same behavior as assigning `100`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bubbleScale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">bubbleScale</span>
+        <span class="k">if</span> <span class="n">bubbleScale</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">100</span>
+        <span class="k">return</span> <span class="n">bubbleScale</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@bubble_scale</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">bubble_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">bubbleChart</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span>
+        <span class="n">bubbleChart</span><span class="o">.</span><span class="n">_remove_bubbleScale</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">bubbleScale</span> <span class="o">=</span> <span class="n">bubbleChart</span><span class="o">.</span><span class="n">_add_bubbleScale</span><span class="p">()</span>
+        <span class="n">bubbleScale</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<span class="k">class</span> <span class="nc">DoughnutPlot</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An doughnut plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">LinePlot</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A line chart-style plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">PiePlot</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A pie chart-style plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">RadarPlot</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A radar-style plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">XyPlot</span><span class="p">(</span><span class="n">_BasePlot</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An XY (scatter) plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">PlotFactory</span><span class="p">(</span><span class="n">xChart</span><span class="p">,</span> <span class="n">chart</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an instance of the appropriate subclass of _BasePlot based on the</span>
+<span class="sd">    tagname of *xChart*.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">PlotCls</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:areaChart&quot;</span><span class="p">):</span> <span class="n">AreaPlot</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:area3DChart&quot;</span><span class="p">):</span> <span class="n">Area3DPlot</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:barChart&quot;</span><span class="p">):</span> <span class="n">BarPlot</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:bubbleChart&quot;</span><span class="p">):</span> <span class="n">BubblePlot</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:doughnutChart&quot;</span><span class="p">):</span> <span class="n">DoughnutPlot</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:lineChart&quot;</span><span class="p">):</span> <span class="n">LinePlot</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:pieChart&quot;</span><span class="p">):</span> <span class="n">PiePlot</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:radarChart&quot;</span><span class="p">):</span> <span class="n">RadarPlot</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:scatterChart&quot;</span><span class="p">):</span> <span class="n">XyPlot</span><span class="p">,</span>
+        <span class="p">}[</span><span class="n">xChart</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;unsupported plot type </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">xChart</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">PlotCls</span><span class="p">(</span><span class="n">xChart</span><span class="p">,</span> <span class="n">chart</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">PlotTypeInspector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;One-shot&quot; service object that knows how to identify the type of a plot</span>
+<span class="sd">    as a member of the XL_CHART_TYPE enumeration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the member of :ref:`XlChartType` that corresponds to the chart</span>
+<span class="sd">        type of *plot*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">chart_type_method</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;AreaPlot&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_differentiate_area_chart_type</span><span class="p">,</span>
+                <span class="s2">&quot;Area3DPlot&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_differentiate_area_3d_chart_type</span><span class="p">,</span>
+                <span class="s2">&quot;BarPlot&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_differentiate_bar_chart_type</span><span class="p">,</span>
+                <span class="s2">&quot;BubblePlot&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_differentiate_bubble_chart_type</span><span class="p">,</span>
+                <span class="s2">&quot;DoughnutPlot&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_differentiate_doughnut_chart_type</span><span class="p">,</span>
+                <span class="s2">&quot;LinePlot&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_differentiate_line_chart_type</span><span class="p">,</span>
+                <span class="s2">&quot;PiePlot&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_differentiate_pie_chart_type</span><span class="p">,</span>
+                <span class="s2">&quot;RadarPlot&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_differentiate_radar_chart_type</span><span class="p">,</span>
+                <span class="s2">&quot;XyPlot&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_differentiate_xy_chart_type</span><span class="p">,</span>
+            <span class="p">}[</span><span class="n">plot</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s2">&quot;chart_type() not implemented for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">plot</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">chart_type_method</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_differentiate_area_3d_chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STANDARD</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">THREE_D_AREA</span><span class="p">,</span>
+            <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">THREE_D_AREA_STACKED</span><span class="p">,</span>
+            <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">PERCENT_STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">THREE_D_AREA_STACKED_100</span><span class="p">,</span>
+        <span class="p">}[</span><span class="n">plot</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">grouping_val</span><span class="p">]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_differentiate_area_chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STANDARD</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">AREA</span><span class="p">,</span>
+            <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">AREA_STACKED</span><span class="p">,</span>
+            <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">PERCENT_STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">AREA_STACKED_100</span><span class="p">,</span>
+        <span class="p">}[</span><span class="n">plot</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">grouping_val</span><span class="p">]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_differentiate_bar_chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="n">barChart</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">_element</span>
+        <span class="k">if</span> <span class="n">barChart</span><span class="o">.</span><span class="n">barDir</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">ST_BarDir</span><span class="o">.</span><span class="n">BAR</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">CLUSTERED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">BAR_CLUSTERED</span><span class="p">,</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">BAR_STACKED</span><span class="p">,</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">PERCENT_STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">BAR_STACKED_100</span><span class="p">,</span>
+            <span class="p">}[</span><span class="n">barChart</span><span class="o">.</span><span class="n">grouping_val</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">barChart</span><span class="o">.</span><span class="n">barDir</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">ST_BarDir</span><span class="o">.</span><span class="n">COL</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">CLUSTERED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">COLUMN_CLUSTERED</span><span class="p">,</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">COLUMN_STACKED</span><span class="p">,</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">PERCENT_STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">COLUMN_STACKED_100</span><span class="p">,</span>
+            <span class="p">}[</span><span class="n">barChart</span><span class="o">.</span><span class="n">grouping_val</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid barChart.barDir value &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">barChart</span><span class="o">.</span><span class="n">barDir</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_differentiate_bubble_chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">first_bubble3D</span><span class="p">(</span><span class="n">bubbleChart</span><span class="p">):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">bubbleChart</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;c:ser/c:bubble3D&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">results</span> <span class="k">else</span> <span class="kc">None</span>
+
+        <span class="n">bubbleChart</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">_element</span>
+        <span class="n">bubble3D</span> <span class="o">=</span> <span class="n">first_bubble3D</span><span class="p">(</span><span class="n">bubbleChart</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">bubble3D</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">BUBBLE</span>
+        <span class="k">if</span> <span class="n">bubble3D</span><span class="o">.</span><span class="n">val</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">BUBBLE_THREE_D_EFFECT</span>
+        <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">BUBBLE</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_differentiate_doughnut_chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="n">doughnutChart</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">_element</span>
+        <span class="n">explosion</span> <span class="o">=</span> <span class="n">doughnutChart</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;./c:ser/c:explosion&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">DOUGHNUT_EXPLODED</span> <span class="k">if</span> <span class="n">explosion</span> <span class="k">else</span> <span class="n">XL</span><span class="o">.</span><span class="n">DOUGHNUT</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_differentiate_line_chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="n">lineChart</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">_element</span>
+
+        <span class="k">def</span> <span class="nf">has_line_markers</span><span class="p">():</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="n">lineChart</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;c:ser/c:marker/c:symbol[@val=&quot;none&quot;]&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">matches</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">has_line_markers</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STANDARD</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">LINE_MARKERS</span><span class="p">,</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">LINE_MARKERS_STACKED</span><span class="p">,</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">PERCENT_STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">LINE_MARKERS_STACKED_100</span><span class="p">,</span>
+            <span class="p">}[</span><span class="n">plot</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">grouping_val</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STANDARD</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">LINE</span><span class="p">,</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">LINE_STACKED</span><span class="p">,</span>
+                <span class="n">ST_Grouping</span><span class="o">.</span><span class="n">PERCENT_STACKED</span><span class="p">:</span> <span class="n">XL</span><span class="o">.</span><span class="n">LINE_STACKED_100</span><span class="p">,</span>
+            <span class="p">}[</span><span class="n">plot</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">grouping_val</span><span class="p">]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_differentiate_pie_chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="n">pieChart</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">_element</span>
+        <span class="n">explosion</span> <span class="o">=</span> <span class="n">pieChart</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;./c:ser/c:explosion&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">PIE_EXPLODED</span> <span class="k">if</span> <span class="n">explosion</span> <span class="k">else</span> <span class="n">XL</span><span class="o">.</span><span class="n">PIE</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_differentiate_radar_chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="n">radarChart</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">_element</span>
+        <span class="n">radar_style</span> <span class="o">=</span> <span class="n">radarChart</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;c:radarStyle&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">noMarkers</span><span class="p">():</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="n">radarChart</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;c:ser/c:marker/c:symbol&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">matches</span> <span class="ow">and</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">radar_style</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">RADAR</span>
+        <span class="k">if</span> <span class="n">radar_style</span> <span class="o">==</span> <span class="s2">&quot;filled&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">RADAR_FILLED</span>
+        <span class="k">if</span> <span class="n">noMarkers</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">RADAR</span>
+        <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">RADAR_MARKERS</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_differentiate_xy_chart_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plot</span><span class="p">):</span>
+        <span class="n">scatterChart</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">_element</span>
+
+        <span class="k">def</span> <span class="nf">noLine</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">scatterChart</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;c:ser/c:spPr/a:ln/a:noFill&quot;</span><span class="p">))</span>
+
+        <span class="k">def</span> <span class="nf">noMarkers</span><span class="p">():</span>
+            <span class="n">symbols</span> <span class="o">=</span> <span class="n">scatterChart</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;c:ser/c:marker/c:symbol&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">symbols</span> <span class="ow">and</span> <span class="n">symbols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">scatter_style</span> <span class="o">=</span> <span class="n">scatterChart</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;c:scatterStyle&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">scatter_style</span> <span class="o">==</span> <span class="s2">&quot;lineMarker&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">noLine</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">XY_SCATTER</span>
+            <span class="k">if</span> <span class="n">noMarkers</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">XY_SCATTER_LINES_NO_MARKERS</span>
+            <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">XY_SCATTER_LINES</span>
+
+        <span class="k">if</span> <span class="n">scatter_style</span> <span class="o">==</span> <span class="s2">&quot;smoothMarker&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">noMarkers</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">XY_SCATTER_SMOOTH_NO_MARKERS</span>
+            <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">XY_SCATTER_SMOOTH</span>
+
+        <span class="k">return</span> <span class="n">XL</span><span class="o">.</span><span class="n">XY_SCATTER</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.plot</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

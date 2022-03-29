@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>util Module &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Enumerations" href="enum/index.html" />
+    <link rel="prev" title="Exceptions" href="exc.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="enum/index.html" title="Enumerations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="exc.html" title="Exceptions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">util</span></code> Module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-pptx.util">
+<span id="util-module"></span><span id="util"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">util</span></code> Module<a class="headerlink" href="#module-pptx.util" title="Permalink to this headline">¶</a></h1>
+<p>Utility functions and classes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.util.Length">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.util.</span></span><span class="sig-name descname"><span class="pre">Length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/util.html#Length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.util.Length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+<p>Base class for length classes Inches, Emu, Cm, Mm, Pt, and Px. Provides
+properties for converting length values to convenient units.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.util.Length.inches">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inches</span></span><a class="headerlink" href="#pptx.util.Length.inches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Floating point length in inches</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.util.Length.centipoints">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">centipoints</span></span><a class="headerlink" href="#pptx.util.Length.centipoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integer length in hundredths of a point (1/7200 inch). Used
+internally because PowerPoint stores font size in centipoints.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.util.Length.cm">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cm</span></span><a class="headerlink" href="#pptx.util.Length.cm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Floating point length in centimeters</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.util.Length.emu">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">emu</span></span><a class="headerlink" href="#pptx.util.Length.emu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integer length in English Metric Units</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.util.Length.mm">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mm</span></span><a class="headerlink" href="#pptx.util.Length.mm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Floating point length in millimeters</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.util.Length.pt">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pt</span></span><a class="headerlink" href="#pptx.util.Length.pt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Floating point length in points</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.util.Inches">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.util.</span></span><span class="sig-name descname"><span class="pre">Inches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inches</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/util.html#Inches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.util.Inches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">pptx.util.Length</span></code></a></p>
+<p>Convenience constructor for length in inches</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.util.Centipoints">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.util.</span></span><span class="sig-name descname"><span class="pre">Centipoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centipoints</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/util.html#Centipoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.util.Centipoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">pptx.util.Length</span></code></a></p>
+<p>Convenience constructor for length in hundredths of a point</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.util.Cm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.util.</span></span><span class="sig-name descname"><span class="pre">Cm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/util.html#Cm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.util.Cm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">pptx.util.Length</span></code></a></p>
+<p>Convenience constructor for length in centimeters</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.util.Emu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.util.</span></span><span class="sig-name descname"><span class="pre">Emu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/util.html#Emu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.util.Emu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">pptx.util.Length</span></code></a></p>
+<p>Convenience constructor for length in english metric units</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.util.Mm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.util.</span></span><span class="sig-name descname"><span class="pre">Mm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/util.html#Mm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.util.Mm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">pptx.util.Length</span></code></a></p>
+<p>Convenience constructor for length in millimeters</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.util.Pt">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.util.</span></span><span class="sig-name descname"><span class="pre">Pt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/util.html#Pt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.util.Pt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">pptx.util.Length</span></code></a></p>
+<p>Convenience value class for specifying a length in points</p>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="exc.html"
+                          title="previous chapter">Exceptions</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="enum/index.html"
+                          title="next chapter">Enumerations</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="enum/index.html" title="Enumerations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="exc.html" title="Exceptions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="xref py py-mod docutils literal notranslate"><span class="pre">util</span></code> Module</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

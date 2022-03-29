@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.slide &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.slide</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.slide</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Slide-related objects, including masters, layouts, and notes.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pptx.dml.fill</span> <span class="kn">import</span> <span class="n">FillFormat</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">PP_PLACEHOLDER</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.shapetree</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LayoutPlaceholders</span><span class="p">,</span>
+    <span class="n">LayoutShapes</span><span class="p">,</span>
+    <span class="n">MasterPlaceholders</span><span class="p">,</span>
+    <span class="n">MasterShapes</span><span class="p">,</span>
+    <span class="n">NotesSlidePlaceholders</span><span class="p">,</span>
+    <span class="n">NotesSlideShapes</span><span class="p">,</span>
+    <span class="n">SlidePlaceholders</span><span class="p">,</span>
+    <span class="n">SlideShapes</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pptx.shared</span> <span class="kn">import</span> <span class="n">ElementProxy</span><span class="p">,</span> <span class="n">ParentedElementProxy</span><span class="p">,</span> <span class="n">PartElementProxy</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseSlide</span><span class="p">(</span><span class="n">PartElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for slide objects, including masters, layouts and notes.&quot;&quot;&quot;</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">background</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|_Background| object providing slide background properties.</span>
+
+<span class="sd">        This property returns a |_Background| object whether or not the</span>
+<span class="sd">        slide, master, or layout has an explicitly defined background.</span>
+
+<span class="sd">        The same |_Background| object is returned on every call for the same</span>
+<span class="sd">        slide object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_Background</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">cSld</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String representing the internal name of this slide. Returns an empty</span>
+<span class="sd">        string (`&#39;&#39;`) if no name is assigned. Assigning an empty string or</span>
+<span class="sd">        |None| to this property causes any name to be removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">cSld</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">cSld</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">new_value</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseMaster</span><span class="p">(</span><span class="n">_BaseSlide</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for master objects such as |SlideMaster| and |NotesMaster|.</span>
+<span class="sd">    Provides access to placeholders and regular shapes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">placeholders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instance of |MasterPlaceholders| containing sequence of placeholder</span>
+<span class="sd">        shapes in this master, sorted in *idx* order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MasterPlaceholders</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">spTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">shapes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instance of |MasterShapes| containing sequence of shape objects</span>
+<span class="sd">        appearing on this slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MasterShapes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">spTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">NotesMaster</span><span class="p">(</span><span class="n">_BaseMaster</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Proxy for the notes master XML document. Provides access to shapes, the</span>
+<span class="sd">    most commonly used of which are placeholders.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="NotesSlide"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.NotesSlide">[docs]</a><span class="k">class</span> <span class="nc">NotesSlide</span><span class="p">(</span><span class="n">_BaseSlide</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Notes slide object.</span>
+
+<span class="sd">    Provides access to slide notes placeholder and other shapes on the notes handout</span>
+<span class="sd">    page.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">clone_master_placeholders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes_master</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Selectively add placeholder shape elements from *notes_master*.</span>
+
+<span class="sd">        Selected placeholder shape elements from *notes_master* are added to the shapes</span>
+<span class="sd">        collection of this notes slide. Z-order of placeholders is preserved. Certain</span>
+<span class="sd">        placeholders (header, date, footer) are not cloned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">iter_cloneable_placeholders</span><span class="p">(</span><span class="n">notes_master</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Generate a reference to each placeholder in *notes_master* that</span>
+<span class="sd">            should be cloned to a notes slide when the a new notes slide is</span>
+<span class="sd">            created.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">cloneable</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SLIDE_IMAGE</span><span class="p">,</span>
+                <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+                <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SLIDE_NUMBER</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">placeholder</span> <span class="ow">in</span> <span class="n">notes_master</span><span class="o">.</span><span class="n">placeholders</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">ph_type</span> <span class="ow">in</span> <span class="n">cloneable</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">placeholder</span>
+
+        <span class="n">shapes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span>
+        <span class="k">for</span> <span class="n">placeholder</span> <span class="ow">in</span> <span class="n">iter_cloneable_placeholders</span><span class="p">(</span><span class="n">notes_master</span><span class="p">):</span>
+            <span class="n">shapes</span><span class="o">.</span><span class="n">clone_placeholder</span><span class="p">(</span><span class="n">placeholder</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">notes_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the notes placeholder on this notes slide, the shape that</span>
+<span class="sd">        contains the actual notes text. Return |None| if no notes placeholder</span>
+<span class="sd">        is present; while this is probably uncommon, it can happen if the</span>
+<span class="sd">        notes master does not have a body placeholder, or if the notes</span>
+<span class="sd">        placeholder has been deleted from the notes slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">placeholder</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">placeholders</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">placeholder_format</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">placeholder</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">notes_text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the text frame of the notes placeholder on this notes slide,</span>
+<span class="sd">        or |None| if there is no notes placeholder. This is a shortcut to</span>
+<span class="sd">        accommodate the common case of simply adding &quot;notes&quot; text to the</span>
+<span class="sd">        notes &quot;page&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">notes_placeholder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">notes_placeholder</span>
+        <span class="k">if</span> <span class="n">notes_placeholder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">notes_placeholder</span><span class="o">.</span><span class="n">text_frame</span>
+
+<div class="viewcode-block" id="NotesSlide.placeholders"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.NotesSlide.placeholders">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">placeholders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An instance of |NotesSlidePlaceholders| containing the sequence of</span>
+<span class="sd">        placeholder shapes in this notes slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">NotesSlidePlaceholders</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">spTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NotesSlide.shapes"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.NotesSlide.shapes">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">shapes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An instance of |NotesSlideShapes| containing the sequence of shape</span>
+<span class="sd">        objects appearing on this notes slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">NotesSlideShapes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">spTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Slide"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.Slide">[docs]</a><span class="k">class</span> <span class="nc">Slide</span><span class="p">(</span><span class="n">_BaseSlide</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Slide object. Provides access to shapes and slide-level properties.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">background</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|_Background| object providing slide background properties.</span>
+
+<span class="sd">        This property returns a |_Background| object whether or not the slide</span>
+<span class="sd">        overrides the default background or inherits it. Determining which of</span>
+<span class="sd">        those conditions applies for this slide is accomplished using the</span>
+<span class="sd">        :attr:`follow_master_background` property.</span>
+
+<span class="sd">        The same |_Background| object is returned on every call for the same</span>
+<span class="sd">        slide object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Slide</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">background</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">follow_master_background</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|True| if this slide inherits the slide master background.</span>
+
+<span class="sd">        Assigning |False| causes background inheritance from the master to be</span>
+<span class="sd">        interrupted; if there is no custom background for this slide,</span>
+<span class="sd">        a default background is added. If a custom background already exists</span>
+<span class="sd">        for this slide, assigning |False| has no effect.</span>
+
+<span class="sd">        Assigning |True| causes any custom background for this slide to be</span>
+<span class="sd">        deleted and inheritance from the master restored.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">bg</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_notes_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return True if this slide has a notes slide, False otherwise. A notes</span>
+<span class="sd">        slide is created by :attr:`.notes_slide` when one doesn&#39;t exist; use</span>
+<span class="sd">        this property to test for a notes slide without the possible side</span>
+<span class="sd">        effect of creating one.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">has_notes_slide</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">notes_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the |NotesSlide| instance for this slide. If the slide does</span>
+<span class="sd">        not have a notes slide, one is created. The same single instance is</span>
+<span class="sd">        returned on each call.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">notes_slide</span>
+
+<div class="viewcode-block" id="Slide.placeholders"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.Slide.placeholders">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">placeholders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instance of |SlidePlaceholders| containing sequence of placeholder</span>
+<span class="sd">        shapes in this slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SlidePlaceholders</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">spTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Slide.shapes"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.Slide.shapes">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">shapes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instance of |SlideShapes| containing sequence of shape objects</span>
+<span class="sd">        appearing on this slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SlideShapes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">spTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">slide_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The integer value that uniquely identifies this slide within this</span>
+<span class="sd">        presentation. The slide id does not change if the position of this</span>
+<span class="sd">        slide in the slide sequence is changed by adding, rearranging, or</span>
+<span class="sd">        deleting slides.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">slide_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">slide_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |SlideLayout| object this slide inherits appearance from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">slide_layout</span></div>
+
+
+<div class="viewcode-block" id="Slides"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.Slides">[docs]</a><span class="k">class</span> <span class="nc">Slides</span><span class="p">(</span><span class="n">ParentedElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sequence of slides belonging to an instance of |Presentation|, having</span>
+<span class="sd">    list semantics for access to individual slides. Supports indexed access,</span>
+<span class="sd">    len(), and iteration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sldIdLst</span><span class="p">,</span> <span class="n">prs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Slides</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sldIdLst</span><span class="p">,</span> <span class="n">prs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sldIdLst</span> <span class="o">=</span> <span class="n">sldIdLst</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provide indexed access, (e.g. &#39;slides[0]&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sldId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sldIdLst</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;slide index out of range&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">related_slide</span><span class="p">(</span><span class="n">sldId</span><span class="o">.</span><span class="n">rId</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Support iteration (e.g. &#39;for slide in slides:&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">sldId</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sldIdLst</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">related_slide</span><span class="p">(</span><span class="n">sldId</span><span class="o">.</span><span class="n">rId</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Support len() built-in function (e.g. &#39;len(slides) == 4&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sldIdLst</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Slides.add_slide"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.Slides.add_slide">[docs]</a>    <span class="k">def</span> <span class="nf">add_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide_layout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a newly added slide that inherits layout from *slide_layout*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rId</span><span class="p">,</span> <span class="n">slide</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">slide_layout</span><span class="p">)</span>
+        <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">clone_layout_placeholders</span><span class="p">(</span><span class="n">slide_layout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sldIdLst</span><span class="o">.</span><span class="n">add_sldId</span><span class="p">(</span><span class="n">rId</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">slide</span></div>
+
+<div class="viewcode-block" id="Slides.get"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.Slides.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide_id</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the slide identified by integer *slide_id* in this</span>
+<span class="sd">        presentation, or *default* if not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">slide</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">get_slide</span><span class="p">(</span><span class="n">slide_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">slide</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">default</span>
+        <span class="k">return</span> <span class="n">slide</span></div>
+
+<div class="viewcode-block" id="Slides.index"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.Slides.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Map *slide* to an integer representing its zero-based position in</span>
+<span class="sd">        this slide collection. Raises |ValueError| on *slide* not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">this_slide</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">this_slide</span> <span class="o">==</span> <span class="n">slide</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">idx</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not in slide collection&quot;</span> <span class="o">%</span> <span class="n">slide</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SlideLayout"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideLayout">[docs]</a><span class="k">class</span> <span class="nc">SlideLayout</span><span class="p">(</span><span class="n">_BaseSlide</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Slide layout object. Provides access to placeholders, regular shapes, and</span>
+<span class="sd">    slide layout-level properties.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">iter_cloneable_placeholders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a reference to each layout placeholder on this slide layout</span>
+<span class="sd">        that should be cloned to a slide when the layout is applied to that</span>
+<span class="sd">        slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">latent_ph_types</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">DATE</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">FOOTER</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SLIDE_NUMBER</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">ph</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">placeholders</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ph</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">ph_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">latent_ph_types</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">ph</span>
+
+<div class="viewcode-block" id="SlideLayout.placeholders"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideLayout.placeholders">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">placeholders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instance of |LayoutPlaceholders| containing sequence of placeholder</span>
+<span class="sd">        shapes in this slide layout, sorted in *idx* order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LayoutPlaceholders</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">spTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SlideLayout.shapes"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideLayout.shapes">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">shapes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instance of |LayoutShapes| containing the sequence of shapes</span>
+<span class="sd">        appearing on this slide layout.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LayoutShapes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">spTree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">slide_master</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Slide master from which this slide layout inherits properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">slide_master</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">used_by_slides</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tuple of slide objects based on this slide layout.&quot;&quot;&quot;</span>
+        <span class="c1"># ---getting Slides collection requires going around the horn a bit---</span>
+        <span class="n">slides</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">presentation_part</span><span class="o">.</span><span class="n">presentation</span><span class="o">.</span><span class="n">slides</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">slides</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">slide_layout</span> <span class="o">==</span> <span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SlideLayouts"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideLayouts">[docs]</a><span class="k">class</span> <span class="nc">SlideLayouts</span><span class="p">(</span><span class="n">ParentedElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sequence of slide layouts belonging to a slide-master.</span>
+
+<span class="sd">    Supports indexed access, len(), iteration, index() and remove().</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sldLayoutIdLst</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SlideLayouts</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sldLayoutIdLst</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sldLayoutIdLst</span> <span class="o">=</span> <span class="n">sldLayoutIdLst</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provide indexed access, (e.g. ``slide_layouts[2]``).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sldLayoutId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sldLayoutIdLst</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;slide layout index out of range&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">related_slide_layout</span><span class="p">(</span><span class="n">sldLayoutId</span><span class="o">.</span><span class="n">rId</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a reference to each of the |SlideLayout| instances in the</span>
+<span class="sd">        collection, in sequence.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">sldLayoutId</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sldLayoutIdLst</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">related_slide_layout</span><span class="p">(</span><span class="n">sldLayoutId</span><span class="o">.</span><span class="n">rId</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Support len() built-in function (e.g. &#39;len(slides) == 4&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sldLayoutIdLst</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SlideLayouts.get_by_name"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideLayouts.get_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return SlideLayout object having *name* or *default* if not found.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">slide_layout</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">slide_layout</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">slide_layout</span>
+        <span class="k">return</span> <span class="n">default</span></div>
+
+<div class="viewcode-block" id="SlideLayouts.index"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideLayouts.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide_layout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return zero-based index of *slide_layout* in this collection.</span>
+
+<span class="sd">        Raises ValueError if *slide_layout* is not present in this collection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">this_layout</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">slide_layout</span> <span class="o">==</span> <span class="n">this_layout</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">idx</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;layout not in this SlideLayouts collection&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SlideLayouts.remove"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideLayouts.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide_layout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove *slide_layout* from the collection.</span>
+
+<span class="sd">        Raises ValueError when *slide_layout* is in use; a slide layout which is the</span>
+<span class="sd">        basis for one or more slides cannot be removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---raise if layout is in use---</span>
+        <span class="k">if</span> <span class="n">slide_layout</span><span class="o">.</span><span class="n">used_by_slides</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot remove slide-layout in use by one or more slides&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ---target layout is identified by its index in this collection---</span>
+        <span class="n">target_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">slide_layout</span><span class="p">)</span>
+
+        <span class="c1"># --remove layout from p:sldLayoutIds of its master</span>
+        <span class="c1"># --this stops layout from showing up, but doesn&#39;t remove it from package</span>
+        <span class="n">target_sldLayoutId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sldLayoutIdLst</span><span class="o">.</span><span class="n">sldLayoutId_lst</span><span class="p">[</span><span class="n">target_idx</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sldLayoutIdLst</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">target_sldLayoutId</span><span class="p">)</span>
+
+        <span class="c1"># --drop relationship from master to layout</span>
+        <span class="c1"># --this removes layout from package, along with everything (only) it refers to,</span>
+        <span class="c1"># --including images (not used elsewhere) and hyperlinks</span>
+        <span class="n">slide_layout</span><span class="o">.</span><span class="n">slide_master</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">drop_rel</span><span class="p">(</span><span class="n">target_sldLayoutId</span><span class="o">.</span><span class="n">rId</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SlideMaster"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideMaster">[docs]</a><span class="k">class</span> <span class="nc">SlideMaster</span><span class="p">(</span><span class="n">_BaseMaster</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Slide master object. Provides access to slide layouts. Access to</span>
+<span class="sd">    placeholders, regular shapes, and slide master-level properties is</span>
+<span class="sd">    inherited from |_BaseMaster|.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SlideMaster.slide_layouts"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideMaster.slide_layouts">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">slide_layouts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|SlideLayouts| object providing access to this slide-master&#39;s layouts.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SlideLayouts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_sldLayoutIdLst</span><span class="p">(),</span> <span class="bp">self</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SlideMasters"><a class="viewcode-back" href="../../api/slides.html#pptx.slide.SlideMasters">[docs]</a><span class="k">class</span> <span class="nc">SlideMasters</span><span class="p">(</span><span class="n">ParentedElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sequence of |SlideMaster| objects belonging to a presentation.</span>
+
+<span class="sd">    Has list access semantics, supporting indexed access, len(), and iteration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sldMasterIdLst</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SlideMasters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sldMasterIdLst</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sldMasterIdLst</span> <span class="o">=</span> <span class="n">sldMasterIdLst</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provide indexed access, (e.g. ``slide_masters[2]``).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sldMasterId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sldMasterIdLst</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;slide master index out of range&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">related_slide_master</span><span class="p">(</span><span class="n">sldMasterId</span><span class="o">.</span><span class="n">rId</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a reference to each of the |SlideMaster| instances in the</span>
+<span class="sd">        collection, in sequence.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">smi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sldMasterIdLst</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">related_slide_master</span><span class="p">(</span><span class="n">smi</span><span class="o">.</span><span class="n">rId</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Support len() built-in function (e.g. &#39;len(slide_masters) == 4&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sldMasterIdLst</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">_Background</span><span class="p">(</span><span class="n">ElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provides access to slide background properties.</span>
+
+<span class="sd">    Note that the presence of this object does not by itself imply an</span>
+<span class="sd">    explicitly-defined background; a slide with an inherited background still</span>
+<span class="sd">    has a |_Background| object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cSld</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_Background</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">cSld</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cSld</span> <span class="o">=</span> <span class="n">cSld</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">fill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|FillFormat| instance for this background.</span>
+
+<span class="sd">        This |FillFormat| object is used to interrogate or specify the fill</span>
+<span class="sd">        of the slide background.</span>
+
+<span class="sd">        Note that accessing this property is potentially destructive. A slide</span>
+<span class="sd">        background can also be specified by a background style reference and</span>
+<span class="sd">        accessing this property will remove that reference, if present, and</span>
+<span class="sd">        replace it with NoFill. This is frequently the case for a slide</span>
+<span class="sd">        master background.</span>
+
+<span class="sd">        This is also the case when there is no explicitly defined background</span>
+<span class="sd">        (background is inherited); merely accessing this property will cause</span>
+<span class="sd">        the background to be set to NoFill and the inheritance link will be</span>
+<span class="sd">        interrupted. This is frequently the case for a slide background.</span>
+
+<span class="sd">        Of course, if you are accessing this property in order to set the</span>
+<span class="sd">        fill, then these changes are of no consequence, but the existing</span>
+<span class="sd">        background cannot be reliably interrogated using this property unless</span>
+<span class="sd">        you have already established it is an explicit fill.</span>
+
+<span class="sd">        If the background is already a fill, then accessing this property</span>
+<span class="sd">        makes no changes to the current background.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bgPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cSld</span><span class="o">.</span><span class="n">get_or_add_bgPr</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">FillFormat</span><span class="o">.</span><span class="n">from_fill_parent</span><span class="p">(</span><span class="n">bgPr</span><span class="p">)</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.slide</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

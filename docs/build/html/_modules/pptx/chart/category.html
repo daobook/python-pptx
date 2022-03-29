@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.chart.category &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.category</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.chart.category</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Category-related objects.</span>
+
+<span class="sd">The |category.Categories| object is returned by ``Plot.categories`` and contains zero or</span>
+<span class="sd">more |category.Category| objects, each representing one of the category labels</span>
+<span class="sd">associated with the plot. Categories can be hierarchical, so there are members allowing</span>
+<span class="sd">discovery of the depth of that hierarchy and providing means to navigate it.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">pptx.compat</span> <span class="kn">import</span> <span class="n">Sequence</span>
+
+
+<div class="viewcode-block" id="Categories"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.category.Categories">[docs]</a><span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A sequence of |category.Category| objects, each representing a category</span>
+<span class="sd">    label on the chart. Provides properties for dealing with hierarchical</span>
+<span class="sd">    categories.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xChart</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Categories</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xChart</span> <span class="o">=</span> <span class="n">xChart</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">pt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xChart</span><span class="o">.</span><span class="n">cat_pts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Category</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cat_pts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xChart</span><span class="o">.</span><span class="n">cat_pts</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">pt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cat_pts</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">Category</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># a category can be &quot;null&quot;, meaning the Excel cell for it is empty.</span>
+        <span class="c1"># In this case, there is no c:pt element for it. The &quot;empty&quot; category</span>
+        <span class="c1"># will, however, be accounted for in c:cat//c:ptCount/@val, which</span>
+        <span class="c1"># reflects the true length of the categories collection.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xChart</span><span class="o">.</span><span class="n">cat_pt_count</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an integer representing the number of hierarchical levels in</span>
+<span class="sd">        this category collection. Returns 1 for non-hierarchical categories</span>
+<span class="sd">        and 0 if no categories are present (generally meaning no series are</span>
+<span class="sd">        present).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xChart</span><span class="o">.</span><span class="n">cat</span>
+        <span class="k">if</span> <span class="n">cat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">cat</span><span class="o">.</span><span class="n">multiLvlStrRef</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">lvls</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flattened_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a sequence of tuples, each containing the flattened hierarchy</span>
+<span class="sd">        of category labels for a leaf category. Each tuple is in parent -&gt;</span>
+<span class="sd">        child order, e.g. ``(&#39;US&#39;, &#39;CA&#39;, &#39;San Francisco&#39;)``, with the leaf</span>
+<span class="sd">        category appearing last. If this categories collection is</span>
+<span class="sd">        non-hierarchical, each tuple will contain only a leaf category label.</span>
+<span class="sd">        If the plot has no series (and therefore no categories), an empty</span>
+<span class="sd">        tuple is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xChart</span><span class="o">.</span><span class="n">cat</span>
+        <span class="k">if</span> <span class="n">cat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">cat</span><span class="o">.</span><span class="n">multiLvlStrRef</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">([(</span><span class="n">category</span><span class="o">.</span><span class="n">label</span><span class="p">,)</span> <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="nb">tuple</span><span class="p">([</span><span class="n">category</span><span class="o">.</span><span class="n">label</span> <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">flat_cat</span><span class="p">)])</span>
+                <span class="k">for</span> <span class="n">flat_cat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter_flattened_categories</span><span class="p">()</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">levels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a sequence of |CategoryLevel| objects representing the</span>
+<span class="sd">        hierarchy of this category collection. The sequence is empty when the</span>
+<span class="sd">        category collection is not hierarchical, that is, contains only</span>
+<span class="sd">        leaf-level categories. The levels are ordered from the leaf level to</span>
+<span class="sd">        the root level; so the first level will contain the same categories</span>
+<span class="sd">        as this category collection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xChart</span><span class="o">.</span><span class="n">cat</span>
+        <span class="k">if</span> <span class="n">cat</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">CategoryLevel</span><span class="p">(</span><span class="n">lvl</span><span class="p">)</span> <span class="k">for</span> <span class="n">lvl</span> <span class="ow">in</span> <span class="n">cat</span><span class="o">.</span><span class="n">lvls</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_iter_flattened_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a ``tuple`` object for each leaf category in this</span>
+<span class="sd">        collection, containing the leaf category followed by its &quot;parent&quot;</span>
+<span class="sd">        categories, e.g. ``(&#39;San Francisco&#39;, &#39;CA&#39;, &#39;USA&#39;). Each tuple will be</span>
+<span class="sd">        the same length as the number of levels (excepting certain edge</span>
+<span class="sd">        cases which I believe always indicate a chart construction error).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">levels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">levels</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">levels</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">leaf_level</span><span class="p">,</span> <span class="n">remaining_levels</span> <span class="o">=</span> <span class="n">levels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">levels</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">leaf_level</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parentage</span><span class="p">((</span><span class="n">category</span><span class="p">,),</span> <span class="n">remaining_levels</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_parentage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">levels</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a tuple formed by recursively concatenating *categories* with</span>
+<span class="sd">        its next ancestor from *levels*. The idx value of the first category</span>
+<span class="sd">        in *categories* determines parentage in all levels. The returned</span>
+<span class="sd">        sequence is in child -&gt; parent order. A parent category is the</span>
+<span class="sd">        Category object in a next level having the maximum idx value not</span>
+<span class="sd">        exceeding that of the leaf category.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># exhausting levels is the expected recursion termination condition</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">levels</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span>
+
+        <span class="c1"># guard against edge case where next level is present but empty. That</span>
+        <span class="c1"># situation is not prohibited for some reason.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">levels</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span>
+
+        <span class="n">parent_level</span><span class="p">,</span> <span class="n">remaining_levels</span> <span class="o">=</span> <span class="n">levels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">levels</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">leaf_node</span> <span class="o">=</span> <span class="n">categories</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Make the first parent the default. A possible edge case is where no</span>
+        <span class="c1"># parent is defined for one or more leading values, e.g. idx &gt; 0 for</span>
+        <span class="c1"># the first parent.</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">parent_level</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">parent_level</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">category</span><span class="o">.</span><span class="n">idx</span> <span class="o">&gt;</span> <span class="n">leaf_node</span><span class="o">.</span><span class="n">idx</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">category</span>
+
+        <span class="n">extended_categories</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">parent</span><span class="p">,)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parentage</span><span class="p">(</span><span class="n">extended_categories</span><span class="p">,</span> <span class="n">remaining_levels</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Category"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.category.Category">[docs]</a><span class="k">class</span> <span class="nc">Category</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An extension of `str` that provides the category label as its string</span>
+<span class="sd">    value, and additional attributes representing other aspects of the</span>
+<span class="sd">    category.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pt</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">category_label</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">pt</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">pt</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">text</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">category_label</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pt</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *idx* is a required attribute of a c:pt element, but must be</span>
+<span class="sd">        specified when pt is None, as when a &quot;placeholder&quot; category is</span>
+<span class="sd">        created to represent a missing c:pt element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pt</span> <span class="o">=</span> <span class="n">pt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span> <span class="o">=</span> <span class="n">idx</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">idx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an integer representing the index reference of this category.</span>
+<span class="sd">        For a leaf node, the index identifies the category. For a parent (or</span>
+<span class="sd">        other ancestor) category, the index specifies the first leaf category</span>
+<span class="sd">        that ancestor encloses.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pt</span><span class="o">.</span><span class="n">idx</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the label of this category as a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CategoryLevel"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.category.CategoryLevel">[docs]</a><span class="k">class</span> <span class="nc">CategoryLevel</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A sequence of |category.Category| objects representing a single level in</span>
+<span class="sd">    a hierarchical category collection. This object is only used when the</span>
+<span class="sd">    categories are hierarchical, meaning they have more than one level and</span>
+<span class="sd">    higher level categories group those at lower levels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lvl</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lvl</span> <span class="o">=</span> <span class="n">lvl</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Category</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lvl</span><span class="o">.</span><span class="n">pt_lst</span><span class="p">[</span><span class="n">offset</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lvl</span><span class="o">.</span><span class="n">pt_lst</span><span class="p">)</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.category</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

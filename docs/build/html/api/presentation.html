@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Presentations &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Slides" href="slides.html" />
+    <link rel="prev" title="Software Updates" href="../community/updates.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="slides.html" title="Slides"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../community/updates.html" title="Software Updates"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Presentations</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="presentations">
+<h1>Presentations<a class="headerlink" href="#presentations" title="Permalink to this headline">¶</a></h1>
+<p>A presentation is opened using the <code class="xref py py-func docutils literal notranslate"><span class="pre">Presentation()</span></code> function, provided
+directly by the <code class="xref py py-mod docutils literal notranslate"><span class="pre">pptx</span></code> package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+</pre></div>
+</div>
+<p>This function returns a <a class="reference internal" href="#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> object which is the root of
+a graph containing the components that constitute a presentation, e.g.
+slides, shapes, etc. All existing presentation components are referenced by
+traversing the graph and new objects are added to the graph by calling
+a method on that object’s container. Consequently, <cite>python-pptx</cite> objects are generally
+not constructed directly.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># load a presentation</span>
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="n">path_to_pptx_file</span><span class="p">)</span>
+
+<span class="c1"># get reference to first shape in first slide</span>
+<span class="n">sp</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># add a picture shape to slide</span>
+<span class="n">pic</span> <span class="o">=</span> <span class="n">sld</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">add_picture</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="presentation-function">
+<h2><a class="reference internal" href="#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> function<a class="headerlink" href="#presentation-function" title="Permalink to this headline">¶</a></h2>
+<p>This function is the only reference that must be imported to work with
+presentation files. Typical use interacts with many other classes, but there
+is no need to construct them as they are accessed using a property or method
+of their containing object.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pptx.Presentation">
+<span class="sig-prename descclassname"><span class="pre">pptx.</span></span><span class="sig-name descname"><span class="pre">Presentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pptx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/api.html#Presentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.Presentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> object loaded from <em>pptx</em>, where <em>pptx</em> can be
+either a path to a <code class="docutils literal notranslate"><span class="pre">.pptx</span></code> file (a string) or a file-like object. If
+<em>pptx</em> is missing or <code class="docutils literal notranslate"><span class="pre">None</span></code>, the built-in default presentation
+“template” is loaded.</p>
+</dd></dl>
+
+</section>
+<section id="presentation-objects">
+<h2><a class="reference internal" href="#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> objects<a class="headerlink" href="#presentation-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.presentation.</span></span><span class="sig-name descname"><span class="pre">Presentation</span></span><a class="reference internal" href="../_modules/pptx/presentation.html#Presentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.presentation.Presentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>PresentationML (PML) presentation.</p>
+<p>Not intended to be constructed directly. Use <a class="reference internal" href="#pptx.Presentation" title="pptx.Presentation"><code class="xref py py-func docutils literal notranslate"><span class="pre">pptx.Presentation()</span></code></a> to open or
+create a presentation.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation.core_properties">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">core_properties</span></span><a class="headerlink" href="#pptx.presentation.Presentation.core_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instance of <a class="reference internal" href="#pptx.opc.coreprops.CoreProperties" title="pptx.opc.coreprops.CoreProperties"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreProperties</span></code></a> holding the read/write Dublin Core
+document properties for this presentation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation.notes_master">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notes_master</span></span><a class="headerlink" href="#pptx.presentation.Presentation.notes_master" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">NotesMaster</span></code> for this presentation. If the presentation
+does not have a notes master, one is created from a default template
+and returned. The same single instance is returned on each call.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/presentation.html#Presentation.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.presentation.Presentation.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save this presentation to <em>file</em>, where <em>file</em> can be either a path
+to a file (a string) or a file-like object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation.slide_height">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">slide_height</span></span><a class="headerlink" href="#pptx.presentation.Presentation.slide_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Height of slides in this presentation, in English Metric Units (EMU).
+Returns <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no slide width is defined. Read/write.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation.slide_layouts">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">slide_layouts</span></span><a class="headerlink" href="#pptx.presentation.Presentation.slide_layouts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sequence of <a class="reference internal" href="slides.html#pptx.slide.SlideLayout" title="pptx.slide.SlideLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideLayout</span></code></a> instances belonging to the first
+<a class="reference internal" href="slides.html#pptx.slide.SlideMaster" title="pptx.slide.SlideMaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMaster</span></code></a> of this presentation. A presentation can have more than
+one slide master and each master will have its own set of layouts.
+This property is a convenience for the common case where the
+presentation has only a single slide master.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation.slide_master">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">slide_master</span></span><a class="headerlink" href="#pptx.presentation.Presentation.slide_master" title="Permalink to this definition">¶</a></dt>
+<dd><p>First <a class="reference internal" href="slides.html#pptx.slide.SlideMaster" title="pptx.slide.SlideMaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMaster</span></code></a> object belonging to this presentation. Typically,
+presentations have only a single slide master. This property provides
+simpler access in that common case.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation.slide_masters">
+<span class="sig-name descname"><span class="pre">slide_masters</span></span><a class="reference internal" href="../_modules/pptx/presentation.html#Presentation.slide_masters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.presentation.Presentation.slide_masters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sequence of <a class="reference internal" href="slides.html#pptx.slide.SlideMaster" title="pptx.slide.SlideMaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMaster</span></code></a> objects belonging to this presentation</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation.slide_width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">slide_width</span></span><a class="headerlink" href="#pptx.presentation.Presentation.slide_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width of slides in this presentation, in English Metric Units (EMU).
+Returns <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no slide width is defined. Read/write.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.presentation.Presentation.slides">
+<span class="sig-name descname"><span class="pre">slides</span></span><a class="reference internal" href="../_modules/pptx/presentation.html#Presentation.slides"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.presentation.Presentation.slides" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="slides.html#pptx.slide.Slides" title="pptx.slide.Slides"><code class="xref py py-class docutils literal notranslate"><span class="pre">Slides</span></code></a> object containing the slides in this presentation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="coreproperties-objects">
+<h2><a class="reference internal" href="#pptx.opc.coreprops.CoreProperties" title="pptx.opc.coreprops.CoreProperties"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreProperties</span></code></a> objects<a class="headerlink" href="#coreproperties-objects" title="Permalink to this headline">¶</a></h2>
+<p>Each <a class="reference internal" href="#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> object has a <a class="reference internal" href="#pptx.opc.coreprops.CoreProperties" title="pptx.opc.coreprops.CoreProperties"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreProperties</span></code></a> object accessed via its
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">core_properties</span></code> attribute that provides read/write access to the
+so-called <em>core properties</em> for the document. The core properties are author,
+category, comments, content_status, created, identifier, keywords, language,
+last_modified_by, last_printed, modified, revision, subject, title, and
+version.</p>
+<p>Each property is one of three types, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code>, or <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>. String
+properties are limited in length to 255 characters and return an empty string
+(‘’) if not set. Date properties are assigned and returned as <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code>
+objects without timezone, i.e. in UTC. Any timezone conversions are the
+responsibility of the client. Date properties return <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if not set.</p>
+<p><cite>python-pptx</cite> does not automatically set any of the document core properties other than
+to add a core properties part to a presentation that doesn’t have one (very
+uncommon). If <cite>python-pptx</cite> adds a core properties part, it contains default values for
+the title, last_modified_by, revision, and modified properties. Client code
+should change properties like revision and last_modified_by explicitly if that
+behavior is desired.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.opc.coreprops.</span></span><span class="sig-name descname"><span class="pre">CoreProperties</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.author">
+<span class="sig-name descname"><span class="pre">author</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.author" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – An entity primarily responsible for making the content of the
+resource.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.category">
+<span class="sig-name descname"><span class="pre">category</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.category" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – A categorization of the content of this package. Example
+values might include: Resume, Letter, Financial Forecast, Proposal,
+or Technical Presentation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.comments">
+<span class="sig-name descname"><span class="pre">comments</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.comments" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – An account of the content of the resource.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.content_status">
+<span class="sig-name descname"><span class="pre">content_status</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.content_status" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – completion status of the document, e.g. ‘draft’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.created">
+<span class="sig-name descname"><span class="pre">created</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.created" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>datetime</em> – time of intial creation of the document</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.identifier">
+<span class="sig-name descname"><span class="pre">identifier</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – An unambiguous reference to the resource within a given
+context, e.g. ISBN.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.keywords">
+<span class="sig-name descname"><span class="pre">keywords</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.keywords" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – descriptive words or short phrases likely to be used as
+search terms for this document</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.language">
+<span class="sig-name descname"><span class="pre">language</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.language" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – language the document is written in</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.last_modified_by">
+<span class="sig-name descname"><span class="pre">last_modified_by</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.last_modified_by" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – name or other identifier (such as email address) of person
+who last modified the document</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.last_printed">
+<span class="sig-name descname"><span class="pre">last_printed</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.last_printed" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>datetime</em> – time the document was last printed</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.modified">
+<span class="sig-name descname"><span class="pre">modified</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.modified" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>datetime</em> – time the document was last modified</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.revision">
+<span class="sig-name descname"><span class="pre">revision</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.revision" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – number of this revision, incremented by the PowerPoint® client
+once each time the document is saved. Note however that the revision
+number is not automatically incremented by <cite>python-pptx</cite>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.subject">
+<span class="sig-name descname"><span class="pre">subject</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.subject" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – The topic of the content of the resource.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.title">
+<span class="sig-name descname"><span class="pre">title</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.title" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – The name given to the resource.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.opc.coreprops.CoreProperties.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#pptx.opc.coreprops.CoreProperties.version" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – free-form version string</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Presentations</a><ul>
+<li><a class="reference internal" href="#presentation-function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code> function</a></li>
+<li><a class="reference internal" href="#presentation-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code> objects</a></li>
+<li><a class="reference internal" href="#coreproperties-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreProperties</span></code> objects</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../community/updates.html"
+                          title="previous chapter">Software Updates</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="slides.html"
+                          title="next chapter">Slides</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="slides.html" title="Slides"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../community/updates.html" title="Software Updates"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Presentations</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.shapes.freeform &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.freeform</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.shapes.freeform</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Objects related to construction of freeform shapes.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">pptx.compat</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<div class="viewcode-block" id="FreeformBuilder"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.freeform.FreeformBuilder">[docs]</a><span class="k">class</span> <span class="nc">FreeformBuilder</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Allows a freeform shape to be specified and created.</span>
+
+<span class="sd">    The initial pen position is provided on construction. From there, drawing</span>
+<span class="sd">    proceeds using successive calls to draw line segments. The freeform shape</span>
+<span class="sd">    may be closed by calling the :meth:`close` method.</span>
+
+<span class="sd">    A shape may have more than one contour, in which case overlapping areas</span>
+<span class="sd">    are &quot;subtracted&quot;. A contour is a sequence of line segments beginning with</span>
+<span class="sd">    a &quot;move-to&quot; operation. A move-to operation is automatically inserted in</span>
+<span class="sd">    each new freeform; additional move-to ops can be inserted with the</span>
+<span class="sd">    `.move_to()` method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">start_x</span><span class="p">,</span> <span class="n">start_y</span><span class="p">,</span> <span class="n">x_scale</span><span class="p">,</span> <span class="n">y_scale</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FreeformBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shapes</span> <span class="o">=</span> <span class="n">shapes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_x</span> <span class="o">=</span> <span class="n">start_x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_y</span> <span class="o">=</span> <span class="n">start_y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x_scale</span> <span class="o">=</span> <span class="n">x_scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y_scale</span> <span class="o">=</span> <span class="n">y_scale</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drawing_operations</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drawing_operations</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_drawing_operations</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">start_x</span><span class="p">,</span> <span class="n">start_y</span><span class="p">,</span> <span class="n">x_scale</span><span class="p">,</span> <span class="n">y_scale</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a new |FreeformBuilder| object.</span>
+
+<span class="sd">        The initial pen location is specified (in local coordinates) by</span>
+<span class="sd">        (*start_x*, *start_y*).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">shapes</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">start_x</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">start_y</span><span class="p">)),</span> <span class="n">x_scale</span><span class="p">,</span> <span class="n">y_scale</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FreeformBuilder.add_line_segments"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.freeform.FreeformBuilder.add_line_segments">[docs]</a>    <span class="k">def</span> <span class="nf">add_line_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="p">,</span> <span class="n">close</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a straight line segment to each point in *vertices*.</span>
+
+<span class="sd">        *vertices* must be an iterable of (x, y) pairs (2-tuples). Each x and</span>
+<span class="sd">        y value is rounded to the nearest integer before use. The optional</span>
+<span class="sd">        *close* parameter determines whether the resulting contour is</span>
+<span class="sd">        *closed* or left *open*.</span>
+
+<span class="sd">        Returns this |FreeformBuilder| object so it can be used in chained</span>
+<span class="sd">        calls.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">vertices</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_line_segment</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">close</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="FreeformBuilder.convert_to_shape"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.freeform.FreeformBuilder.convert_to_shape">[docs]</a>    <span class="k">def</span> <span class="nf">convert_to_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin_x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">origin_y</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return new freeform shape positioned relative to specified offset.</span>
+
+<span class="sd">        *origin_x* and *origin_y* locate the origin of the local coordinate</span>
+<span class="sd">        system in slide coordinates (EMU), perhaps most conveniently by use</span>
+<span class="sd">        of a |Length| object.</span>
+
+<span class="sd">        Note that this method may be called more than once to add multiple</span>
+<span class="sd">        shapes of the same geometry in different locations on the slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_freeform_sp</span><span class="p">(</span><span class="n">origin_x</span><span class="p">,</span> <span class="n">origin_y</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_path</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">drawing_operation</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">drawing_operation</span><span class="o">.</span><span class="n">apply_operation_to</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shapes</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FreeformBuilder.move_to"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.freeform.FreeformBuilder.move_to">[docs]</a>    <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Move pen to (x, y) (local coordinates) without drawing line.</span>
+
+<span class="sd">        Returns this |FreeformBuilder| object so it can be used in chained</span>
+<span class="sd">        calls.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_drawing_operations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_MoveTo</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape_offset_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return x distance of shape origin from local coordinate origin.</span>
+
+<span class="sd">        The returned integer represents the leftmost extent of the freeform</span>
+<span class="sd">        shape, in local coordinates. Note that the bounding box of the shape</span>
+<span class="sd">        need not start at the local origin.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">min_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_x</span>
+        <span class="k">for</span> <span class="n">drawing_operation</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">drawing_operation</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">):</span>
+                <span class="n">min_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_x</span><span class="p">,</span> <span class="n">drawing_operation</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">min_x</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape_offset_y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return y distance of shape origin from local coordinate origin.</span>
+
+<span class="sd">        The returned integer represents the topmost extent of the freeform</span>
+<span class="sd">        shape, in local coordinates. Note that the bounding box of the shape</span>
+<span class="sd">        need not start at the local origin.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">min_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_y</span>
+        <span class="k">for</span> <span class="n">drawing_operation</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">drawing_operation</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">):</span>
+                <span class="n">min_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_y</span><span class="p">,</span> <span class="n">drawing_operation</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">min_y</span>
+
+    <span class="k">def</span> <span class="nf">_add_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a close |_Close| operation to the drawing sequence.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_drawing_operations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_Close</span><span class="o">.</span><span class="n">new</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_add_freeform_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin_x</span><span class="p">,</span> <span class="n">origin_y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a freeform `p:sp` element having no drawing elements.</span>
+
+<span class="sd">        *origin_x* and *origin_y* are specified in slide coordinates, and</span>
+<span class="sd">        represent the location of the local coordinates origin on the slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spTree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shapes</span><span class="o">.</span><span class="n">_spTree</span>
+        <span class="k">return</span> <span class="n">spTree</span><span class="o">.</span><span class="n">add_freeform_sp</span><span class="p">(</span>
+            <span class="n">origin_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="p">,</span> <span class="n">origin_y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_top</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_line_segment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a |_LineSegment| operation to the drawing sequence.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_drawing_operations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_LineSegment</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_drawing_operations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the sequence of drawing operation objects for freeform.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_dx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return integer width of this shape&#39;s path in local units.&quot;&quot;&quot;</span>
+        <span class="n">min_x</span> <span class="o">=</span> <span class="n">max_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_x</span>
+        <span class="k">for</span> <span class="n">drawing_operation</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">drawing_operation</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">):</span>
+                <span class="n">min_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_x</span><span class="p">,</span> <span class="n">drawing_operation</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+                <span class="n">max_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_x</span><span class="p">,</span> <span class="n">drawing_operation</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">max_x</span> <span class="o">-</span> <span class="n">min_x</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_dy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return integer height of this shape&#39;s path in local units.&quot;&quot;&quot;</span>
+        <span class="n">min_y</span> <span class="o">=</span> <span class="n">max_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_y</span>
+        <span class="k">for</span> <span class="n">drawing_operation</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">drawing_operation</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">):</span>
+                <span class="n">min_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_y</span><span class="p">,</span> <span class="n">drawing_operation</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+                <span class="n">max_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_y</span><span class="p">,</span> <span class="n">drawing_operation</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">max_y</span> <span class="o">-</span> <span class="n">min_y</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return vertical size of this shape&#39;s path in slide coordinates.</span>
+
+<span class="sd">        This value is based on the actual extents of the shape and does not</span>
+<span class="sd">        include any positioning offset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dy</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y_scale</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return leftmost extent of this shape&#39;s path in slide coordinates.</span>
+
+<span class="sd">        Note that this value does not include any positioning offset; it</span>
+<span class="sd">        assumes the drawing (local) coordinate origin is at (0, 0) on the</span>
+<span class="sd">        slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape_offset_x</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x_scale</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_local_to_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">local_x</span><span class="p">,</span> <span class="n">local_y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Translate local coordinates point to shape coordinates.</span>
+
+<span class="sd">        Shape coordinates have the same unit as local coordinates, but are</span>
+<span class="sd">        offset such that the origin of the shape coordinate system (0, 0) is</span>
+<span class="sd">        located at the top-left corner of the shape bounding box.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">local_x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape_offset_x</span><span class="p">,</span> <span class="n">local_y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape_offset_y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_start_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a newly created `a:path` element added to *sp*.</span>
+
+<span class="sd">        The returned `a:path` element has an `a:moveTo` element representing</span>
+<span class="sd">        the shape starting point as its only child.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">add_path</span><span class="p">(</span><span class="n">w</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dx</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dy</span><span class="p">)</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">add_moveTo</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_local_to_shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_start_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_y</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">path</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return topmost extent of this shape&#39;s path in slide coordinates.</span>
+
+<span class="sd">        Note that this value does not include any positioning offset; it</span>
+<span class="sd">        assumes the drawing (local) coordinate origin is located at slide</span>
+<span class="sd">        coordinates (0, 0) (top-left corner of slide).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape_offset_y</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y_scale</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return width of this shape&#39;s path in slide coordinates.</span>
+
+<span class="sd">        This value is based on the actual extents of the shape path and does</span>
+<span class="sd">        not include any positioning offset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dx</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x_scale</span><span class="p">))</span></div>
+
+
+<span class="k">class</span> <span class="nc">_BaseDrawingOperation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for freeform drawing operations.</span>
+
+<span class="sd">    A drawing operation has at least one location (x, y) in local</span>
+<span class="sd">    coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">freeform_builder</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_BaseDrawingOperation</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_freeform_builder</span> <span class="o">=</span> <span class="n">freeform_builder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">apply_operation_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add the XML element(s) implementing this operation to *path*.</span>
+
+<span class="sd">        Must be implemented by each subclass.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;must be implemented by each subclass&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the horizontal (x) target location of this operation.</span>
+
+<span class="sd">        The returned value is an integer in local coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the vertical (y) target location of this operation.</span>
+
+<span class="sd">        The returned value is an integer in local coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span>
+
+
+<span class="k">class</span> <span class="nc">_Close</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specifies adding a `&lt;a:close/&gt;` element to the current contour.&quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a new _Close object.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">apply_operation_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add `a:close` element to *path*.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">add_close</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">_LineSegment</span><span class="p">(</span><span class="n">_BaseDrawingOperation</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specifies a straight line segment ending at the specified point.&quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">freeform_builder</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a new _LineSegment object ending at point *(x, y)*.</span>
+
+<span class="sd">        Both *x* and *y* are rounded to the nearest integer before use.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">freeform_builder</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">apply_operation_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add `a:lnTo` element to *path* for this line segment.</span>
+
+<span class="sd">        Returns the `a:lnTo` element newly added to the path.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">add_lnTo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_freeform_builder</span><span class="o">.</span><span class="n">shape_offset_x</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_freeform_builder</span><span class="o">.</span><span class="n">shape_offset_y</span><span class="p">,</span>
+        <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_MoveTo</span><span class="p">(</span><span class="n">_BaseDrawingOperation</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specifies a new pen position.&quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">freeform_builder</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a new _MoveTo object for move to point *(x, y)*.</span>
+
+<span class="sd">        Both *x* and *y* are rounded to the nearest integer before use.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">freeform_builder</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">apply_operation_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add `a:moveTo` element to *path* for this line segment.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">add_moveTo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_freeform_builder</span><span class="o">.</span><span class="n">shape_offset_x</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_freeform_builder</span><span class="o">.</span><span class="n">shape_offset_y</span><span class="p">,</span>
+        <span class="p">)</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.freeform</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

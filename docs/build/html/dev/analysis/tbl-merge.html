@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Cell Merge &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Table" href="tbl-table.html" />
+    <link rel="prev" title="Chart Shape" href="cht-chart-shape.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tbl-table.html" title="Table"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cht-chart-shape.html" title="Chart Shape"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Cell Merge</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cell-merge">
+<span id="table-merge"></span><h1>Cell Merge<a class="headerlink" href="#cell-merge" title="Permalink to this headline">¶</a></h1>
+<p>PowerPoint allows a user to <em>merge</em> table cells, causing multiple <em>grid
+cells</em> to appear and behave as a single cell.</p>
+<section id="terminology">
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
+<p>The following distinctions are important to the implementation and also to
+using the API.</p>
+<dl>
+<dt>table grid</dt><dd><p>A PowerPoint (DrawingML) table has an underlying grid which is a strict
+two-dimensional (n X m) array; each row in the table grid has m cells and
+each column has n cells. Grid cell boundaries are aligned both vertically
+and horizontally.</p>
+</dd>
+<dt>grid cell</dt><dd><p>Each of the n x m cells in a table is a grid cell. Every grid cell is
+addressable, even those “shadowed” by a merge-origin cell.</p>
+<p><em>Apparent</em> cell boundaries can be modified by <em>merging</em> two or more grid
+cells.</p>
+</dd>
+<dt>merge-origin cell</dt><dd><p>The top-left grid cell in a merged cell. This cell will be visible, have
+the combined extent of all spanned cells, and contain any visible content.</p>
+</dd>
+<dt>spanned cell</dt><dd><p>All grid cells in a merged cell are spanned cells, excepting the one at
+the top-left (the merge-origin cell). Intuitively, the merge-origin cell
+“spans” all the other grid cells in the merge range.</p>
+<p>Content in a spanned cell is not visible, and is typically moved to the
+merge-origin cell as part of the merge operation, leaving each spanned
+cell with exactly one empty paragraph. This content becomes visible again
+if the merged cell is split.</p>
+</dd>
+<dt>unmerged cell</dt><dd><p>While not a distinction directly embodied in the code, any cell which is
+not a merge-origin cell and is also not a spanned cell is a “regular” cell
+and not part of a merged cell.</p>
+</dd>
+</dl>
+</section>
+<section id="protocol">
+<h2>Protocol<a class="headerlink" href="#protocol" title="Permalink to this headline">¶</a></h2>
+<p>A cell is accessed by grid location (regardless of any merged regions). All
+grid cells are addressable, even those “shadowed” by a merge (such a shadowed
+cell is a <em>spanned</em> cell):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">)</span><span class="o">.</span><span class="n">table</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cells</span><span class="p">)</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>Merge 2 x 2 cells at top left:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cells</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">other_cell</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cells</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">other_cell</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The top-left cell of a merged cell is the merge-origin cell:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">origin_cell</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cells</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">origin_cell</span>
+<span class="go">&lt;pptx.table._MergeOriginCell object at 0x...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">origin_cell</span><span class="o">.</span><span class="n">is_merge_origin</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">origin_cell</span><span class="o">.</span><span class="n">is_spanned</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">origin_cell</span><span class="o">.</span><span class="n">span_height</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">origin_cell</span><span class="o">.</span><span class="n">span_width</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>A spanned cell has <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> on its <cite>.is_spanned</cite> property:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spanned_cell</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spanned_cell</span>
+<span class="go">&lt;pptx.table._SpannedCell object at 0x...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spanned_cell</span><span class="o">.</span><span class="n">is_merge_origin</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spanned_cell</span><span class="o">.</span><span class="n">is_spanned</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>A “regular” cell not participating in a merge is neither the merge origin nor
+spanned:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span>
+<span class="go">&lt;pptx.table._Cell object at 0x...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">is_merge_origin</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">is_spanned</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Cell instances proxying the same <cite>a:tc</cite> element compare equal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">origin_cell</span> <span class="o">==</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spanned_cell</span> <span class="o">==</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span> <span class="o">==</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">origin_cell</span> <span class="o">==</span> <span class="n">spanned_cell</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</section>
+<section id="use-cases">
+<h2>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h2>
+<p>Use Case: Interrogate table for merged cells:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">iter_merge_origins</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate each merge-origin cell in *table*.</span>
+
+<span class="sd">    Cell objects are ordered by their position in the table,</span>
+<span class="sd">    left-to-right, top-to-bottom.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">cell</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">iter_cells</span><span class="p">()</span> <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">is_merge_origin</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">merged_cell_report</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return str summarizing position and size of merged *cell*.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="s1">&#39;merged cell at row </span><span class="si">%d</span><span class="s1">, col </span><span class="si">%d</span><span class="s1">, </span><span class="si">%d</span><span class="s1"> cells high and </span><span class="si">%d</span><span class="s1"> cells wide&#39;</span>
+        <span class="o">%</span> <span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">row_idx</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">col_idx</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">span_height</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">span_width</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="c1"># ---Print a summary line for each merged cell in *table*.---</span>
+<span class="k">for</span> <span class="n">merge_origin_cell</span> <span class="ow">in</span> <span class="n">iter_merge_origins</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">merged_cell_report</span><span class="p">(</span><span class="n">merge_origin_cell</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Use Case: Access only cells that display text (are not spanned):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">iter_visible_cells</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">cell</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">iter_cells</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">cell</span><span class="o">.</span><span class="n">is_spanned</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use Case: Determine whether table contains merged cells:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">has_merged_cells</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">iter_cells</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">is_merge_origin</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+<section id="powerpoint-behaviors">
+<h2>PowerPoint behaviors<a class="headerlink" href="#powerpoint-behaviors" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>Two or more cells are merged by selecting them using the mouse, then
+selecting “Merge cells” from the context menu.</p></li>
+<li><p>Content from spanned cells is moved to the merge origin cell.</p></li>
+<li><p>A merged cell can be split (“unmerged” roughly). The UI allows the merge to
+be split into an arbitrary number of rows and columns and adjusts the table
+grid and row heights etc. to accommodate, adding (potentially very many)
+new merged cells as required.</p>
+<p><cite>python-pptx</cite> just removes the merge, restoring the underlying table grid
+cells to regular (unmerged) cells.</p>
+</li>
+</ul>
+</section>
+<section id="specimen-xml">
+<h2>Specimen XML<a class="headerlink" href="#specimen-xml" title="Permalink to this headline">¶</a></h2>
+<p>Super-simplified 3-cell horizontal merge:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:tr&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">gridSpan=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">hMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>  <span class="cm">&lt;!-- PowerPoint uses boolean value &quot;1&quot; --&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">hMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/a:tr&gt;</span>
+</pre></div>
+</div>
+<p>Super-simplified 3-cell vertical merge:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:tr&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">rowSpan=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/a:tr&gt;</span>
+<span class="nt">&lt;a:tr&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">vMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>  <span class="cm">&lt;!-- PowerPoint uses boolean value &quot;1&quot; --&gt;</span>
+<span class="nt">&lt;/a:tr&gt;</span>
+<span class="nt">&lt;a:tr&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">vMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/a:tr&gt;</span>
+</pre></div>
+</div>
+<p>Super-simplified 2D merge:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:tr&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">rowSpan=</span><span class="s">&quot;3&quot;</span> <span class="na">gridSpan=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">rowSpan=</span><span class="s">&quot;3&quot;</span> <span class="na">hMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">rowSpan=</span><span class="s">&quot;3&quot;</span> <span class="na">hMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/a:tr&gt;</span>
+<span class="nt">&lt;a:tr&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">gridSpan=</span><span class="s">&quot;3&quot;</span> <span class="na">vMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">hMerge=</span><span class="s">&quot;true&quot;</span> <span class="na">vMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">hMerge=</span><span class="s">&quot;true&quot;</span> <span class="na">vMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/a:tr&gt;</span>
+<span class="nt">&lt;a:tr&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">gridSpan=</span><span class="s">&quot;3&quot;</span> <span class="na">vMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">hMerge=</span><span class="s">&quot;true&quot;</span> <span class="na">vMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;a:tc</span> <span class="na">hMerge=</span><span class="s">&quot;true&quot;</span> <span class="na">vMerge=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/a:tr&gt;</span>
+</pre></div>
+</div>
+<p>Simplified 2 x 3 table with first two horizontal cells merged:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:tbl&gt;</span>
+  <span class="nt">&lt;a:tblGrid&gt;</span>
+    <span class="nt">&lt;a:gridCol</span> <span class="na">w=</span><span class="s">&quot;2032000&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:gridCol</span> <span class="na">w=</span><span class="s">&quot;2032000&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:gridCol</span> <span class="na">w=</span><span class="s">&quot;2032000&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:tblGrid&gt;</span>
+  <span class="nt">&lt;a:tr</span> <span class="na">h=</span><span class="s">&quot;370840&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:tc</span> <span class="na">gridSpan=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:txBody&gt;</span>...<span class="nt">&lt;/a:txBody&gt;</span>
+      <span class="nt">&lt;a:tcPr/&gt;</span>
+    <span class="nt">&lt;/a:tc&gt;</span>
+    <span class="nt">&lt;a:tc</span> <span class="na">hMerge=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:txBody&gt;</span>...<span class="nt">&lt;/a:txBody&gt;</span>
+      <span class="nt">&lt;a:tcPr/&gt;</span>
+    <span class="nt">&lt;/a:tc&gt;</span>
+    <span class="nt">&lt;a:tc&gt;</span>
+      <span class="nt">&lt;a:txBody&gt;</span>...<span class="nt">&lt;/a:txBody&gt;</span>
+      <span class="nt">&lt;a:tcPr/&gt;</span>
+    <span class="nt">&lt;/a:tc&gt;</span>
+  <span class="nt">&lt;/a:tr&gt;</span>
+  <span class="nt">&lt;a:tr</span> <span class="na">h=</span><span class="s">&quot;370840&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:tc&gt;</span>...<span class="nt">&lt;/a:tc&gt;</span>
+    <span class="nt">&lt;a:tc&gt;</span>...<span class="nt">&lt;/a:tc&gt;</span>
+    <span class="nt">&lt;a:tc&gt;</span>...<span class="nt">&lt;/a:tc&gt;</span>
+  <span class="nt">&lt;/a:tr&gt;</span>
+<span class="nt">&lt;/a:tbl&gt;</span>
+</pre></div>
+</div>
+<p>Simplified 2 x 3 table with first two vertical cells merged:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:tbl&gt;</span>
+  <span class="nt">&lt;a:tr</span> <span class="na">h=</span><span class="s">&quot;370840&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:tc</span> <span class="na">rowSpan=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:txBody&gt;</span>
+        <span class="nt">&lt;a:bodyPr/&gt;</span>
+        <span class="nt">&lt;a:lstStyle/&gt;</span>
+        <span class="nt">&lt;a:p&gt;</span>
+          <span class="nt">&lt;a:r&gt;</span>
+            <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;a:t&gt;</span>Vertical<span class="nt">&lt;/a:t&gt;</span>
+          <span class="nt">&lt;/a:r&gt;</span>
+          <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:p&gt;</span>
+        <span class="nt">&lt;a:p&gt;</span>
+          <span class="nt">&lt;a:r&gt;</span>
+            <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;a:t&gt;</span>Span<span class="nt">&lt;/a:t&gt;</span>
+          <span class="nt">&lt;/a:r&gt;</span>
+          <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:p&gt;</span>
+      <span class="nt">&lt;/a:txBody&gt;</span>
+      <span class="nt">&lt;a:tcPr/&gt;</span>
+    <span class="nt">&lt;/a:tc&gt;</span>
+    <span class="nt">&lt;a:tc&gt;</span>...<span class="nt">&lt;/a:tc&gt;</span>
+    <span class="nt">&lt;a:tc&gt;</span>...<span class="nt">&lt;/a:tc&gt;</span>
+  <span class="nt">&lt;/a:tr&gt;</span>
+  <span class="nt">&lt;a:tr</span> <span class="na">h=</span><span class="s">&quot;370840&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:tc</span> <span class="na">vMerge=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:txBody&gt;</span>
+        <span class="nt">&lt;a:bodyPr/&gt;</span>
+        <span class="nt">&lt;a:lstStyle/&gt;</span>
+        <span class="nt">&lt;a:p&gt;</span>
+          <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:p&gt;</span>
+      <span class="nt">&lt;/a:txBody&gt;</span>
+      <span class="nt">&lt;a:tcPr/&gt;</span>
+    <span class="nt">&lt;/a:tc&gt;</span>
+    <span class="nt">&lt;a:tc&gt;</span>...<span class="nt">&lt;/a:tc&gt;</span>
+    <span class="nt">&lt;a:tc&gt;</span>...<span class="nt">&lt;/a:tc&gt;</span>
+  <span class="nt">&lt;/a:tr&gt;</span>
+<span class="nt">&lt;/a:tbl&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="schema-excerpt">
+<h2>Schema excerpt<a class="headerlink" href="#schema-excerpt" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TableCell&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txBody&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextBody&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tcPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TableCellProperties&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rowSpan&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span>     <span class="na">default=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;gridSpan&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span>     <span class="na">default=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;hMerge&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;vMerge&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Cell Merge</a><ul>
+<li><a class="reference internal" href="#terminology">Terminology</a></li>
+<li><a class="reference internal" href="#protocol">Protocol</a></li>
+<li><a class="reference internal" href="#use-cases">Use Cases</a></li>
+<li><a class="reference internal" href="#powerpoint-behaviors">PowerPoint behaviors</a></li>
+<li><a class="reference internal" href="#specimen-xml">Specimen XML</a></li>
+<li><a class="reference internal" href="#schema-excerpt">Schema excerpt</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="cht-chart-shape.html"
+                          title="previous chapter">Chart Shape</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="tbl-table.html"
+                          title="next chapter">Table</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tbl-table.html" title="Table"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cht-chart-shape.html" title="Chart Shape"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Cell Merge</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

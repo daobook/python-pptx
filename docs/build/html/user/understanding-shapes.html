@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Understanding Shapes &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Working with AutoShapes" href="autoshapes.html" />
+    <link rel="prev" title="Working with Slides" href="slides.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="autoshapes.html" title="Working with AutoShapes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="slides.html" title="Working with Slides"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Understanding Shapes</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="understanding-shapes">
+<h1>Understanding Shapes<a class="headerlink" href="#understanding-shapes" title="Permalink to this headline">¶</a></h1>
+<p>Pretty much anything on a slide is a shape; the only thing I can think of that
+can appear on a slide that’s not a shape is a slide background. There are
+between six and ten different types of shape, depending how you count. I’ll
+explain some of the general shape concepts you’ll need to make sense of how to
+work with them and then we’ll jump right into working with the specific types.</p>
+<p>Technically there are six and only six different types of shapes that can be
+placed on a slide:</p>
+<dl class="simple">
+<dt>auto shape</dt><dd><p>This is a regular shape, like a rectangle, an ellipse, or a block arrow.
+They come in a large variety of preset shapes, in the neighborhood of 180
+different ones. An auto shape can have a fill and an outline, and can
+contain text. Some auto shapes have adjustments, the little yellow diamonds
+you can drag to adjust how round the corners of a rounded rectangle are for
+example. A text box is also an autoshape, a rectangular one, just by default
+without a fill and without an outline.</p>
+</dd>
+<dt>picture</dt><dd><p>A raster image, like a photograph or clip art is referred to as a <em>picture</em>
+in PowerPoint. It’s its own kind of shape with different behaviors than an
+autoshape. Note that an auto shape can have a picture fill, in which an
+image “shows through” as the background of the shape instead of a fill color
+or gradient. That’s a different thing. But cool.</p>
+</dd>
+<dt>graphic frame</dt><dd><p>This is the technical name for the container that holds a table, a chart,
+a smart art diagram, or media clip. You can’t add one of these by itself,
+it just shows up in the file when you add a graphical object. You probably
+won’t need to know anything more about these.</p>
+</dd>
+<dt>group shape</dt><dd><p>In PowerPoint, a set of shapes can be <em>grouped</em>, allowing them to be
+selected, moved, resized, and even filled as a unit. When you group a set of
+shapes a group shape gets created to contain those member shapes. You can’t
+actually see these except by their bounding box when the group is
+selected.</p>
+</dd>
+<dt>line/connector</dt><dd><p>Lines are different from auto shapes because, well, they’re linear. Some
+lines can be connected to other shapes and stay connected when the other
+shape is moved. These aren’t supported yet either so I don’t know much more
+about them. I’d better get to these soon though, they seem like they’d be
+very handy.</p>
+</dd>
+<dt>content part</dt><dd><p>I actually have only the vaguest notion of what these are. It has something
+to do with embedding “foreign” XML like SVG in with the presentation. I’m
+pretty sure PowerPoint itself doesn’t do anything with these. My strategy
+is to ignore them. Working good so far.</p>
+</dd>
+</dl>
+<p>As for real-life shapes, there are these nine types:</p>
+<ul class="simple">
+<li><p>shape shapes – auto shapes with fill and an outline</p></li>
+<li><p>text boxes – auto shapes with no fill and no outline</p></li>
+<li><p>placeholders – auto shapes that can appear on a slide layout or master and
+be inherited on slides that use that layout, allowing content to be added
+that takes on the formatting of the placeholder</p></li>
+<li><p>line/connector – as described above</p></li>
+<li><p>picture – as described above</p></li>
+<li><p>table – that row and column thing</p></li>
+<li><p>chart – pie chart, line chart, etc.</p></li>
+<li><p>smart art – not supported yet, although preserved if present</p></li>
+<li><p>media clip – video or audio</p></li>
+</ul>
+<section id="accessing-the-shapes-on-a-slide">
+<h2>Accessing the shapes on a slide<a class="headerlink" href="#accessing-the-shapes-on-a-slide" title="Permalink to this headline">¶</a></h2>
+<p>Each slide has a <em>shape tree</em> that holds its shapes. It’s called a tree because
+it’s hierarchical in the general case; a node in the shape tree can be a group
+shape which itself can contain shapes and has the same semantics as the shape
+tree. For most purposes the shape tree has list semantics. You gain access to
+it like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shapes</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
+</pre></div>
+</div>
+<p>We’ll see a lot more of the shape tree in the next few sections.</p>
+</section>
+<section id="up-next">
+<h2>Up next …<a class="headerlink" href="#up-next" title="Permalink to this headline">¶</a></h2>
+<p>Okay. That should be enough noodle work to get started. Let’s move on to
+working with AutoShapes.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Understanding Shapes</a><ul>
+<li><a class="reference internal" href="#accessing-the-shapes-on-a-slide">Accessing the shapes on a slide</a></li>
+<li><a class="reference internal" href="#up-next">Up next …</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="slides.html"
+                          title="previous chapter">Working with Slides</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="autoshapes.html"
+                          title="next chapter">Working with AutoShapes</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="autoshapes.html" title="Working with AutoShapes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="slides.html" title="Working with Slides"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Understanding Shapes</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

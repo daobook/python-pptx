@@ -1,0 +1,964 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.chart.data &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.data</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.chart.data</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;ChartData and related objects.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+
+<span class="kn">from</span> <span class="nn">pptx.chart.xlsx</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BubbleWorkbookWriter</span><span class="p">,</span>
+    <span class="n">CategoryWorkbookWriter</span><span class="p">,</span>
+    <span class="n">XyWorkbookWriter</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pptx.chart.xmlwriter</span> <span class="kn">import</span> <span class="n">ChartXmlWriter</span>
+<span class="kn">from</span> <span class="nn">pptx.compat</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseChartData</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class providing common members for chart data objects. A chart data</span>
+<span class="sd">    object serves as a proxy for the chart data table that will be written to</span>
+<span class="sd">    an Excel worksheet; operating as a sequence of series as well as</span>
+<span class="sd">    providing access to chart-level attributes. A chart data object is used</span>
+<span class="sd">    as a parameter in :meth:`shapes.add_chart` and</span>
+<span class="sd">    :meth:`Chart.replace_data`. The data structure varies between major chart</span>
+<span class="sd">    categories such as category charts and XY charts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_format</span><span class="o">=</span><span class="s2">&quot;General&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_BaseChartData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span> <span class="o">=</span> <span class="n">number_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_series</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_series</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_series</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_series</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">data_point_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The total integer number of data points appearing in the series of</span>
+<span class="sd">        this chart that are prior to *series* in this sequence.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">this_series</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">series</span> <span class="ow">is</span> <span class="n">this_series</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">count</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">this_series</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;series not in chart data object&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The formatting template string, e.g. &#39;#,##0.0&#39;, that determines how</span>
+<span class="sd">        X and Y values are formatted in this chart and in the Excel</span>
+<span class="sd">        spreadsheet. A number format specified on a series will override this</span>
+<span class="sd">        value for that series. Likewise, a distinct number format can be</span>
+<span class="sd">        specified for a particular data point within a series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span>
+
+    <span class="k">def</span> <span class="nf">series_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the integer index of *series* in this sequence.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">series</span> <span class="ow">is</span> <span class="n">s</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">idx</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;series not in chart data object&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">series_name_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the Excel worksheet reference to the cell containing the name</span>
+<span class="sd">        for *series*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workbook_writer</span><span class="o">.</span><span class="n">series_name_ref</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">x_values_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference to the X values for *series* (not</span>
+<span class="sd">        including the column label).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workbook_writer</span><span class="o">.</span><span class="n">x_values_ref</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">xlsx_blob</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a blob containing an Excel workbook file populated with the</span>
+<span class="sd">        contents of this chart data object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workbook_writer</span><span class="o">.</span><span class="n">xlsx_blob</span>
+
+    <span class="k">def</span> <span class="nf">xml_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chart_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a blob containing the XML for a chart of *chart_type*</span>
+<span class="sd">        containing the series in this chart data object, as bytes suitable</span>
+<span class="sd">        for writing directly to a file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xml</span><span class="p">(</span><span class="n">chart_type</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">y_values_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference to the Y values for *series* (not</span>
+<span class="sd">        including the column label).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workbook_writer</span><span class="o">.</span><span class="n">y_values_ref</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_workbook_writer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The worksheet writer object to which layout and writing of the Excel</span>
+<span class="sd">        worksheet for this chart will be delegated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;must be implemented by all subclasses&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chart_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return (as unicode text) the XML for a chart of *chart_type*</span>
+<span class="sd">        populated with the values in this chart data object. The XML is</span>
+<span class="sd">        a complete XML document, including an XML declaration specifying</span>
+<span class="sd">        UTF-8 encoding.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ChartXmlWriter</span><span class="p">(</span><span class="n">chart_type</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">xml</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseSeriesData</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class providing common members for series data objects. A series</span>
+<span class="sd">    data object serves as proxy for a series data column in the Excel</span>
+<span class="sd">    worksheet. It operates as a sequence of data points, as well as providing</span>
+<span class="sd">    access to series-level attributes like the series label.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chart_data</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">number_format</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span> <span class="o">=</span> <span class="n">chart_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span> <span class="o">=</span> <span class="n">number_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_points</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_points</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_points</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_point</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_point</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_point_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The integer count of data points that appear in all chart series</span>
+<span class="sd">        prior to this one.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">data_point_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Zero-based integer indicating the sequence position of this series in</span>
+<span class="sd">        its chart. For example, the second of three series would return `1`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">series_index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The name of this series, e.g. &#39;Series 1&#39;. This name is used as the</span>
+<span class="sd">        column heading for the y-values of this series and may also appear in</span>
+<span class="sd">        the chart legend and perhaps other chart locations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference to the cell containing the name for</span>
+<span class="sd">        this series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">series_name_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The formatting template string that determines how a number in this</span>
+<span class="sd">        series is formatted, both in the chart and in the Excel spreadsheet;</span>
+<span class="sd">        for example &#39;#,##0.0&#39;. If not specified for this series, it is</span>
+<span class="sd">        inherited from the parent chart data object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">number_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span>
+        <span class="k">if</span> <span class="n">number_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">number_format</span>
+        <span class="k">return</span> <span class="n">number_format</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">x_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A sequence containing the X value of each datapoint in this series,</span>
+<span class="sd">        in data point order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">dp</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_points</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">x_values_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference to the X values for this chart (not</span>
+<span class="sd">        including the column heading).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">x_values_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">y_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A sequence containing the Y value of each datapoint in this series,</span>
+<span class="sd">        in data point order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">dp</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_points</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">y_values_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference to the Y values for this chart (not</span>
+<span class="sd">        including the column heading).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">y_values_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseDataPoint</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class providing common members for data point objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series_data</span><span class="p">,</span> <span class="n">number_format</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_BaseDataPoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_series_data</span> <span class="o">=</span> <span class="n">series_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span> <span class="o">=</span> <span class="n">number_format</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The formatting template string that determines how the value of this</span>
+<span class="sd">        data point is formatted, both in the chart and in the Excel</span>
+<span class="sd">        spreadsheet; for example &#39;#,##0.0&#39;. If not specified for this data</span>
+<span class="sd">        point, it is inherited from the parent series data object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">number_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span>
+        <span class="k">if</span> <span class="n">number_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_series_data</span><span class="o">.</span><span class="n">number_format</span>
+        <span class="k">return</span> <span class="n">number_format</span>
+
+
+<div class="viewcode-block" id="CategoryChartData"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.CategoryChartData">[docs]</a><span class="k">class</span> <span class="nc">CategoryChartData</span><span class="p">(</span><span class="n">_BaseChartData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accumulates data specifying the categories and series values for a chart</span>
+<span class="sd">    and acts as a proxy for the chart data table that will be written to an</span>
+<span class="sd">    Excel worksheet. Used as a parameter in :meth:`shapes.add_chart` and</span>
+<span class="sd">    :meth:`Chart.replace_data`.</span>
+
+<span class="sd">    This object is suitable for use with category charts, i.e. all those</span>
+<span class="sd">    having a discrete set of label values (categories) as the range of their</span>
+<span class="sd">    independent variable (X-axis) values. Unlike the ChartData types for</span>
+<span class="sd">    charts supporting a continuous range of independent variable values (such</span>
+<span class="sd">    as XyChartData), CategoryChartData has a single collection of category</span>
+<span class="sd">    (X) values and each data point in its series specifies only the Y value.</span>
+<span class="sd">    The corresponding X value is inferred by its position in the sequence.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CategoryChartData.add_category"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.CategoryChartData.add_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a newly created |data.Category| object having *label* and</span>
+<span class="sd">        appended to the end of the category collection for this chart.</span>
+<span class="sd">        *label* can be a string, a number, a datetime.date, or</span>
+<span class="sd">        datetime.datetime object. All category labels in a chart must be the</span>
+<span class="sd">        same type. All category labels in a chart having multi-level</span>
+<span class="sd">        categories must be strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">add_category</span><span class="p">(</span><span class="n">label</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CategoryChartData.add_series"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.CategoryChartData.add_series">[docs]</a>    <span class="k">def</span> <span class="nf">add_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(),</span> <span class="n">number_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a series to this data set entitled *name* and having the data</span>
+<span class="sd">        points specified by *values*, an iterable of numeric values.</span>
+<span class="sd">        *number_format* specifies how the series values will be displayed,</span>
+<span class="sd">        and may be a string, e.g. &#39;#,##0&#39; corresponding to an Excel number</span>
+<span class="sd">        format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">series_data</span> <span class="o">=</span> <span class="n">CategorySeriesData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">number_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">series_data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+            <span class="n">series_data</span><span class="o">.</span><span class="n">add_data_point</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">series_data</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|data.Categories| object providing access to category-object hierarchy.</span>
+
+<span class="sd">        Assigning an iterable of category labels (strings, numbers, or dates) replaces</span>
+<span class="sd">        the |data.Categories| object with a new one containing a category for each label</span>
+<span class="sd">        in the sequence.</span>
+
+<span class="sd">        Creating a chart from chart data having date categories will cause the chart to</span>
+<span class="sd">        have a |DateAxis| for its category axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_categories&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span> <span class="o">=</span> <span class="n">Categories</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span>
+
+    <span class="nd">@categories</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">categories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_labels</span><span class="p">):</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">Categories</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">category_labels</span><span class="p">:</span>
+            <span class="n">categories</span><span class="o">.</span><span class="n">add_category</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span> <span class="o">=</span> <span class="n">categories</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">categories_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference to the categories for this chart (not</span>
+<span class="sd">        including the column heading).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workbook_writer</span><span class="o">.</span><span class="n">categories_ref</span>
+
+<div class="viewcode-block" id="CategoryChartData.values_ref"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.CategoryChartData.values_ref">[docs]</a>    <span class="k">def</span> <span class="nf">values_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference to the values for *series* (not</span>
+<span class="sd">        including the column heading).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workbook_writer</span><span class="o">.</span><span class="n">values_ref</span><span class="p">(</span><span class="n">series</span><span class="p">)</span></div>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_workbook_writer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The worksheet writer object to which layout and writing of the Excel</span>
+<span class="sd">        worksheet for this chart will be delegated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CategoryWorkbookWriter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Categories"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.Categories">[docs]</a><span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A sequence of |data.Category| objects, also having certain hierarchical</span>
+<span class="sd">    graph behaviors for support of multi-level (nested) categories.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Categories</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the count of the highest level of category in this sequence.</span>
+<span class="sd">        If it contains hierarchical (multi-level) categories, this number</span>
+<span class="sd">        will differ from :attr:`category_count`, which is the number of leaf</span>
+<span class="sd">        nodes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Categories.add_category"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.Categories.add_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a newly created |data.Category| object having *label* and</span>
+<span class="sd">        appended to the end of this category sequence. *label* can be</span>
+<span class="sd">        a string, a number, a datetime.date, or datetime.datetime object. All</span>
+<span class="sd">        category labels in a chart must be the same type. All category labels</span>
+<span class="sd">        in a chart having multi-level categories must be strings.</span>
+
+<span class="sd">        Creating a chart from chart data having date categories will cause</span>
+<span class="sd">        the chart to have a |DateAxis| for its category axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="n">Category</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">category</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">are_dates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return |True| if the first category in this collection has a date</span>
+<span class="sd">        label (as opposed to str or numeric). A date label is one of type</span>
+<span class="sd">        datetime.date or datetime.datetime. Returns |False| otherwise,</span>
+<span class="sd">        including when this category collection is empty. It also returns</span>
+<span class="sd">        False when this category collection is hierarchical, because</span>
+<span class="sd">        hierarchical categories can only be written as string labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">first_cat_label</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">label</span>
+        <span class="n">date_types</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first_cat_label</span><span class="p">,</span> <span class="n">date_types</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">are_numeric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return |True| if the first category in this collection has a numeric</span>
+<span class="sd">        label (as opposed to a string label), including if that value is</span>
+<span class="sd">        a datetime.date or datetime.datetime object (as those are converted</span>
+<span class="sd">        to integers for storage in Excel). Returns |False| otherwise,</span>
+<span class="sd">        including when this category collection is empty. It also returns</span>
+<span class="sd">        False when this category collection is hierarchical, because</span>
+<span class="sd">        hierarchical categories can only be written as string labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># This method only tests the first category. The categories must</span>
+        <span class="c1"># be of uniform type, and if they&#39;re not, there will be problems</span>
+        <span class="c1"># later in the process, but it&#39;s not this method&#39;s job to validate</span>
+        <span class="c1"># the caller&#39;s input.</span>
+        <span class="n">first_cat_label</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">label</span>
+        <span class="n">numeric_types</span> <span class="o">=</span> <span class="p">(</span><span class="n">Number</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first_cat_label</span><span class="p">,</span> <span class="n">numeric_types</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of hierarchy levels in this category graph. Returns 0 if</span>
+<span class="sd">        it contains no categories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">categories</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">first_depth</span> <span class="o">=</span> <span class="n">categories</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">depth</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="n">category</span><span class="o">.</span><span class="n">depth</span> <span class="o">!=</span> <span class="n">first_depth</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;category depth not uniform&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">first_depth</span>
+
+<div class="viewcode-block" id="Categories.index"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.Categories.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The offset of *category* in the overall sequence of leaf categories.</span>
+<span class="sd">        A non-leaf category gets the index of its first sub-category.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">this_category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">category</span> <span class="ow">is</span> <span class="n">this_category</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">index</span>
+            <span class="n">index</span> <span class="o">+=</span> <span class="n">this_category</span><span class="o">.</span><span class="n">leaf_count</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;category not in top-level categories&quot;</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">leaf_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of leaf-level categories in this hierarchy. The return</span>
+<span class="sd">        value is the same as that of `len()` only when the hierarchy is</span>
+<span class="sd">        single level.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">leaf_count</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_categories</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">levels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A generator of (idx, label) sequences representing the category</span>
+<span class="sd">        hierarchy from the bottom up. The first level contains all leaf</span>
+<span class="sd">        categories, and each subsequent is the next level up.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">levels</span><span class="p">(</span><span class="n">categories</span><span class="p">):</span>
+            <span class="c1"># yield all lower levels</span>
+            <span class="n">sub_categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">sc</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">categories</span> <span class="k">for</span> <span class="n">sc</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">sub_categories</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">sub_categories</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">levels</span><span class="p">(</span><span class="n">sub_categories</span><span class="p">):</span>
+                    <span class="k">yield</span> <span class="n">level</span>
+            <span class="c1"># yield this level</span>
+            <span class="k">yield</span> <span class="p">[(</span><span class="n">cat</span><span class="o">.</span><span class="n">idx</span><span class="p">,</span> <span class="n">cat</span><span class="o">.</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">levels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">level</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write. Return a string representing the number format used in</span>
+<span class="sd">        Excel to format these category values, e.g. &#39;0.0&#39; or &#39;mm/dd/yyyy&#39;.</span>
+<span class="sd">        This string is only relevant when the categories are numeric or date</span>
+<span class="sd">        type, although it returns &#39;General&#39; without error when the categories</span>
+<span class="sd">        are string labels. Assigning |None| causes the default number format</span>
+<span class="sd">        to be used, based on the type of the category labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">GENERAL</span> <span class="o">=</span> <span class="s2">&quot;General&quot;</span>
+
+        <span class="c1"># defined value takes precedence</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span>
+
+        <span class="c1"># multi-level (should) always be string labels</span>
+        <span class="c1"># zero depth means empty in which case we can&#39;t tell anyway</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">GENERAL</span>
+
+        <span class="c1"># everything except dates gets &#39;General&#39;</span>
+        <span class="n">first_cat_label</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">label</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first_cat_label</span><span class="p">,</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;yyyy\-mm\-dd&quot;</span>
+        <span class="k">return</span> <span class="n">GENERAL</span>
+
+    <span class="nd">@number_format</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">number_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_number_format</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="Category"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.Category">[docs]</a><span class="k">class</span> <span class="nc">Category</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A chart category, primarily having a label to be displayed on the</span>
+<span class="sd">    category axis, but also able to be configured in a hierarchy for support</span>
+<span class="sd">    of multi-level category charts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sub_categories</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Category.add_sub_category"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.Category.add_sub_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_sub_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a newly created |data.Category| object having *label* and</span>
+<span class="sd">        appended to the end of the sub-category sequence for this category.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="n">Category</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sub_categories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">category</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of hierarchy levels rooted at this category node. Returns</span>
+<span class="sd">        1 if this category has no sub-categories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sub_categories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sub_categories</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">sub_categories</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="n">first_depth</span> <span class="o">=</span> <span class="n">sub_categories</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">depth</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">sub_categories</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="n">category</span><span class="o">.</span><span class="n">depth</span> <span class="o">!=</span> <span class="n">first_depth</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;category depth not uniform&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">first_depth</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">idx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The offset of this category in the overall sequence of leaf</span>
+<span class="sd">        categories. A non-leaf category gets the index of its first</span>
+<span class="sd">        sub-category.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_category</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The offset of *sub_category* in the overall sequence of leaf</span>
+<span class="sd">        categories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">this_sub_category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sub_categories</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sub_category</span> <span class="ow">is</span> <span class="n">this_sub_category</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">index</span>
+            <span class="n">index</span> <span class="o">+=</span> <span class="n">this_sub_category</span><span class="o">.</span><span class="n">leaf_count</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;sub_category not in this category&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">leaf_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of leaf category nodes under this category. Returns</span>
+<span class="sd">        1 if this category has no sub-categories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sub_categories</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">category</span><span class="o">.</span><span class="n">leaf_count</span> <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sub_categories</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The value that appears on the axis for this category. The label can</span>
+<span class="sd">        be a string, a number, or a datetime.date or datetime.datetime</span>
+<span class="sd">        object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+
+<div class="viewcode-block" id="Category.numeric_str_val"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.Category.numeric_str_val">[docs]</a>    <span class="k">def</span> <span class="nf">numeric_str_val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_1904</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The string representation of the numeric (or date) label of this</span>
+<span class="sd">        category, suitable for use in the XML `c:pt` element for this</span>
+<span class="sd">        category. The optional *date_1904* parameter specifies the epoch used</span>
+<span class="sd">        for calculating Excel date numbers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%.1f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_excel_date_number</span><span class="p">(</span><span class="n">date_1904</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sub_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The sequence of child categories for this category.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sub_categories</span>
+
+    <span class="k">def</span> <span class="nf">_excel_date_number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_1904</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an integer representing the date label of this category as the</span>
+<span class="sd">        number of days since January 1, 1900 (or 1904 if date_1904 is</span>
+<span class="sd">        |True|).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">date</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span>
+        <span class="c1"># -- get date from label in type-independent-ish way</span>
+        <span class="n">date_</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+        <span class="n">epoch</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">1904</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">date_1904</span> <span class="k">else</span> <span class="n">date</span><span class="p">(</span><span class="mi">1899</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">date_</span> <span class="o">-</span> <span class="n">epoch</span>
+        <span class="n">excel_day_number</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">days</span>
+
+        <span class="c1"># -- adjust for Excel mistaking 1900 for a leap year --</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">date_1904</span> <span class="ow">and</span> <span class="n">excel_day_number</span> <span class="o">&gt;</span> <span class="mi">59</span><span class="p">:</span>
+            <span class="n">excel_day_number</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">excel_day_number</span></div>
+
+
+<div class="viewcode-block" id="ChartData"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.ChartData">[docs]</a><span class="k">class</span> <span class="nc">ChartData</span><span class="p">(</span><span class="n">CategoryChartData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    |ChartData| is simply an alias for |CategoryChartData| and may be removed</span>
+<span class="sd">    in a future release. All new development should use |CategoryChartData|</span>
+<span class="sd">    for creating or replacing the data in chart types other than XY and</span>
+<span class="sd">    Bubble.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<span class="k">class</span> <span class="nc">CategorySeriesData</span><span class="p">(</span><span class="n">_BaseSeriesData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The data specific to a particular category chart series. It provides</span>
+<span class="sd">    access to the series label, the series data points, and an optional</span>
+<span class="sd">    number format to be applied to each data point not having a specified</span>
+<span class="sd">    number format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">add_data_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">number_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a CategoryDataPoint object newly created with value *value*,</span>
+<span class="sd">        an optional *number_format*, and appended to this sequence.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_point</span> <span class="o">=</span> <span class="n">CategoryDataPoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">number_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_point</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_point</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |data.Categories| object that provides access to the category</span>
+<span class="sd">        objects for this series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">categories</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">categories_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference to the categories for this chart (not</span>
+<span class="sd">        including the column heading).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">categories_ref</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A sequence containing the (Y) value of each datapoint in this series,</span>
+<span class="sd">        in data point order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">dp</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_points</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">values_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference to the (Y) values for this series (not</span>
+<span class="sd">        including the column heading).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">values_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="XyChartData"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.XyChartData">[docs]</a><span class="k">class</span> <span class="nc">XyChartData</span><span class="p">(</span><span class="n">_BaseChartData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A specialized ChartData object suitable for use with an XY (aka. scatter)</span>
+<span class="sd">    chart. Unlike ChartData, it has no category sequence. Rather, each data</span>
+<span class="sd">    point of each series specifies both an X and a Y value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="XyChartData.add_series"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.XyChartData.add_series">[docs]</a>    <span class="k">def</span> <span class="nf">add_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">number_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an |XySeriesData| object newly created and added at the end of</span>
+<span class="sd">        this sequence, identified by *name* and values formatted with</span>
+<span class="sd">        *number_format*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">series_data</span> <span class="o">=</span> <span class="n">XySeriesData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">number_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">series_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">series_data</span></div>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_workbook_writer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The worksheet writer object to which layout and writing of the Excel</span>
+<span class="sd">        worksheet for this chart will be delegated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">XyWorkbookWriter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BubbleChartData"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.BubbleChartData">[docs]</a><span class="k">class</span> <span class="nc">BubbleChartData</span><span class="p">(</span><span class="n">XyChartData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A specialized ChartData object suitable for use with a bubble chart.</span>
+<span class="sd">    A bubble chart is essentially an XY chart where the markers are scaled to</span>
+<span class="sd">    provide a third quantitative dimension to the exhibit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BubbleChartData.add_series"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.BubbleChartData.add_series">[docs]</a>    <span class="k">def</span> <span class="nf">add_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">number_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a |BubbleSeriesData| object newly created and added at the end</span>
+<span class="sd">        of this sequence, and having series named *name* and values formatted</span>
+<span class="sd">        with *number_format*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">series_data</span> <span class="o">=</span> <span class="n">BubbleSeriesData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">number_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">series_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">series_data</span></div>
+
+    <span class="k">def</span> <span class="nf">bubble_sizes_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference for the range containing the bubble</span>
+<span class="sd">        sizes for *series*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workbook_writer</span><span class="o">.</span><span class="n">bubble_sizes_ref</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_workbook_writer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The worksheet writer object to which layout and writing of the Excel</span>
+<span class="sd">        worksheet for this chart will be delegated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">BubbleWorkbookWriter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="XySeriesData"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.XySeriesData">[docs]</a><span class="k">class</span> <span class="nc">XySeriesData</span><span class="p">(</span><span class="n">_BaseSeriesData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The data specific to a particular XY chart series. It provides access to</span>
+<span class="sd">    the series label, the series data points, and an optional number format</span>
+<span class="sd">    to be applied to each data point not having a specified number format.</span>
+
+<span class="sd">    The sequence of data points in an XY series is significant; lines are</span>
+<span class="sd">    plotted following the sequence of points, even if that causes a line</span>
+<span class="sd">    segment to &quot;travel backward&quot; (implying a multi-valued function). The data</span>
+<span class="sd">    points are not automatically sorted into increasing order by X value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="XySeriesData.add_data_point"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.XySeriesData.add_data_point">[docs]</a>    <span class="k">def</span> <span class="nf">add_data_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">number_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an XyDataPoint object newly created with values *x* and *y*,</span>
+<span class="sd">        and appended to this sequence.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_point</span> <span class="o">=</span> <span class="n">XyDataPoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">number_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_point</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_point</span></div></div>
+
+
+<div class="viewcode-block" id="BubbleSeriesData"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.BubbleSeriesData">[docs]</a><span class="k">class</span> <span class="nc">BubbleSeriesData</span><span class="p">(</span><span class="n">XySeriesData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The data specific to a particular Bubble chart series. It provides access</span>
+<span class="sd">    to the series label, the series data points, and an optional number</span>
+<span class="sd">    format to be applied to each data point not having a specified number</span>
+<span class="sd">    format.</span>
+
+<span class="sd">    The sequence of data points in a bubble chart series is maintained</span>
+<span class="sd">    throughout the chart building process because a data point has no unique</span>
+<span class="sd">    identifier and can only be retrieved by index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BubbleSeriesData.add_data_point"><a class="viewcode-back" href="../../../api/chart-data.html#pptx.chart.data.BubbleSeriesData.add_data_point">[docs]</a>    <span class="k">def</span> <span class="nf">add_data_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">number_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Append a new BubbleDataPoint object having the values *x*, *y*, and</span>
+<span class="sd">        *size*. The optional *number_format* is used to format the Y value.</span>
+<span class="sd">        If not provided, the number format is inherited from the series data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_point</span> <span class="o">=</span> <span class="n">BubbleDataPoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">number_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_point</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_point</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bubble_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A sequence containing the bubble size for each datapoint in this</span>
+<span class="sd">        series, in data point order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">dp</span><span class="o">.</span><span class="n">bubble_size</span> <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_points</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bubble_sizes_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Excel worksheet reference for the range containing the bubble</span>
+<span class="sd">        sizes for this series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chart_data</span><span class="o">.</span><span class="n">bubble_sizes_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">CategoryDataPoint</span><span class="p">(</span><span class="n">_BaseDataPoint</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data point in a category chart series. Provides access to the value of</span>
+<span class="sd">    the datapoint and the number format with which it should appear in the</span>
+<span class="sd">    Excel file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series_data</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">number_format</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CategoryDataPoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">series_data</span><span class="p">,</span> <span class="n">number_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The (Y) value for this category data point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+
+
+<span class="k">class</span> <span class="nc">XyDataPoint</span><span class="p">(</span><span class="n">_BaseDataPoint</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data point in an XY chart series. Provides access to the x and y values</span>
+<span class="sd">    of the datapoint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series_data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">number_format</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">XyDataPoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">series_data</span><span class="p">,</span> <span class="n">number_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The X value for this XY data point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Y value for this XY data point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span>
+
+
+<span class="k">class</span> <span class="nc">BubbleDataPoint</span><span class="p">(</span><span class="n">XyDataPoint</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data point in a bubble chart series. Provides access to the x, y, and</span>
+<span class="sd">    size values of the datapoint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">series_data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">number_format</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BubbleDataPoint</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">series_data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">number_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bubble_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The value representing the size of the bubble for this data point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.data</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

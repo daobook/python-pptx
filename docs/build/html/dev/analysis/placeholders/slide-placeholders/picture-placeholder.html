@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Picture placeholder &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Table placeholder" href="table-placeholder.html" />
+    <link rel="prev" title="Slide Placeholders" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="table-placeholder.html" title="Table placeholder"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Slide Placeholders"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Analysis</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >Placeholders</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" accesskey="U">Slide Placeholders</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Picture placeholder</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="picture-placeholder">
+<h1>Picture placeholder<a class="headerlink" href="#picture-placeholder" title="Permalink to this headline">¶</a></h1>
+<p>A picture placeholder is an unpopulated placeholder into which an image can
+be inserted. This comprises three concrete placeholder types, a picture
+placeholder, a clip art placeholder, and a content placeholder. Each of
+these, and indeed any unpopulated placeholder, take the form of a <cite>p:sp</cite>
+element in the XML. Once populated with an image, these placeholders become
+a <em>placeholder picture</em> and take the form of a <cite>p:pic</cite> element.</p>
+<section id="candidate-protocol">
+<h2>Candidate protocol<a class="headerlink" href="#candidate-protocol" title="Permalink to this headline">¶</a></h2>
+<p>Placeholder access:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">picture_placeholder</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># keyed by idx, not offset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">picture_placeholder</span>
+<span class="go">&lt;pptx.shapes.placeholder.PicturePlaceholder object at 0x100830510&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">picture_placeholder</span><span class="o">.</span><span class="n">shape_type</span>
+<span class="go">MSO_SHAPE_TYPE.PLACEHOLDER (14)</span>
+</pre></div>
+</div>
+<p>PicturePlaceholder.insert_picture():</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">placeholder_picture</span> <span class="o">=</span> <span class="n">picture_placeholder</span><span class="o">.</span><span class="n">insert_picture</span><span class="p">(</span><span class="s1">&#39;image.png&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">placeholder_picture</span>
+<span class="go">&lt;pptx.shapes.placeholder.PlaceholderPicture object at 0x10083087a&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">placeholder_picture</span><span class="o">.</span><span class="n">shape_type</span>
+<span class="go">MSO_SHAPE_TYPE.PLACEHOLDER (14)</span>
+</pre></div>
+</div>
+</section>
+<section id="example-xml">
+<h2>Example XML<a class="headerlink" href="#example-xml" title="Permalink to this headline">¶</a></h2>
+<p>A picture-only layout placholder:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">name=</span><span class="s">&quot;Picture Placeholder 2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvSpPr&gt;</span>
+      <span class="nt">&lt;a:spLocks</span> <span class="na">noGrp=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvSpPr&gt;</span>
+    <span class="nt">&lt;p:nvPr&gt;</span>
+      <span class="nt">&lt;p:ph</span> <span class="na">type=</span><span class="s">&quot;pic&quot;</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:nvPr&gt;</span>
+  <span class="nt">&lt;/p:nvSpPr&gt;</span>
+  <span class="nt">&lt;p:spPr&gt;</span>
+    <span class="nt">&lt;a:xfrm&gt;</span>
+      <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;1792288&quot;</span> <span class="na">y=</span><span class="s">&quot;612775&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;5486400&quot;</span> <span class="na">cy=</span><span class="s">&quot;4114800&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:xfrm&gt;</span>
+  <span class="nt">&lt;/p:spPr&gt;</span>
+  <span class="nt">&lt;p:txBody&gt;</span>
+    <span class="nt">&lt;a:bodyPr/&gt;</span>
+    <span class="nt">&lt;a:lstStyle&gt;</span>
+      <span class="cm">&lt;!-- a:lvl{n}pPr for n in 1:9 --&gt;</span>
+    <span class="nt">&lt;/a:lstStyle&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:p&gt;</span>
+  <span class="nt">&lt;/p:txBody&gt;</span>
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>An unpopulated picture-only placeholder on a slide:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;7&quot;</span> <span class="na">name=</span><span class="s">&quot;Picture Placeholder 6&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvSpPr&gt;</span>
+      <span class="nt">&lt;a:spLocks</span> <span class="na">noGrp=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvSpPr&gt;</span>
+    <span class="nt">&lt;p:nvPr&gt;</span>
+      <span class="nt">&lt;p:ph</span> <span class="na">type=</span><span class="s">&quot;pic&quot;</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:nvPr&gt;</span>
+  <span class="nt">&lt;/p:nvSpPr&gt;</span>
+  <span class="nt">&lt;p:spPr/&gt;</span>
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>A picture-only placeholder populated with an image:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:pic&gt;</span>
+  <span class="nt">&lt;p:nvPicPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;8&quot;</span> <span class="na">name=</span><span class="s">&quot;Picture Placeholder 7&quot;</span>
+             <span class="na">descr=</span><span class="s">&quot;aphrodite.brinsmead.jpg&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvPicPr&gt;</span>
+      <span class="nt">&lt;a:picLocks</span> <span class="na">noGrp=</span><span class="s">&quot;1&quot;</span> <span class="na">noChangeAspect=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvPicPr&gt;</span>
+    <span class="nt">&lt;p:nvPr&gt;</span>
+      <span class="nt">&lt;p:ph</span> <span class="na">type=</span><span class="s">&quot;pic&quot;</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:nvPr&gt;</span>
+  <span class="nt">&lt;/p:nvPicPr&gt;</span>
+  <span class="nt">&lt;p:blipFill&gt;</span>
+    <span class="nt">&lt;a:blip</span> <span class="na">r:embed=</span><span class="s">&quot;rId2&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:extLst&gt;</span>
+        <span class="nt">&lt;a:ext</span> <span class="na">uri=</span><span class="s">&quot;{28A0092B-C50C-407E-A947-70E740481C1C}&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a14:useLocalDpi</span> <span class="na">xmlns:a14=</span><span class="s">&quot;http://../drawing/2010/main&quot;</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:ext&gt;</span>
+      <span class="nt">&lt;/a:extLst&gt;</span>
+    <span class="nt">&lt;/a:blip&gt;</span>
+    <span class="nt">&lt;a:srcRect</span> <span class="na">t=</span><span class="s">&quot;20000&quot;</span> <span class="na">b=</span><span class="s">&quot;20000&quot;</span><span class="nt">/&gt;</span>  <span class="cm">&lt;!-- 20% crop, top and bottom --&gt;</span>
+    <span class="nt">&lt;a:stretch&gt;</span>
+      <span class="nt">&lt;a:fillRect/&gt;</span>
+    <span class="nt">&lt;/a:stretch&gt;</span>
+  <span class="nt">&lt;/p:blipFill&gt;</span>
+  <span class="nt">&lt;p:spPr/&gt;</span>
+<span class="nt">&lt;/p:pic&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Picture placeholder</a><ul>
+<li><a class="reference internal" href="#candidate-protocol">Candidate protocol</a></li>
+<li><a class="reference internal" href="#example-xml">Example XML</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Slide Placeholders</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="table-placeholder.html"
+                          title="next chapter">Table placeholder</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="table-placeholder.html" title="Table placeholder"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Slide Placeholders"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Analysis</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >Placeholders</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" >Slide Placeholders</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Picture placeholder</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

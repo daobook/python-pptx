@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Text-related objects &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Click Action-related Objects" href="action.html" />
+    <link rel="prev" title="Charts" href="chart.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="action.html" title="Click Action-related Objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="chart.html" title="Charts"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Text-related objects</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="text-related-objects">
+<span id="text-api"></span><h1>Text-related objects<a class="headerlink" href="#text-related-objects" title="Permalink to this headline">¶</a></h1>
+<section id="textframe-objects">
+<h2><a class="reference internal" href="#pptx.text.text.TextFrame" title="pptx.text.text.TextFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextFrame</span></code></a> objects<a class="headerlink" href="#textframe-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.text.text.</span></span><span class="sig-name descname"><span class="pre">TextFrame</span></span><a class="reference internal" href="../_modules/pptx/text/text.html#TextFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text.TextFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>The part of a shape that contains its text.</p>
+<p>Not all shapes have a text frame. Corresponds to the <code class="docutils literal notranslate"><span class="pre">&lt;p:txBody&gt;</span></code> element that can
+appear as a child element of <code class="docutils literal notranslate"><span class="pre">&lt;p:sp&gt;</span></code>. Not intended to be constructed directly.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.add_paragraph">
+<span class="sig-name descname"><span class="pre">add_paragraph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/text/text.html#TextFrame.add_paragraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text.TextFrame.add_paragraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return new <a class="reference internal" href="#pptx.text.text._Paragraph" title="pptx.text.text._Paragraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Paragraph</span></code></a> instance appended to the sequence of
+paragraphs contained in this text frame.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.auto_size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auto_size</span></span><a class="headerlink" href="#pptx.text.text.TextFrame.auto_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of automatic resizing that should be used to fit the text of
+this shape within its bounding box when the text would otherwise
+extend beyond the shape boundaries. May be <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>,
+<code class="docutils literal notranslate"><span class="pre">MSO_AUTO_SIZE.NONE</span></code>, <code class="docutils literal notranslate"><span class="pre">MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/text/text.html#TextFrame.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text.TextFrame.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all paragraphs except one empty one.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.fit_text">
+<span class="sig-name descname"><span class="pre">fit_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">font_family</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Calibri'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">18</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">italic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/text/text.html#TextFrame.fit_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text.TextFrame.fit_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit text-frame text entirely within bounds of its shape.</p>
+<p>Make the text in this text frame fit entirely within the bounds of
+its shape by setting word wrap on and applying the “best-fit” font
+size to all the text it contains. <a class="reference internal" href="#pptx.text.text.TextFrame.auto_size" title="pptx.text.text.TextFrame.auto_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextFrame.auto_size</span></code></a> is set
+to <code class="xref py py-attr docutils literal notranslate"><span class="pre">MSO_AUTO_SIZE.NONE</span></code>. The font size will not be set larger
+than <em>max_size</em> points. If the path to a matching TrueType font is
+provided as <em>font_file</em>, that font file will be used for the font
+metrics. If <em>font_file</em> is <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>, best efforts are made to locate
+a font file with matchhing <em>font_family</em>, <em>bold</em>, and <em>italic</em>
+installed on the current system (usually succeeds if the font is
+installed).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.margin_bottom">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margin_bottom</span></span><a class="headerlink" href="#pptx.text.text.TextFrame.margin_bottom" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> value representing the inset of text from the bottom text
+frame border. <a class="reference internal" href="util.html#pptx.util.Inches" title="pptx.util.Inches"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pptx.util.Inches()</span></code></a> provides a convenient way of
+setting the value, e.g. <code class="docutils literal notranslate"><span class="pre">text_frame.margin_bottom</span> <span class="pre">=</span> <span class="pre">Inches(0.05)</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.margin_left">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margin_left</span></span><a class="headerlink" href="#pptx.text.text.TextFrame.margin_left" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inset of text from left text frame border as <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.margin_right">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margin_right</span></span><a class="headerlink" href="#pptx.text.text.TextFrame.margin_right" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inset of text from right text frame border as <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.margin_top">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margin_top</span></span><a class="headerlink" href="#pptx.text.text.TextFrame.margin_top" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inset of text from top text frame border as <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.paragraphs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">paragraphs</span></span><a class="headerlink" href="#pptx.text.text.TextFrame.paragraphs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Immutable sequence of <a class="reference internal" href="#pptx.text.text._Paragraph" title="pptx.text.text._Paragraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Paragraph</span></code></a> instances corresponding to the
+paragraphs in this text frame. A text frame always contains at least
+one paragraph.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.text">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text</span></span><a class="headerlink" href="#pptx.text.text.TextFrame.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unicode/str containing all text in this text-frame.</p>
+<p>Read/write. The return value is a str (unicode) containing all text in this
+text-frame. A line-feed character (<code class="docutils literal notranslate"><span class="pre">&quot;\n&quot;</span></code>) separates the text for each
+paragraph. A vertical-tab character (<code class="docutils literal notranslate"><span class="pre">&quot;\v&quot;</span></code>) appears for each line break
+(aka. soft carriage-return) encountered.</p>
+<p>The vertical-tab character is how PowerPoint represents a soft carriage return
+in clipboard text, which is why that encoding was chosen.</p>
+<p>Assignment replaces all text in the text frame. The assigned value can be
+a 7-bit ASCII string, a UTF-8 encoded 8-bit string, or unicode. A bytes value
+(such as a Python 2 <code class="docutils literal notranslate"><span class="pre">str</span></code>) is converted to unicode assuming UTF-8 encoding.
+A new paragraph is added for each line-feed character (<code class="docutils literal notranslate"><span class="pre">&quot;\n&quot;</span></code>) encountered.
+A line-break (soft carriage-return) is inserted for each vertical-tab character
+(<code class="docutils literal notranslate"><span class="pre">&quot;\v&quot;</span></code>) encountered.</p>
+<p>Any control character other than newline, tab, or vertical-tab are escaped as
+plain-text like “_x001B_” (for ESC (ASCII 32) in this example).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.vertical_anchor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vertical_anchor</span></span><a class="headerlink" href="#pptx.text.text.TextFrame.vertical_anchor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read/write member of <a class="reference internal" href="enum/MsoVerticalAnchor.html#msoverticalanchor"><span class="std std-ref">MSO_VERTICAL_ANCHOR</span></a> enumeration or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>,
+representing the vertical alignment of text in this text frame.
+<code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates the effective value should be inherited from this
+object’s style hierarchy.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.TextFrame.word_wrap">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">word_wrap</span></span><a class="headerlink" href="#pptx.text.text.TextFrame.word_wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read-write setting determining whether lines of text in this shape
+are wrapped to fit within the shape’s width. Valid values are True,
+False, or None. True and False turn word wrap on and off,
+respectively. Assigning None to word wrap causes any word wrap
+setting to be removed from the text frame, causing it to inherit this
+setting from its style hierarchy.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="font-objects">
+<h2><a class="reference internal" href="#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> objects<a class="headerlink" href="#font-objects" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> object is encountered as a property of <a class="reference internal" href="#pptx.text.text._Run" title="pptx.text.text._Run"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Run</span></code></a>, <a class="reference internal" href="#pptx.text.text._Paragraph" title="pptx.text.text._Paragraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Paragraph</span></code></a>, and in
+future other presentation text objects.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.text.text.Font">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.text.text.</span></span><span class="sig-name descname"><span class="pre">Font</span></span><a class="reference internal" href="../_modules/pptx/text/text.html#Font"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text.Font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Character properties object, providing font size, font name, bold,
+italic, etc. Corresponds to <code class="docutils literal notranslate"><span class="pre">&lt;a:rPr&gt;</span></code> child element of a run. Also
+appears as <code class="docutils literal notranslate"><span class="pre">&lt;a:defRPr&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;a:endParaRPr&gt;</span></code> in paragraph and
+<code class="docutils literal notranslate"><span class="pre">&lt;a:defRPr&gt;</span></code> in list style elements.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.Font.bold">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bold</span></span><a class="headerlink" href="#pptx.text.text.Font.bold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set boolean bold value of <a class="reference internal" href="#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a>, e.g.
+<code class="docutils literal notranslate"><span class="pre">paragraph.font.bold</span> <span class="pre">=</span> <span class="pre">True</span></code>. If set to <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>, the bold setting is
+cleared and is inherited from an enclosing shape’s setting, or a
+setting in a style or master. Returns None if no bold attribute is
+present, meaning the effective bold value is inherited from a master
+or the theme.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.text.text.Font.color">
+<span class="sig-name descname"><span class="pre">color</span></span><a class="reference internal" href="../_modules/pptx/text/text.html#Font.color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text.Font.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.color.ColorFormat" title="pptx.dml.color.ColorFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFormat</span></code></a> instance that provides access to the color settings
+for this font.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.text.text.Font.fill">
+<span class="sig-name descname"><span class="pre">fill</span></span><a class="reference internal" href="../_modules/pptx/text/text.html#Font.fill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text.Font.fill" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="dml.html#pptx.dml.fill.FillFormat" title="pptx.dml.fill.FillFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">FillFormat</span></code></a> instance for this font, providing access to fill
+properties such as fill color.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.Font.italic">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">italic</span></span><a class="headerlink" href="#pptx.text.text.Font.italic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set boolean italic value of <a class="reference internal" href="#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> instance, with the same
+behaviors as bold with respect to None values.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.Font.language_id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">language_id</span></span><a class="headerlink" href="#pptx.text.text.Font.language_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the language id of this <a class="reference internal" href="#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> instance. The language id
+is a member of the <a class="reference internal" href="enum/MsoLanguageId.html#msolanguageid"><span class="std std-ref">MSO_LANGUAGE_ID</span></a> enumeration. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>
+removes any language setting, the same behavior as assigning
+<cite>MSO_LANGUAGE_ID.NONE</cite>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.Font.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.text.text.Font.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get or set the typeface name for this <a class="reference internal" href="#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> instance, causing the
+text it controls to appear in the named font, if a matching font is
+found. Returns <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if the typeface is currently inherited from the
+theme. Setting it to <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> removes any override of the theme
+typeface.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.Font.size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#pptx.text.text.Font.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read/write <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> value or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>, indicating the font height in
+English Metric Units (EMU). <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates the font size should be
+inherited from its style hierarchy, such as a placeholder or document
+defaults (usually 18pt). <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> is a subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> having
+properties for convenient conversion into points or other length
+units. Likewise, the <a class="reference internal" href="util.html#pptx.util.Pt" title="pptx.util.Pt"><code class="xref py py-class docutils literal notranslate"><span class="pre">pptx.util.Pt</span></code></a> class allows convenient
+specification of point values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">font</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">font</span><span class="o">.</span><span class="n">size</span>
+<span class="mi">304800</span>
+<span class="o">&gt;&gt;</span> <span class="n">font</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">pt</span>
+<span class="mf">24.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text.Font.underline">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">underline</span></span><a class="headerlink" href="#pptx.text.text.Font.underline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read/write. <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>, or a member of the
+<a class="reference internal" href="enum/MsoTextUnderlineType.html#msotextunderlinetype"><span class="std std-ref">MSO_TEXT_UNDERLINE_TYPE</span></a> enumeration indicating the underline
+setting for this font. <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> is the default and indicates the
+underline setting should be inherited from the style hierarchy, such
+as from a placeholder. <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> indicates single underline. <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code>
+indicates no underline. Other settings such as double and wavy
+underlining are indicated with members of the
+<a class="reference internal" href="enum/MsoTextUnderlineType.html#msotextunderlinetype"><span class="std std-ref">MSO_TEXT_UNDERLINE_TYPE</span></a> enumeration.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="paragraph-objects">
+<h2><a class="reference internal" href="#pptx.text.text._Paragraph" title="pptx.text.text._Paragraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Paragraph</span></code></a> objects<a class="headerlink" href="#paragraph-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.text.text.</span></span><span class="sig-name descname"><span class="pre">_Paragraph</span></span><a class="reference internal" href="../_modules/pptx/text/text.html#_Paragraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text._Paragraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Paragraph object. Not intended to be constructed directly.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.add_line_break">
+<span class="sig-name descname"><span class="pre">add_line_break</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/text/text.html#_Paragraph.add_line_break"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text._Paragraph.add_line_break" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add line break at end of this paragraph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.add_run">
+<span class="sig-name descname"><span class="pre">add_run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/text/text.html#_Paragraph.add_run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text._Paragraph.add_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new run appended to the runs in this paragraph.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.alignment">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">alignment</span></span><a class="headerlink" href="#pptx.text.text._Paragraph.alignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Horizontal alignment of this paragraph, represented by either
+a member of the enumeration <a class="reference internal" href="enum/PpParagraphAlignment.html#ppparagraphalignment"><span class="std std-ref">PP_PARAGRAPH_ALIGNMENT</span></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>.
+The value <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates the paragraph should ‘inherit’ its
+effective value from its style hierarchy. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> removes
+any explicit setting, causing its inherited value to be used.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/text/text.html#_Paragraph.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text._Paragraph.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all content from this paragraph. Paragraph properties are
+preserved. Content includes runs, line breaks, and fields.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.font">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">font</span></span><a class="headerlink" href="#pptx.text.text._Paragraph.font" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> object containing default character properties for the runs in
+this paragraph. These character properties override default properties
+inherited from parent objects such as the text frame the paragraph is
+contained in and they may be overridden by character properties set at
+the run level.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.level">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">level</span></span><a class="headerlink" href="#pptx.text.text._Paragraph.level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read-write integer indentation level of this paragraph, having a
+range of 0-8 inclusive. 0 represents a top-level paragraph and is the
+default value. Indentation level is most commonly encountered in a
+bulleted list, as is found on a word bullet slide.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.line_spacing">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">line_spacing</span></span><a class="headerlink" href="#pptx.text.text._Paragraph.line_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numeric or <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> value specifying the space between baselines in
+successive lines of this paragraph. A value of <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates no
+explicit value is assigned and its effective value is inherited from
+the paragraph’s style hierarchy. A numeric value, e.g. <cite>2</cite> or <cite>1.5</cite>,
+indicates spacing is applied in multiples of line heights. A <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a>
+value such as <code class="docutils literal notranslate"><span class="pre">Pt(12)</span></code> indicates spacing is a fixed height. The
+<a class="reference internal" href="util.html#pptx.util.Pt" title="pptx.util.Pt"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pt</span></code></a> value class is a convenient way to apply line spacing in units
+of points.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.runs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">runs</span></span><a class="headerlink" href="#pptx.text.text._Paragraph.runs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Immutable sequence of <a class="reference internal" href="#pptx.text.text._Run" title="pptx.text.text._Run"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Run</span></code></a> objects corresponding to the runs in
+this paragraph.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.space_after">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">space_after</span></span><a class="headerlink" href="#pptx.text.text._Paragraph.space_after" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> value specifying the spacing to appear between this
+paragraph and the subsequent paragraph. A value of <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates
+no explicit value is assigned and its effective value is inherited
+from the paragraph’s style hierarchy. <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> objects provide
+convenience properties, such as <code class="docutils literal notranslate"><span class="pre">.pt</span></code> and <code class="docutils literal notranslate"><span class="pre">.inches</span></code>, that allow
+easy conversion to various length units.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.space_before">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">space_before</span></span><a class="headerlink" href="#pptx.text.text._Paragraph.space_before" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> value specifying the spacing to appear between this
+paragraph and the prior paragraph. A value of <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates no
+explicit value is assigned and its effective value is inherited from
+the paragraph’s style hierarchy. <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> objects provide convenience
+properties, such as <code class="docutils literal notranslate"><span class="pre">.pt</span></code> and <code class="docutils literal notranslate"><span class="pre">.cm</span></code>, that allow easy conversion
+to various length units.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Paragraph.text">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text</span></span><a class="headerlink" href="#pptx.text.text._Paragraph.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>str (unicode) representation of paragraph contents.</p>
+<p>Read/write. This value is formed by concatenating the text in each run and field
+making up the paragraph, adding a vertical-tab character (<code class="docutils literal notranslate"><span class="pre">&quot;\v&quot;</span></code>) for each
+line-break element (<cite>&lt;a:br&gt;</cite>, soft carriage-return) encountered.</p>
+<p>While the encoding of line-breaks as a vertical tab might be surprising at
+first, doing so is consistent with PowerPoint’s clipboard copy behavior and
+allows a line-break to be distinguished from a paragraph boundary within the str
+return value.</p>
+<p>Assignment causes all content in the paragraph to be replaced. Each vertical-tab
+character (<code class="docutils literal notranslate"><span class="pre">&quot;\v&quot;</span></code>) in the assigned str is translated to a line-break, as is
+each line-feed character (<code class="docutils literal notranslate"><span class="pre">&quot;\n&quot;</span></code>). Contrast behavior of line-feed character
+in <cite>TextFrame.text</cite> setter. If line-feed characters are intended to produce new
+paragraphs, use <cite>TextFrame.text</cite> instead. Any other control characters in the
+assigned string are escaped as a hex representation like “_x001B_” (for ESC
+(ASCII 27) in this example).</p>
+<p>The assigned value can be a 7-bit ASCII byte string (Python 2 str), a UTF-8
+encoded 8-bit byte string (Python 2 str), or unicode. Bytes values are converted
+to unicode assuming UTF-8 encoding.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="run-objects">
+<h2><a class="reference internal" href="#pptx.text.text._Run" title="pptx.text.text._Run"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Run</span></code></a> objects<a class="headerlink" href="#run-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.text.text._Run">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.text.text.</span></span><span class="sig-name descname"><span class="pre">_Run</span></span><a class="reference internal" href="../_modules/pptx/text/text.html#_Run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text._Run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text run object. Corresponds to <code class="docutils literal notranslate"><span class="pre">&lt;a:r&gt;</span></code> child element in a paragraph.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Run.font">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">font</span></span><a class="headerlink" href="#pptx.text.text._Run.font" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> instance containing run-level character properties for the
+text in this run. Character properties can be and perhaps most often
+are inherited from parent objects such as the paragraph and slide
+layout the run is contained in. Only those specifically overridden at
+the run level are contained in the font object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.text.text._Run.hyperlink">
+<span class="sig-name descname"><span class="pre">hyperlink</span></span><a class="reference internal" href="../_modules/pptx/text/text.html#_Run.hyperlink"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.text.text._Run.hyperlink" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_Hyperlink</span></code> instance acting as proxy for any <code class="docutils literal notranslate"><span class="pre">&lt;a:hlinkClick&gt;</span></code>
+element under the run properties element. Created on demand, the
+hyperlink object is available whether an <code class="docutils literal notranslate"><span class="pre">&lt;a:hlinkClick&gt;</span></code> element
+is present or not, and creates or deletes that element as appropriate
+in response to actions on its methods and attributes.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.text.text._Run.text">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text</span></span><a class="headerlink" href="#pptx.text.text._Run.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read/write. A unicode string containing the text in this run.</p>
+<p>Assignment replaces all text in the run. The assigned value can be a 7-bit ASCII
+string, a UTF-8 encoded 8-bit string, or unicode. String values are converted to
+unicode assuming UTF-8 encoding.</p>
+<p>Any other control characters in the assigned string other than tab or newline
+are escaped as a hex representation. For example, ESC (ASCII 27) is escaped as
+“_x001B_”. Contrast the behavior of <cite>TextFrame.text</cite> and <cite>_Paragraph.text</cite> with
+respect to line-feed and vertical-tab characters.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Text-related objects</a><ul>
+<li><a class="reference internal" href="#textframe-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextFrame</span></code> objects</a></li>
+<li><a class="reference internal" href="#font-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code> objects</a></li>
+<li><a class="reference internal" href="#paragraph-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Paragraph</span></code> objects</a></li>
+<li><a class="reference internal" href="#run-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Run</span></code> objects</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="chart.html"
+                          title="previous chapter">Charts</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="action.html"
+                          title="next chapter">Click Action-related Objects</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="action.html" title="Click Action-related Objects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="chart.html" title="Charts"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Text-related objects</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

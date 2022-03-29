@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Working with text &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Working with charts" href="charts.html" />
+    <link rel="prev" title="Working with placeholders" href="placeholders-using.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="charts.html" title="Working with charts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="placeholders-using.html" title="Working with placeholders"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Working with text</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="working-with-text">
+<h1>Working with text<a class="headerlink" href="#working-with-text" title="Permalink to this headline">¶</a></h1>
+<p>Auto shapes and table cells can contain text. Other shapes can’t. Text is
+always manipulated the same way, regardless of its container.</p>
+<p>Text exists in a hierarchy of three levels:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/shapes.html#pptx.shapes.autoshape.Shape.text_frame" title="pptx.shapes.autoshape.Shape.text_frame"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Shape.text_frame</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/text.html#pptx.text.text.TextFrame.paragraphs" title="pptx.text.text.TextFrame.paragraphs"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextFrame.paragraphs</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/text.html#pptx.text.text._Paragraph.runs" title="pptx.text.text._Paragraph.runs"><code class="xref py py-attr docutils literal notranslate"><span class="pre">_Paragraph.runs</span></code></a></p></li>
+</ul>
+<p>All the text in a shape is contained in its <em>text frame</em>. A text frame has
+vertical alignment, margins, wrapping and auto-fit behavior, a rotation angle,
+some possible 3D visual features, and can be set to format its text into
+multiple columns. It also contains a sequence of paragraphs, which always
+contains at least one paragraph, even when empty.</p>
+<p>A paragraph has line spacing, space before, space after, available bullet
+formatting, tabs, outline/indentation level, and horizontal alignment.
+A paragraph can be empty, but if it contains any text, that text is contained
+in one or more runs.</p>
+<p>A run exists to provide character level formatting, including font typeface,
+size, and color, an optional hyperlink target URL, bold, italic, and underline
+styles, strikethrough, kerning, and a few capitalization styles like all caps.</p>
+<p>Let’s run through these one by one. Only features available in the current
+release are shown.</p>
+<section id="accessing-the-text-frame">
+<h2>Accessing the text frame<a class="headerlink" href="#accessing-the-text-frame" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned, not all shapes have a text frame. So if you’re not sure and you
+don’t want to catch the possible exception, you’ll want to check before
+attempting to access it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">shape</span><span class="o">.</span><span class="n">has_text_frame</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">text_frame</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span>
+    <span class="c1"># do things with the text frame</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</section>
+<section id="accessing-paragraphs">
+<h2>Accessing paragraphs<a class="headerlink" href="#accessing-paragraphs" title="Permalink to this headline">¶</a></h2>
+<p>A text frame always contains at least one paragraph. This causes the process
+of getting multiple paragraphs into a shape to be a little clunkier than one
+might like. Say for example you want a shape with three paragraphs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paragraph_strs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Egg, bacon, sausage and spam.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Spam, bacon, sausage and spam.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Spam, egg, spam, spam, bacon and spam.&#39;</span>
+<span class="p">]</span>
+
+<span class="n">text_frame</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>  <span class="c1"># remove any existing paragraphs, leaving one empty one</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">paragraph_strs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">para_str</span> <span class="ow">in</span> <span class="n">paragraph_strs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">para_str</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-text">
+<h2>Adding text<a class="headerlink" href="#adding-text" title="Permalink to this headline">¶</a></h2>
+<p>Only runs can actually contain text. Assigning a string to the <code class="docutils literal notranslate"><span class="pre">.text</span></code>
+attribute on a shape, text frame, or paragraph is a shortcut method for placing
+text in a run contained by those objects. The following two snippets produce
+the same result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shape</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;foobar&#39;</span>
+
+<span class="c1"># is equivalent to ...</span>
+
+<span class="n">text_frame</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">()</span>
+<span class="n">run</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;foobar&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="applying-text-frame-level-formatting">
+<h2>Applying text frame-level formatting<a class="headerlink" href="#applying-text-frame-level-formatting" title="Permalink to this headline">¶</a></h2>
+<p>The following produces a shape with a single paragraph, a slightly wider bottom
+than top margin (these default to 0.05”), no left margin, text aligned top, and
+word wrapping turned off. In addition, the auto-size behavior is set to
+adjust the width and height of the shape to fit its text. Note that vertical
+alignment is set on the text frame. Horizontal alignment is set on each
+paragraph:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Inches</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.text</span> <span class="kn">import</span> <span class="n">MSO_ANCHOR</span><span class="p">,</span> <span class="n">MSO_AUTO_SIZE</span>
+
+<span class="n">text_frame</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Spam, eggs, and spam&#39;</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">margin_bottom</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">0.08</span><span class="p">)</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">margin_left</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">vertical_anchor</span> <span class="o">=</span> <span class="n">MSO_ANCHOR</span><span class="o">.</span><span class="n">TOP</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">word_wrap</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">auto_size</span> <span class="o">=</span> <span class="n">MSO_AUTO_SIZE</span><span class="o">.</span><span class="n">SHAPE_TO_FIT_TEXT</span>
+</pre></div>
+</div>
+<p>The possible values for <code class="docutils literal notranslate"><span class="pre">TextFrame.auto_size</span></code> and
+<code class="docutils literal notranslate"><span class="pre">TextFrame.vertical_anchor</span></code> are specified by the enumeration
+<a class="reference internal" href="../api/enum/MsoAutoSize.html#msoautosize"><span class="std std-ref">MSO_AUTO_SIZE</span></a> and <a class="reference internal" href="../api/enum/MsoVerticalAnchor.html#msoverticalanchor"><span class="std std-ref">MSO_VERTICAL_ANCHOR</span></a> respectively.</p>
+</section>
+<section id="applying-paragraph-formatting">
+<h2>Applying paragraph formatting<a class="headerlink" href="#applying-paragraph-formatting" title="Permalink to this headline">¶</a></h2>
+<p>The following produces a shape containing three left-aligned paragraphs, the
+second and third indented (like sub-bullets) under the first:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx.enum.text</span> <span class="kn">import</span> <span class="n">PP_ALIGN</span>
+
+<span class="n">paragraph_strs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Egg, bacon, sausage and spam.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Spam, bacon, sausage and spam.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Spam, egg, spam, spam, bacon and spam.&#39;</span>
+<span class="p">]</span>
+
+<span class="n">text_frame</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">paragraph_strs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">p</span><span class="o">.</span><span class="n">alignment</span> <span class="o">=</span> <span class="n">PP_ALIGN</span><span class="o">.</span><span class="n">LEFT</span>
+
+<span class="k">for</span> <span class="n">para_str</span> <span class="ow">in</span> <span class="n">paragraph_strs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">para_str</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">alignment</span> <span class="o">=</span> <span class="n">PP_ALIGN</span><span class="o">.</span><span class="n">LEFT</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="applying-character-formatting">
+<h2>Applying character formatting<a class="headerlink" href="#applying-character-formatting" title="Permalink to this headline">¶</a></h2>
+<p>Character level formatting is applied at the run level, using the <code class="docutils literal notranslate"><span class="pre">.font</span></code>
+attribute. The following formats a sentence in 18pt Calibri Bold and applies
+the theme color Accent 1.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx.dml.color</span> <span class="kn">import</span> <span class="n">RGBColor</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.dml</span> <span class="kn">import</span> <span class="n">MSO_THEME_COLOR</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Pt</span>
+
+<span class="n">text_frame</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span>
+<span class="n">text_frame</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>  <span class="c1"># not necessary for newly-created shape</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">()</span>
+<span class="n">run</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Spam, eggs, and spam&#39;</span>
+
+<span class="n">font</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">font</span>
+<span class="n">font</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Calibri&#39;</span>
+<span class="n">font</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">font</span><span class="o">.</span><span class="n">bold</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">font</span><span class="o">.</span><span class="n">italic</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># cause value to be inherited from theme</span>
+<span class="n">font</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">theme_color</span> <span class="o">=</span> <span class="n">MSO_THEME_COLOR</span><span class="o">.</span><span class="n">ACCENT_1</span>
+</pre></div>
+</div>
+<p>If you prefer, you can set the font color to an absolute RGB value. Note that
+this will not change color when the theme is changed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">font</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mh">0xFF</span><span class="p">,</span> <span class="mh">0x7F</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A run can also be made into a hyperlink by providing a target URL:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run</span><span class="o">.</span><span class="n">hyperlink</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/scanny/python-pptx&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Working with text</a><ul>
+<li><a class="reference internal" href="#accessing-the-text-frame">Accessing the text frame</a></li>
+<li><a class="reference internal" href="#accessing-paragraphs">Accessing paragraphs</a></li>
+<li><a class="reference internal" href="#adding-text">Adding text</a></li>
+<li><a class="reference internal" href="#applying-text-frame-level-formatting">Applying text frame-level formatting</a></li>
+<li><a class="reference internal" href="#applying-paragraph-formatting">Applying paragraph formatting</a></li>
+<li><a class="reference internal" href="#applying-character-formatting">Applying character formatting</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="placeholders-using.html"
+                          title="previous chapter">Working with placeholders</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="charts.html"
+                          title="next chapter">Working with charts</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="charts.html" title="Working with charts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="placeholders-using.html" title="Working with placeholders"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Working with text</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

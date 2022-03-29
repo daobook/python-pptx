@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Core Document Properties &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Enumerations" href="enumerations.html" />
+    <link rel="prev" title="Line format" href="dml-line.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="enumerations.html" title="Enumerations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dml-line.html" title="Line format"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Core Document Properties</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="core-document-properties">
+<h1>Core Document Properties<a class="headerlink" href="#core-document-properties" title="Permalink to this headline">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Updated</dt>
+<dd class="field-odd"><p>2013-06-22</p>
+</dd>
+<dt class="field-even">Author</dt>
+<dd class="field-even"><p>Steve Canny</p>
+</dd>
+<dt class="field-odd">Status</dt>
+<dd class="field-odd"><p><strong>WORKING DRAFT</strong></p>
+</dd>
+</dl>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The ‘Core’ in core document properties refers to <a class="reference external" href="http://en.wikipedia.org/wiki/Dublin_Core">Dublin Core</a>, a metadata
+standard that defines a core set of elements to describe resources.</p>
+<p>ISO/IEC 29500-2 Section 11</p>
+</section>
+<section id="api-sketch">
+<h2>API Sketch<a class="headerlink" href="#api-sketch" title="Permalink to this headline">¶</a></h2>
+<p>Presentation.core_properties</p>
+<p>_CoreProperties():</p>
+<p>All string values are limited to 255 chars (unicode chars, not bytes)</p>
+<ul class="simple">
+<li><p>title</p></li>
+<li><p>subject</p></li>
+<li><p>author</p></li>
+<li><p>keywords</p></li>
+<li><p>comments</p></li>
+<li><p>last_modified_by</p></li>
+<li><p>revision (integer)</p></li>
+<li><p>created (date in format: ‘2013-04-06T06:03:36Z’)</p></li>
+<li><p>modified (date in same format)</p></li>
+<li><p>category</p></li>
+</ul>
+<p>Status and company (and many others) are custom properties, held in
+<code class="docutils literal notranslate"><span class="pre">app.xml</span></code>.</p>
+</section>
+<section id="xml-produced-by-powerpoint-client">
+<h2>XML produced by PowerPoint® client<a class="headerlink" href="#xml-produced-by-powerpoint-client" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span>
+<span class="nt">&lt;cp:coreProperties</span> <span class="na">xmlns:cp=</span><span class="s">&quot;http://schemas.openxmlformats.org/package/2006/metadata/core-properties&quot;</span> <span class="na">xmlns:dc=</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span> <span class="na">xmlns:dcterms=</span><span class="s">&quot;http://purl.org/dc/terms/&quot;</span> <span class="na">xmlns:dcmitype=</span><span class="s">&quot;http://purl.org/dc/dcmitype/&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;dc:title&gt;</span>Core Document Properties Exploration<span class="nt">&lt;/dc:title&gt;</span>
+  <span class="nt">&lt;dc:subject&gt;</span>PowerPoint core document properties<span class="nt">&lt;/dc:subject&gt;</span>
+  <span class="nt">&lt;dc:creator&gt;</span>Steve Canny<span class="nt">&lt;/dc:creator&gt;</span>
+  <span class="nt">&lt;cp:keywords&gt;</span>powerpoint; open xml; dublin core; microsoft office<span class="nt">&lt;/cp:keywords&gt;</span>
+  <span class="nt">&lt;dc:description&gt;</span>One thing I&#39;d like to discover is just how line wrapping is handled in the comments. This paragraph is all on a single line._x000d__x000d_This is a second paragraph separated from the first by two line feeds.<span class="nt">&lt;/dc:description&gt;</span>
+  <span class="nt">&lt;cp:lastModifiedBy&gt;</span>Steve Canny<span class="nt">&lt;/cp:lastModifiedBy&gt;</span>
+  <span class="nt">&lt;cp:revision&gt;</span>2<span class="nt">&lt;/cp:revision&gt;</span>
+  <span class="nt">&lt;dcterms:created</span> <span class="na">xsi:type=</span><span class="s">&quot;dcterms:W3CDTF&quot;</span><span class="nt">&gt;</span>2013-04-06T06:03:36Z<span class="nt">&lt;/dcterms:created&gt;</span>
+  <span class="nt">&lt;dcterms:modified</span> <span class="na">xsi:type=</span><span class="s">&quot;dcterms:W3CDTF&quot;</span><span class="nt">&gt;</span>2013-06-15T06:09:18Z<span class="nt">&lt;/dcterms:modified&gt;</span>
+  <span class="nt">&lt;cp:category&gt;</span>analysis<span class="nt">&lt;/cp:category&gt;</span>
+<span class="nt">&lt;/cp:coreProperties&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="schema">
+<h2>Schema<a class="headerlink" href="#schema" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xs:schema</span>
+  <span class="na">targetNamespace=</span><span class="s">&quot;http://schemas.openxmlformats.org/package/2006/metadata/core-properties&quot;</span>
+  <span class="na">xmlns=</span><span class="s">&quot;http://schemas.openxmlformats.org/package/2006/metadata/core-properties&quot;</span>
+  <span class="na">xmlns:xs=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>
+  <span class="na">xmlns:dc=</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span>
+  <span class="na">xmlns:dcterms=</span><span class="s">&quot;http://purl.org/dc/terms/&quot;</span>
+  <span class="na">elementFormDefault=</span><span class="s">&quot;qualified&quot;</span>
+  <span class="na">blockDefault=</span><span class="s">&quot;#all&quot;</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;xs:import</span>
+    <span class="na">namespace=</span><span class="s">&quot;http://purl.org/dc/elements/1.1/&quot;</span>
+    <span class="na">schemaLocation=</span><span class="s">&quot;http://dublincore.org/schemas/xmls/qdc/2003/04/02/dc.xsd&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xs:import</span>
+    <span class="na">namespace=</span><span class="s">&quot;http://purl.org/dc/terms/&quot;</span>
+    <span class="na">schemaLocation=</span><span class="s">&quot;http://dublincore.org/schemas/xmls/qdc/2003/04/02/dcterms.xsd&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xs:import</span>
+    <span class="na">id=</span><span class="s">&quot;xml&quot;</span>
+    <span class="na">namespace=</span><span class="s">&quot;http://www.w3.org/XML/1998/namespace&quot;</span><span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;coreProperties&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_CoreProperties&quot;</span><span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;xs:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_CoreProperties&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xs:all&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;category&quot;</span>        <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;contentStatus&quot;</span>   <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">ref=</span><span class="s">&quot;dcterms:created&quot;</span>                     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">ref=</span><span class="s">&quot;dc:creator&quot;</span>                          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">ref=</span><span class="s">&quot;dc:description&quot;</span>                      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">ref=</span><span class="s">&quot;dc:identifier&quot;</span>                       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Keywords&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">ref=</span><span class="s">&quot;dc:language&quot;</span>                         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;lastModifiedBy&quot;</span>  <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;lastPrinted&quot;</span>     <span class="na">type=</span><span class="s">&quot;xs:dateTime&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">ref=</span><span class="s">&quot;dcterms:modified&quot;</span>                    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;revision&quot;</span>        <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">ref=</span><span class="s">&quot;dc:subject&quot;</span>                          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">ref=</span><span class="s">&quot;dc:title&quot;</span>                            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;version&quot;</span>         <span class="na">type=</span><span class="s">&quot;xs:string&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xs:all&gt;</span>
+  <span class="nt">&lt;/xs:complexType&gt;</span>
+
+  <span class="nt">&lt;xs:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Keywords&quot;</span> <span class="na">mixed=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xs:sequence&gt;</span>
+      <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;value&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Keyword&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xs:sequence&gt;</span>
+    <span class="nt">&lt;xs:attribute</span> <span class="na">ref=</span><span class="s">&quot;xml:lang&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xs:complexType&gt;</span>
+
+  <span class="nt">&lt;xs:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Keyword&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xs:simpleContent&gt;</span>
+      <span class="nt">&lt;xs:extension</span> <span class="na">base=</span><span class="s">&quot;xs:string&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;xs:attribute</span> <span class="na">ref=</span><span class="s">&quot;xml:lang&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/xs:extension&gt;</span>
+    <span class="nt">&lt;/xs:simpleContent&gt;</span>
+  <span class="nt">&lt;/xs:complexType&gt;</span>
+
+<span class="nt">&lt;/xs:schema&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Core Document Properties</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#api-sketch">API Sketch</a></li>
+<li><a class="reference internal" href="#xml-produced-by-powerpoint-client">XML produced by PowerPoint® client</a></li>
+<li><a class="reference internal" href="#schema">Schema</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="dml-line.html"
+                          title="previous chapter">Line format</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="enumerations.html"
+                          title="next chapter">Enumerations</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="enumerations.html" title="Enumerations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dml-line.html" title="Line format"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Core Document Properties</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

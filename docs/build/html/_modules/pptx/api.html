@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.api &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.api</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.api</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Directly exposed API classes, Presentation for now. Provides some syntactic</span>
+<span class="sd">sugar for interacting with the pptx.presentation.Package graph and also</span>
+<span class="sd">provides some insulation so not so many classes in the other modules need to</span>
+<span class="sd">be named as internal (leading underscore).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">.opc.constants</span> <span class="kn">import</span> <span class="n">CONTENT_TYPE</span> <span class="k">as</span> <span class="n">CT</span>
+<span class="kn">from</span> <span class="nn">.package</span> <span class="kn">import</span> <span class="n">Package</span>
+
+
+<div class="viewcode-block" id="Presentation"><a class="viewcode-back" href="../../api/presentation.html#pptx.Presentation">[docs]</a><span class="k">def</span> <span class="nf">Presentation</span><span class="p">(</span><span class="n">pptx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a |Presentation| object loaded from *pptx*, where *pptx* can be</span>
+<span class="sd">    either a path to a ``.pptx`` file (a string) or a file-like object. If</span>
+<span class="sd">    *pptx* is missing or ``None``, the built-in default presentation</span>
+<span class="sd">    &quot;template&quot; is loaded.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">pptx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">pptx</span> <span class="o">=</span> <span class="n">_default_pptx_path</span><span class="p">()</span>
+
+    <span class="n">presentation_part</span> <span class="o">=</span> <span class="n">Package</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">pptx</span><span class="p">)</span><span class="o">.</span><span class="n">main_document_part</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_pptx_package</span><span class="p">(</span><span class="n">presentation_part</span><span class="p">):</span>
+        <span class="n">tmpl</span> <span class="o">=</span> <span class="s2">&quot;file &#39;</span><span class="si">%s</span><span class="s2">&#39; is not a PowerPoint file, content type is &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">tmpl</span> <span class="o">%</span> <span class="p">(</span><span class="n">pptx</span><span class="p">,</span> <span class="n">presentation_part</span><span class="o">.</span><span class="n">content_type</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">presentation_part</span><span class="o">.</span><span class="n">presentation</span></div>
+
+
+<span class="k">def</span> <span class="nf">_default_pptx_path</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the path to the built-in default .pptx package.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_thisdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_thisdir</span><span class="p">,</span> <span class="s2">&quot;templates&quot;</span><span class="p">,</span> <span class="s2">&quot;default.pptx&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_is_pptx_package</span><span class="p">(</span><span class="n">prs_part</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return |True| if *prs_part* is a valid main document part, |False|</span>
+<span class="sd">    otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">valid_content_types</span> <span class="o">=</span> <span class="p">(</span><span class="n">CT</span><span class="o">.</span><span class="n">PML_PRESENTATION_MAIN</span><span class="p">,</span> <span class="n">CT</span><span class="o">.</span><span class="n">PML_PRES_MACRO_MAIN</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prs_part</span><span class="o">.</span><span class="n">content_type</span> <span class="ow">in</span> <span class="n">valid_content_types</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.api</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

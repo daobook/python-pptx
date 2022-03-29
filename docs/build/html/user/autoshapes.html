@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Working with AutoShapes &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Understanding placeholders" href="placeholders-understanding.html" />
+    <link rel="prev" title="Understanding Shapes" href="understanding-shapes.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="placeholders-understanding.html" title="Understanding placeholders"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="understanding-shapes.html" title="Understanding Shapes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Working with AutoShapes</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="working-with-autoshapes">
+<h1>Working with AutoShapes<a class="headerlink" href="#working-with-autoshapes" title="Permalink to this headline">¶</a></h1>
+<p>Auto shapes are regular shape shapes. Squares, circles, triangles, stars,
+that sort of thing. There are 182 different auto shapes to choose from. 120
+of these have adjustment “handles” you can use to change the shape, sometimes
+dramatically.</p>
+<p>Many shape types share a common set of properties. We’ll introduce many of
+them here because several of those shapes are just a specialized form of
+AutoShape.</p>
+<section id="adding-an-auto-shape">
+<h2>Adding an auto shape<a class="headerlink" href="#adding-an-auto-shape" title="Permalink to this headline">¶</a></h2>
+<p>The following code adds a rounded rectangle shape, one inch square, and
+positioned one inch from the top-left corner of the slide:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">MSO_SHAPE</span>
+
+<span class="n">shapes</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
+<span class="n">left</span> <span class="o">=</span> <span class="n">top</span> <span class="o">=</span> <span class="n">width</span> <span class="o">=</span> <span class="n">height</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_shape</span><span class="p">(</span>
+    <span class="n">MSO_SHAPE</span><span class="o">.</span><span class="n">ROUNDED_RECTANGLE</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="../api/enum/MsoAutoShapeType.html#msoautoshapetype"><span class="std std-ref">MSO_AUTO_SHAPE_TYPE</span></a> enumeration page for a list of all 182 auto
+shape types.</p>
+</section>
+<section id="understanding-english-metric-units">
+<span id="emu"></span><h2>Understanding English Metric Units<a class="headerlink" href="#understanding-english-metric-units" title="Permalink to this headline">¶</a></h2>
+<p>In the prior example we set the position and dimension values to the
+expression <code class="docutils literal notranslate"><span class="pre">Inches(1.0)</span></code>. What’s that about?</p>
+<p>Internally, PowerPoint stores length values in <em>English Metric Units</em> (EMU).
+This term might be worth a quick Googling, but the short story is EMU is an
+integer unit of length, 914400 to the inch. Most lengths in Office documents
+are stored in EMU. 914400 has the great virtue that it is evenly divisible by
+a great many common factors, allowing exact conversion between inches and
+centimeters, for example. Being an integer, it can be represented exactly
+across serializations and across platforms.</p>
+<p>As you might imagine, working directly in EMU is inconvenient. To make it
+easier, python-pptx provides a collection of value types to allow easy
+specification and conversion into convenient units:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Inches</span><span class="p">,</span> <span class="n">Pt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">length</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">length</span>
+<span class="go">914400</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">length</span><span class="o">.</span><span class="n">inches</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">length</span><span class="o">.</span><span class="n">cm</span>
+<span class="go">2.54</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">length</span><span class="o">.</span><span class="n">pt</span>
+<span class="go">72.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">length</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">72</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">length</span>
+<span class="go">914400</span>
+</pre></div>
+</div>
+<p>More details are available in the <a class="reference internal" href="../api/util.html#util"><span class="std std-ref">API documentation for pptx.util</span></a></p>
+</section>
+<section id="shape-position-and-dimensions">
+<h2>Shape position and dimensions<a class="headerlink" href="#shape-position-and-dimensions" title="Permalink to this headline">¶</a></h2>
+<p>All shapes have a position on their slide and have a size. In general,
+position and size are specified when the shape is created. Position and size
+can also be read from existing shapes and changed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">MSO_SHAPE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">left</span> <span class="o">=</span> <span class="n">top</span> <span class="o">=</span> <span class="n">width</span> <span class="o">=</span> <span class="n">height</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_shape</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">MSO_SHAPE</span><span class="o">.</span><span class="n">ROUNDED_RECTANGLE</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">height</span>
+<span class="go">(914400, 914400, 914400, 914400)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">inches</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">inches</span>
+<span class="go">2.0</span>
+</pre></div>
+</div>
+</section>
+<section id="fill">
+<h2>Fill<a class="headerlink" href="#fill" title="Permalink to this headline">¶</a></h2>
+<p>AutoShapes have an outline around their outside edge. What appears within
+that outline is called the shape’s <em>fill</em>.</p>
+<p>The most common type of fill is a solid color. A shape may also be filled
+with a gradient, a picture, a pattern (like cross-hatching for example), or
+may have no fill (transparent).</p>
+<p>When a color is used, it may be specified as a specific RGB value or a color
+from the theme palette.</p>
+<p>Because there are so many options, the API for fill is a bit complex. This
+code sets the fill of a shape to red:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">fill</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This sets it to the theme color that appears as ‘Accent 1 - 25% Darker’ in
+the toolbar palette:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx.enum.dml</span> <span class="kn">import</span> <span class="n">MSO_THEME_COLOR</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">fill</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span><span class="o">.</span><span class="n">theme_color</span> <span class="o">=</span> <span class="n">MSO_THEME_COLOR</span><span class="o">.</span><span class="n">ACCENT_1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span><span class="o">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span>
+</pre></div>
+</div>
+<p>This sets the shape fill to transparent, or ‘No Fill’ as it’s called in the
+PowerPoint UI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">background</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As you can see, the first step is to specify the desired fill type by calling
+the corresponding method on fill. Doing so actually changes the properties
+available on the fill object. For example, referencing <code class="docutils literal notranslate"><span class="pre">.fore_color</span></code> on a
+fill object after calling its <code class="docutils literal notranslate"><span class="pre">.background()</span></code> method will raise an
+exception:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">fill</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span>
+<span class="go">&lt;pptx.dml.color.ColorFormat object at 0x10ce20910&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">background</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span>
+<span class="gt">Traceback (most recent call last):</span>
+  <span class="c">...</span>
+<span class="gr">TypeError</span>: <span class="n">a transparent (background) fill has no foreground color</span>
+</pre></div>
+</div>
+</section>
+<section id="line">
+<h2>Line<a class="headerlink" href="#line" title="Permalink to this headline">¶</a></h2>
+<p>The outline of an AutoShape can also be formatted, including setting its
+color, width, dash (solid, dashed, dotted, etc.), line style (single, double,
+thick-thin, etc.), end cap, join type, and others. At the time of writing,
+color and width can be set using python-pptx:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">line</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># 50% lighter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Theme colors can be used on lines too:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">theme_color</span> <span class="o">=</span> <span class="n">MSO_THEME_COLOR</span><span class="o">.</span><span class="n">ACCENT_6</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Shape.line</span></code> has the attribute <code class="docutils literal notranslate"><span class="pre">.color</span></code>. This is essentially a shortcut
+for:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span>
+</pre></div>
+</div>
+<p>This makes sense for line formatting because a shape outline is most
+frequently set to a solid color. Accessing the fill directly is required, for
+example, to set the line to transparent:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">background</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="line-width">
+<h3>Line width<a class="headerlink" href="#line-width" title="Permalink to this headline">¶</a></h3>
+<p>The shape outline also has a read/write width property:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">width</span>
+<span class="go">9525</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">width</span><span class="o">.</span><span class="n">pt</span>
+<span class="go">0.75</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">width</span><span class="o">.</span><span class="n">pt</span>
+<span class="go">2.0</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="adjusting-an-autoshape">
+<h2>Adjusting an autoshape<a class="headerlink" href="#adjusting-an-autoshape" title="Permalink to this headline">¶</a></h2>
+<p>Many auto shapes have adjustments. In PowerPoint, these show up as little
+yellow diamonds you can drag to change the look of the shape. They’re a little
+fiddly to work with via a program, but if you have the patience to get them
+right, you can achieve some remarkable effects with great precision.</p>
+<section id="shape-adjustment-concepts">
+<h3>Shape Adjustment Concepts<a class="headerlink" href="#shape-adjustment-concepts" title="Permalink to this headline">¶</a></h3>
+<p>There are a few concepts it’s worthwhile to grasp before trying to do serious
+work with adjustments.</p>
+<p>First, adjustments are particular to a specific auto shape type. Each auto
+shape has between zero and eight adjustments. What each of them does is
+arbitrary and depends on the shape design.</p>
+<p>Conceptually, adjustments are guides, in many ways like the light blue ones you
+can align to in the PowerPoint UI and other drawing apps. These don’t show, but
+they operate in a similar way, each defining an x or y value that part of the
+shape will align to, changing the proportions of the shape.</p>
+<p>Adjustment values are large integers, each based on a nominal value of 100,000.
+The effective value of an adjustment is proportional to the width or height of
+the shape. So a value of 50,000 for an x-coordinate adjustment corresponds to
+half the width of the shape; a value of 75,000 for a y-coordinate adjustment
+corresponds to 3/4 of the shape height.</p>
+<p>Adjustment values can be negative, generally indicating the coordinate is to
+the left or above the top left corner (origin) of the shape. Values can also be
+subject to limits, meaning their effective value cannot be outside a prescribed
+range. In practice this corresponds to a point not being able to extend beyond
+the left side of the shape, for example.</p>
+<p>Spending some time fooling around with shape adjustments in PowerPoint is time
+well spent to build an intuitive sense of how they behave. You also might want
+to have <code class="docutils literal notranslate"><span class="pre">opc-diag</span></code> installed so you can look at the XML values that are
+generated by different adjustments as a head start on developing your
+adjustment code.</p>
+<p>The following code formats a callout shape using its adjustments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">callout_sp</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_shape</span><span class="p">(</span>
+    <span class="n">MSO_SHAPE</span><span class="o">.</span><span class="n">LINE_CALLOUT_2_ACCENT_BAR</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
+<span class="p">)</span>
+
+<span class="c1"># get the callout line coming out of the right place</span>
+<span class="n">adjs</span> <span class="o">=</span> <span class="n">callout_sp</span><span class="o">.</span><span class="n">adjustments</span>
+<span class="n">adjs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>   <span class="c1"># vert pos of junction in margin line, 0 is top</span>
+<span class="n">adjs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>   <span class="c1"># horz pos of margin ln wrt shape width, 0 is left side</span>
+<span class="n">adjs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>   <span class="c1"># vert pos of elbow wrt margin line, 0 is top</span>
+<span class="n">adjs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.1</span>  <span class="c1"># horz pos of elbow wrt shape width, 0 is margin line</span>
+<span class="n">adjs</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.0</span>   <span class="c1"># vert pos of line end wrt shape height, 0 is top</span>
+<span class="n">a5</span> <span class="o">=</span> <span class="n">adjs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">adjs</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">adjs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">height</span><span class="o">/</span><span class="n">width</span>
+<span class="n">adjs</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">a5</span>    <span class="c1"># horz pos of elbow wrt shape width, 0 is margin line</span>
+
+<span class="c1"># rotate 45 degrees counter-clockwise</span>
+<span class="n">callout_sp</span><span class="o">.</span><span class="n">rotation</span> <span class="o">=</span> <span class="o">-</span><span class="mf">45.0</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Working with AutoShapes</a><ul>
+<li><a class="reference internal" href="#adding-an-auto-shape">Adding an auto shape</a></li>
+<li><a class="reference internal" href="#understanding-english-metric-units">Understanding English Metric Units</a></li>
+<li><a class="reference internal" href="#shape-position-and-dimensions">Shape position and dimensions</a></li>
+<li><a class="reference internal" href="#fill">Fill</a></li>
+<li><a class="reference internal" href="#line">Line</a><ul>
+<li><a class="reference internal" href="#line-width">Line width</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adjusting-an-autoshape">Adjusting an autoshape</a><ul>
+<li><a class="reference internal" href="#shape-adjustment-concepts">Shape Adjustment Concepts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="understanding-shapes.html"
+                          title="previous chapter">Understanding Shapes</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="placeholders-understanding.html"
+                          title="next chapter">Understanding placeholders</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="placeholders-understanding.html" title="Understanding placeholders"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="understanding-shapes.html" title="Understanding Shapes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Working with AutoShapes</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

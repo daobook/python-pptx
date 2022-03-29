@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.action &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.action</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.action</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Objects related to mouse click and hover actions on a shape or text.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pptx.enum.action</span> <span class="kn">import</span> <span class="n">PP_ACTION</span>
+<span class="kn">from</span> <span class="nn">pptx.opc.constants</span> <span class="kn">import</span> <span class="n">RELATIONSHIP_TYPE</span> <span class="k">as</span> <span class="n">RT</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes</span> <span class="kn">import</span> <span class="n">Subshape</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<div class="viewcode-block" id="ActionSetting"><a class="viewcode-back" href="../../api/action.html#pptx.action.ActionSetting">[docs]</a><span class="k">class</span> <span class="nc">ActionSetting</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Properties specifying how a shape or run reacts to mouse actions.&quot;&quot;&quot;</span>
+
+    <span class="c1"># --- The Subshape superclass provides access to the Slide Part, which is needed</span>
+    <span class="c1"># --- to access relationships.</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xPr</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">hover</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ActionSetting</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="c1"># xPr is either a cNvPr or rPr element</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">xPr</span>
+        <span class="c1"># _hover determines use of `a:hlinkClick` or `a:hlinkHover`</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="n">hover</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Member of :ref:`PpActionType` enumeration, such as `PP_ACTION.HYPERLINK`.</span>
+
+<span class="sd">        The returned member indicates the type of action that will result when the</span>
+<span class="sd">        specified shape or text is clicked or the mouse pointer is positioned over the</span>
+<span class="sd">        shape during a slide show.</span>
+
+<span class="sd">        If there is no click-action or the click-action value is not recognized (is not</span>
+<span class="sd">        one of the official `MsoPpAction` values) then `PP_ACTION.NONE` is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hlink</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hlink</span>
+
+        <span class="k">if</span> <span class="n">hlink</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NONE</span>
+
+        <span class="n">action_verb</span> <span class="o">=</span> <span class="n">hlink</span><span class="o">.</span><span class="n">action_verb</span>
+
+        <span class="k">if</span> <span class="n">action_verb</span> <span class="o">==</span> <span class="s2">&quot;hlinkshowjump&quot;</span><span class="p">:</span>
+            <span class="n">relative_target</span> <span class="o">=</span> <span class="n">hlink</span><span class="o">.</span><span class="n">action_fields</span><span class="p">[</span><span class="s2">&quot;jump&quot;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;firstslide&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">FIRST_SLIDE</span><span class="p">,</span>
+                <span class="s2">&quot;lastslide&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">LAST_SLIDE</span><span class="p">,</span>
+                <span class="s2">&quot;lastslideviewed&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">LAST_SLIDE_VIEWED</span><span class="p">,</span>
+                <span class="s2">&quot;nextslide&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NEXT_SLIDE</span><span class="p">,</span>
+                <span class="s2">&quot;previousslide&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">PREVIOUS_SLIDE</span><span class="p">,</span>
+                <span class="s2">&quot;endshow&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">END_SHOW</span><span class="p">,</span>
+            <span class="p">}[</span><span class="n">relative_target</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="kc">None</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">HYPERLINK</span><span class="p">,</span>
+            <span class="s2">&quot;hlinksldjump&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NAMED_SLIDE</span><span class="p">,</span>
+            <span class="s2">&quot;hlinkpres&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">PLAY</span><span class="p">,</span>
+            <span class="s2">&quot;hlinkfile&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">OPEN_FILE</span><span class="p">,</span>
+            <span class="s2">&quot;customshow&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NAMED_SLIDE_SHOW</span><span class="p">,</span>
+            <span class="s2">&quot;ole&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">OLE_VERB</span><span class="p">,</span>
+            <span class="s2">&quot;macro&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">RUN_MACRO</span><span class="p">,</span>
+            <span class="s2">&quot;program&quot;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">RUN_PROGRAM</span><span class="p">,</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">action_verb</span><span class="p">,</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NONE</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ActionSetting.hyperlink"><a class="viewcode-back" href="../../api/action.html#pptx.action.ActionSetting.hyperlink">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">hyperlink</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A |Hyperlink| object representing the hyperlink action defined on</span>
+<span class="sd">        this click or hover mouse event. A |Hyperlink| object is always</span>
+<span class="sd">        returned, even if no hyperlink or other click action is defined.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Hyperlink</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">target_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A reference to the slide in this presentation that is the target of</span>
+<span class="sd">        the slide jump action in this shape. Slide jump actions include</span>
+<span class="sd">        `PP_ACTION.FIRST_SLIDE`, `LAST_SLIDE`, `NEXT_SLIDE`,</span>
+<span class="sd">        `PREVIOUS_SLIDE`, and `NAMED_SLIDE`. Returns |None| for all other</span>
+<span class="sd">        actions. In particular, the `LAST_SLIDE_VIEWED` action and the `PLAY`</span>
+<span class="sd">        (start other presentation) actions are not supported.</span>
+
+<span class="sd">        A slide object may be assigned to this property, which makes the</span>
+<span class="sd">        shape an &quot;internal hyperlink&quot; to the assigened slide::</span>
+
+<span class="sd">            slide, target_slide = prs.slides[0], prs.slides[1]</span>
+<span class="sd">            shape = slide.shapes[0]</span>
+<span class="sd">            shape.target_slide = target_slide</span>
+
+<span class="sd">        Assigning |None| removes any slide jump action. Note that this is</span>
+<span class="sd">        accomplished by removing any action present (such as a hyperlink),</span>
+<span class="sd">        without first checking that it is a slide jump action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">slide_jump_actions</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">FIRST_SLIDE</span><span class="p">,</span>
+            <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">LAST_SLIDE</span><span class="p">,</span>
+            <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NEXT_SLIDE</span><span class="p">,</span>
+            <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">PREVIOUS_SLIDE</span><span class="p">,</span>
+            <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NAMED_SLIDE</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">slide_jump_actions</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">FIRST_SLIDE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slides</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">LAST_SLIDE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slides</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NEXT_SLIDE</span><span class="p">:</span>
+            <span class="n">next_slide_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slide_index</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">next_slide_idx</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_slides</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no next slide&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slides</span><span class="p">[</span><span class="n">next_slide_idx</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">PREVIOUS_SLIDE</span><span class="p">:</span>
+            <span class="n">prev_slide_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slide_index</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">prev_slide_idx</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no previous slide&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slides</span><span class="p">[</span><span class="n">prev_slide_idx</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NAMED_SLIDE</span><span class="p">:</span>
+            <span class="n">rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hlink</span><span class="o">.</span><span class="n">rId</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">related_part</span><span class="p">(</span><span class="n">rId</span><span class="p">)</span><span class="o">.</span><span class="n">slide</span>
+
+    <span class="nd">@target_slide</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">target_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clear_click_action</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">slide</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">hlink</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_hlinkClick</span><span class="p">()</span>
+        <span class="n">hlink</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="s2">&quot;ppaction://hlinksldjump&quot;</span>
+        <span class="n">hlink</span><span class="o">.</span><span class="n">rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">relate_to</span><span class="p">(</span><span class="n">slide</span><span class="o">.</span><span class="n">part</span><span class="p">,</span> <span class="n">RT</span><span class="o">.</span><span class="n">SLIDE</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_clear_click_action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove any existing click action.&quot;&quot;&quot;</span>
+        <span class="n">hlink</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hlink</span>
+        <span class="k">if</span> <span class="n">hlink</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">rId</span> <span class="o">=</span> <span class="n">hlink</span><span class="o">.</span><span class="n">rId</span>
+        <span class="k">if</span> <span class="n">rId</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">drop_rel</span><span class="p">(</span><span class="n">rId</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">hlink</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_hlink</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reference to the `a:hlinkClick` or `h:hlinkHover` element for this</span>
+<span class="sd">        click action. Returns |None| if the element is not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">hlinkHover</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">hlinkClick</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reference to the slide containing the shape having this click action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">slide</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_slide_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Position in the slide collection of the slide containing the shape</span>
+<span class="sd">        having this click action.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slides</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_slide</span><span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_slides</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reference to the slide collection for this presentation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">presentation_part</span><span class="o">.</span><span class="n">presentation</span><span class="o">.</span><span class="n">slides</span></div>
+
+
+<div class="viewcode-block" id="Hyperlink"><a class="viewcode-back" href="../../api/action.html#pptx.action.Hyperlink">[docs]</a><span class="k">class</span> <span class="nc">Hyperlink</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a hyperlink action on a shape or text run.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xPr</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">hover</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Hyperlink</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="c1"># xPr is either a cNvPr or rPr element</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">xPr</span>
+        <span class="c1"># _hover determines use of `a:hlinkClick` or `a:hlinkHover`</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span> <span class="o">=</span> <span class="n">hover</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write. The URL of the hyperlink. URL can be on http, https,</span>
+<span class="sd">        mailto, or file scheme; others may work. Returns |None| if no</span>
+<span class="sd">        hyperlink is defined, including when another action such as</span>
+<span class="sd">        `RUN_MACRO` is defined on the object. Assigning |None| removes any</span>
+<span class="sd">        action defined on the object, whether it is a hyperlink action or</span>
+<span class="sd">        not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hlink</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hlink</span>
+
+        <span class="c1"># there&#39;s no URL if there&#39;s no click action</span>
+        <span class="k">if</span> <span class="n">hlink</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># a click action without a relationship has no URL</span>
+        <span class="n">rId</span> <span class="o">=</span> <span class="n">hlink</span><span class="o">.</span><span class="n">rId</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rId</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">target_ref</span><span class="p">(</span><span class="n">rId</span><span class="p">)</span>
+
+    <span class="nd">@address</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="c1"># implements all three of add, change, and remove hyperlink</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remove_hlink</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">relate_to</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">RT</span><span class="o">.</span><span class="n">HYPERLINK</span><span class="p">,</span> <span class="n">is_external</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">hlink</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_or_add_hlink</span><span class="p">()</span>
+            <span class="n">hlink</span><span class="o">.</span><span class="n">rId</span> <span class="o">=</span> <span class="n">rId</span>
+
+    <span class="k">def</span> <span class="nf">_get_or_add_hlink</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the `a:hlinkClick` or `a:hlinkHover` element for the Hyperlink</span>
+<span class="sd">        object, depending on the value of `self._hover`. Create one if not</span>
+<span class="sd">        present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_hlinkHover</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_hlinkClick</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_hlink</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reference to the `a:hlinkClick` or `h:hlinkHover` element for this</span>
+<span class="sd">        click action. Returns |None| if the element is not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hover</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">hlinkHover</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">hlinkClick</span>
+
+    <span class="k">def</span> <span class="nf">_remove_hlink</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove the a:hlinkClick or a:hlinkHover element, including dropping</span>
+<span class="sd">        any relationship it might have.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hlink</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hlink</span>
+        <span class="k">if</span> <span class="n">hlink</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">rId</span> <span class="o">=</span> <span class="n">hlink</span><span class="o">.</span><span class="n">rId</span>
+        <span class="k">if</span> <span class="n">rId</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">drop_rel</span><span class="p">(</span><span class="n">rId</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">hlink</span><span class="p">)</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.action</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

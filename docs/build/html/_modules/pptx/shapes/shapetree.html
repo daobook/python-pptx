@@ -1,0 +1,1230 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.shapes.shapetree &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.shapetree</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.shapes.shapetree</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;The shape tree, the structure that holds a slide&#39;s shapes.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">pptx.compat</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">PP_PLACEHOLDER</span><span class="p">,</span> <span class="n">PROG_ID</span>
+<span class="kn">from</span> <span class="nn">pptx.media</span> <span class="kn">import</span> <span class="n">SPEAKER_IMAGE_BYTES</span><span class="p">,</span> <span class="n">Video</span>
+<span class="kn">from</span> <span class="nn">pptx.opc.constants</span> <span class="kn">import</span> <span class="n">CONTENT_TYPE</span> <span class="k">as</span> <span class="n">CT</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.shapes.graphfrm</span> <span class="kn">import</span> <span class="n">CT_GraphicalObjectFrame</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.shapes.picture</span> <span class="kn">import</span> <span class="n">CT_Picture</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.simpletypes</span> <span class="kn">import</span> <span class="n">ST_Direction</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.autoshape</span> <span class="kn">import</span> <span class="n">AutoShapeType</span><span class="p">,</span> <span class="n">Shape</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.base</span> <span class="kn">import</span> <span class="n">BaseShape</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.connector</span> <span class="kn">import</span> <span class="n">Connector</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.freeform</span> <span class="kn">import</span> <span class="n">FreeformBuilder</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.graphfrm</span> <span class="kn">import</span> <span class="n">GraphicFrame</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.group</span> <span class="kn">import</span> <span class="n">GroupShape</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.picture</span> <span class="kn">import</span> <span class="n">Movie</span><span class="p">,</span> <span class="n">Picture</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.placeholder</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ChartPlaceholder</span><span class="p">,</span>
+    <span class="n">LayoutPlaceholder</span><span class="p">,</span>
+    <span class="n">MasterPlaceholder</span><span class="p">,</span>
+    <span class="n">NotesSlidePlaceholder</span><span class="p">,</span>
+    <span class="n">PicturePlaceholder</span><span class="p">,</span>
+    <span class="n">PlaceholderGraphicFrame</span><span class="p">,</span>
+    <span class="n">PlaceholderPicture</span><span class="p">,</span>
+    <span class="n">SlidePlaceholder</span><span class="p">,</span>
+    <span class="n">TablePlaceholder</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pptx.shared</span> <span class="kn">import</span> <span class="n">ParentedElementProxy</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Emu</span><span class="p">,</span> <span class="n">lazyproperty</span>
+
+<span class="c1"># +-- _BaseShapes</span>
+<span class="c1"># |   |</span>
+<span class="c1"># |   +-- _BaseGroupShapes</span>
+<span class="c1"># |   |   |</span>
+<span class="c1"># |   |   +-- GroupShapes</span>
+<span class="c1"># |   |   |</span>
+<span class="c1"># |   |   +-- SlideShapes</span>
+<span class="c1"># |   |</span>
+<span class="c1"># |   +-- LayoutShapes</span>
+<span class="c1"># |   |</span>
+<span class="c1"># |   +-- MasterShapes</span>
+<span class="c1"># |   |</span>
+<span class="c1"># |   +-- NotesSlideShapes</span>
+<span class="c1"># |   |</span>
+<span class="c1"># |   +-- BasePlaceholders</span>
+<span class="c1"># |       |</span>
+<span class="c1"># |       +-- LayoutPlaceholders</span>
+<span class="c1"># |       |</span>
+<span class="c1"># |       +-- MasterPlaceholders</span>
+<span class="c1"># |           |</span>
+<span class="c1"># |           +-- NotesSlidePlaceholders</span>
+<span class="c1"># |</span>
+<span class="c1"># +-- SlidePlaceholders</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseShapes</span><span class="p">(</span><span class="n">ParentedElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for a shape collection appearing in a slide-type object,</span>
+<span class="sd">    include Slide, SlideLayout, and SlideMaster, providing common methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spTree</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_BaseShapes</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">spTree</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span> <span class="o">=</span> <span class="n">spTree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_max_shape_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return shape at *idx* in sequence, e.g. ``shapes[2]``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">shape_elms</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iter_member_elms</span><span class="p">())</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">shape_elm</span> <span class="o">=</span> <span class="n">shape_elms</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;shape index out of range&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a reference to each shape in the collection, in sequence.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">shape_elm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter_member_elms</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return count of shapes in this shape tree. A group shape contributes</span>
+<span class="sd">        1 to the total, without regard to the number of shapes contained in</span>
+<span class="sd">        the group.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">shape_elms</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iter_member_elms</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape_elms</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clone_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a new placeholder shape based on *placeholder*.&quot;&quot;&quot;</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">element</span>
+        <span class="n">ph_type</span><span class="p">,</span> <span class="n">orient</span><span class="p">,</span> <span class="n">sz</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">ph_type</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">ph_orient</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">ph_sz</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">ph_idx</span><span class="p">)</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_shape_id</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_ph_name</span><span class="p">(</span><span class="n">ph_type</span><span class="p">,</span> <span class="n">id_</span><span class="p">,</span> <span class="n">orient</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">add_placeholder</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">ph_type</span><span class="p">,</span> <span class="n">orient</span><span class="p">,</span> <span class="n">sz</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">ph_basename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ph_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the base name for a placeholder of *ph_type* in this shape</span>
+<span class="sd">        collection. There is some variance between slide types, for example</span>
+<span class="sd">        a notes slide uses a different name for the body placeholder, so this</span>
+<span class="sd">        method can be overriden by subclasses.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BITMAP</span><span class="p">:</span> <span class="s2">&quot;ClipArt Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">:</span> <span class="s2">&quot;Text Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">CENTER_TITLE</span><span class="p">:</span> <span class="s2">&quot;Title&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">CHART</span><span class="p">:</span> <span class="s2">&quot;Chart Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">DATE</span><span class="p">:</span> <span class="s2">&quot;Date Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">FOOTER</span><span class="p">:</span> <span class="s2">&quot;Footer Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">HEADER</span><span class="p">:</span> <span class="s2">&quot;Header Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">MEDIA_CLIP</span><span class="p">:</span> <span class="s2">&quot;Media Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">OBJECT</span><span class="p">:</span> <span class="s2">&quot;Content Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">ORG_CHART</span><span class="p">:</span> <span class="s2">&quot;SmartArt Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">PICTURE</span><span class="p">:</span> <span class="s2">&quot;Picture Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SLIDE_NUMBER</span><span class="p">:</span> <span class="s2">&quot;Slide Number Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SUBTITLE</span><span class="p">:</span> <span class="s2">&quot;Subtitle&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">TABLE</span><span class="p">:</span> <span class="s2">&quot;Table Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">TITLE</span><span class="p">:</span> <span class="s2">&quot;Title&quot;</span><span class="p">,</span>
+        <span class="p">}[</span><span class="n">ph_type</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">turbo_add_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;True if &quot;turbo-add&quot; mode is enabled. Read/Write.</span>
+
+<span class="sd">        EXPERIMENTAL: This feature can radically improve performance when</span>
+<span class="sd">        adding large numbers (hundreds of shapes) to a slide. It works by</span>
+<span class="sd">        caching the last shape ID used and incrementing that value to assign</span>
+<span class="sd">        the next shape id. This avoids repeatedly searching all shape ids in</span>
+<span class="sd">        the slide each time a new ID is required.</span>
+
+<span class="sd">        Performance is not noticeably improved for a slide with a relatively</span>
+<span class="sd">        small number of shapes, but because the search time rises with the</span>
+<span class="sd">        square of the shape count, this option can be useful for optimizing</span>
+<span class="sd">        generation of a slide composed of many shapes.</span>
+
+<span class="sd">        Shape-id collisions can occur (causing a repair error on load) if</span>
+<span class="sd">        more than one |Slide| object is used to interact with the same slide</span>
+<span class="sd">        in the presentation. Note that the |Slides| collection creates a new</span>
+<span class="sd">        |Slide| object each time a slide is accessed</span>
+<span class="sd">        (e.g. `slide = prs.slides[0]`, so you must be careful to limit use to</span>
+<span class="sd">        a single |Slide| object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_max_shape_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="nd">@turbo_add_enabled</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">turbo_add_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">enable</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_max_shape_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">max_shape_id</span> <span class="k">if</span> <span class="n">enable</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_member_elm</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return true if *shape_elm* represents a member of this collection,</span>
+<span class="sd">        False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_iter_member_elms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate each child of the ``&lt;p:spTree&gt;`` element that corresponds to</span>
+<span class="sd">        a shape, in the sequence they appear in the XML.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">shape_elm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">iter_shape_elms</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_member_elm</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">shape_elm</span>
+
+    <span class="k">def</span> <span class="nf">_next_ph_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ph_type</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">orient</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Next unique placeholder name for placeholder shape of type *ph_type*,</span>
+<span class="sd">        with id number *id* and orientation *orient*. Usually will be standard</span>
+<span class="sd">        placeholder root name suffixed with id-1, e.g.</span>
+<span class="sd">        _next_ph_name(ST_PlaceholderType.TBL, 4, &#39;horz&#39;) ==&gt;</span>
+<span class="sd">        &#39;Table Placeholder 3&#39;. The number is incremented as necessary to make</span>
+<span class="sd">        the name unique within the collection. If *orient* is ``&#39;vert&#39;``, the</span>
+<span class="sd">        placeholder name is prefixed with ``&#39;Vertical &#39;``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">basename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ph_basename</span><span class="p">(</span><span class="n">ph_type</span><span class="p">)</span>
+
+        <span class="c1"># prefix rootname with &#39;Vertical &#39; if orient is &#39;vert&#39;</span>
+        <span class="k">if</span> <span class="n">orient</span> <span class="o">==</span> <span class="n">ST_Direction</span><span class="o">.</span><span class="n">VERT</span><span class="p">:</span>
+            <span class="n">basename</span> <span class="o">=</span> <span class="s2">&quot;Vertical </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">basename</span>
+
+        <span class="c1"># increment numpart as necessary to make name unique</span>
+        <span class="n">numpart</span> <span class="o">=</span> <span class="nb">id</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//p:cNvPr/@name&quot;</span><span class="p">)</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">basename</span><span class="p">,</span> <span class="n">numpart</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">numpart</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_next_shape_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a unique shape id suitable for use with a new shape.</span>
+
+<span class="sd">        The returned id is 1 greater than the maximum shape id used so far.</span>
+<span class="sd">        In practice, the minimum id is 2 because the spTree element is always</span>
+<span class="sd">        assigned id=&quot;1&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---presence of cached-max-shape-id indicates turbo mode is on---</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_max_shape_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cached_max_shape_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_max_shape_id</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">max_shape_id</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_shape_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an instance of the appropriate shape proxy class for</span>
+<span class="sd">        *shape_elm*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">BaseShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseGroupShapes</span><span class="p">(</span><span class="n">_BaseShapes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for shape-trees that can add shapes.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grpSp</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_BaseGroupShapes</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">grpSp</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grpSp</span> <span class="o">=</span> <span class="n">grpSp</span>
+
+    <span class="k">def</span> <span class="nf">add_chart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chart_type</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">chart_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a new chart of *chart_type* to the slide.</span>
+
+<span class="sd">        The chart is positioned at (*x*, *y*), has size (*cx*, *cy*), and</span>
+<span class="sd">        depicts *chart_data*. *chart_type* is one of the :ref:`XlChartType`</span>
+<span class="sd">        enumeration values. *chart_data* is a |ChartData| object populated</span>
+<span class="sd">        with the categories and series values for the chart.</span>
+
+<span class="sd">        Note that a |GraphicFrame| shape object is returned, not the |Chart|</span>
+<span class="sd">        object contained in that graphic frame shape. The chart object may be</span>
+<span class="sd">        accessed using the :attr:`chart` property of the returned</span>
+<span class="sd">        |GraphicFrame| object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">add_chart_part</span><span class="p">(</span><span class="n">chart_type</span><span class="p">,</span> <span class="n">chart_data</span><span class="p">)</span>
+        <span class="n">graphicFrame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_chart_graphicFrame</span><span class="p">(</span><span class="n">rId</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recalculate_extents</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">graphicFrame</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_connector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector_type</span><span class="p">,</span> <span class="n">begin_x</span><span class="p">,</span> <span class="n">begin_y</span><span class="p">,</span> <span class="n">end_x</span><span class="p">,</span> <span class="n">end_y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a newly created connector shape to the end of this shape tree.</span>
+
+<span class="sd">        *connector_type* is a member of the :ref:`MsoConnectorType`</span>
+<span class="sd">        enumeration and the end-point values are specified as EMU values. The</span>
+<span class="sd">        returned connector is of type *connector_type* and has begin and end</span>
+<span class="sd">        points as specified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cxnSp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_cxnSp</span><span class="p">(</span><span class="n">connector_type</span><span class="p">,</span> <span class="n">begin_x</span><span class="p">,</span> <span class="n">begin_y</span><span class="p">,</span> <span class="n">end_x</span><span class="p">,</span> <span class="n">end_y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recalculate_extents</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">cxnSp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_group_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shapes</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot;Return a |GroupShape| object newly appended to this shape tree.</span>
+
+<span class="sd">        The group shape is empty and must be populated with shapes using</span>
+<span class="sd">        methods on its shape tree, available on its `.shapes` property. The</span>
+<span class="sd">        position and extents of the group shape are determined by the shapes</span>
+<span class="sd">        it contains; its position and extents are recalculated each time</span>
+<span class="sd">        a shape is added to it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">grpSp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">add_grpSp</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">:</span>
+            <span class="n">grpSp</span><span class="o">.</span><span class="n">insert_element_before</span><span class="p">(</span><span class="n">shape</span><span class="o">.</span><span class="n">_element</span><span class="p">,</span> <span class="s2">&quot;p:extLst&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">shapes</span><span class="p">:</span>
+            <span class="n">grpSp</span><span class="o">.</span><span class="n">recalculate_extents</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">grpSp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_ole_object</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">object_file</span><span class="p">,</span> <span class="n">prog_id</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">icon_file</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return newly-created GraphicFrame shape embedding `object_file`.</span>
+
+<span class="sd">        The returned graphic-frame shape contains `object_file` as an embedded OLE</span>
+<span class="sd">        object. It is displayed as an icon at `left`, `top` with size `width`, `height`.</span>
+<span class="sd">        `width` and `height` may be omitted when `prog_id` is a member of `PROG_ID`, in</span>
+<span class="sd">        which case the default icon size is used. This is advised for best appearance</span>
+<span class="sd">        where applicable because it avoids an icon with a &quot;stretched&quot; appearance.</span>
+
+<span class="sd">        `object_file` may either be a str path to the file or a file-like</span>
+<span class="sd">        object (such as `io.BytesIO`) containing the bytes of the object file.</span>
+
+<span class="sd">        `prog_id` can be either a member of `pptx.enum.shapes.PROG_ID` or a str value</span>
+<span class="sd">        like `&quot;Adobe.Exchange.7&quot;` determined by inspecting the XML generated by</span>
+<span class="sd">        PowerPoint for an object of the desired type.</span>
+
+<span class="sd">        `icon_file` may either be a str path to an image file or a file-like object</span>
+<span class="sd">        containing the image. The image provided will be displayed in lieu of the OLE</span>
+<span class="sd">        object; double-clicking on the image opens the object (subject to</span>
+<span class="sd">        operating-system limitations). The image file can be any supported image file.</span>
+<span class="sd">        Those produced by PowerPoint itself are generally EMF and can be harvested from</span>
+<span class="sd">        a PPTX package that embeds such an object. PNG and JPG also work fine.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">graphicFrame</span> <span class="o">=</span> <span class="n">_OleObjectElementCreator</span><span class="o">.</span><span class="n">graphicFrame</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_next_shape_id</span><span class="p">,</span>
+            <span class="n">object_file</span><span class="p">,</span>
+            <span class="n">prog_id</span><span class="p">,</span>
+            <span class="n">left</span><span class="p">,</span>
+            <span class="n">top</span><span class="p">,</span>
+            <span class="n">width</span><span class="p">,</span>
+            <span class="n">height</span><span class="p">,</span>
+            <span class="n">icon_file</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graphicFrame</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recalculate_extents</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">graphicFrame</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_picture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_file</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add picture shape displaying image in *image_file*.</span>
+
+<span class="sd">        *image_file* can be either a path to a file (a string) or a file-like</span>
+<span class="sd">        object. The picture is positioned with its top-left corner at (*top*,</span>
+<span class="sd">        *left*). If *width* and *height* are both |None|, the native size of</span>
+<span class="sd">        the image is used. If only one of *width* or *height* is used, the</span>
+<span class="sd">        unspecified dimension is calculated to preserve the aspect ratio of</span>
+<span class="sd">        the image. If both are specified, the picture is stretched to fit,</span>
+<span class="sd">        without regard to its native aspect ratio.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image_part</span><span class="p">,</span> <span class="n">rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">get_or_add_image_part</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+        <span class="n">pic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_pic_from_image_part</span><span class="p">(</span><span class="n">image_part</span><span class="p">,</span> <span class="n">rId</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recalculate_extents</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">pic</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">autoshape_type_id</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return new |Shape| object appended to this shape tree.</span>
+
+<span class="sd">        *autoshape_type_id* is a member of :ref:`MsoAutoShapeType` e.g.</span>
+<span class="sd">        ``MSO_SHAPE.RECTANGLE`` specifying the type of shape to be added. The</span>
+<span class="sd">        remaining arguments specify the new shape&#39;s position and size.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">autoshape_type</span> <span class="o">=</span> <span class="n">AutoShapeType</span><span class="p">(</span><span class="n">autoshape_type_id</span><span class="p">)</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_sp</span><span class="p">(</span><span class="n">autoshape_type</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recalculate_extents</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_textbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return newly added text box shape appended to this shape tree.</span>
+
+<span class="sd">        The text box is of the specified size, located at the specified</span>
+<span class="sd">        position on the slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_textbox_sp</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recalculate_extents</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">build_freeform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return |FreeformBuilder| object to specify a freeform shape.</span>
+
+<span class="sd">        The optional *start_x* and *start_y* arguments specify the starting</span>
+<span class="sd">        pen position in local coordinates. They will be rounded to the</span>
+<span class="sd">        nearest integer before use and each default to zero.</span>
+
+<span class="sd">        The optional *scale* argument specifies the size of local coordinates</span>
+<span class="sd">        proportional to slide coordinates (EMU). If the vertical scale is</span>
+<span class="sd">        different than the horizontal scale (local coordinate units are</span>
+<span class="sd">        &quot;rectangular&quot;), a pair of numeric values can be provided as the</span>
+<span class="sd">        *scale* argument, e.g. `scale=(1.0, 2.0)`. In this case the first</span>
+<span class="sd">        number is interpreted as the horizontal (X) scale and the second as</span>
+<span class="sd">        the vertical (Y) scale.</span>
+
+<span class="sd">        A convenient method for calculating scale is to divide a |Length|</span>
+<span class="sd">        object by an equivalent count of local coordinate units, e.g.</span>
+<span class="sd">        `scale = Inches(1)/1000` for 1000 local units per inch.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">x_scale</span><span class="p">,</span> <span class="n">y_scale</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">x_scale</span> <span class="o">=</span> <span class="n">y_scale</span> <span class="o">=</span> <span class="n">scale</span>
+
+        <span class="k">return</span> <span class="n">FreeformBuilder</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_x</span><span class="p">,</span> <span class="n">start_y</span><span class="p">,</span> <span class="n">x_scale</span><span class="p">,</span> <span class="n">y_scale</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the index of *shape* in this sequence.</span>
+
+<span class="sd">        Raises |ValueError| if *shape* is not in the collection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">shape_elms</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">iter_shape_elms</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">shape_elms</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">shape</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_chart_graphicFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rId</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return new `p:graphicFrame` element appended to this shape tree.</span>
+
+<span class="sd">        The `p:graphicFrame` element has the specified position and size and</span>
+<span class="sd">        refers to the chart part identified by *rId*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">shape_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_shape_id</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Chart </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">shape_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">graphicFrame</span> <span class="o">=</span> <span class="n">CT_GraphicalObjectFrame</span><span class="o">.</span><span class="n">new_chart_graphicFrame</span><span class="p">(</span>
+            <span class="n">shape_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rId</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graphicFrame</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">graphicFrame</span>
+
+    <span class="k">def</span> <span class="nf">_add_cxnSp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector_type</span><span class="p">,</span> <span class="n">begin_x</span><span class="p">,</span> <span class="n">begin_y</span><span class="p">,</span> <span class="n">end_x</span><span class="p">,</span> <span class="n">end_y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a newly-added `p:cxnSp` element as specified.</span>
+
+<span class="sd">        The `p:cxnSp` element is for a connector of *connector_type*</span>
+<span class="sd">        beginning at (*begin_x*, *begin_y*) and extending to</span>
+<span class="sd">        (*end_x*, *end_y*).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_shape_id</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Connector </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">id_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">flipH</span><span class="p">,</span> <span class="n">flipV</span> <span class="o">=</span> <span class="n">begin_x</span> <span class="o">&gt;</span> <span class="n">end_x</span><span class="p">,</span> <span class="n">begin_y</span> <span class="o">&gt;</span> <span class="n">end_y</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">begin_x</span><span class="p">,</span> <span class="n">end_x</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">begin_y</span><span class="p">,</span> <span class="n">end_y</span><span class="p">)</span>
+        <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">end_x</span> <span class="o">-</span> <span class="n">begin_x</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">end_y</span> <span class="o">-</span> <span class="n">begin_y</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">add_cxnSp</span><span class="p">(</span>
+            <span class="n">id_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">connector_type</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">flipH</span><span class="p">,</span> <span class="n">flipV</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_pic_from_image_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_part</span><span class="p">,</span> <span class="n">rId</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a newly appended `p:pic` element as specified.</span>
+
+<span class="sd">        The `p:pic` element displays the image in *image_part* with size and</span>
+<span class="sd">        position specified by *x*, *y*, *cx*, and *cy*. The element is</span>
+<span class="sd">        appended to the shape tree, causing it to be displayed first in</span>
+<span class="sd">        z-order on the slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_shape_id</span>
+        <span class="n">scaled_cx</span><span class="p">,</span> <span class="n">scaled_cy</span> <span class="o">=</span> <span class="n">image_part</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Picture </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">id_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="n">image_part</span><span class="o">.</span><span class="n">desc</span>
+        <span class="n">pic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grpSp</span><span class="o">.</span><span class="n">add_pic</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">rId</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scaled_cx</span><span class="p">,</span> <span class="n">scaled_cy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pic</span>
+
+    <span class="k">def</span> <span class="nf">_add_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">autoshape_type</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return newly-added `p:sp` element as specified.</span>
+
+<span class="sd">        `p:sp` element is of *autoshape_type* at position (*x*, *y*) and of</span>
+<span class="sd">        size (*cx*, *cy*).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_shape_id</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">autoshape_type</span><span class="o">.</span><span class="n">basename</span><span class="p">,</span> <span class="n">id_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grpSp</span><span class="o">.</span><span class="n">add_autoshape</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">autoshape_type</span><span class="o">.</span><span class="n">prst</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sp</span>
+
+    <span class="k">def</span> <span class="nf">_add_textbox_sp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return newly-appended textbox `p:sp` element.</span>
+
+<span class="sd">        Element has position (*x*, *y*) and size (*cx*, *cy*).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_shape_id</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;TextBox </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">id_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">add_textbox</span><span class="p">(</span><span class="n">id_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sp</span>
+
+    <span class="k">def</span> <span class="nf">_recalculate_extents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adjust position and size to incorporate all contained shapes.</span>
+
+<span class="sd">        This would typically be called when a contained shape is added,</span>
+<span class="sd">        removed, or its position or size updated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---default behavior is to do nothing, GroupShapes overrides to</span>
+        <span class="c1">#    produce the distinctive behavior of groups and subgroups.---</span>
+        <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="GroupShapes"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.shapetree.GroupShapes">[docs]</a><span class="k">class</span> <span class="nc">GroupShapes</span><span class="p">(</span><span class="n">_BaseGroupShapes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The sequence of child shapes belonging to a group shape.</span>
+
+<span class="sd">    Note that this collection can itself contain a group shape, making this</span>
+<span class="sd">    part of a recursive, tree data structure (acyclic graph).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_recalculate_extents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adjust position and size to incorporate all contained shapes.</span>
+
+<span class="sd">        This would typically be called when a contained shape is added,</span>
+<span class="sd">        removed, or its position or size updated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grpSp</span><span class="o">.</span><span class="n">recalculate_extents</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SlideShapes"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.shapetree.SlideShapes">[docs]</a><span class="k">class</span> <span class="nc">SlideShapes</span><span class="p">(</span><span class="n">_BaseGroupShapes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sequence of shapes appearing on a slide.</span>
+
+<span class="sd">    The first shape in the sequence is the backmost in z-order and the last</span>
+<span class="sd">    shape is topmost. Supports indexed access, len(), index(), and iteration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SlideShapes.add_movie"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.shapetree.SlideShapes.add_movie">[docs]</a>    <span class="k">def</span> <span class="nf">add_movie</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">movie_file</span><span class="p">,</span>
+        <span class="n">left</span><span class="p">,</span>
+        <span class="n">top</span><span class="p">,</span>
+        <span class="n">width</span><span class="p">,</span>
+        <span class="n">height</span><span class="p">,</span>
+        <span class="n">poster_frame_image</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mime_type</span><span class="o">=</span><span class="n">CT</span><span class="o">.</span><span class="n">VIDEO</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return newly added movie shape displaying video in *movie_file*.</span>
+
+<span class="sd">        **EXPERIMENTAL.** This method has important limitations:</span>
+
+<span class="sd">        * The size must be specified; no auto-scaling such as that provided</span>
+<span class="sd">          by :meth:`add_picture` is performed.</span>
+<span class="sd">        * The MIME type of the video file should be specified, e.g.</span>
+<span class="sd">          &#39;video/mp4&#39;. The provided video file is not interrogated for its</span>
+<span class="sd">          type. The MIME type `video/unknown` is used by default (and works</span>
+<span class="sd">          fine in tests as of this writing).</span>
+<span class="sd">        * A poster frame image must be provided, it cannot be automatically</span>
+<span class="sd">          extracted from the video file. If no poster frame is provided, the</span>
+<span class="sd">          default &quot;media loudspeaker&quot; image will be used.</span>
+
+<span class="sd">        Return a newly added movie shape to the slide, positioned at (*left*,</span>
+<span class="sd">        *top*), having size (*width*, *height*), and containing *movie_file*.</span>
+<span class="sd">        Before the video is started, *poster_frame_image* is displayed as</span>
+<span class="sd">        a placeholder for the video.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">movie_pic</span> <span class="o">=</span> <span class="n">_MoviePicElementCreator</span><span class="o">.</span><span class="n">new_movie_pic</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_next_shape_id</span><span class="p">,</span>
+            <span class="n">movie_file</span><span class="p">,</span>
+            <span class="n">left</span><span class="p">,</span>
+            <span class="n">top</span><span class="p">,</span>
+            <span class="n">width</span><span class="p">,</span>
+            <span class="n">height</span><span class="p">,</span>
+            <span class="n">poster_frame_image</span><span class="p">,</span>
+            <span class="n">mime_type</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">movie_pic</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_video_timing</span><span class="p">(</span><span class="n">movie_pic</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">movie_pic</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SlideShapes.add_table"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.shapetree.SlideShapes.add_table">[docs]</a>    <span class="k">def</span> <span class="nf">add_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a |GraphicFrame| object containing a table with the specified</span>
+<span class="sd">        number of *rows* and *cols* and the specified position and size.</span>
+<span class="sd">        *width* is evenly distributed between the columns of the new table.</span>
+<span class="sd">        Likewise, *height* is evenly distributed between the rows. Note that</span>
+<span class="sd">        the ``.table`` property on the returned |GraphicFrame| shape must be</span>
+<span class="sd">        used to access the enclosed |Table| object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">graphicFrame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_graphicFrame_containing_table</span><span class="p">(</span>
+            <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
+        <span class="p">)</span>
+        <span class="n">graphic_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">graphicFrame</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">graphic_frame</span></div>
+
+    <span class="k">def</span> <span class="nf">clone_layout_placeholders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide_layout</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add placeholder shapes based on those in *slide_layout*. Z-order of</span>
+<span class="sd">        placeholders is preserved. Latent placeholders (date, slide number,</span>
+<span class="sd">        and footer) are not cloned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">placeholder</span> <span class="ow">in</span> <span class="n">slide_layout</span><span class="o">.</span><span class="n">iter_cloneable_placeholders</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clone_placeholder</span><span class="p">(</span><span class="n">placeholder</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">placeholders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instance of |SlidePlaceholders| containing sequence of placeholder</span>
+<span class="sd">        shapes in this slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">placeholders</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The title placeholder shape on the slide or |None| if the slide has</span>
+<span class="sd">        no title placeholder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">elm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">iter_ph_elms</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">elm</span><span class="o">.</span><span class="n">ph_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape_factory</span><span class="p">(</span><span class="n">elm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_add_graphicFrame_containing_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a newly added ``&lt;p:graphicFrame&gt;`` element containing a table</span>
+<span class="sd">        as specified by the parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_shape_id</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Table </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">graphicFrame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">graphicFrame</span>
+
+    <span class="k">def</span> <span class="nf">_add_video_timing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pic</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a `p:video` element under `p:sld/p:timing`.</span>
+
+<span class="sd">        The element will refer to the specified *pic* element by its shape</span>
+<span class="sd">        id, and cause the video play controls to appear for that video.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sld</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spTree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;/p:sld&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">childTnLst</span> <span class="o">=</span> <span class="n">sld</span><span class="o">.</span><span class="n">get_or_add_childTnLst</span><span class="p">()</span>
+        <span class="n">childTnLst</span><span class="o">.</span><span class="n">add_video</span><span class="p">(</span><span class="n">pic</span><span class="o">.</span><span class="n">shape_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_shape_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an instance of the appropriate shape proxy class for</span>
+<span class="sd">        *shape_elm*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SlideShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">LayoutShapes</span><span class="p">(</span><span class="n">_BaseShapes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sequence of shapes appearing on a slide layout. The first shape in the</span>
+<span class="sd">    sequence is the backmost in z-order and the last shape is topmost.</span>
+<span class="sd">    Supports indexed access, len(), index(), and iteration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_shape_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an instance of the appropriate shape proxy class for</span>
+<span class="sd">        *shape_elm*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_LayoutShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MasterShapes</span><span class="p">(</span><span class="n">_BaseShapes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sequence of shapes appearing on a slide master. The first shape in the</span>
+<span class="sd">    sequence is the backmost in z-order and the last shape is topmost.</span>
+<span class="sd">    Supports indexed access, len(), and iteration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_shape_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an instance of the appropriate shape proxy class for</span>
+<span class="sd">        *shape_elm*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_MasterShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">NotesSlideShapes</span><span class="p">(</span><span class="n">_BaseShapes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sequence of shapes appearing on a notes slide. The first shape in the</span>
+<span class="sd">    sequence is the backmost in z-order and the last shape is topmost.</span>
+<span class="sd">    Supports indexed access, len(), index(), and iteration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">ph_basename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ph_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the base name for a placeholder of *ph_type* in this shape</span>
+<span class="sd">        collection. A notes slide uses a different name for the body</span>
+<span class="sd">        placeholder and has some unique placeholder types, so this</span>
+<span class="sd">        method overrides the default in the base class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">:</span> <span class="s2">&quot;Notes Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">DATE</span><span class="p">:</span> <span class="s2">&quot;Date Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">FOOTER</span><span class="p">:</span> <span class="s2">&quot;Footer Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">HEADER</span><span class="p">:</span> <span class="s2">&quot;Header Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SLIDE_IMAGE</span><span class="p">:</span> <span class="s2">&quot;Slide Image Placeholder&quot;</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SLIDE_NUMBER</span><span class="p">:</span> <span class="s2">&quot;Slide Number Placeholder&quot;</span><span class="p">,</span>
+        <span class="p">}[</span><span class="n">ph_type</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_shape_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an instance of the appropriate shape proxy class for</span>
+<span class="sd">        *shape_elm* appearing on a notes slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_NotesSlideShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BasePlaceholders</span><span class="p">(</span><span class="n">_BaseShapes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for placeholder collections that differentiate behaviors for</span>
+<span class="sd">    a master, layout, and slide. By default, placeholder shapes are</span>
+<span class="sd">    constructed using |BaseShapeFactory|. Subclasses should override</span>
+<span class="sd">    :method:`_shape_factory` to use custom placeholder classes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_member_elm</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        True if *shape_elm* is a placeholder shape, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">has_ph_elm</span>
+
+
+<span class="k">class</span> <span class="nc">LayoutPlaceholders</span><span class="p">(</span><span class="n">BasePlaceholders</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sequence of |LayoutPlaceholder| instances representing the placeholder</span>
+<span class="sd">    shapes on a slide layout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the first placeholder shape with matching *idx* value, or</span>
+<span class="sd">        *default* if not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">placeholder</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">ph_idx</span> <span class="o">==</span> <span class="n">idx</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">placeholder</span>
+        <span class="k">return</span> <span class="n">default</span>
+
+    <span class="k">def</span> <span class="nf">_shape_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an instance of the appropriate shape proxy class for</span>
+<span class="sd">        *shape_elm*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_LayoutShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MasterPlaceholders</span><span class="p">(</span><span class="n">BasePlaceholders</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sequence of _MasterPlaceholder instances representing the placeholder</span>
+<span class="sd">    shapes on a slide master.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ph_type</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the first placeholder shape with type *ph_type* (e.g. &#39;body&#39;),</span>
+<span class="sd">        or *default* if no such placeholder shape is present in the</span>
+<span class="sd">        collection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">placeholder</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">ph_type</span> <span class="o">==</span> <span class="n">ph_type</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">placeholder</span>
+        <span class="k">return</span> <span class="n">default</span>
+
+    <span class="k">def</span> <span class="nf">_shape_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an instance of the appropriate shape proxy class for</span>
+<span class="sd">        *shape_elm*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_MasterShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">NotesSlidePlaceholders</span><span class="p">(</span><span class="n">MasterPlaceholders</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sequence of placeholder shapes on a notes slide.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_shape_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">placeholder_elm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an instance of the appropriate placeholder proxy class for</span>
+<span class="sd">        *placeholder_elm*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_NotesSlideShapeFactory</span><span class="p">(</span><span class="n">placeholder_elm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SlidePlaceholders"><a class="viewcode-back" href="../../../api/slides.html#pptx.shapes.shapetree.SlidePlaceholders">[docs]</a><span class="k">class</span> <span class="nc">SlidePlaceholders</span><span class="p">(</span><span class="n">ParentedElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of placeholder shapes on a slide. Supports iteration,</span>
+<span class="sd">    :func:`len`, and dictionary-style lookup on the `idx` value of the</span>
+<span class="sd">    placeholders it contains.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Access placeholder shape having *idx*. Note that while this looks</span>
+<span class="sd">        like list access, idx is actually a dictionary key and will raise</span>
+<span class="sd">        |KeyError| if no placeholder with that idx value is in the</span>
+<span class="sd">        collection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">iter_ph_elms</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">ph_idx</span> <span class="o">==</span> <span class="n">idx</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">SlideShapeFactory</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;no placeholder on this slide with idx == </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">idx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate placeholder shapes in `idx` order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ph_elms</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">iter_ph_elms</span><span class="p">()],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">ph_idx</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">SlideShapeFactory</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">ph_elms</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return count of placeholder shapes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">iter_ph_elms</span><span class="p">()))</span></div>
+
+
+<span class="k">def</span> <span class="nf">BaseShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an instance of the appropriate shape proxy class for *shape_elm*.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">tag</span>
+
+    <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:pic&quot;</span><span class="p">):</span>
+        <span class="n">videoFiles</span> <span class="o">=</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;./p:nvPicPr/p:nvPr/a:videoFile&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">videoFiles</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Movie</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Picture</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+    <span class="n">shape_cls</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:cxnSp&quot;</span><span class="p">):</span> <span class="n">Connector</span><span class="p">,</span>
+        <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:grpSp&quot;</span><span class="p">):</span> <span class="n">GroupShape</span><span class="p">,</span>
+        <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:sp&quot;</span><span class="p">):</span> <span class="n">Shape</span><span class="p">,</span>
+        <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:graphicFrame&quot;</span><span class="p">):</span> <span class="n">GraphicFrame</span><span class="p">,</span>
+    <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">BaseShape</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">shape_cls</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_LayoutShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an instance of the appropriate shape proxy class for *shape_elm*</span>
+<span class="sd">    on a slide layout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tag_name</span> <span class="o">=</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">tag</span>
+    <span class="k">if</span> <span class="n">tag_name</span> <span class="o">==</span> <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:sp&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">has_ph_elm</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">LayoutPlaceholder</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">BaseShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_MasterShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an instance of the appropriate shape proxy class for *shape_elm*</span>
+<span class="sd">    on a slide master.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tag_name</span> <span class="o">=</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">tag</span>
+    <span class="k">if</span> <span class="n">tag_name</span> <span class="o">==</span> <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:sp&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">has_ph_elm</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">MasterPlaceholder</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">BaseShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_NotesSlideShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an instance of the appropriate shape proxy class for *shape_elm*</span>
+<span class="sd">    on a notes slide.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tag_name</span> <span class="o">=</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">tag</span>
+    <span class="k">if</span> <span class="n">tag_name</span> <span class="o">==</span> <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:sp&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">has_ph_elm</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">NotesSlidePlaceholder</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">BaseShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_SlidePlaceholderFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a placeholder shape of the appropriate type for *shape_elm*.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">tag</span>
+    <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:sp&quot;</span><span class="p">):</span>
+        <span class="n">Constructor</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BITMAP</span><span class="p">:</span> <span class="n">PicturePlaceholder</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">CHART</span><span class="p">:</span> <span class="n">ChartPlaceholder</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">PICTURE</span><span class="p">:</span> <span class="n">PicturePlaceholder</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">TABLE</span><span class="p">:</span> <span class="n">TablePlaceholder</span><span class="p">,</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">shape_elm</span><span class="o">.</span><span class="n">ph_type</span><span class="p">,</span> <span class="n">SlidePlaceholder</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:graphicFrame&quot;</span><span class="p">):</span>
+        <span class="n">Constructor</span> <span class="o">=</span> <span class="n">PlaceholderGraphicFrame</span>
+    <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;p:pic&quot;</span><span class="p">):</span>
+        <span class="n">Constructor</span> <span class="o">=</span> <span class="n">PlaceholderPicture</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Constructor</span> <span class="o">=</span> <span class="n">BaseShapeFactory</span>
+    <span class="k">return</span> <span class="n">Constructor</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">SlideShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an instance of the appropriate shape proxy class for *shape_elm*</span>
+<span class="sd">    on a slide.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">has_ph_elm</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_SlidePlaceholderFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">BaseShapeFactory</span><span class="p">(</span><span class="n">shape_elm</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_MoviePicElementCreator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Functional service object for creating a new movie p:pic element.</span>
+
+<span class="sd">    It&#39;s entire external interface is its :meth:`new_movie_pic` class method</span>
+<span class="sd">    that returns a new `p:pic` element containing the specified video. This</span>
+<span class="sd">    class is not intended to be constructed or an instance of it retained by</span>
+<span class="sd">    the caller; it is a &quot;one-shot&quot; object, really a function wrapped in</span>
+<span class="sd">    a object such that its helper methods can be organized here.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">shape_id</span><span class="p">,</span> <span class="n">movie_file</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">poster_frame_file</span><span class="p">,</span> <span class="n">mime_type</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_MoviePicElementCreator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shapes</span> <span class="o">=</span> <span class="n">shapes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shape_id</span> <span class="o">=</span> <span class="n">shape_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_movie_file</span> <span class="o">=</span> <span class="n">movie_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cy</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_poster_frame_file</span> <span class="o">=</span> <span class="n">poster_frame_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mime_type</span> <span class="o">=</span> <span class="n">mime_type</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new_movie_pic</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">shape_id</span><span class="p">,</span> <span class="n">movie_file</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">poster_frame_image</span><span class="p">,</span> <span class="n">mime_type</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a new `p:pic` element containing video in *movie_file*.</span>
+
+<span class="sd">        If *mime_type* is None, &#39;video/unknown&#39; is used. If</span>
+<span class="sd">        *poster_frame_file* is None, the default &quot;media loudspeaker&quot; image is</span>
+<span class="sd">        used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">shapes</span><span class="p">,</span> <span class="n">shape_id</span><span class="p">,</span> <span class="n">movie_file</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">poster_frame_image</span><span class="p">,</span> <span class="n">mime_type</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">_pic</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_media_rId</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the rId of RT.MEDIA relationship to video part.</span>
+
+<span class="sd">        For historical reasons, there are two relationships to the same part;</span>
+<span class="sd">        one is the video rId and the other is the media rId.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video_part_rIds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_pic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the new `p:pic` element referencing the video.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CT_Picture</span><span class="o">.</span><span class="n">new_video_pic</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shape_id</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shape_name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_video_rId</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_media_rId</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_poster_frame_rId</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cx</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cy</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_poster_frame_image_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the image file for video placeholder image.</span>
+
+<span class="sd">        If no poster frame file is provided, the default &quot;media loudspeaker&quot;</span>
+<span class="sd">        image is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">poster_frame_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_poster_frame_file</span>
+        <span class="k">if</span> <span class="n">poster_frame_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">SPEAKER_IMAGE_BYTES</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">poster_frame_file</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_poster_frame_rId</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the rId of relationship to poster frame image.</span>
+
+<span class="sd">        The poster frame is the image used to represent the video before it&#39;s</span>
+<span class="sd">        played.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">poster_frame_rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slide_part</span><span class="o">.</span><span class="n">get_or_add_image_part</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_poster_frame_image_file</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">poster_frame_rId</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_shape_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the appropriate shape name for the p:pic shape.</span>
+
+<span class="sd">        A movie shape is named with the base filename of the video.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="o">.</span><span class="n">filename</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_slide_part</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return SlidePart object for slide containing this movie.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shapes</span><span class="o">.</span><span class="n">part</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_video</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a |Video| object containing the movie file.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Video</span><span class="o">.</span><span class="n">from_path_or_file_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_movie_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mime_type</span><span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_video_part_rIds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the rIds for relationships to media part for video.</span>
+
+<span class="sd">        This is where the media part and its relationships to the slide are</span>
+<span class="sd">        actually created.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">media_rId</span><span class="p">,</span> <span class="n">video_rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slide_part</span><span class="o">.</span><span class="n">get_or_add_video_media_part</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">media_rId</span><span class="p">,</span> <span class="n">video_rId</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_video_rId</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the rId of RT.VIDEO relationship to video part.</span>
+
+<span class="sd">        For historical reasons, there are two relationships to the same part;</span>
+<span class="sd">        one is the video rId and the other is the media rId.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video_part_rIds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">_OleObjectElementCreator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Functional service object for creating a new OLE-object p:graphicFrame element.</span>
+
+<span class="sd">    It&#39;s entire external interface is its :meth:`graphicFrame` class method that returns</span>
+<span class="sd">    a new `p:graphicFrame` element containing the specified embedded OLE-object shape.</span>
+<span class="sd">    This class is not intended to be constructed or an instance of it retained by the</span>
+<span class="sd">    caller; it is a &quot;one-shot&quot; object, really a function wrapped in a object such that</span>
+<span class="sd">    its helper methods can be organized here.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">shape_id</span><span class="p">,</span> <span class="n">ole_object_file</span><span class="p">,</span> <span class="n">prog_id</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">icon_file</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shapes</span> <span class="o">=</span> <span class="n">shapes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shape_id</span> <span class="o">=</span> <span class="n">shape_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ole_object_file</span> <span class="o">=</span> <span class="n">ole_object_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prog_id_arg</span> <span class="o">=</span> <span class="n">prog_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cx_arg</span> <span class="o">=</span> <span class="n">cx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cy_arg</span> <span class="o">=</span> <span class="n">cy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_icon_file_arg</span> <span class="o">=</span> <span class="n">icon_file</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">graphicFrame</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">shape_id</span><span class="p">,</span> <span class="n">ole_object_file</span><span class="p">,</span> <span class="n">prog_id</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">icon_file</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return new `p:graphicFrame` element containing embedded `ole_object_file`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">shapes</span><span class="p">,</span> <span class="n">shape_id</span><span class="p">,</span> <span class="n">ole_object_file</span><span class="p">,</span> <span class="n">prog_id</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">icon_file</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">_graphicFrame</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_graphicFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Newly-created `p:graphicFrame` element referencing embedded OLE-object.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CT_GraphicalObjectFrame</span><span class="o">.</span><span class="n">new_ole_object_graphicFrame</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shape_id</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shape_name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ole_object_rId</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_progId</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_icon_rId</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cx</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cy</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_cx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Emu object specifying width of &quot;show-as-icon&quot; image for OLE shape.&quot;&quot;&quot;</span>
+        <span class="c1"># --- a user-specified width overrides any default ---</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cx_arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cx_arg</span>
+
+        <span class="c1"># --- the default width is specified by the PROG_ID member if prog_id is one,</span>
+        <span class="c1"># --- otherwise it gets the default icon width.</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">Emu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prog_id_arg</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prog_id_arg</span> <span class="ow">in</span> <span class="n">PROG_ID</span>
+            <span class="k">else</span> <span class="n">Emu</span><span class="p">(</span><span class="mi">965200</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_cy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Emu object specifying height of &quot;show-as-icon&quot; image for OLE shape.&quot;&quot;&quot;</span>
+        <span class="c1"># --- a user-specified width overrides any default ---</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cy_arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cy_arg</span>
+
+        <span class="c1"># --- the default height is specified by the PROG_ID member if prog_id is one,</span>
+        <span class="c1"># --- otherwise it gets the default icon height.</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">Emu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prog_id_arg</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prog_id_arg</span> <span class="ow">in</span> <span class="n">PROG_ID</span>
+            <span class="k">else</span> <span class="n">Emu</span><span class="p">(</span><span class="mi">609600</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_icon_image_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reference to image file containing icon to show in lieu of this object.</span>
+
+<span class="sd">        This can be either a str path or a file-like object (io.BytesIO typically).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- a user-specified icon overrides any default ---</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icon_file_arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_icon_file_arg</span>
+
+        <span class="c1"># --- A prog_id belonging to PROG_ID gets its icon filename from there. A</span>
+        <span class="c1"># --- user-specified (str) prog_id gets the default icon.</span>
+        <span class="n">icon_filename</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prog_id_arg</span><span class="o">.</span><span class="n">icon_filename</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prog_id_arg</span> <span class="ow">in</span> <span class="n">PROG_ID</span>
+            <span class="k">else</span> <span class="s2">&quot;generic-icon.emf&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">_thisdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_thisdir</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;templates&quot;</span><span class="p">,</span> <span class="n">icon_filename</span><span class="p">))</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_icon_rId</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str rId like &quot;rId7&quot; of rel to icon (image) representing OLE-object part.&quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slide_part</span><span class="o">.</span><span class="n">get_or_add_image_part</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_icon_image_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rId</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_ole_object_rId</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str rId like &quot;rId6&quot; of relationship to embedded ole_object part.</span>
+
+<span class="sd">        This is where the ole_object part and its relationship to the slide are actually</span>
+<span class="sd">        created.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slide_part</span><span class="o">.</span><span class="n">add_embedded_ole_object_part</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prog_id_arg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ole_object_file</span>
+        <span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_progId</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str like &quot;Excel.Sheet.12&quot; identifying program used to open object.</span>
+
+<span class="sd">        This value appears in the `progId` attribute of the `p:oleObj` element for the</span>
+<span class="sd">        object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prog_id_arg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prog_id_arg</span>
+
+        <span class="c1"># --- member of PROG_ID enumeration knows its progId keyphrase, otherwise caller</span>
+        <span class="c1"># --- has specified it explicitly (as str)</span>
+        <span class="k">return</span> <span class="n">prog_id_arg</span><span class="o">.</span><span class="n">progId</span> <span class="k">if</span> <span class="n">prog_id_arg</span> <span class="ow">in</span> <span class="n">PROG_ID</span> <span class="k">else</span> <span class="n">prog_id_arg</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_shape_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str name like &quot;Object 1&quot; for the embedded ole_object shape.</span>
+
+<span class="sd">        The name is formed from the prefix &quot;Object &quot; and the shape-id decremented by 1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;Object </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">_slide_part</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;SlidePart object for this slide.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shapes</span><span class="o">.</span><span class="n">part</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.shapetree</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

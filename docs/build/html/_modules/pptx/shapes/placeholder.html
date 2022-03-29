@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.shapes.placeholder &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.placeholder</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.shapes.placeholder</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Placeholder-related objects.</span>
+
+<span class="sd">Specific to shapes having a `p:ph` element. A placeholder has distinct behaviors</span>
+<span class="sd">depending on whether it appears on a slide, layout, or master. Hence there is a</span>
+<span class="sd">non-trivial class inheritance structure.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">MSO_SHAPE_TYPE</span><span class="p">,</span> <span class="n">PP_PLACEHOLDER</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.shapes.graphfrm</span> <span class="kn">import</span> <span class="n">CT_GraphicalObjectFrame</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.shapes.picture</span> <span class="kn">import</span> <span class="n">CT_Picture</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.autoshape</span> <span class="kn">import</span> <span class="n">Shape</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.graphfrm</span> <span class="kn">import</span> <span class="n">GraphicFrame</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.picture</span> <span class="kn">import</span> <span class="n">Picture</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Emu</span>
+
+
+<span class="k">class</span> <span class="nc">_InheritsDimensions</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mixin class that provides inherited dimension behavior. Specifically,</span>
+<span class="sd">    left, top, width, and height report the value from the layout placeholder</span>
+<span class="sd">    where they would have otherwise reported |None|. This behavior is</span>
+<span class="sd">    distinctive to placeholders. :meth:`_base_placeholder` must be overridden</span>
+<span class="sd">    by all subclasses to provide lookup of the appropriate base placeholder</span>
+<span class="sd">    to inherit from.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The effective height of this placeholder shape; its directly-applied</span>
+<span class="sd">        height if it has one, otherwise the height of its parent layout</span>
+<span class="sd">        placeholder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_value</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">)</span>
+
+    <span class="nd">@height</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">cy</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The effective left of this placeholder shape; its directly-applied</span>
+<span class="sd">        left if it has one, otherwise the left of its parent layout</span>
+<span class="sd">        placeholder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_value</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+
+    <span class="nd">@left</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Member of :ref:`MsoShapeType` specifying the type of this shape.</span>
+<span class="sd">        Unconditionally ``MSO_SHAPE_TYPE.PLACEHOLDER`` in this case.</span>
+<span class="sd">        Read-only.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">PLACEHOLDER</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The effective top of this placeholder shape; its directly-applied</span>
+<span class="sd">        top if it has one, otherwise the top of its parent layout</span>
+<span class="sd">        placeholder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_value</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+    <span class="nd">@top</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The effective width of this placeholder shape; its directly-applied</span>
+<span class="sd">        width if it has one, otherwise the width of its parent layout</span>
+<span class="sd">        placeholder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_value</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">)</span>
+
+    <span class="nd">@width</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">cx</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_base_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the layout or master placeholder shape this placeholder</span>
+<span class="sd">        inherits from. Not to be confused with an instance of</span>
+<span class="sd">        |BasePlaceholder| (necessarily).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Must be implemented by all subclasses.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_effective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The effective value of *attr_name* on this placeholder shape; its</span>
+<span class="sd">        directly-applied value if it has one, otherwise the value on the</span>
+<span class="sd">        layout placeholder it inherits from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">directly_applied_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">_InheritsDimensions</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span> <span class="n">attr_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">directly_applied_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">directly_applied_value</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inherited_value</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_inherited_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the attribute value, e.g. &#39;width&#39; of the base placeholder this</span>
+<span class="sd">        placeholder inherits from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">base_placeholder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_placeholder</span>
+        <span class="k">if</span> <span class="n">base_placeholder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">inherited_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">base_placeholder</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">inherited_value</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseSlidePlaceholder</span><span class="p">(</span><span class="n">_InheritsDimensions</span><span class="p">,</span> <span class="n">Shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for placeholders on slides.</span>
+
+<span class="sd">    Provides common behaviors such as inherited dimensions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Boolean indicating whether this shape is a placeholder.</span>
+<span class="sd">        Unconditionally |True| in this case.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Member of :ref:`MsoShapeType` specifying the type of this shape.</span>
+<span class="sd">        Unconditionally ``MSO_SHAPE_TYPE.PLACEHOLDER`` in this case.</span>
+<span class="sd">        Read-only.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">PLACEHOLDER</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_base_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the layout placeholder this slide placeholder inherits from.</span>
+<span class="sd">        Not to be confused with an instance of |BasePlaceholder|</span>
+<span class="sd">        (necessarily).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">layout</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">slide_layout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">ph_idx</span>
+        <span class="k">return</span> <span class="n">layout</span><span class="o">.</span><span class="n">placeholders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="o">=</span><span class="n">idx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_replace_placeholder_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Substitute *element* for this placeholder element in the shapetree.</span>
+<span class="sd">        This placeholder&#39;s `._element` attribute is set to |None| and its</span>
+<span class="sd">        original element is free for garbage collection. Any attribute access</span>
+<span class="sd">        (including a method call) on this placeholder after this call raises</span>
+<span class="sd">        |AttributeError|.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">element</span><span class="o">.</span><span class="n">_nvXxPr</span><span class="o">.</span><span class="n">nvPr</span><span class="o">.</span><span class="n">_insert_ph</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">ph</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">addprevious</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">class</span> <span class="nc">BasePlaceholder</span><span class="p">(</span><span class="n">Shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    NOTE: This class is deprecated and will be removed from a future release</span>
+<span class="sd">    along with the properties *idx*, *orient*, *ph_type*, and *sz*. The *idx*</span>
+<span class="sd">    property will be available via the .placeholder_format property. The</span>
+<span class="sd">    others will be accessed directly from the oxml layer as they are only</span>
+<span class="sd">    used for internal purposes.</span>
+
+<span class="sd">    Base class for placeholder subclasses that differentiate the varying</span>
+<span class="sd">    behaviors of placeholders on a master, layout, and slide.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">idx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Integer placeholder &#39;idx&#39; attribute, e.g. 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">ph_idx</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">orient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Placeholder orientation, e.g. ST_Direction.HORZ</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">ph_orient</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ph_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Placeholder type, e.g. PP_PLACEHOLDER.CENTER_TITLE</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">ph_type</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Placeholder &#39;sz&#39; attribute, e.g. ST_PlaceholderSize.FULL</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">ph_sz</span>
+
+
+<div class="viewcode-block" id="LayoutPlaceholder"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.LayoutPlaceholder">[docs]</a><span class="k">class</span> <span class="nc">LayoutPlaceholder</span><span class="p">(</span><span class="n">_InheritsDimensions</span><span class="p">,</span> <span class="n">Shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Placeholder shape on a slide layout, providing differentiated behavior</span>
+<span class="sd">    for slide layout placeholders, in particular, inheriting shape properties</span>
+<span class="sd">    from the master placeholder having the same type, when a matching one</span>
+<span class="sd">    exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_base_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the master placeholder this layout placeholder inherits from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">base_ph_type</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">CHART</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BITMAP</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">CENTER_TITLE</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">TITLE</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">ORG_CHART</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">DATE</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">DATE</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">FOOTER</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">FOOTER</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">MEDIA_CLIP</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">OBJECT</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">PICTURE</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SLIDE_NUMBER</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SLIDE_NUMBER</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">SUBTITLE</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">TABLE</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">BODY</span><span class="p">,</span>
+            <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">TITLE</span><span class="p">:</span> <span class="n">PP_PLACEHOLDER</span><span class="o">.</span><span class="n">TITLE</span><span class="p">,</span>
+        <span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">ph_type</span><span class="p">]</span>
+        <span class="n">slide_master</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">slide_master</span>
+        <span class="k">return</span> <span class="n">slide_master</span><span class="o">.</span><span class="n">placeholders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_ph_type</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MasterPlaceholder"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.MasterPlaceholder">[docs]</a><span class="k">class</span> <span class="nc">MasterPlaceholder</span><span class="p">(</span><span class="n">BasePlaceholder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Placeholder shape on a slide master.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<span class="k">class</span> <span class="nc">NotesSlidePlaceholder</span><span class="p">(</span><span class="n">_InheritsDimensions</span><span class="p">,</span> <span class="n">Shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Placeholder shape on a notes slide. Inherits shape properties from the</span>
+<span class="sd">    placeholder on the notes master that has the same type (e.g. &#39;body&#39;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_base_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the notes master placeholder this notes slide placeholder</span>
+<span class="sd">        inherits from, or |None| if no placeholder of the matching type is</span>
+<span class="sd">        present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">notes_master</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">notes_master</span>
+        <span class="n">ph_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">ph_type</span>
+        <span class="k">return</span> <span class="n">notes_master</span><span class="o">.</span><span class="n">placeholders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ph_type</span><span class="o">=</span><span class="n">ph_type</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">SlidePlaceholder</span><span class="p">(</span><span class="n">_BaseSlidePlaceholder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Placeholder shape on a slide. Inherits shape properties from its</span>
+<span class="sd">    corresponding slide layout placeholder.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="ChartPlaceholder"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.ChartPlaceholder">[docs]</a><span class="k">class</span> <span class="nc">ChartPlaceholder</span><span class="p">(</span><span class="n">_BaseSlidePlaceholder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Placeholder shape that can only accept a chart.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ChartPlaceholder.insert_chart"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.ChartPlaceholder.insert_chart">[docs]</a>    <span class="k">def</span> <span class="nf">insert_chart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chart_type</span><span class="p">,</span> <span class="n">chart_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a |PlaceholderGraphicFrame| object containing a new chart of</span>
+<span class="sd">        *chart_type* depicting *chart_data* and having the same position and</span>
+<span class="sd">        size as this placeholder. *chart_type* is one of the</span>
+<span class="sd">        :ref:`XlChartType` enumeration values. *chart_data* is a |ChartData|</span>
+<span class="sd">        object populated with the categories and series values for the chart.</span>
+<span class="sd">        Note that the new |Chart| object is not returned directly. The chart</span>
+<span class="sd">        object may be accessed using the</span>
+<span class="sd">        :attr:`~.PlaceholderGraphicFrame.chart` property of the returned</span>
+<span class="sd">        |PlaceholderGraphicFrame| object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">add_chart_part</span><span class="p">(</span><span class="n">chart_type</span><span class="p">,</span> <span class="n">chart_data</span><span class="p">)</span>
+        <span class="n">graphicFrame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_chart_graphicFrame</span><span class="p">(</span>
+            <span class="n">rId</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_placeholder_with</span><span class="p">(</span><span class="n">graphicFrame</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PlaceholderGraphicFrame</span><span class="p">(</span><span class="n">graphicFrame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_new_chart_graphicFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rId</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a newly created `p:graphicFrame` element having the specified</span>
+<span class="sd">        position and size and containing the chart identified by *rId*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id_</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="n">CT_GraphicalObjectFrame</span><span class="o">.</span><span class="n">new_chart_graphicFrame</span><span class="p">(</span>
+            <span class="n">id_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rId</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PicturePlaceholder"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.PicturePlaceholder">[docs]</a><span class="k">class</span> <span class="nc">PicturePlaceholder</span><span class="p">(</span><span class="n">_BaseSlidePlaceholder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Placeholder shape that can only accept a picture.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PicturePlaceholder.insert_picture"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.PicturePlaceholder.insert_picture">[docs]</a>    <span class="k">def</span> <span class="nf">insert_picture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a |PlaceholderPicture| object depicting the image in `image_file`.</span>
+
+<span class="sd">        `image_file` may be either a path (string) or a file-like object. The image is</span>
+<span class="sd">        cropped to fill the entire space of the placeholder. A |PlaceholderPicture|</span>
+<span class="sd">        object has all the properties and methods of a |Picture| shape except that the</span>
+<span class="sd">        value of its :attr:`~._BaseSlidePlaceholder.shape_type` property is</span>
+<span class="sd">        `MSO_SHAPE_TYPE.PLACEHOLDER` instead of `MSO_SHAPE_TYPE.PICTURE`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_placeholder_pic</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_placeholder_with</span><span class="p">(</span><span class="n">pic</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PlaceholderPicture</span><span class="p">(</span><span class="n">pic</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_new_placeholder_pic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a new `p:pic` element depicting the image in *image_file*,</span>
+<span class="sd">        suitable for use as a placeholder. In particular this means not</span>
+<span class="sd">        having an `a:xfrm` element, allowing its extents to be inherited from</span>
+<span class="sd">        its layout placeholder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rId</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">image_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_or_add_image</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+        <span class="n">shape_id</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">pic</span> <span class="o">=</span> <span class="n">CT_Picture</span><span class="o">.</span><span class="n">new_ph_pic</span><span class="p">(</span><span class="n">shape_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">rId</span><span class="p">)</span>
+        <span class="n">pic</span><span class="o">.</span><span class="n">crop_to_fit</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pic</span>
+
+    <span class="k">def</span> <span class="nf">_get_or_add_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an (rId, description, image_size) 3-tuple identifying the</span>
+<span class="sd">        related image part containing *image_file* and describing the image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image_part</span><span class="p">,</span> <span class="n">rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">get_or_add_image_part</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+        <span class="n">desc</span><span class="p">,</span> <span class="n">image_size</span> <span class="o">=</span> <span class="n">image_part</span><span class="o">.</span><span class="n">desc</span><span class="p">,</span> <span class="n">image_part</span><span class="o">.</span><span class="n">_px_size</span>
+        <span class="k">return</span> <span class="n">rId</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">image_size</span></div>
+
+
+<div class="viewcode-block" id="PlaceholderGraphicFrame"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.PlaceholderGraphicFrame">[docs]</a><span class="k">class</span> <span class="nc">PlaceholderGraphicFrame</span><span class="p">(</span><span class="n">GraphicFrame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Placeholder shape populated with a table, chart, or smart art.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Boolean indicating whether this shape is a placeholder.</span>
+<span class="sd">        Unconditionally |True| in this case.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="PlaceholderPicture"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.PlaceholderPicture">[docs]</a><span class="k">class</span> <span class="nc">PlaceholderPicture</span><span class="p">(</span><span class="n">_InheritsDimensions</span><span class="p">,</span> <span class="n">Picture</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Placeholder shape populated with a picture.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_base_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the layout placeholder this picture placeholder inherits from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">layout</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">slide_layout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">ph_idx</span>
+        <span class="k">return</span> <span class="n">layout</span><span class="o">.</span><span class="n">placeholders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="o">=</span><span class="n">idx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TablePlaceholder"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.TablePlaceholder">[docs]</a><span class="k">class</span> <span class="nc">TablePlaceholder</span><span class="p">(</span><span class="n">_BaseSlidePlaceholder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Placeholder shape that can only accept a table.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TablePlaceholder.insert_table"><a class="viewcode-back" href="../../../api/placeholders.html#pptx.shapes.placeholder.TablePlaceholder.insert_table">[docs]</a>    <span class="k">def</span> <span class="nf">insert_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return |PlaceholderGraphicFrame| object containing a `rows` by `cols` table.</span>
+
+<span class="sd">        The position and width of the table are those of the placeholder and its height</span>
+<span class="sd">        is proportional to the number of rows. A |PlaceholderGraphicFrame| object has</span>
+<span class="sd">        all the properties and methods of a |GraphicFrame| shape except that the value</span>
+<span class="sd">        of its :attr:`~._BaseSlidePlaceholder.shape_type` property is unconditionally</span>
+<span class="sd">        `MSO_SHAPE_TYPE.PLACEHOLDER`. Note that the return value is not the new table</span>
+<span class="sd">        but rather *contains* the new table. The table can be accessed using the</span>
+<span class="sd">        :attr:`~.PlaceholderGraphicFrame.table` property of the returned</span>
+<span class="sd">        |PlaceholderGraphicFrame| object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">graphicFrame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_placeholder_table</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_replace_placeholder_with</span><span class="p">(</span><span class="n">graphicFrame</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PlaceholderGraphicFrame</span><span class="p">(</span><span class="n">graphicFrame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_new_placeholder_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a newly added `p:graphicFrame` element containing an empty</span>
+<span class="sd">        table with *rows* rows and *cols* columns, positioned at the location</span>
+<span class="sd">        of this placeholder and having its same width. The table&#39;s height is</span>
+<span class="sd">        determined by the number of rows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">shape_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Emu</span><span class="p">(</span><span class="n">rows</span> <span class="o">*</span> <span class="mi">370840</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">CT_GraphicalObjectFrame</span><span class="o">.</span><span class="n">new_table_graphicFrame</span><span class="p">(</span>
+            <span class="n">shape_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span>
+        <span class="p">)</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.placeholder</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

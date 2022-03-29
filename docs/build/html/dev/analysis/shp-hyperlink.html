@@ -1,0 +1,805 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Shape hyperlink &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Placeholders" href="placeholders/index.html" />
+    <link rel="prev" title="Movie" href="shp-movie.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="placeholders/index.html" title="Placeholders"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="shp-movie.html" title="Movie"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Shape hyperlink</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="shape-hyperlink">
+<h1>Shape hyperlink<a class="headerlink" href="#shape-hyperlink" title="Permalink to this headline">¶</a></h1>
+<p>In addition to hyperlinks in text, PowerPoint supports hyperlinks on shapes.
+This feature is a subset of the more general <em>click action</em> functionality on
+shapes.</p>
+<p>A run or shape can have two distinct mouse event behaviors, one for (left)
+clicking and another for rolling over with the mouse (hover). These are
+independent; a run or shape can have one, the other, both, or neither.</p>
+<p>A “true” hyperlink in PowerPoint is indicated by having no <cite>action</cite> attribute
+on the <cite>a:hlinkClick</cite> element. The general hyperlink mechanism of storing
+a URL in a mapped relationship is used by other verbs such as <cite>hlinkfile</cite> and
+<cite>program</cite>, but these are considered distinct from hyperlinks for the sake of
+this analysis. That distinction is reflected in the API.</p>
+<p>See also: _Run.hyperlink, <cite>pptx.text._Hyperlink</cite></p>
+<section id="candidate-protocol">
+<h2>Candidate Protocol<a class="headerlink" href="#candidate-protocol" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p><cite>Shape</cite></p>
+<ul class="simple">
+<li><p><cite>.click_action</cite> - unconditionally returns an <cite>ActionSetting</cite> object,
+regardless of whether a click action is defined. Returns an
+<cite>ActionSetting</cite> object even when the shape type does not support a click
+action (such as a table).</p></li>
+</ul>
+</li>
+<li><p><cite>ActionSetting</cite></p>
+<ul>
+<li><p><cite>.action</cite> - returns a member of the <cite>PP_ACTION_TYPE</cite> (<cite>PP_ACTION</cite>)
+enumeration</p></li>
+<li><p><cite>.action_url</cite> - returns the <cite>ppaction://</cite> URL as a string, in its
+entirety, or None if no action attribute is present. Maybe this should
+do XML character entity decoding.</p></li>
+<li><p><cite>.action_verb</cite> - returns the verb in the <cite>ppaction://</cite> URL, or None if no
+action URL is present. e.g. <cite>‘hlinksldjump’</cite></p></li>
+<li><p><cite>.action_fields</cite> - returns a dictionary containing the fields in the query
+string of the action URL.</p></li>
+<li><p><cite>.hyperlink</cite> - returns a Hyperlink object that represents the hyperlink
+defined for the shape. A Hyperlink object is always returned.</p></li>
+<li><p><cite>.target_slide</cite> - returns a Slide object when the action is a jump to
+another slide in the same presentation. This is the case when action is
+<cite>FIRST_SLIDE</cite>, <cite>LAST_SLIDE</cite>, <cite>PREVIOUS_SLIDE</cite>, <cite>NEXT_SLIDE</cite>, or
+<cite>NAMED_SLIDE</cite>.</p>
+<p>Supports assignment of a slide object, after which <cite>.action</cite> returns
+<cite>NAMED_SLIDE</cite>.</p>
+</li>
+</ul>
+</li>
+<li><p>Hyperlink</p>
+<ul class="simple">
+<li><p><cite>.address</cite> - returns the URL contained in the relationship for this
+hyperlink.</p></li>
+<li><p><cite>.screen_tip</cite> - tool-tip text displayed on mouse rollover is slideshow
+mode. Put in the XML hooks for this but API call is second priority</p></li>
+</ul>
+</li>
+</ul>
+<p>Detect that a shape has a hyperlink:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">:</span>
+    <span class="n">click_action</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">click_action</span>
+    <span class="k">if</span> <span class="n">click_action</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">HYPERLINK</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">click_action</span><span class="o">.</span><span class="n">hyperlink</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Add a hyperlink:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">add_run</span><span class="p">()</span>
+<span class="n">r</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;link to python-pptx @ GitHub&#39;</span>
+<span class="n">hlink</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hyperlink</span>
+<span class="n">hlink</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/scanny/python-pptx&#39;</span>
+</pre></div>
+</div>
+<p>Delete a hyperlink:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="o">.</span><span class="n">hyperlink</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># or -----------</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">hyperlink</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># empty string &#39;&#39; will do it too</span>
+</pre></div>
+</div>
+<p>A Hyperlink instance is lazy-created on first reference. The object persists
+until garbage collected once created. The link XML is not written until
+.address is specified. Setting <code class="docutils literal notranslate"><span class="pre">hlink.address</span></code> to None or ‘’ causes the
+<cite>hlink</cite> entry to be removed if present.</p>
+<p>Add “Jump to slide” click action:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">click_action</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">click_action</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">click_action</span><span class="o">.</span><span class="n">target_slide</span> <span class="o">=</span> <span class="n">slides</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">click_action</span><span class="o">.</span><span class="n">action</span>
+<span class="go">NAMED_SLIDE (101)</span>
+</pre></div>
+</div>
+</section>
+<section id="future-scope">
+<h2>Future Scope<a class="headerlink" href="#future-scope" title="Permalink to this headline">¶</a></h2>
+<p><cite>ActionSetting.action</cite> supports these alternate assignments:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ---Shape.click_action is an ActionSetting object---</span>
+<span class="n">ActionSetting</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">FIRST_SLIDE</span> <span class="ow">or</span>
+    <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">LAST_SLIDE</span> <span class="ow">or</span>
+    <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NEXT_SLIDE</span> <span class="ow">or</span>
+    <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">PREVIOUS_SLIDE</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Each of these assignments takes immediate effect and is “self-contained”; no
+further assignments are necessary to produce the specified behavior.</p>
+<p>Assigning <cite>NAMED_SLIDE</cite> to <cite>ActionSetting.action</cite> raises an exception. This
+action is created by assigning a <cite>Slide</cite> object.</p>
+</section>
+<section id="glossary">
+<h2>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt><strong>click action</strong></dt><dd><p>The behavior to be executed when the user clicks on a shape. There are 14
+possible behaviors, such as navigate to a different slide, open a web
+page, and run a macro. The possible behaviors are described by the
+members of the <cite>PP_ACTION_TYPE</cite> enumeration.</p>
+</dd>
+<dt><strong>hover action</strong></dt><dd><p>All click action behaviors can also be triggered by a mouse-over (hover)
+event.</p>
+</dd>
+<dt><strong>hyperlink</strong></dt><dd><p>A hyperlink is a particular class of click action that roughly
+corresponds to opening a web page, although it can also be used to send
+an email. While a similar mechanism is used to specify other actions,
+such as open a file, this term here is reserved for the action of
+navigating to a web URL (including <cite>mailto://</cite>).</p>
+</dd>
+<dt><strong>action</strong></dt><dd><p>The click or hover action is specified in the XML using a URL on the
+<cite>ppaction://</cite> protocol contained in the <cite>action</cite> attribute of the
+<cite>a:hlinkClick</cite> (or <cite>a:hlinkHover</cite>) element. A hyperlink action is implied
+when no <cite>action</cite> attribute is present.</p>
+</dd>
+<dt><strong>action verb</strong></dt><dd><p>The specific action to be performed is contained in the <em>host</em> field of
+the <cite>ppaction://</cite> URL. For instance, <cite>customshow</cite> appears in
+<cite>ppaction://customshow?id=0&amp;return=true</cite> to indicate
+a <cite>PP_ACTION.NAMED_SLIDE_SHOW</cite> action.</p>
+</dd>
+<dt><strong>OLE verb</strong></dt><dd><p>The term <em>verb</em> also appears in this context to indicate an OLE verb such
+as <cite>Open</cite> or <cite>Edit</cite>. This is not to be confused with an <cite>action verb</cite>.</p>
+</dd>
+</dl>
+</section>
+<section id="pp-action-type-mapping-logic">
+<h2><cite>PP_ACTION_TYPE</cite> mapping logic<a class="headerlink" href="#pp-action-type-mapping-logic" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># _ClickAction.action property</span>
+
+<span class="n">hlinkClick</span> <span class="o">=</span> <span class="n">shape_elm</span><span class="o">.</span><span class="n">hlinkClick</span>
+
+<span class="k">if</span> <span class="n">hlinkClick</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NONE</span>
+
+<span class="n">action_verb</span> <span class="o">=</span> <span class="n">hlinkClick</span><span class="o">.</span><span class="n">action_verb</span>
+
+<span class="k">if</span> <span class="n">action_verb</span> <span class="o">==</span> <span class="s1">&#39;hlinkshowjump&#39;</span><span class="p">:</span>
+    <span class="n">relative_target</span> <span class="o">=</span> <span class="n">hlinkClick</span><span class="o">.</span><span class="n">action_fields</span><span class="p">[</span><span class="s1">&#39;jump&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;firstslide&#39;</span><span class="p">:</span>      <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">FIRST_SLIDE</span><span class="p">,</span>
+        <span class="s1">&#39;lastslide&#39;</span><span class="p">:</span>       <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">LAST_SLIDE</span><span class="p">,</span>
+        <span class="s1">&#39;lastslideviewed&#39;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">LAST_SLIDE_VIEWED</span><span class="p">,</span>
+        <span class="s1">&#39;nextslide&#39;</span><span class="p">:</span>       <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NEXT_SLIDE</span><span class="p">,</span>
+        <span class="s1">&#39;previousslide&#39;</span><span class="p">:</span>   <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">PREVIOUS_SLIDE</span><span class="p">,</span>
+        <span class="s1">&#39;endshow&#39;</span><span class="p">:</span>         <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">END_SHOW</span><span class="p">,</span>
+    <span class="p">}[</span><span class="n">relative_target</span><span class="p">]</span>
+
+<span class="k">return</span> <span class="p">{</span>
+    <span class="kc">None</span><span class="p">:</span>           <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">HYPERLINK</span><span class="p">,</span>
+    <span class="s1">&#39;hlinksldjump&#39;</span><span class="p">:</span> <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NAMED_SLIDE</span><span class="p">,</span>
+    <span class="s1">&#39;hlinkpres&#39;</span><span class="p">:</span>    <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">PLAY</span><span class="p">,</span>
+    <span class="s1">&#39;hlinkfile&#39;</span><span class="p">:</span>    <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">OPEN_FILE</span><span class="p">,</span>
+    <span class="s1">&#39;customshow&#39;</span><span class="p">:</span>   <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">NAMED_SLIDE_SHOW</span><span class="p">,</span>
+    <span class="s1">&#39;ole&#39;</span><span class="p">:</span>          <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">OLE_VERB</span><span class="p">,</span>
+    <span class="s1">&#39;macro&#39;</span><span class="p">:</span>        <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">RUN_MACRO</span><span class="p">,</span>
+    <span class="s1">&#39;program&#39;</span><span class="p">:</span>      <span class="n">PP_ACTION</span><span class="o">.</span><span class="n">RUN_PROGRAM</span><span class="p">,</span>
+<span class="p">}[</span><span class="n">action_verb</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="powerpoint-application-behavior">
+<h2>PowerPoint® application behavior<a class="headerlink" href="#powerpoint-application-behavior" title="Permalink to this headline">¶</a></h2>
+<p>The general domain here is mouse event behaviors, with respect to a shape.
+So far, the only two mouse events are (left) click and hover (mouse over).
+These can trigger a variety of actions. I’m not sure if all actions can be
+triggered by either event, but the XML appears to support it.</p>
+<section id="action-inventory">
+<h3>Action inventory<a class="headerlink" href="#action-inventory" title="Permalink to this headline">¶</a></h3>
+<p>The following behaviors can be triggered by a click:</p>
+<ul class="simple">
+<li><p>Jump to a relative slide in same presentation (first, last, next, previous,
+etc.).</p></li>
+<li><p>Jump to specific slide in same presentation (by slide index, perhaps title
+as fallback)</p></li>
+<li><p>Jump to a slide in different presentation (by slide index)</p></li>
+<li><p>End the slide show</p></li>
+<li><p>Jump to bookmark in Microsoft Word document</p></li>
+<li><p>Open an arbitrary file on the same computer</p></li>
+<li><p>Web link - Open a browser and navigate to a specified web page</p></li>
+<li><p>Run a macro</p></li>
+<li><p>Run an arbitrary program</p></li>
+<li><p>Execute an OLE action</p></li>
+</ul>
+<p>In addition to performing one of these actions, zero, one, or both of two
+auxiliary actions can be triggered by clicking:</p>
+<ul class="simple">
+<li><p>Play a sound</p></li>
+<li><p>Highlight the shape with a dashed line for a short time</p></li>
+</ul>
+</section>
+<section id="hyperlinkable-shapes">
+<h3>Hyperlinkable shapes<a class="headerlink" href="#hyperlinkable-shapes" title="Permalink to this headline">¶</a></h3>
+<p>These shape types can have hyperlinks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>Autoshapes</cite></p></li>
+<li><p><cite>Textbox</cite></p></li>
+<li><p><cite>Picture</cite></p></li>
+<li><p><cite>Connector</cite></p></li>
+<li><p><cite>Chart</cite></p></li>
+</ul>
+</div></blockquote>
+<p>These shape types cannot:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>Table</cite></p></li>
+<li><p><cite>Group Shape</cite></p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+<section id="ui-procedures">
+<h2>UI procedures<a class="headerlink" href="#ui-procedures" title="Permalink to this headline">¶</a></h2>
+<section id="hyperlink-autoshape-to-other-slide-by-title">
+<h3>Hyperlink autoshape to other slide by title<a class="headerlink" href="#hyperlink-autoshape-to-other-slide-by-title" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Right-click &gt; Hyperlink… (Cmd-K)</p></li>
+<li><p>Select Document panel</p></li>
+<li><p>Anchor: &gt; Locate… &gt; Slide Titles</p></li>
+<li><p>select slide by number and title, e.g. “2</p></li>
+</ul>
+</section>
+<section id="add-anchor-point-in-a-document-or-perhaps-a-slide">
+<h3>Add Anchor point in a document (or perhaps a slide)<a class="headerlink" href="#add-anchor-point-in-a-document-or-perhaps-a-slide" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A hyperlink can link to a bookmark in a Word document</p></li>
+<li><p>It appears that maximum granularity in PowerPoint is to an entire slide
+(not to a range of text in a shape, for example)</p></li>
+</ul>
+</section>
+</section>
+<section id="ms-api">
+<h2>MS API<a class="headerlink" href="#ms-api" title="Permalink to this headline">¶</a></h2>
+<section id="shape-actionsettings-ppmouseclick-ppmouseover">
+<h3>Shape.ActionSettings(ppMouseClick | ppMouseOver)<a class="headerlink" href="#shape-actionsettings-ppmouseclick-ppmouseover" title="Permalink to this headline">¶</a></h3>
+<p>The Shape object has an ActionSettings property, which is a collection of two
+ActionSetting objects, one for click and the other for hover.
+<a class="reference external" href="https://msdn.microsoft.com/EN-US/library/office/ff745656.aspx">https://msdn.microsoft.com/EN-US/library/office/ff745656.aspx</a></p>
+</section>
+<section id="actionsetting">
+<h3>ActionSetting<a class="headerlink" href="#actionsetting" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Shape.ActionSettings(ppMouseClick | ppMouseOver) =&gt; ActionSetting</p></li>
+<li><p>ActionSetting.Action</p>
+<ul>
+<li><p>one of: ppActionHyperlink, ppActionFirstSlide, ppActionPlay, or several
+others: <a class="reference external" href="https://msdn.microsoft.com/EN-US/library/office/ff744511.aspx">https://msdn.microsoft.com/EN-US/library/office/ff744511.aspx</a></p></li>
+</ul>
+</li>
+<li><p>ActionSetting.Hyperlink =&gt; Hyperlink</p></li>
+<li><p>Hyperlink members:</p>
+<ul>
+<li><p>Address</p></li>
+<li><p>SubAddress</p></li>
+<li><p>TextToDisplay</p></li>
+<li><p>ScreenTip</p></li>
+<li><p>EmailSubject</p></li>
+<li><p>Type (read-only, one of msoHyperlinkRange (run) or msoHyperlinkShape)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="Permalink to this headline">¶</a></h2>
+<p>These are representative samples of shape XML showing the hyperlinks
+associated the shape (as opposed to text contained by the shape).</p>
+<ul class="simple">
+<li><p>The <cite>a:hlinkClick</cite> element can be present or absent.</p></li>
+<li><p>Its parent, <cite>p:cNvPr</cite> is always present (is a required element).</p></li>
+<li><p>All of its attributes are optional, but an <cite>a:hlinkClick</cite> having no
+attributes has no meaning (or may trigger an error).</p></li>
+<li><p>Its <cite>r:id</cite> element is always present on click actions created by PowerPoint.
+Its value is an empty string when the action is first, last, next, previous,
+macro, and perhaps others.</p></li>
+<li><p>Adding a <cite>highlightClick</cite> attribute set True causes the shape to get
+a dashed line border for a short time when it is clicked.</p></li>
+<li><p>There are some more obscure attributes like “stop playing sound before
+navigating” that are available on <cite>CT_Hyperlink</cite>, perhaps meant for
+kiosk-style applications.</p></li>
+</ul>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h3>
+<p>The action to perform on a mouse click is specified by the <cite>action</cite> attribute
+of the <cite>a:hlinkClick</cite> element. Its value is a URL having the <cite>ppaction://</cite>
+protocol, a verb, and an optional query string.</p>
+<p>Some actions reference a relationship that specifies the target of the
+action.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 11%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>verb</p></th>
+<th class="head"><p>rId</p></th>
+<th class="head"><p>behavior</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>none</p></td>
+<td><p>external</p></td>
+<td><p>Open a browser and navigate to URL in relationship</p></td>
+</tr>
+<tr class="row-odd"><td><p>hlinkshowjump</p></td>
+<td><p>none</p></td>
+<td><p>Jump to a relative slide in the same presentation</p></td>
+</tr>
+<tr class="row-even"><td><p>hlinksldjump</p></td>
+<td><p>internal</p></td>
+<td><p>Jump to a specified slide in the same presentation</p></td>
+</tr>
+<tr class="row-odd"><td><p>hlinkpres</p></td>
+<td><p>external</p></td>
+<td><p>Jump to a specified slide in another presentation</p></td>
+</tr>
+<tr class="row-even"><td><p>hlinkfile</p></td>
+<td><p>external</p></td>
+<td><p>Open an arbitrary file on the same computer</p></td>
+</tr>
+<tr class="row-odd"><td><p>customshow</p></td>
+<td><p>none</p></td>
+<td><p>Start a custom slide show, option to return after</p></td>
+</tr>
+<tr class="row-even"><td><p>ole</p></td>
+<td><p>none</p></td>
+<td><p>Execute an OLE action (open, edit)</p></td>
+</tr>
+<tr class="row-odd"><td><p>macro</p></td>
+<td><p>none</p></td>
+<td><p>Run an embedded VBA macro</p></td>
+</tr>
+<tr class="row-even"><td><p>program</p></td>
+<td><p>external</p></td>
+<td><p>Execute an arbitrary program on same computer</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="jump-to-relative-slide-within-presentation">
+<h3>Jump to relative slide within presentation<a class="headerlink" href="#jump-to-relative-slide-within-presentation" title="Permalink to this headline">¶</a></h3>
+<p><strong>hlinkshowjump</strong> action</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;7&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 6&quot;</span><span class="nt">&gt;</span>
+      <span class="cm">&lt;!-- this element does the needful --&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://hlinkshowjump?jump=firstslide&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvPr&gt;</span>
+    <span class="nt">&lt;p:cNvSpPr/&gt;</span>
+    <span class="nt">&lt;p:nvPr/&gt;</span>
+  <span class="nt">&lt;/p:nvSpPr&gt;</span>
+  <span class="nt">&lt;p:spPr&gt;</span>
+    <span class="nt">&lt;a:xfrm&gt;</span>
+      <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;1020781&quot;</span> <span class="na">y=</span><span class="s">&quot;1684235&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;1495562&quot;</span> <span class="na">cy=</span><span class="s">&quot;1775031&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:xfrm&gt;</span>
+    <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;roundRect&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:avLst/&gt;</span>
+    <span class="nt">&lt;/a:prstGeom&gt;</span>
+  <span class="nt">&lt;/p:spPr&gt;</span>
+  <span class="nt">&lt;p:txBody&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      <span class="nt">&lt;a:pPr</span> <span class="na">algn=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:r&gt;</span>
+        <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:t&gt;</span>Click to go to Foobar Slide<span class="nt">&lt;/a:t&gt;</span>
+      <span class="nt">&lt;/a:r&gt;</span>
+      <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:p&gt;</span>
+  <span class="nt">&lt;/p:txBody&gt;</span>
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><cite>jump</cite> key can have value <cite>firstslide</cite>, <cite>lastslide</cite>, <cite>previousslide</cite>,
+<cite>nextslide</cite>, <cite>lastslideviewed</cite>, <cite>endshow</cite>.</p></li>
+<li><p>Note that <cite>r:id</cite> attribute is empty string; no relationship is required to
+determine target slide.</p></li>
+</ul>
+</section>
+<section id="jump-to-specific-slide-within-presentation">
+<h3>Jump to specific slide within presentation<a class="headerlink" href="#jump-to-specific-slide-within-presentation" title="Permalink to this headline">¶</a></h3>
+<p><strong>hlinksldjump</strong> action</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;7&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 6&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;rId2&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://hlinksldjump&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvPr&gt;</span>
+    ...
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>The corresponding <cite>Relationship</cite> element must be of type <cite>slide</cite>, be
+internal, and point to the target slide in the package:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Relationship</span>
+  <span class="na">Id=</span><span class="s">&quot;rId2&quot;</span>
+  <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide&quot;</span>
+  <span class="na">Target=</span><span class="s">&quot;slide1.xml&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="jump-to-slide-in-another-presentation">
+<h3>Jump to slide in another presentation<a class="headerlink" href="#jump-to-slide-in-another-presentation" title="Permalink to this headline">¶</a></h3>
+<p><strong>hlinkpres</strong> action</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;7&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 6&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;rId3&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://hlinkpres?slideindex=3&amp;amp;slidetitle=Key Questions&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvPr&gt;</span>
+    ...
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>The corresponding <cite>Relationship</cite> element must be of type <cite>hyperlink</cite>, be
+<em>external</em>, and point to the target presentation with a URL (using the
+<cite>file://</cite> protocol for a local file). The slide number and slide title are
+provided in the <cite>ppaction://</cite> URL in the <cite>a:hlinkClick</cite> element:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Relationship</span>
+  <span class="na">Id=</span><span class="s">&quot;rId3&quot;</span>
+  <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink&quot;</span>
+  <span class="na">Target=</span><span class="s">&quot;file://localhost/Users/scanny/Documents/checksec-prelim-analysis.pptx&quot;</span>
+  <span class="na">TargetMode=</span><span class="s">&quot;External&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="web-link-hyperlink">
+<h3>Web link (hyperlink)<a class="headerlink" href="#web-link-hyperlink" title="Permalink to this headline">¶</a></h3>
+<p>Note: The <cite>action</cite> attribute of <cite>a:hlinkClick</cite> has no value in this case.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;4&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 3&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;rId3&quot;</span><span class="nt">/&gt;</span>
+    ...
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>The corresponding <cite>Relationship</cite> element must be of type <cite>hyperlink</cite>, be
+<em>external</em>, and point to the target URL (using a web protocol).</p>
+<p>The target is often a web URL, such as <a class="reference external" href="https://github/scanny/python-pptx">https://github/scanny/python-pptx</a>,
+including an optional anchor (e.g. #sub-heading suffix to jump mid-page). The
+target can also be an email address, launching the local email client.
+A mailto: URI is used in this case, with subject specifiable using
+a ‘?subject=xyz’ suffix.</p>
+<p>An optional ScreenTip, a roll-over tool-tip sort of message, can also be
+specified for a hyperlink. The XML schema does not limit its use to
+hyperlinks, although the PowerPoint UI may not provide access to this field
+in non-hyperlink cases.:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Relationship</span>
+  <span class="na">Id=</span><span class="s">&quot;rId3&quot;</span>
+  <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink&quot;</span>
+  <span class="na">Target=</span><span class="s">&quot;https://www.google.com/&quot;</span>
+  <span class="na">TargetMode=</span><span class="s">&quot;External&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="open-an-arbitrary-file-on-the-same-computer">
+<h3>Open an arbitrary file on the same computer<a class="headerlink" href="#open-an-arbitrary-file-on-the-same-computer" title="Permalink to this headline">¶</a></h3>
+<p><strong>hlinkfile</strong> action</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;7&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 6&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;rId2&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://hlinkfile&quot;</span><span class="nt">/&gt;</span>
+      ...
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>PowerPoint opens the file (after a warning dialog) using the default
+application for the file.</p></li>
+</ul>
+<p>The corresponding <cite>Relationship</cite> element must be of type <cite>hyperlink</cite>, be
+<em>external</em>, and point to the target file with a <cite>file://</cite> protocol URL:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Relationship</span>
+  <span class="na">Id=</span><span class="s">&quot;rId2&quot;</span>
+  <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink&quot;</span>
+  <span class="na">Target=</span><span class="s">&quot;file:///C:\Install.log&quot;</span>
+  <span class="na">TargetMode=</span><span class="s">&quot;External&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="run-custom-slideshow">
+<h3>Run Custom SlideShow<a class="headerlink" href="#run-custom-slideshow" title="Permalink to this headline">¶</a></h3>
+<p><strong>customshow</strong> action</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;4&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 3&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://customshow?id=0&amp;amp;return=true&quot;</span><span class="nt">/&gt;</span>
+      ...
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The <cite>return</cite> query field determines whether focus returns to the current show
+after running the linked show. This field can be omitted, and defaults to
+<cite>false</cite>.</p></li>
+</ul>
+</section>
+<section id="execute-an-ole-action">
+<h3>Execute an OLE action<a class="headerlink" href="#execute-an-ole-action" title="Permalink to this headline">¶</a></h3>
+<p><strong>ole</strong> action</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;9&quot;</span> <span class="na">name=</span><span class="s">&quot;Object 8&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://ole?verb=0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvPr&gt;</span>
+  ...
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>This option is only available on an embedded (OLE) object. The verb field is
+‘0’ for Edit and ‘1’ for Open.</p>
+</section>
+<section id="run-macro">
+<h3>Run macro<a class="headerlink" href="#run-macro" title="Permalink to this headline">¶</a></h3>
+<p><strong>macro</strong> action</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;4&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 3&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://macro?name=Hello&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvPr&gt;</span>
+  ...
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="run-a-program">
+<h3>Run a program<a class="headerlink" href="#run-a-program" title="Permalink to this headline">¶</a></h3>
+<p><strong>program</strong> action</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;4&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 3&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;rId2&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://program&quot;</span><span class="nt">/&gt;</span>
+    ...
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>The corresponding <cite>Relationship</cite> element must be of type <cite>hyperlink</cite>, be
+<em>external</em>, and point to the target application with a <cite>file://</cite> protocol
+URL.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Relationship</span>
+  <span class="na">Id=</span><span class="s">&quot;rId2&quot;</span>
+  <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink&quot;</span>
+  <span class="na">Target=</span><span class="s">&quot;file:///C:\Program%20Files%20(x86)\Vim\vim74\gvim.exe&quot;</span>
+  <span class="na">TargetMode=</span><span class="s">&quot;External&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="play-a-sound">
+<h3>Play a sound<a class="headerlink" href="#play-a-sound" title="Permalink to this headline">¶</a></h3>
+<p>Playing a sound is not a distinct action; rather, like highlighting, it is an
+optional additional action to be performed on a click or hover event.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;5&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 4&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://..any..&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:snd</span> <span class="na">r:embed=</span><span class="s">&quot;rId3&quot;</span> <span class="na">name=</span><span class="s">&quot;applause.wav&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:hlinkClick&gt;</span>
+    ...
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>The corresponding <cite>Relationship</cite> element must be of type <cite>audio</cite>, be
+internal, and point to a sound file embedded in the presentation:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Relationship</span>
+  <span class="na">Id=</span><span class="s">&quot;rId3&quot;</span>
+  <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/audio&quot;</span>
+  <span class="na">Target=</span><span class="s">&quot;../media/audio1.wav&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Shape&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nvSpPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ShapeNonVisual&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;style&quot;</span>  <span class="na">type=</span><span class="s">&quot;a:CT_ShapeStyle&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txBody&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;useBgFill&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ShapeNonVisual&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cNvPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;a:CT_NonVisualDrawingProps&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cNvSpPr&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_NonVisualDrawingShapeProps&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nvPr&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ApplicationNonVisualDrawingProps&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NonVisualDrawingProps&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hlinkClick&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Hyperlink&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hlinkHover&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Hyperlink&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_DrawingElementId&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>          <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;descr&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>          <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;hidden&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>         <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;title&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>          <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Hyperlink&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;snd&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_EmbeddedWAVAudioFile&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">ref=</span><span class="s">&quot;r:id&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;invalidUrl&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;action&quot;</span>         <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;tgtFrame&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;tooltip&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;history&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;highlightClick&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;endSnd&quot;</span>         <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Shape hyperlink</a><ul>
+<li><a class="reference internal" href="#candidate-protocol">Candidate Protocol</a></li>
+<li><a class="reference internal" href="#future-scope">Future Scope</a></li>
+<li><a class="reference internal" href="#glossary">Glossary</a></li>
+<li><a class="reference internal" href="#pp-action-type-mapping-logic"><cite>PP_ACTION_TYPE</cite> mapping logic</a></li>
+<li><a class="reference internal" href="#powerpoint-application-behavior">PowerPoint® application behavior</a><ul>
+<li><a class="reference internal" href="#action-inventory">Action inventory</a></li>
+<li><a class="reference internal" href="#hyperlinkable-shapes">Hyperlinkable shapes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ui-procedures">UI procedures</a><ul>
+<li><a class="reference internal" href="#hyperlink-autoshape-to-other-slide-by-title">Hyperlink autoshape to other slide by title</a></li>
+<li><a class="reference internal" href="#add-anchor-point-in-a-document-or-perhaps-a-slide">Add Anchor point in a document (or perhaps a slide)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ms-api">MS API</a><ul>
+<li><a class="reference internal" href="#shape-actionsettings-ppmouseclick-ppmouseover">Shape.ActionSettings(ppMouseClick | ppMouseOver)</a></li>
+<li><a class="reference internal" href="#actionsetting">ActionSetting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#jump-to-relative-slide-within-presentation">Jump to relative slide within presentation</a></li>
+<li><a class="reference internal" href="#jump-to-specific-slide-within-presentation">Jump to specific slide within presentation</a></li>
+<li><a class="reference internal" href="#jump-to-slide-in-another-presentation">Jump to slide in another presentation</a></li>
+<li><a class="reference internal" href="#web-link-hyperlink">Web link (hyperlink)</a></li>
+<li><a class="reference internal" href="#open-an-arbitrary-file-on-the-same-computer">Open an arbitrary file on the same computer</a></li>
+<li><a class="reference internal" href="#run-custom-slideshow">Run Custom SlideShow</a></li>
+<li><a class="reference internal" href="#execute-an-ole-action">Execute an OLE action</a></li>
+<li><a class="reference internal" href="#run-macro">Run macro</a></li>
+<li><a class="reference internal" href="#run-a-program">Run a program</a></li>
+<li><a class="reference internal" href="#play-a-sound">Play a sound</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="shp-movie.html"
+                          title="previous chapter">Movie</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="placeholders/index.html"
+                          title="next chapter">Placeholders</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="placeholders/index.html" title="Placeholders"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="shp-movie.html" title="Movie"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Shape hyperlink</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

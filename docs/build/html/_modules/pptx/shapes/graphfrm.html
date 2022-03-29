@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.shapes.graphfrm &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.graphfrm</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.shapes.graphfrm</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Graphic Frame shape and related objects.</span>
+
+<span class="sd">A graphic frame is a common container for table, chart, smart art, and media</span>
+<span class="sd">objects.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">MSO_SHAPE_TYPE</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.base</span> <span class="kn">import</span> <span class="n">BaseShape</span>
+<span class="kn">from</span> <span class="nn">pptx.shared</span> <span class="kn">import</span> <span class="n">ParentedElementProxy</span>
+<span class="kn">from</span> <span class="nn">pptx.spec</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GRAPHIC_DATA_URI_CHART</span><span class="p">,</span>
+    <span class="n">GRAPHIC_DATA_URI_OLEOBJ</span><span class="p">,</span>
+    <span class="n">GRAPHIC_DATA_URI_TABLE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pptx.table</span> <span class="kn">import</span> <span class="n">Table</span>
+
+
+<div class="viewcode-block" id="GraphicFrame"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.graphfrm.GraphicFrame">[docs]</a><span class="k">class</span> <span class="nc">GraphicFrame</span><span class="p">(</span><span class="n">BaseShape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Container shape for table, chart, smart art, and media objects.</span>
+
+<span class="sd">    Corresponds to a ``&lt;p:graphicFrame&gt;`` element in the shape tree.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">chart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The |Chart| object containing the chart in this graphic frame.</span>
+
+<span class="sd">        Raises |ValueError| if this graphic frame does not contain a chart.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_chart</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;shape does not contain a chart&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">chart_part</span><span class="o">.</span><span class="n">chart</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">chart_part</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The |ChartPart| object containing the chart in this graphic frame.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">related_part</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">chart_rId</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_chart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|True| if this graphic frame contains a chart object. |False| otherwise.</span>
+
+<span class="sd">        When |True|, the chart object can be accessed using the ``.chart`` property.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">graphicData_uri</span> <span class="o">==</span> <span class="n">GRAPHIC_DATA_URI_CHART</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|True| if this graphic frame contains a table object, |False| otherwise.</span>
+
+<span class="sd">        When |True|, the table object can be accessed using the `.table` property.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">graphicData_uri</span> <span class="o">==</span> <span class="n">GRAPHIC_DATA_URI_TABLE</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ole_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Optional _OleFormat object for this graphic-frame shape.</span>
+
+<span class="sd">        Raises `ValueError` on a GraphicFrame instance that does not contain an OLE</span>
+<span class="sd">        object.</span>
+
+<span class="sd">        An shape that contains an OLE object will have `.shape_type` of either</span>
+<span class="sd">        `EMBEDDED_OLE_OBJECT` or `LINKED_OLE_OBJECT`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">has_oleobj</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;not an OLE-object shape&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_OleFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">graphicData</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shadow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unconditionally raises |NotImplementedError|.</span>
+
+<span class="sd">        Access to the shadow effect for graphic-frame objects is</span>
+<span class="sd">        content-specific (i.e. different for charts, tables, etc.) and has</span>
+<span class="sd">        not yet been implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;shadow property on GraphicFrame not yet supported&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Optional member of `MSO_SHAPE_TYPE` identifying the type of this shape.</span>
+
+<span class="sd">        Possible values are ``MSO_SHAPE_TYPE.CHART``, ``MSO_SHAPE_TYPE.TABLE``,</span>
+<span class="sd">        ``MSO_SHAPE_TYPE.EMBEDDED_OLE_OBJECT``, ``MSO_SHAPE_TYPE.LINKED_OLE_OBJECT``.</span>
+
+<span class="sd">        This value is `None` when none of these four types apply, for example when the</span>
+<span class="sd">        shape contains SmartArt.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">graphicData_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">graphicData_uri</span>
+        <span class="k">if</span> <span class="n">graphicData_uri</span> <span class="o">==</span> <span class="n">GRAPHIC_DATA_URI_CHART</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">CHART</span>
+        <span class="k">elif</span> <span class="n">graphicData_uri</span> <span class="o">==</span> <span class="n">GRAPHIC_DATA_URI_TABLE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">TABLE</span>
+        <span class="k">elif</span> <span class="n">graphicData_uri</span> <span class="o">==</span> <span class="n">GRAPHIC_DATA_URI_OLEOBJ</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">EMBEDDED_OLE_OBJECT</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">is_embedded_ole_obj</span>
+                <span class="k">else</span> <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">LINKED_OLE_OBJECT</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |Table| object contained in this graphic frame. Raises</span>
+<span class="sd">        |ValueError| if this graphic frame does not contain a table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_table</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;shape does not contain a table&quot;</span><span class="p">)</span>
+        <span class="n">tbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">graphic</span><span class="o">.</span><span class="n">graphicData</span><span class="o">.</span><span class="n">tbl</span>
+        <span class="k">return</span> <span class="n">Table</span><span class="p">(</span><span class="n">tbl</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">_OleFormat</span><span class="p">(</span><span class="n">ParentedElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provides attributes on an embedded OLE object.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graphicData</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_OleFormat</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">graphicData</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graphicData</span> <span class="o">=</span> <span class="n">graphicData</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">blob</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Optional bytes of OLE object, suitable for loading or saving as a file.</span>
+
+<span class="sd">        This value is None if the embedded object does not represent a &quot;file&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">related_part</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_graphicData</span><span class="o">.</span><span class="n">blob_rId</span><span class="p">)</span><span class="o">.</span><span class="n">blob</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">prog_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str &quot;progId&quot; attribute of this embedded OLE object.</span>
+
+<span class="sd">        The progId is a str like &quot;Excel.Sheet.12&quot; that identifies the &quot;file-type&quot; of the</span>
+<span class="sd">        embedded object, or perhaps more precisely, the application (aka. &quot;server&quot; in</span>
+<span class="sd">        OLE parlance) to be used to open this object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graphicData</span><span class="o">.</span><span class="n">progId</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">show_as_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;True when OLE object should appear as an icon (rather than preview).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graphicData</span><span class="o">.</span><span class="n">showAsIcon</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.graphfrm</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

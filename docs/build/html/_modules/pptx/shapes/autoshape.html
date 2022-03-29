@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.shapes.autoshape &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.autoshape</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.shapes.autoshape</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Autoshape-related objects such as Shape and Adjustment.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+
+<span class="kn">from</span> <span class="nn">pptx.dml.fill</span> <span class="kn">import</span> <span class="n">FillFormat</span>
+<span class="kn">from</span> <span class="nn">pptx.dml.line</span> <span class="kn">import</span> <span class="n">LineFormat</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">MSO_AUTO_SHAPE_TYPE</span><span class="p">,</span> <span class="n">MSO_SHAPE_TYPE</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes.base</span> <span class="kn">import</span> <span class="n">BaseShape</span>
+<span class="kn">from</span> <span class="nn">pptx.spec</span> <span class="kn">import</span> <span class="n">autoshape_types</span>
+<span class="kn">from</span> <span class="nn">pptx.text.text</span> <span class="kn">import</span> <span class="n">TextFrame</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<div class="viewcode-block" id="Adjustment"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.autoshape.Adjustment">[docs]</a><span class="k">class</span> <span class="nc">Adjustment</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An adjustment value for an autoshape.</span>
+
+<span class="sd">    An adjustment value corresponds to the position of an adjustment handle on</span>
+<span class="sd">    an auto shape. Adjustment handles are the small yellow diamond-shaped</span>
+<span class="sd">    handles that appear on certain auto shapes and allow the outline of the</span>
+<span class="sd">    shape to be adjusted. For example, a rounded rectangle has an adjustment</span>
+<span class="sd">    handle that allows the radius of its corner rounding to be adjusted.</span>
+
+<span class="sd">    Values are |float| and generally range from 0.0 to 1.0, although the value</span>
+<span class="sd">    can be negative or greater than 1.0 in certain circumstances.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">def_val</span><span class="p">,</span> <span class="n">actual</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Adjustment</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">def_val</span> <span class="o">=</span> <span class="n">def_val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actual</span> <span class="o">=</span> <span class="n">actual</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">effective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write |float| representing normalized adjustment value for this</span>
+<span class="sd">        adjustment. Actual values are a large-ish integer expressed in shape</span>
+<span class="sd">        coordinates, nominally between 0 and 100,000. The effective value is</span>
+<span class="sd">        normalized to a corresponding value nominally between 0.0 and 1.0.</span>
+<span class="sd">        Intuitively this represents the proportion of the width or height of</span>
+<span class="sd">        the shape at which the adjustment value is located from its starting</span>
+<span class="sd">        point. For simple shapes such as a rounded rectangle, this intuitive</span>
+<span class="sd">        correspondence holds. For more complicated shapes and at more extreme</span>
+<span class="sd">        shape proportions (e.g. width is much greater than height), the value</span>
+<span class="sd">        can become negative or greater than 1.0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">raw_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actual</span>
+        <span class="k">if</span> <span class="n">raw_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">raw_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">def_val</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="n">raw_value</span><span class="p">)</span>
+
+    <span class="nd">@effective_value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">effective_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Number</span><span class="p">):</span>
+            <span class="n">tmpl</span> <span class="o">=</span> <span class="s2">&quot;adjustment value must be numeric, got &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">tmpl</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_denormalize</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_denormalize</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return integer corresponding to normalized *raw_value* on unit basis</span>
+<span class="sd">        of 100,000. See Adjustment.normalize for additional details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span> <span class="o">*</span> <span class="mf">100000.0</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span><span class="n">raw_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return normalized value for *raw_value*. A normalized value is a</span>
+<span class="sd">        |float| between 0.0 and 1.0 for nominal raw values between 0 and</span>
+<span class="sd">        100,000. Raw values less than 0 and greater than 100,000 are valid</span>
+<span class="sd">        and return values calculated on the same unit basis of 100,000.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">raw_value</span> <span class="o">/</span> <span class="mf">100000.0</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">val</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Denormalized effective value (expressed in shape coordinates),</span>
+<span class="sd">        suitable for using in the XML.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">actual</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">actual</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">def_val</span></div>
+
+
+<div class="viewcode-block" id="AdjustmentCollection"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.autoshape.AdjustmentCollection">[docs]</a><span class="k">class</span> <span class="nc">AdjustmentCollection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sequence of |Adjustment| instances for an auto shape, each representing</span>
+<span class="sd">    an available adjustment for a shape of its type. Supports ``len()`` and</span>
+<span class="sd">    indexed access, e.g. ``shape.adjustments[1] = 0.15``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prstGeom</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AdjustmentCollection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_adjustments_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized_adjustments</span><span class="p">(</span><span class="n">prstGeom</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prstGeom</span> <span class="o">=</span> <span class="n">prstGeom</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Provides indexed access, (e.g. &#39;adjustments[9]&#39;).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_adjustments_</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">effective_value</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provides item assignment via an indexed expression, e.g.</span>
+<span class="sd">        ``adjustments[9] = 999.9``. Causes all adjustment values in</span>
+<span class="sd">        collection to be written to the XML.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_adjustments_</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">effective_value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rewrite_guides</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_initialized_adjustments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prstGeom</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an initialized list of adjustment values based on the contents</span>
+<span class="sd">        of *prstGeom*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">prstGeom</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">davs</span> <span class="o">=</span> <span class="n">AutoShapeType</span><span class="o">.</span><span class="n">default_adjustment_values</span><span class="p">(</span><span class="n">prstGeom</span><span class="o">.</span><span class="n">prst</span><span class="p">)</span>
+        <span class="n">adjustments</span> <span class="o">=</span> <span class="p">[</span><span class="n">Adjustment</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">def_val</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">def_val</span> <span class="ow">in</span> <span class="n">davs</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_adjustments_with_actuals</span><span class="p">(</span><span class="n">adjustments</span><span class="p">,</span> <span class="n">prstGeom</span><span class="o">.</span><span class="n">gd_lst</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">adjustments</span>
+
+    <span class="k">def</span> <span class="nf">_rewrite_guides</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write ``&lt;a:gd&gt;`` elements to the XML, one for each adjustment value.</span>
+<span class="sd">        Any existing guide elements are overwritten.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">guides</span> <span class="o">=</span> <span class="p">[(</span><span class="n">adj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">adj</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">adj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_adjustments_</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prstGeom</span><span class="o">.</span><span class="n">rewrite_guides</span><span class="p">(</span><span class="n">guides</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_update_adjustments_with_actuals</span><span class="p">(</span><span class="n">adjustments</span><span class="p">,</span> <span class="n">guides</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update |Adjustment| instances in *adjustments* with actual values</span>
+<span class="sd">        held in *guides*, a list of ``&lt;a:gd&gt;`` elements. Guides with a name</span>
+<span class="sd">        that does not match an adjustment object are skipped.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">adjustments_by_name</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">adj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">adj</span><span class="p">)</span> <span class="k">for</span> <span class="n">adj</span> <span class="ow">in</span> <span class="n">adjustments</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">gd</span> <span class="ow">in</span> <span class="n">guides</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">actual</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">gd</span><span class="o">.</span><span class="n">fmla</span><span class="p">[</span><span class="mi">4</span><span class="p">:])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">adjustment</span> <span class="o">=</span> <span class="n">adjustments_by_name</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">adjustment</span><span class="o">.</span><span class="n">actual</span> <span class="o">=</span> <span class="n">actual</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_adjustments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sequence containing direct references to the |Adjustment| objects</span>
+<span class="sd">        contained in collection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_adjustments_</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implement built-in function len()&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_adjustments_</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">AutoShapeType</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an instance of |AutoShapeType| containing metadata for an auto</span>
+<span class="sd">    shape of type identified by *autoshape_type_id*. Instances are cached, so</span>
+<span class="sd">    no more than one instance for a particular auto shape type is in memory.</span>
+
+<span class="sd">    Instances provide the following attributes:</span>
+
+<span class="sd">    .. attribute:: autoshape_type_id</span>
+
+<span class="sd">       Integer uniquely identifying this auto shape type. Corresponds to a</span>
+<span class="sd">       value in ``pptx.constants.MSO`` like ``MSO_SHAPE.ROUNDED_RECTANGLE``.</span>
+
+<span class="sd">    .. attribute:: basename</span>
+
+<span class="sd">       Base part of shape name for auto shapes of this type, e.g. ``Rounded</span>
+<span class="sd">       Rectangle`` becomes ``Rounded Rectangle 99`` when the distinguishing</span>
+<span class="sd">       integer is added to the shape name.</span>
+
+<span class="sd">    .. attribute:: prst</span>
+
+<span class="sd">       String identifier for this auto shape type used in the ``&lt;a:prstGeom&gt;``</span>
+<span class="sd">       element.</span>
+
+<span class="sd">    .. attribute:: desc</span>
+
+<span class="sd">       Informal string description of auto shape.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_instances</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">autoshape_type_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Only create new instance on first call for content_type. After that,</span>
+<span class="sd">        use cached instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if there&#39;s not a matching instance in the cache, create one</span>
+        <span class="k">if</span> <span class="n">autoshape_type_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">:</span>
+            <span class="n">inst</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">AutoShapeType</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">[</span><span class="n">autoshape_type_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">inst</span>
+        <span class="c1"># return the instance; note that __init__() gets called either way</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">[</span><span class="n">autoshape_type_id</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">autoshape_type_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize attributes from constant values in pptx.spec&quot;&quot;&quot;</span>
+        <span class="c1"># skip loading if this instance is from the cache</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_loaded&quot;</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="c1"># raise on bad autoshape_type_id</span>
+        <span class="k">if</span> <span class="n">autoshape_type_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">autoshape_types</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="s2">&quot;no autoshape type with id &#39;</span><span class="si">%s</span><span class="s2">&#39; in pptx.spec.autoshape_types&quot;</span>
+                <span class="o">%</span> <span class="n">autoshape_type_id</span>
+            <span class="p">)</span>
+        <span class="c1"># otherwise initialize new instance</span>
+        <span class="n">autoshape_type</span> <span class="o">=</span> <span class="n">autoshape_types</span><span class="p">[</span><span class="n">autoshape_type_id</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autoshape_type_id</span> <span class="o">=</span> <span class="n">autoshape_type_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_basename</span> <span class="o">=</span> <span class="n">autoshape_type</span><span class="p">[</span><span class="s2">&quot;basename&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loaded</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">autoshape_type_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        MSO_AUTO_SHAPE_TYPE enumeration value for this auto shape type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_autoshape_type_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">basename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Base of shape name (less the distinguishing integer) for this auto</span>
+<span class="sd">        shape type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_basename</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">default_adjustment_values</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">prst</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return sequence of name, value tuples representing the adjustment</span>
+<span class="sd">        value defaults for the auto shape type identified by *prst*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">autoshape_types</span><span class="p">[</span><span class="n">prst</span><span class="p">][</span><span class="s2">&quot;avLst&quot;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Informal description of this auto shape type&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">id_from_prst</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">prst</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return auto shape id (e.g. ``MSO_SHAPE.RECTANGLE``) corresponding to</span>
+<span class="sd">        preset geometry keyword *prst*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MSO_AUTO_SHAPE_TYPE</span><span class="o">.</span><span class="n">from_xml</span><span class="p">(</span><span class="n">prst</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">prst</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Preset geometry identifier string for this auto shape. Used in the</span>
+<span class="sd">        ``prst`` attribute of ``&lt;a:prstGeom&gt;`` element to specify the geometry</span>
+<span class="sd">        to be used in rendering the shape, for example ``&#39;roundRect&#39;``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MSO_AUTO_SHAPE_TYPE</span><span class="o">.</span><span class="n">to_xml</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_autoshape_type_id</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Shape"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.autoshape.Shape">[docs]</a><span class="k">class</span> <span class="nc">Shape</span><span class="p">(</span><span class="n">BaseShape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A shape that can appear on a slide.</span>
+
+<span class="sd">    Corresponds to the ``&lt;p:sp&gt;`` element that can appear in any of the slide-type parts</span>
+<span class="sd">    (slide, slideLayout, slideMaster, notesPage, notesMaster, handoutMaster).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sp</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Shape</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span> <span class="o">=</span> <span class="n">sp</span>
+
+<div class="viewcode-block" id="Shape.adjustments"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.autoshape.Shape.adjustments">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">adjustments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read-only reference to |AdjustmentCollection| instance for this</span>
+<span class="sd">        shape</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AdjustmentCollection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">prstGeom</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">auto_shape_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enumeration value identifying the type of this auto shape, like</span>
+<span class="sd">        ``MSO_SHAPE.ROUNDED_RECTANGLE``. Raises |ValueError| if this shape is</span>
+<span class="sd">        not an auto shape.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">is_autoshape</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;shape is not an auto shape&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">prst</span>
+
+<div class="viewcode-block" id="Shape.fill"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.autoshape.Shape.fill">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">fill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |FillFormat| instance for this shape, providing access to fill</span>
+<span class="sd">        properties such as fill color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">FillFormat</span><span class="o">.</span><span class="n">from_fill_parent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">spPr</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">get_or_add_ln</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the ``&lt;a:ln&gt;`` element containing the line format properties</span>
+<span class="sd">        XML for this shape.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">get_or_add_ln</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |True| if this shape can contain text. Always |True| for an</span>
+<span class="sd">        AutoShape.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="Shape.line"><a class="viewcode-back" href="../../../api/shapes.html#pptx.shapes.autoshape.Shape.line">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |LineFormat| instance for this shape, providing access to line</span>
+<span class="sd">        properties such as line color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LineFormat</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ln</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The ``&lt;a:ln&gt;`` element containing the line format properties such as</span>
+<span class="sd">        line color and width. |None| if no ``&lt;a:ln&gt;`` element is present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">ln</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unique integer identifying the type of this shape, like</span>
+<span class="sd">        ``MSO_SHAPE_TYPE.TEXT_BOX``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_placeholder</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">PLACEHOLDER</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">has_custom_geometry</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">FREEFORM</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">is_autoshape</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">AUTO_SHAPE</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">is_textbox</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MSO_SHAPE_TYPE</span><span class="o">.</span><span class="n">TEXT_BOX</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Shape instance of unrecognized shape type&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write. Unicode (str in Python 3) representation of shape text.</span>
+
+<span class="sd">        The returned string will contain a newline character (``&quot;\\n&quot;``) separating each</span>
+<span class="sd">        paragraph and a vertical-tab (``&quot;\\v&quot;``) character for each line break (soft</span>
+<span class="sd">        carriage return) in the shape&#39;s text.</span>
+
+<span class="sd">        Assignment to *text* replaces all text previously contained in the shape, along</span>
+<span class="sd">        with any paragraph or font formatting applied to it. A newline character</span>
+<span class="sd">        (``&quot;\\n&quot;``) in the assigned text causes a new paragraph to be started.</span>
+<span class="sd">        A vertical-tab (``&quot;\\v&quot;``) character in the assigned text causes a line-break</span>
+<span class="sd">        (soft carriage-return) to be inserted. (The vertical-tab character appears in</span>
+<span class="sd">        clipboard text copied from PowerPoint as its encoding of line-breaks.)</span>
+
+<span class="sd">        Either bytes (Python 2 str) or unicode (Python 3 str) can be assigned. Bytes can</span>
+<span class="sd">        be 7-bit ASCII or UTF-8 encoded 8-bit bytes. Bytes values are converted to</span>
+<span class="sd">        unicode assuming UTF-8 encoding (which also works for ASCII).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_frame</span><span class="o">.</span><span class="n">text</span>
+
+    <span class="nd">@text</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_frame</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|TextFrame| instance for this shape.</span>
+
+<span class="sd">        Contains the text of the shape and provides access to text formatting</span>
+<span class="sd">        properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">txBody</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_txBody</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">TextFrame</span><span class="p">(</span><span class="n">txBody</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.shapes.autoshape</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

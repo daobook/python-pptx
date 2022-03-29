@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>About Open XML Packaging &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="About Part Relationships" href="about_relationships.html" />
+    <link rel="prev" title="Python packaging" href="python_packaging.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="about_relationships.html" title="About Part Relationships"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="python_packaging.html" title="Python packaging"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Resources</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">About Open XML Packaging</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="about-open-xml-packaging">
+<h1>About Open XML Packaging<a class="headerlink" href="#about-open-xml-packaging" title="Permalink to this headline">¶</a></h1>
+<section id="recent-notes">
+<h2>Recent Notes<a class="headerlink" href="#recent-notes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The content type for <strong>XML</strong> parts (only) is strictly determined by the
+relationship type. Binary media parts may have multiple allowable content
+types.</p></li>
+<li><p>Each part type has one and only one relationship type.</p></li>
+</ul>
+</section>
+<section id="about-packages">
+<h2>About Packages<a class="headerlink" href="#about-packages" title="Permalink to this headline">¶</a></h2>
+<p>Open XML PowerPoint files are stored in files with the extension <code class="docutils literal notranslate"><span class="pre">.pptx</span></code>.
+These <code class="docutils literal notranslate"><span class="pre">.pptx</span></code> files are zip archives containing a separate file for each
+main component of the presentation along with other files which contain
+metadata about the overall presentation and relationships between its
+components.</p>
+<p>The overall collection of files is known as a <strong>package</strong>. Each file within
+the package represents a <strong>package item</strong>, commonly although sometimes
+ambiguously referred to simply as an <strong>item</strong>. Package items that represent
+high-level presentation components, such as slides, slide masters, and themes,
+are referred to as <strong>parts</strong>. All parts are package items, but not all
+package items are parts.</p>
+<p>Package items that are not parts are primarily <strong>relationship items</strong> that
+express relationships between one part and another. Examples of relationships
+include a slide having a relationship to the slide layout it is based on and a
+slide master’s relationship to an image such as a logo it displays. There is
+one special relationship item, the <strong>package relationship item</strong>
+(<code class="docutils literal notranslate"><span class="pre">/_rels/.rels</span></code>) which contains relationships between the package and
+certain parts rather than relationships between parts.</p>
+<p>The only other package item is the <strong>content types item</strong>
+(<code class="docutils literal notranslate"><span class="pre">/[Content_Types].xml</span></code>) which contains mappings of the parts to their
+content types (roughly MIME types).</p>
+</section>
+<section id="package-loading-strategies">
+<h2>Package Loading Strategies<a class="headerlink" href="#package-loading-strategies" title="Permalink to this headline">¶</a></h2>
+<section id="strategy-1">
+<h3>Strategy 1<a class="headerlink" href="#strategy-1" title="Permalink to this headline">¶</a></h3>
+<p>The content type item ([Content_Types].xml actually contains references to all
+the main parts of the package. So one approach might be:</p>
+<ol class="arabic">
+<li><p>Have passed in a mapping of content types to target classes that each
+know how to load themselves from the xml and a list of relationships.
+These classes are what OpenXML4J calls an <em>unmarshaller</em>. These would
+each look something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s1">&#39;application/vnd...slide+xml&#39;</span>       <span class="p">:</span> <span class="n">Slide</span>
+<span class="p">,</span> <span class="s1">&#39;application/vnd...slideLayout+xml&#39;</span> <span class="p">:</span> <span class="n">SlideLayout</span>
+<span class="p">,</span> <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Have a ContentType class that can load from a content type item and allow
+lookups by partname. Have it load the content type item from the package.
+Lookups on it first look for an explicit override, but then fall back to
+defaults. Not sure yet whether it should try to be smart about whether a
+package part that looks like one that should have an override will get
+fed to the xml default or not.</p></li>
+<li><p>Walk the package directory tree, and as each file is encountered:</p></li>
+</ol>
+<p>OR</p>
+<ol class="arabic" start="3">
+<li><p>Walk the relationships tree, starting from /_rels/.rels</p>
+<ul class="simple">
+<li><p>look up its content type in the content type manager</p></li>
+<li><p>look up the unmarshaller for that content type</p></li>
+<li><p>dispatch the part to the specified unmarshaller for loading</p></li>
+<li><p>add the resulting part to the package parts collection</p></li>
+<li><p>if it’s a rels file, parse it and associate the relationships with the
+appropriate source part.</p></li>
+</ul>
+<p>If a content type or unmarshaller is not found, throw an exception and
+exit. Skip the content type item (already processed), and for now skip
+the package relationship item. Infer the corresponding part name from
+part rels item names. I think the walk can be configured so rels items
+are encountered only after their part has been processed.</p>
+</li>
+<li><p>Resolve all part relationship targets to in-memory references.</p></li>
+</ol>
+<section id="principles-upheld">
+<h4>Principles upheld:<a class="headerlink" href="#principles-upheld" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>If there are any stray items in the package (items not referenced in the
+content type part), they are identified and can be dealt with appropriately
+by throwing an exception if it looks like a package part or just writing it
+to the log if it’s an extra file. Can set debug during development to throw
+an exception either way just to give a sense of what might typically be
+found in a package or to give notice that a hand-crafted package has an
+internal inconsistency.</p></li>
+<li><p>Conversely, if there are any parts referenced in the content type part that
+are not found in the zip archive, that throws an exception too.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="random-thoughts">
+<h2>Random thoughts<a class="headerlink" href="#random-thoughts" title="Permalink to this headline">¶</a></h2>
+<p>I’m starting to think that the packaging module could be a useful
+general-purpose capability that could be applied to .docx and .xlsx files in
+addition to .pptx ones.</p>
+<p>Also I’m thinking that a generalized loading strategy that walks the zip
+archive directory tree and loads files based on combining what it discovers
+there with what it can look up in it’s spec tables might be an interesting
+approach.</p>
+<p>I can think of the following possible ways to identify the type of package,
+not sure which one is most reliable or definitive:</p>
+<ul class="simple">
+<li><p>Check the file extension. Kind of thinking this should do the trick 99.99%
+of the time.</p></li>
+<li><p>Might not hurt to confirm that by finding an expected directory of /ppt, /word, or /xl.</p></li>
+<li><p>A little further on that would be to find /ppt/presentation.xml, /word/document.xml, or /xl/workbook.xml.</p></li>
+<li><p>Even further would be to find a relationship in the package relationship item to one of those three and not to any of the others.</p></li>
+<li><p>Another confirmation might be finding a content type in [Content_Types].xml of:</p>
+<ul>
+<li><p>…/presentationml.presentation.main+xml for /ppt/presentation.xml</p></li>
+<li><p>…/spreadsheetml.sheet.main+xml for /xl/workbook.xml (Note that
+macro-enabled workbooks use a different content type
+‘application/vnd.ms-excel.sheet.macroEnabled.main+xml’, I believe there
+are variants for PresentationML as well, used for templates and slide
+shows.</p></li>
+<li><p>…/wordprocessingml.document.main+xml for /word/document.xml</p></li>
+</ul>
+</li>
+</ul>
+<p>It’s probably worth consulting ECMA-376 Part 2 to see if there are any hard
+rules that might help determine what a definitive test would be.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">About Open XML Packaging</a><ul>
+<li><a class="reference internal" href="#recent-notes">Recent Notes</a></li>
+<li><a class="reference internal" href="#about-packages">About Packages</a></li>
+<li><a class="reference internal" href="#package-loading-strategies">Package Loading Strategies</a><ul>
+<li><a class="reference internal" href="#strategy-1">Strategy 1</a><ul>
+<li><a class="reference internal" href="#principles-upheld">Principles upheld:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#random-thoughts">Random thoughts</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="python_packaging.html"
+                          title="previous chapter">Python packaging</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="about_relationships.html"
+                          title="next chapter">About Part Relationships</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="about_relationships.html" title="About Part Relationships"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="python_packaging.html" title="Python packaging"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Resources</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">About Open XML Packaging</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

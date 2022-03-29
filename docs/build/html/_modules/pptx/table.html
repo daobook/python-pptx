@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.table &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.table</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.table</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Table-related objects such as Table and Cell.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pptx.compat</span> <span class="kn">import</span> <span class="n">is_integer</span>
+<span class="kn">from</span> <span class="nn">pptx.dml.fill</span> <span class="kn">import</span> <span class="n">FillFormat</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.table</span> <span class="kn">import</span> <span class="n">TcRange</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes</span> <span class="kn">import</span> <span class="n">Subshape</span>
+<span class="kn">from</span> <span class="nn">pptx.text.text</span> <span class="kn">import</span> <span class="n">TextFrame</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<div class="viewcode-block" id="Table"><a class="viewcode-back" href="../../api/table.html#pptx.table.Table">[docs]</a><span class="k">class</span> <span class="nc">Table</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A DrawingML table object.</span>
+
+<span class="sd">    Not intended to be constructed directly, use</span>
+<span class="sd">    :meth:`.Slide.shapes.add_table` to add a table to a slide.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tbl</span><span class="p">,</span> <span class="n">graphic_frame</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Table</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span> <span class="o">=</span> <span class="n">tbl</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graphic_frame</span> <span class="o">=</span> <span class="n">graphic_frame</span>
+
+<div class="viewcode-block" id="Table.cell"><a class="viewcode-back" href="../../api/table.html#pptx.table.Table.cell">[docs]</a>    <span class="k">def</span> <span class="nf">cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_idx</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return cell at *row_idx*, *col_idx*.</span>
+
+<span class="sd">        Return value is an instance of |_Cell|. *row_idx* and *col_idx* are</span>
+<span class="sd">        zero-based, e.g. cell(0, 0) is the top, left cell in the table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_Cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">tc</span><span class="p">(</span><span class="n">row_idx</span><span class="p">,</span> <span class="n">col_idx</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Table.columns"><a class="viewcode-back" href="../../api/table.html#pptx.table.Table.columns">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|_ColumnCollection| instance for this table.</span>
+
+<span class="sd">        Provides access to |_Column| objects representing the table&#39;s columns. |_Column|</span>
+<span class="sd">        objects are accessed using list notation, e.g. ``col = tbl.columns[0]``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_ColumnCollection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">first_col</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean property which, when true, indicates the first</span>
+<span class="sd">        column should be formatted differently, as for a side-heading column</span>
+<span class="sd">        at the far left of the table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">firstCol</span>
+
+    <span class="nd">@first_col</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">first_col</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">firstCol</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">first_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean property which, when true, indicates the first</span>
+<span class="sd">        row should be formatted differently, e.g. for column headings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">firstRow</span>
+
+    <span class="nd">@first_row</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">first_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">firstRow</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">horz_banding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean property which, when true, indicates the rows of</span>
+<span class="sd">        the table should appear with alternating shading.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">bandRow</span>
+
+    <span class="nd">@horz_banding</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">horz_banding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">bandRow</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="Table.iter_cells"><a class="viewcode-back" href="../../api/table.html#pptx.table.Table.iter_cells">[docs]</a>    <span class="k">def</span> <span class="nf">iter_cells</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate _Cell object for each cell in this table.</span>
+
+<span class="sd">        Each grid cell is generated in left-to-right, top-to-bottom order.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">_Cell</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">iter_tcs</span><span class="p">())</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_col</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean property which, when true, indicates the last</span>
+<span class="sd">        column should be formatted differently, as for a row totals column at</span>
+<span class="sd">        the far right of the table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">lastCol</span>
+
+    <span class="nd">@last_col</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">last_col</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">lastCol</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean property which, when true, indicates the last</span>
+<span class="sd">        row should be formatted differently, as for a totals row at the</span>
+<span class="sd">        bottom of the table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">lastRow</span>
+
+    <span class="nd">@last_row</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">last_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">lastRow</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">notify_height_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by a row when its height changes, triggering the graphic frame</span>
+<span class="sd">        to recalculate its total height (as the sum of the row heights).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_table_height</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">row</span><span class="o">.</span><span class="n">height</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graphic_frame</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">new_table_height</span>
+
+    <span class="k">def</span> <span class="nf">notify_width_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by a column when its width changes, triggering the graphic</span>
+<span class="sd">        frame to recalculate its total width (as the sum of the column</span>
+<span class="sd">        widths).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_table_width</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">col</span><span class="o">.</span><span class="n">width</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graphic_frame</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">new_table_width</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">part</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The package part containing this table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graphic_frame</span><span class="o">.</span><span class="n">part</span>
+
+<div class="viewcode-block" id="Table.rows"><a class="viewcode-back" href="../../api/table.html#pptx.table.Table.rows">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|_RowCollection| instance for this table.</span>
+
+<span class="sd">        Provides access to |_Row| objects representing the table&#39;s rows. |_Row| objects</span>
+<span class="sd">        are accessed using list notation, e.g. ``col = tbl.rows[0]``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_RowCollection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vert_banding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean property which, when true, indicates the columns</span>
+<span class="sd">        of the table should appear with alternating shading.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">bandCol</span>
+
+    <span class="nd">@vert_banding</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">vert_banding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">bandCol</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="_Cell"><a class="viewcode-back" href="../../api/table.html#pptx.table._Cell">[docs]</a><span class="k">class</span> <span class="nc">_Cell</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Table cell&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tc</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_Cell</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span> <span class="o">=</span> <span class="n">tc</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|True| if this object proxies the same element as *other*.</span>
+
+<span class="sd">        Equality for proxy objects is defined as referring to the same XML</span>
+<span class="sd">        element, whether or not they are the same proxy object instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span> <span class="ow">is</span> <span class="n">other</span><span class="o">.</span><span class="n">_tc</span>
+
+    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">other</span><span class="o">.</span><span class="n">_tc</span>
+
+<div class="viewcode-block" id="_Cell.fill"><a class="viewcode-back" href="../../api/table.html#pptx.table._Cell.fill">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">fill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |FillFormat| instance for this cell, providing access to fill</span>
+<span class="sd">        properties such as foreground color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tcPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">get_or_add_tcPr</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">FillFormat</span><span class="o">.</span><span class="n">from_fill_parent</span><span class="p">(</span><span class="n">tcPr</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_merge_origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;True if this cell is the top-left grid cell in a merged cell.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">is_merge_origin</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_spanned</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;True if this cell is spanned by a merge-origin cell.</span>
+
+<span class="sd">        A merge-origin cell &quot;spans&quot; the other grid cells in its merge range,</span>
+<span class="sd">        consuming their area and &quot;shadowing&quot; the spanned grid cells.</span>
+
+<span class="sd">        Note this value is |False| for a merge-origin cell. A merge-origin</span>
+<span class="sd">        cell spans other grid cells, but is not itself a spanned cell.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">is_spanned</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">margin_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write integer value of left margin of cell as a |Length| value</span>
+<span class="sd">        object. If assigned |None|, the default value is used, 0.1 inches for</span>
+<span class="sd">        left and right margins and 0.05 inches for top and bottom.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">marL</span>
+
+    <span class="nd">@margin_left</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">margin_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin_left</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_margin_value</span><span class="p">(</span><span class="n">margin_left</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">marL</span> <span class="o">=</span> <span class="n">margin_left</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">margin_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Right margin of cell.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">marR</span>
+
+    <span class="nd">@margin_right</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">margin_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin_right</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_margin_value</span><span class="p">(</span><span class="n">margin_right</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">marR</span> <span class="o">=</span> <span class="n">margin_right</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">margin_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Top margin of cell.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">marT</span>
+
+    <span class="nd">@margin_top</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">margin_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin_top</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_margin_value</span><span class="p">(</span><span class="n">margin_top</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">marT</span> <span class="o">=</span> <span class="n">margin_top</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">margin_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Bottom margin of cell.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">marB</span>
+
+    <span class="nd">@margin_bottom</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">margin_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin_bottom</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_margin_value</span><span class="p">(</span><span class="n">margin_bottom</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">marB</span> <span class="o">=</span> <span class="n">margin_bottom</span>
+
+<div class="viewcode-block" id="_Cell.merge"><a class="viewcode-back" href="../../api/table.html#pptx.table._Cell.merge">[docs]</a>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_cell</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create merged cell from this cell to *other_cell*.</span>
+
+<span class="sd">        This cell and *other_cell* specify opposite corners of the merged</span>
+<span class="sd">        cell range. Either diagonal of the cell region may be specified in</span>
+<span class="sd">        either order, e.g. self=bottom-right, other_cell=top-left, etc.</span>
+
+<span class="sd">        Raises |ValueError| if the specified range already contains merged</span>
+<span class="sd">        cells anywhere within its extents or if *other_cell* is not in the</span>
+<span class="sd">        same table as *self*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tc_range</span> <span class="o">=</span> <span class="n">TcRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="p">,</span> <span class="n">other_cell</span><span class="o">.</span><span class="n">_tc</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tc_range</span><span class="o">.</span><span class="n">in_same_table</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;other_cell from different table&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tc_range</span><span class="o">.</span><span class="n">contains_merged_cell</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;range contains one or more merged cells&quot;</span><span class="p">)</span>
+
+        <span class="n">tc_range</span><span class="o">.</span><span class="n">move_content_to_origin</span><span class="p">()</span>
+
+        <span class="n">row_count</span><span class="p">,</span> <span class="n">col_count</span> <span class="o">=</span> <span class="n">tc_range</span><span class="o">.</span><span class="n">dimensions</span>
+
+        <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="n">tc_range</span><span class="o">.</span><span class="n">iter_top_row_tcs</span><span class="p">():</span>
+            <span class="n">tc</span><span class="o">.</span><span class="n">rowSpan</span> <span class="o">=</span> <span class="n">row_count</span>
+        <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="n">tc_range</span><span class="o">.</span><span class="n">iter_left_col_tcs</span><span class="p">():</span>
+            <span class="n">tc</span><span class="o">.</span><span class="n">gridSpan</span> <span class="o">=</span> <span class="n">col_count</span>
+        <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="n">tc_range</span><span class="o">.</span><span class="n">iter_except_left_col_tcs</span><span class="p">():</span>
+            <span class="n">tc</span><span class="o">.</span><span class="n">hMerge</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="n">tc_range</span><span class="o">.</span><span class="n">iter_except_top_row_tcs</span><span class="p">():</span>
+            <span class="n">tc</span><span class="o">.</span><span class="n">vMerge</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">span_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int count of rows spanned by this cell.</span>
+
+<span class="sd">        The value of this property may be misleading (often 1) on cells where</span>
+<span class="sd">        `.is_merge_origin` is not |True|, since only a merge-origin cell</span>
+<span class="sd">        contains complete span information. This property is only intended</span>
+<span class="sd">        for use on cells known to be a merge origin by testing</span>
+<span class="sd">        `.is_merge_origin`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">rowSpan</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">span_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int count of columns spanned by this cell.</span>
+
+<span class="sd">        The value of this property may be misleading (often 1) on cells where</span>
+<span class="sd">        `.is_merge_origin` is not |True|, since only a merge-origin cell</span>
+<span class="sd">        contains complete span information. This property is only intended</span>
+<span class="sd">        for use on cells known to be a merge origin by testing</span>
+<span class="sd">        `.is_merge_origin`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">gridSpan</span>
+
+<div class="viewcode-block" id="_Cell.split"><a class="viewcode-back" href="../../api/table.html#pptx.table._Cell.split">[docs]</a>    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove merge from this (merge-origin) cell.</span>
+
+<span class="sd">        The merged cell represented by this object will be &quot;unmerged&quot;,</span>
+<span class="sd">        yielding a separate unmerged cell for each grid cell previously</span>
+<span class="sd">        spanned by this merge.</span>
+
+<span class="sd">        Raises |ValueError| when this cell is not a merge-origin cell. Test</span>
+<span class="sd">        with `.is_merge_origin` before calling.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_merge_origin</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;not a merge-origin cell; only a merge-origin cell can be sp&quot;</span> <span class="s2">&quot;lit&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">tc_range</span> <span class="o">=</span> <span class="n">TcRange</span><span class="o">.</span><span class="n">from_merge_origin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="n">tc_range</span><span class="o">.</span><span class="n">iter_tcs</span><span class="p">():</span>
+            <span class="n">tc</span><span class="o">.</span><span class="n">rowSpan</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">gridSpan</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">tc</span><span class="o">.</span><span class="n">hMerge</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">vMerge</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unicode (str in Python 3) representation of cell contents.</span>
+
+<span class="sd">        The returned string will contain a newline character (``&quot;\\n&quot;``) separating each</span>
+<span class="sd">        paragraph and a vertical-tab (``&quot;\\v&quot;``) character for each line break (soft</span>
+<span class="sd">        carriage return) in the cell&#39;s text.</span>
+
+<span class="sd">        Assignment to *text* replaces all text currently contained in the cell. A</span>
+<span class="sd">        newline character (``&quot;\\n&quot;``) in the assigned text causes a new paragraph to be</span>
+<span class="sd">        started. A vertical-tab (``&quot;\\v&quot;``) character in the assigned text causes</span>
+<span class="sd">        a line-break (soft carriage-return) to be inserted. (The vertical-tab character</span>
+<span class="sd">        appears in clipboard text copied from PowerPoint as its encoding of</span>
+<span class="sd">        line-breaks.)</span>
+
+<span class="sd">        Either bytes (Python 2 str) or unicode (Python 3 str) can be assigned. Bytes can</span>
+<span class="sd">        be 7-bit ASCII or UTF-8 encoded 8-bit bytes. Bytes values are converted to</span>
+<span class="sd">        unicode assuming UTF-8 encoding (which correctly decodes ASCII).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_frame</span><span class="o">.</span><span class="n">text</span>
+
+    <span class="nd">@text</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_frame</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |TextFrame| instance containing the text that appears in the cell.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">txBody</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">get_or_add_txBody</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">TextFrame</span><span class="p">(</span><span class="n">txBody</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vertical_anchor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Vertical alignment of this cell.</span>
+
+<span class="sd">        This value is a member of the :ref:`MsoVerticalAnchor` enumeration or</span>
+<span class="sd">        |None|. A value of |None| indicates the cell has no explicitly</span>
+<span class="sd">        applied vertical anchor setting and its effective value is inherited</span>
+<span class="sd">        from its style-hierarchy ancestors.</span>
+
+<span class="sd">        Assigning |None| to this property causes any explicitly applied</span>
+<span class="sd">        vertical anchor setting to be cleared and inheritance of its</span>
+<span class="sd">        effective value to be restored.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">anchor</span>
+
+    <span class="nd">@vertical_anchor</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">vertical_anchor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mso_anchor_idx</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tc</span><span class="o">.</span><span class="n">anchor</span> <span class="o">=</span> <span class="n">mso_anchor_idx</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_validate_margin_value</span><span class="p">(</span><span class="n">margin_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raise ValueError if *margin_value* is not a positive integer value or</span>
+<span class="sd">        |None|.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">margin_value</span><span class="p">)</span> <span class="ow">and</span> <span class="n">margin_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tmpl</span> <span class="o">=</span> <span class="s2">&quot;margin value must be integer or None, got &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">tmpl</span> <span class="o">%</span> <span class="n">margin_value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_Column"><a class="viewcode-back" href="../../api/table.html#pptx.table._Column">[docs]</a><span class="k">class</span> <span class="nc">_Column</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Table column&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gridCol</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_Column</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gridCol</span> <span class="o">=</span> <span class="n">gridCol</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Width of column in EMU.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gridCol</span><span class="o">.</span><span class="n">w</span>
+
+    <span class="nd">@width</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gridCol</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">notify_width_changed</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="_Row"><a class="viewcode-back" href="../../api/table.html#pptx.table._Row">[docs]</a><span class="k">class</span> <span class="nc">_Row</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Table row&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_Row</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tr</span> <span class="o">=</span> <span class="n">tr</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cells</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read-only reference to collection of cells in row. An individual cell</span>
+<span class="sd">        is referenced using list notation, e.g. ``cell = row.cells[0]``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_CellCollection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Height of row in EMU.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tr</span><span class="o">.</span><span class="n">h</span>
+
+    <span class="nd">@height</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tr</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">notify_height_changed</span><span class="p">()</span></div>
+
+
+<span class="k">class</span> <span class="nc">_CellCollection</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Horizontal sequence of row cells&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_CellCollection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tr</span> <span class="o">=</span> <span class="n">tr</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Provides indexed access, (e.g. &#39;cells[0]&#39;).&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tr</span><span class="o">.</span><span class="n">tc_lst</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;cell index [</span><span class="si">%d</span><span class="s2">] out of range&quot;</span> <span class="o">%</span> <span class="n">idx</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_Cell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tr</span><span class="o">.</span><span class="n">tc_lst</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Provides iterability.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">_Cell</span><span class="p">(</span><span class="n">tc</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="k">for</span> <span class="n">tc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tr</span><span class="o">.</span><span class="n">tc_lst</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Supports len() function (e.g. &#39;len(cells) == 1&#39;).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tr</span><span class="o">.</span><span class="n">tc_lst</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_ColumnCollection</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sequence of table columns.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tbl</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_ColumnCollection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span> <span class="o">=</span> <span class="n">tbl</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provides indexed access, (e.g. &#39;columns[0]&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">tblGrid</span><span class="o">.</span><span class="n">gridCol_lst</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;column index [</span><span class="si">%d</span><span class="s2">] out of range&quot;</span> <span class="o">%</span> <span class="n">idx</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_Column</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">tblGrid</span><span class="o">.</span><span class="n">gridCol_lst</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Supports len() function (e.g. &#39;len(columns) == 1&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">tblGrid</span><span class="o">.</span><span class="n">gridCol_lst</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">notify_width_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by a column when its width changes. Pass along to parent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">notify_width_changed</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">_RowCollection</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sequence of table rows&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tbl</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_RowCollection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span> <span class="o">=</span> <span class="n">tbl</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provides indexed access, (e.g. &#39;rows[0]&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;row index [</span><span class="si">%d</span><span class="s2">] out of range&quot;</span> <span class="o">%</span> <span class="n">idx</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_Row</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">tr_lst</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Supports len() function (e.g. &#39;len(rows) == 1&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tbl</span><span class="o">.</span><span class="n">tr_lst</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">notify_height_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by a row when its height changes. Pass along to parent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">notify_height_changed</span><span class="p">()</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.table</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

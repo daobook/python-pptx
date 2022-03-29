@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Notes Master &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Base Slide" href="sld-base.html" />
+    <link rel="prev" title="Notes Slide" href="sld-notes-slide.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sld-base.html" title="Base Slide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sld-notes-slide.html" title="Notes Slide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Notes Master</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="notes-master">
+<h1>Notes Master<a class="headerlink" href="#notes-master" title="Permalink to this headline">¶</a></h1>
+<p>A presentation may have a notes master part (zero or one). The notes master
+determines the background elements and default layout of a notes page.</p>
+<p>In the PowerPoint UI, a notes item is called a “notes page”; internally
+however, it is referred to as a “notes slide”, is based on the Slide object,
+and shares many behaviors with it such as containing shapes and inheriting
+from a master.</p>
+<p>A notes slide is created on-first use, perhaps most frequently by typing text
+into the notes pane. When a new notes slide is created, it is based on the
+notes master. If no notes master is yet present, a new one is created from
+an internal PowerPoint-preset default and added to the package.</p>
+<p>When a notes slide is created from the notes master, certain placeholders are
+partially “cloned” from the master. All other placeholders and shapes remain
+only on the master. The cloning process only creates placeholder shapes on
+the notes slide, but does not copy position or size information or other
+formatting. By default, position, size, and other formatting is inherited
+from the corresponding master placeholder. This achieves consistency through
+a presentation.</p>
+<p>If position, size, etc. is changed on a NotesSlide, the new position
+overrides that on the master. This override is property-by-property.</p>
+<p>A notes slide maintains a relationship with the master it was created from.
+This relationship is traversed to access the master placeholder properties
+for inheritance purposes.</p>
+<p>A master can contain at most one each of six different placeholders: slide
+image, notes (textbox), header, footer, date, and slide number. The header,
+footer, and date placeholders are not copied to the notes slide by default.
+These three placeholders can be individually shown or hidden (copied to or
+deleted from the notes slide actually) using the Insert &gt; Header and
+Footer… menu option/dialog. This dialog is also available from the Page
+Setup dialog.</p>
+<p>All other items on the notes master, such as background color/texture/image
+and any additional text boxes or other shapes such as a logo, constitute
+“background graphics” and are shown by default. The may be hidden or re-shown
+on a notes slide-by-slide basis using the Format Background… (context or
+menu bar) menu item.</p>
+<section id="candidate-protocol">
+<h2>Candidate Protocol<a class="headerlink" href="#candidate-protocol" title="Permalink to this headline">¶</a></h2>
+<p>A NotesMaster part is created on first access when not yet present:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes_master</span> <span class="o">=</span> <span class="n">presentation</span><span class="o">.</span><span class="n">notes_master</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">notes_master</span>
+<span class="go">&lt;pptx.slide.NotesMaster object at 0x10698c1e0&gt;</span>
+</pre></div>
+</div>
+<p>It provides access to its placeholders and its shapes (which include
+placeholders):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes_master</span><span class="o">.</span><span class="n">shapes</span>
+<span class="go">&lt;pptx.shapes.shapetree.MasterShapes object at 0x10698d140&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">notes_master</span><span class="o">.</span><span class="n">placeholders</span>
+<span class="go">&lt;pptx.shapes.shapetree.MasterPlaceholders object at 0x1069902f0&gt;</span>
+</pre></div>
+</div>
+<p>These placeholders and other shapes can be manipulated as usual.</p>
+</section>
+<section id="understanding-placeholders-implementation">
+<h2>Understanding Placeholders implementation<a class="headerlink" href="#understanding-placeholders-implementation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>SlidePlaceholders is a direct implementation, not subclassing Shapes</p></li>
+</ul>
+</section>
+<section id="call-stacks">
+<h2>Call stacks:<a class="headerlink" href="#call-stacks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>_BaseSlide.placeholders</dt><dd><dl class="simple">
+<dt>=&gt; BasePlaceholders()</dt><dd><p>=&gt; _BaseShapes + _is_member_elm() override</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>NotesMaster.placeholders</dt><dd><dl class="simple">
+<dt>=&gt; _BaseMaster.placeholders</dt><dd><dl class="simple">
+<dt>=&gt; MasterPlaceholders()</dt><dd><dl class="simple">
+<dt>=&gt; BasePlaceholders() + get() + _shape_factory() override</dt><dd><p>=&gt; _BaseShapes + _is_member_elm() override</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="powerpoint-behavior">
+<h2>PowerPoint behavior<a class="headerlink" href="#powerpoint-behavior" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>A NotesSlide placeholder inherits properties from the NotesMaster
+placeholder <em>of the same type</em> (there can be at most one).</p></li>
+<li><p>For some reason PowerPoint adds a second theme for the NotesMaster, not
+sure what that’s all about. I’ll just add the default theme2.xml, then
+folks can avoid that if there are problems just by pre-loading
+a notesMaster of their own in their template.</p></li>
+</ul>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="Permalink to this headline">¶</a></h2>
+<p>The root element of a notesSlide part is a <cite>p:notes</cite> element:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;notesMaster&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_NotesMaster&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NotesMaster&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cSld&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_CommonSlideData&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;clrMap&quot;</span>     <span class="na">type=</span><span class="s">&quot;a:CT_ColorMapping&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hf&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_HeaderFooter&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;notesStyle&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_TextListStyle&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_CommonSlideData&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bg&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Background&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spTree&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_GroupShape&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custDataLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_CustomerDataList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;controls&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ControlList&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;theme&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeStyleSheet&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_OfficeStyleSheet&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;themeElements&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_BaseStyles&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;objectDefaults&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ObjectStyleDefaults&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extraClrSchemeLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ColorSchemeList&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custClrLst&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_CustomColorList&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Notes Master</a><ul>
+<li><a class="reference internal" href="#candidate-protocol">Candidate Protocol</a></li>
+<li><a class="reference internal" href="#understanding-placeholders-implementation">Understanding Placeholders implementation</a></li>
+<li><a class="reference internal" href="#call-stacks">Call stacks:</a></li>
+<li><a class="reference internal" href="#powerpoint-behavior">PowerPoint behavior</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="sld-notes-slide.html"
+                          title="previous chapter">Notes Slide</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="sld-base.html"
+                          title="next chapter">Base Slide</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sld-base.html" title="Base Slide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sld-notes-slide.html" title="Notes Slide"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Notes Master</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

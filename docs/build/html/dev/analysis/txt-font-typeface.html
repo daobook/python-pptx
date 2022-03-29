@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Font typeface &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Hyperlinks" href="txt-hyperlink.html" />
+    <link rel="prev" title="Font Color" href="txt-font-color.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="txt-hyperlink.html" title="Hyperlinks"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="txt-font-color.html" title="Font Color"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Font typeface</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="font-typeface">
+<h1>Font typeface<a class="headerlink" href="#font-typeface" title="Permalink to this headline">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>PowerPoint allows the font of text elements to be changed from, for example,
+Verdana to Arial. This aspect of a font is its <em>typeface</em>, as opposed to its
+size (e.g. 18 points) or style (e.g. bold, italic).</p>
+</section>
+<section id="minimum-viable-feature">
+<h2>Minimum viable feature<a class="headerlink" href="#minimum-viable-feature" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">font</span><span class="p">,</span> <span class="n">pptx</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">Font</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">font</span><span class="o">.</span><span class="n">name</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">font</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Verdana&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">font</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Verdana&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-ms-api">
+<h2>Related MS API<a class="headerlink" href="#related-ms-api" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Font.Name</p></li>
+<li><p>Font.NameAscii</p></li>
+<li><p>Font.NameComplexScript</p></li>
+<li><p>Font.NameFarEast</p></li>
+<li><p>Font.NameOther</p></li>
+</ul>
+</section>
+<section id="protocol">
+<h2>Protocol<a class="headerlink" href="#protocol" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">font</span><span class="p">,</span> <span class="n">pptx</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">Font</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">font</span><span class="o">.</span><span class="n">name</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">font</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Verdana&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">font</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Verdana&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="Permalink to this headline">¶</a></h2>
+<p>Here is a representative sample of textbox XML showing the effect of applying
+a non-default typeface.</p>
+<p><em>Baseline default textbox</em>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:txBody&gt;</span>
+  <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;none&quot;</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:spAutoFit/&gt;</span>
+  <span class="nt">&lt;/a:bodyPr&gt;</span>
+  <span class="nt">&lt;a:lstStyle/&gt;</span>
+  <span class="nt">&lt;a:p&gt;</span>
+    <span class="nt">&lt;a:r&gt;</span>
+      <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:t&gt;</span>Baseline default textbox, no adjustments of any kind<span class="nt">&lt;/a:t&gt;</span>
+    <span class="nt">&lt;/a:r&gt;</span>
+    <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:p&gt;</span>
+<span class="nt">&lt;/p:txBody&gt;</span>
+</pre></div>
+</div>
+<p><em>textbox with typeface applied at shape level</em>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:txBody&gt;</span>
+  <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;none&quot;</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:spAutoFit/&gt;</span>
+  <span class="nt">&lt;/a:bodyPr&gt;</span>
+  <span class="nt">&lt;a:lstStyle/&gt;</span>
+  <span class="nt">&lt;a:p&gt;</span>
+    <span class="nt">&lt;a:r&gt;</span>
+      <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Verdana&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Verdana&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:rPr&gt;</span>
+      <span class="nt">&lt;a:t&gt;</span>A textbox with Verdana typeface applied to shape, not text selection<span class="nt">&lt;/a:t&gt;</span>
+    <span class="nt">&lt;/a:r&gt;</span>
+    <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Verdana&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Verdana&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:endParaRPr&gt;</span>
+  <span class="nt">&lt;/a:p&gt;</span>
+<span class="nt">&lt;/p:txBody&gt;</span>
+</pre></div>
+</div>
+<p><em>textbox with multiple runs, typeface applied at shape level</em>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:txBody&gt;</span>
+  <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;none&quot;</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:spAutoFit/&gt;</span>
+  <span class="nt">&lt;/a:bodyPr&gt;</span>
+  <span class="nt">&lt;a:lstStyle/&gt;</span>
+  <span class="nt">&lt;a:p&gt;</span>
+    <span class="nt">&lt;a:pPr</span> <span class="na">algn=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:r&gt;</span>
+      <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Arial Black&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Arial Black&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:rPr&gt;</span>
+      <span class="nt">&lt;a:t&gt;</span>textbox with multiple runs having typeface<span class="nt">&lt;/a:t&gt;</span>
+    <span class="nt">&lt;/a:r&gt;</span>
+    <span class="nt">&lt;a:br&gt;</span>
+      <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Arial Black&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Arial Black&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:rPr&gt;</span>
+    <span class="nt">&lt;/a:br&gt;</span>
+    <span class="nt">&lt;a:r&gt;</span>
+      <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Arial Black&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Arial Black&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:rPr&gt;</span>
+      <span class="nt">&lt;a:t&gt;</span>customized at shape level<span class="nt">&lt;/a:t&gt;</span>
+    <span class="nt">&lt;/a:r&gt;</span>
+    <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Arial Black&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Arial Black&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:endParaRPr&gt;</span>
+  <span class="nt">&lt;/a:p&gt;</span>
+<span class="nt">&lt;/p:txBody&gt;</span>
+</pre></div>
+</div>
+<p><em>Asian characters, or possibly Asian font being applied</em>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:txBody&gt;</span>
+  <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;none&quot;</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:spAutoFit/&gt;</span>
+  <span class="nt">&lt;/a:bodyPr&gt;</span>
+  <span class="nt">&lt;a:lstStyle/&gt;</span>
+  <span class="nt">&lt;a:p&gt;</span>
+    <span class="nt">&lt;a:pPr</span> <span class="na">algn=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:r&gt;</span>
+      <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Hiragino Sans GB W3&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:ea</span> <span class="na">typeface=</span><span class="s">&quot;Hiragino Sans GB W3&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Hiragino Sans GB W3&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:rPr&gt;</span>
+      <span class="nt">&lt;a:t&gt;</span>暒龢加咊晴弗<span class="nt">&lt;/a:t&gt;</span>
+    <span class="nt">&lt;/a:r&gt;</span>
+    <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Hiragino Sans GB W3&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ea</span> <span class="na">typeface=</span><span class="s">&quot;Hiragino Sans GB W3&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Hiragino Sans GB W3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:endParaRPr&gt;</span>
+  <span class="nt">&lt;/a:p&gt;</span>
+<span class="nt">&lt;/p:txBody&gt;</span>
+</pre></div>
+</div>
+<p><em>then applying Arial from font pull-down</em>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:txBody&gt;</span>
+  <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;none&quot;</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:spAutoFit/&gt;</span>
+  <span class="nt">&lt;/a:bodyPr&gt;</span>
+  <span class="nt">&lt;a:lstStyle/&gt;</span>
+  <span class="nt">&lt;a:p&gt;</span>
+    <span class="nt">&lt;a:pPr</span> <span class="na">algn=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:r&gt;</span>
+      <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Arial&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:ea</span> <span class="na">typeface=</span><span class="s">&quot;Hiragino Sans GB W3&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Arial&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:rPr&gt;</span>
+      <span class="nt">&lt;a:t&gt;</span>暒龢加咊晴弗<span class="nt">&lt;/a:t&gt;</span>
+    <span class="nt">&lt;/a:r&gt;</span>
+    <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Arial&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ea</span> <span class="na">typeface=</span><span class="s">&quot;Hiragino Sans GB W3&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;Arial&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:endParaRPr&gt;</span>
+  <span class="nt">&lt;/a:p&gt;</span>
+<span class="nt">&lt;/p:txBody&gt;</span>
+</pre></div>
+</div>
+<section id="observations">
+<h3>Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>PowerPoint UI always applies typeface customization at run level rather
+than paragraph (defRPr) level, even when applied to shape rather than
+a specific selection of text.</p></li>
+<li><p>PowerPoint applies the same typeface to the <code class="docutils literal notranslate"><span class="pre">&lt;a:latin&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;a:cs&gt;</span></code>
+tag when a typeface is selected from the font pull-down in the UI.</p></li>
+</ul>
+</section>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextCharacterProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ln&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_FillProperties&quot;</span>                   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_EffectProperties&quot;</span>                 <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;highlight&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_Color&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_TextUnderlineLine&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_TextUnderlineFill&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;latin&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_TextFont&quot;</span>  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ea&quot;</span>             <span class="na">type=</span><span class="s">&quot;CT_TextFont&quot;</span>  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cs&quot;</span>             <span class="na">type=</span><span class="s">&quot;CT_TextFont&quot;</span>  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sym&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_TextFont&quot;</span>  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hlinkClick&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Hyperlink&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hlinkMouseOver&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Hyperlink&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;rtl&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>  <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;kumimoji&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>             <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;lang&quot;</span>       <span class="na">type=</span><span class="s">&quot;s:ST_Lang&quot;</span>               <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;altLang&quot;</span>    <span class="na">type=</span><span class="s">&quot;s:ST_Lang&quot;</span>               <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;sz&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_TextFontSize&quot;</span>         <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;b&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>             <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;i&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>             <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;u&quot;</span>          <span class="na">type=</span><span class="s">&quot;ST_TextUnderlineType&quot;</span>    <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;strike&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TextStrikeType&quot;</span>       <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;kern&quot;</span>       <span class="na">type=</span><span class="s">&quot;ST_TextNonNegativePoint&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;cap&quot;</span>        <span class="na">type=</span><span class="s">&quot;ST_TextCapsType&quot;</span>         <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spc&quot;</span>        <span class="na">type=</span><span class="s">&quot;ST_TextPoint&quot;</span>            <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;normalizeH&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>             <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;baseline&quot;</span>   <span class="na">type=</span><span class="s">&quot;ST_Percentage&quot;</span>           <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;noProof&quot;</span>    <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>             <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;dirty&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>             <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;err&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>             <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;smtClean&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>             <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;smtId&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:unsignedInt&quot;</span>         <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bmk&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>              <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextFont&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;typeface&quot;</span>    <span class="na">type=</span><span class="s">&quot;ST_TextTypeface&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;panose&quot;</span>      <span class="na">type=</span><span class="s">&quot;s:ST_Panose&quot;</span>     <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;pitchFamily&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_PitchFamily&quot;</span>  <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;charset&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:byte&quot;</span>        <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextTypeface&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Font typeface</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#minimum-viable-feature">Minimum viable feature</a></li>
+<li><a class="reference internal" href="#related-ms-api">Related MS API</a></li>
+<li><a class="reference internal" href="#protocol">Protocol</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a><ul>
+<li><a class="reference internal" href="#observations">Observations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="txt-font-color.html"
+                          title="previous chapter">Font Color</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="txt-hyperlink.html"
+                          title="next chapter">Hyperlinks</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="txt-hyperlink.html" title="Hyperlinks"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="txt-font-color.html" title="Font Color"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Font typeface</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Placeholders &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Slide Placeholders" href="slide-placeholders/index.html" />
+    <link rel="prev" title="Shape hyperlink" href="../shp-hyperlink.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="slide-placeholders/index.html" title="Slide Placeholders"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../shp-hyperlink.html" title="Shape hyperlink"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Placeholders</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="placeholders">
+<span id="placeholder"></span><h1>Placeholders<a class="headerlink" href="#placeholders" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="slide-placeholders/index.html">Slide Placeholders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="slide-placeholders/picture-placeholder.html">Picture placeholder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slide-placeholders/table-placeholder.html">Table placeholder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slide-placeholders/placeholders-in-new-slide.html">Placeholders in new slide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="layout-placeholders.html">Layout Placeholders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="master-placeholders.html">Master Placeholders</a></li>
+</ul>
+</div>
+<p>From a user perspective, a placeholder is a container into which content can
+be inserted. The position, size, and formatting of content inserted into the
+placeholder is determined by the placeholder, allowing those key presentation
+design characteristics to be determined at design time and kept consistent
+across presentations created from a particular template.</p>
+<p>The placeholder appearing on a slide is only part of the overall placeholder
+mechanism however. Placeholder behavior requires three different categories
+of placeholder shape; those that exist on a slide master, those on a slide
+layout, and those that ultimately appear on a slide in a presentation.</p>
+<p>These three categories of placeholder participate in a property inheritance
+hierarchy, either as an inheritor, an inheritee, or both. Placeholder shapes
+on masters are inheritees only. Conversely placeholder shapes on slides are
+inheritors only. Placeholders on slide layouts are both, a possible inheritor
+from a slide master placeholder and an inheritee to placeholders on slides
+linked to that layout.</p>
+<p>A layout inherits from its master differently than a slide inherits from
+its layout. A layout placeholder inherits from the master placeholder sharing
+the same type. A slide placeholder inherits from the layout placeholder
+having the same <cite>idx</cite> value.</p>
+<section id="glossary">
+<h2>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>placeholder shape</dt><dd><p>A shape on a slide that inherits from a layout placeholder.</p>
+</dd>
+<dt>layout placeholder</dt><dd><p>a shorthand name for the placeholder shape on the slide layout from which
+a particular placeholder on a slide inherits shape properties</p>
+</dd>
+<dt>master placeholder</dt><dd><p>the placeholder shape on the slide master which a layout placeholder
+inherits from, if any.</p>
+</dd>
+</dl>
+</section>
+<section id="schema-excerpt">
+<h2>Schema excerpt<a class="headerlink" href="#schema-excerpt" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ApplicationNonVisualDrawingProps&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span>   <span class="na">name=</span><span class="s">&quot;ph&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_Placeholder&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- a:EG_Media --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;audioCd&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_AudioCD&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;wavAudioFile&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_EmbeddedWAVAudioFile&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;audioFile&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_AudioFile&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;videoFile&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_VideoFile&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;quickTimeFile&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_QuickTimeFile&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span>   <span class="na">name=</span><span class="s">&quot;custDataLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_CustomerDataList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span>   <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;isPhoto&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;userDrawn&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Placeholder&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span>            <span class="na">type=</span><span class="s">&quot;ST_PlaceholderType&quot;</span> <span class="na">default=</span><span class="s">&quot;obj&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;orient&quot;</span>          <span class="na">type=</span><span class="s">&quot;ST_Direction&quot;</span>       <span class="na">default=</span><span class="s">&quot;horz&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;sz&quot;</span>              <span class="na">type=</span><span class="s">&quot;ST_PlaceholderSize&quot;</span> <span class="na">default=</span><span class="s">&quot;full&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;idx&quot;</span>             <span class="na">type=</span><span class="s">&quot;xsd:unsignedInt&quot;</span>    <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;hasCustomPrompt&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>        <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_PlaceholderType&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;title&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;body&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;ctrTitle&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;subTitle&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;sldNum&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;ftr&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;hdr&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;obj&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;chart&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;tbl&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;clipArt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dgm&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;media&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;sldImg&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pic&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_PlaceholderSize&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;full&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;half&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;quarter&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Direction&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;horz&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;vert&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_PlaceholderSize&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;full&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;half&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;quarter&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="notes-on-footer-item-placeholders">
+<h2>Notes on footer item placeholders<a class="headerlink" href="#notes-on-footer-item-placeholders" title="Permalink to this headline">¶</a></h2>
+<section id="recommendation-and-argumentation">
+<h3>Recommendation and Argumentation<a class="headerlink" href="#recommendation-and-argumentation" title="Permalink to this headline">¶</a></h3>
+<p>Place page number (and perhaps copyright, date) on master in plain text boxes.
+Use “Hide Background Graphics” option on title slide to prevent them showing
+there if desired.</p>
+<ul>
+<li><p>In the slide placeholder method, an individually selectable footer item
+placeholder is present on the slide:</p>
+<ul class="simple">
+<li><p>It can be moved accidentally, losing the placement consistency originally
+imposed by the master. Recovering exact placement requires reapplying the
+layout which may make other, unwanted changes.</p></li>
+<li><p>It can be deleted, which could be a plus or minus depending.</p></li>
+<li><p>It can be formatted inconsistently.</p></li>
+<li><p>In can be accidentally selected and generally pollutes the shape space of
+the slide.</p></li>
+</ul>
+</li>
+<li><p>I’m not sure python-pptx does the right thing when adding slides from layouts
+containing footer items, at least not the same thing as PowerPoint does in
+automatically working out which footer items to copy over.</p>
+<p>Also, there’s no method to copy over footer items from the layout.</p>
+</li>
+<li><p>Alternatives:</p>
+<ol class="arabic">
+<li><p>A page number can be placed on the master as a text box. This causes it to
+appear on every layout and every slide. No refreshing is necessary as this
+item is inherited, not copied at slide or layout create time.</p>
+<p>It can be excluded from an individual layout (such as a title slide
+layout) by setting the <cite>Hide Background Graphics</cite> flag on
+a layout-by-layout basis. Unfortunately, this also hides other items such
+as a logo, copyright text, and slide background, but these can be
+reapplied individually directly to that slide layout. Since the title
+slide layout is generally the only one folks want to hide a slide number
+from, this is perhaps not a great burden. Others, like perhaps closing
+slides, might have their own background anyway.</p>
+</li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="hypothesis">
+<h3>Hypothesis:<a class="headerlink" href="#hypothesis" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>There is a class of placeholders known as “footer elements”, comprising date
+and time, footer text, and slide number.</p></li>
+<li><p>These placeholders can only be directly added to a master. They are not
+available as options to add directly to a layout or to a slide.</p></li>
+<li><p>In every case, these placeholders are copied, although some attributes may be
+inherited at run time (not sure). Footer items are copied from the master to
+a new layout. Likewise, items are copied from a layout to a slide, but only
+when explicitly asked for using Insert &gt; Header and Footer. PowerPoint
+sometimes adds these automatically when they’re already present on other
+slides (don’t know the rules it uses).</p></li>
+</ul>
+</section>
+<section id="intended-procedure">
+<h3>Intended procedure<a class="headerlink" href="#intended-procedure" title="Permalink to this headline">¶</a></h3>
+<p>This is how slide footer items are designed to be used:</p>
+<ul class="simple">
+<li><p>Add footer placeholders to master with intended standard position and
+formatting.</p></li>
+<li><p>Available by default on each layout. Can be disabled for individual layouts,
+for example, the title slide layout using the Slide Master Ribbon &gt; Edit
+Layout &gt; Allow Footers checkbox. Also can be deleted and formatting changed
+individually on a layout-by-layout basis.</p></li>
+<li><p>Hidden by default on new slides. Use Insert &gt; Header and Footer dialog to add
+which items to show. Can be applied to all slides. Under certain
+circumstances, PowerPoint adds selected footer items to new slides
+automatically, based on them being present on other slides already in the
+presentation.</p></li>
+</ul>
+</section>
+<section id="powerpoint-behaviors">
+<h3>PowerPoint Behaviors<a class="headerlink" href="#powerpoint-behaviors" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Layout: Slide Master (ribbon) &gt; Edit Layout &gt; Allow Footers (checkbox)</p>
+<ul class="simple">
+<li><p>Adding or removing a footer item from a layout, does not automatically
+reflect that change on existing slides based on that layout. The change is
+also not reflected when you reapply the layout, at least for deleting case.</p>
+<ul>
+<li><p>It does not appear when you reapply the layout (‘Reset Layout to Default
+Settings’ on Mac)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Position appears to be inherited as long as you haven’t moved the placeholder
+on the slide. This applies at master -&gt; layout as well as layout -&gt; slide
+level.</p>
+<ul class="simple">
+<li><p>Refreshing the layout after the page number item has been deleted leaves
+the page number item, but repositions it to a default (right justified to
+right slide edge) position. Apparently it attempts to inherit the position
+from the layout but not presence (or not).</p></li>
+</ul>
+</li>
+<li><p>The <cite>Allow Footers</cite> checkbox is inactive (not greyed out but can’t be set on)
+when there are no footer placeholder items on the master.</p></li>
+<li><p>Allow footers seems to be something of a one-way street. You can’t clear the
+checkbox once it’s set. However, if you delete the footer placeholder(s), the
+checkbox clears all by itself.</p></li>
+<li><p>The placeholder copied from master to layout can be repositioned and
+formatted (font etc.).</p></li>
+<li><p>Menu &gt; Insert &gt; Header and Footer … Is available on individual slides and
+can be applied to all slides. It also works for removing footer items. This
+applies to <em>slides</em>, not to slide layouts.</p>
+<p>This dialog is also available from the Page Setup dialog.</p>
+</li>
+<li><p>Hide background graphics flag does not control footer items. It does however
+control visibility of all non-placeholder items on the layout (or slide).
+It’s available at both the layout and slide level. Not sure how that’s
+reflected in the XML.</p></li>
+<li><p>When creating a new slide layout, the footer placeholders from the master are
+all automatically shown. This is to say that the “Allow Footers” ribbon
+option defaults to True when adding a new slide layout.</p>
+<p>Clicking Allow Footers off hides all the footer items. They can also be
+deleted or formatted individually.</p>
+</li>
+<li><p>In order to appear (at create time anyway), footer items need to be:</p>
+<ol class="arabic simple">
+<li><p>Present on the master</p></li>
+<li><p>Present on the layout (‘Allow Footers’ turned on, ph not deleted)</p></li>
+<li><p>Insert Header and Footer turned on for each ph element to be shown. This
+is applied on a slide-by-slide basis.</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Header is a misnomer as far as slides are concerned. There are no header
+items for a slide. A notes page can have a header though, which I expect is
+why it appears, since the same dialog is used for slides and notes pages (and
+handouts).</p></li>
+<li><p>A master is intended only to contain certain items:</p>
+<ul>
+<li><p>Title</p></li>
+<li><p>Body</p></li>
+<li><p>Footer placeholders (date/time, footer text, slide number)</p></li>
+<li><p>Background and theme items, perhaps logos and static text</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="http://www.powerpointninja.com/templates/powerpoint-templates-beware-of-the-footers/">http://www.powerpointninja.com/templates/powerpoint-templates-beware-of-the-footers/</a></p></li>
+<li><p><a class="reference external" href="https://github.com/scanny/python-pptx/issues/64">https://github.com/scanny/python-pptx/issues/64</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Placeholders</a><ul>
+<li><a class="reference internal" href="#glossary">Glossary</a></li>
+<li><a class="reference internal" href="#schema-excerpt">Schema excerpt</a></li>
+<li><a class="reference internal" href="#notes-on-footer-item-placeholders">Notes on footer item placeholders</a><ul>
+<li><a class="reference internal" href="#recommendation-and-argumentation">Recommendation and Argumentation</a></li>
+<li><a class="reference internal" href="#hypothesis">Hypothesis:</a></li>
+<li><a class="reference internal" href="#intended-procedure">Intended procedure</a></li>
+<li><a class="reference internal" href="#powerpoint-behaviors">PowerPoint Behaviors</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../shp-hyperlink.html"
+                          title="previous chapter">Shape hyperlink</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="slide-placeholders/index.html"
+                          title="next chapter">Slide Placeholders</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="slide-placeholders/index.html" title="Slide Placeholders"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../shp-hyperlink.html" title="Shape hyperlink"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Placeholders</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

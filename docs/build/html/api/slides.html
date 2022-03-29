@@ -1,0 +1,489 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Slides &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Shapes" href="shapes.html" />
+    <link rel="prev" title="Presentations" href="presentation.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="shapes.html" title="Shapes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="presentation.html" title="Presentations"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Slides</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="slides">
+<span id="slides-api"></span><h1>Slides<a class="headerlink" href="#slides" title="Permalink to this headline">¶</a></h1>
+<section id="slides-objects">
+<h2><a class="reference internal" href="#pptx.slide.Slides" title="pptx.slide.Slides"><code class="xref py py-class docutils literal notranslate"><span class="pre">Slides</span></code></a> objects<a class="headerlink" href="#slides-objects" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#pptx.slide.Slides" title="pptx.slide.Slides"><code class="xref py py-class docutils literal notranslate"><span class="pre">Slides</span></code></a> object is accessed using the
+<a class="reference internal" href="presentation.html#pptx.presentation.Presentation.slides" title="pptx.presentation.Presentation.slides"><code class="xref py py-attr docutils literal notranslate"><span class="pre">slides</span></code></a> property of <a class="reference internal" href="presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a>. It
+is not intended to be constructed directly.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.slide.Slides">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.slide.</span></span><span class="sig-name descname"><span class="pre">Slides</span></span><a class="reference internal" href="../_modules/pptx/slide.html#Slides"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.Slides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sequence of slides belonging to an instance of <a class="reference internal" href="presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a>, having
+list semantics for access to individual slides. Supports indexed access,
+len(), and iteration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.slide.Slides.add_slide">
+<span class="sig-name descname"><span class="pre">add_slide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide_layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/slide.html#Slides.add_slide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.Slides.add_slide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a newly added slide that inherits layout from <em>slide_layout</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.slide.Slides.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/slide.html#Slides.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.Slides.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the slide identified by integer <em>slide_id</em> in this
+presentation, or <em>default</em> if not found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.slide.Slides.index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/slide.html#Slides.index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.Slides.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map <em>slide</em> to an integer representing its zero-based position in
+this slide collection. Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> on <em>slide</em> not present.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="slide-objects">
+<h2><a class="reference internal" href="#pptx.slide.Slide" title="pptx.slide.Slide"><code class="xref py py-class docutils literal notranslate"><span class="pre">Slide</span></code></a> objects<a class="headerlink" href="#slide-objects" title="Permalink to this headline">¶</a></h2>
+<p>An individual <a class="reference internal" href="#pptx.slide.Slide" title="pptx.slide.Slide"><code class="xref py py-class docutils literal notranslate"><span class="pre">Slide</span></code></a> object is accessed by index from <a class="reference internal" href="#pptx.slide.Slides" title="pptx.slide.Slides"><code class="xref py py-class docutils literal notranslate"><span class="pre">Slides</span></code></a> or as the
+return value of <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_slide()</span></code>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.slide.Slide">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.slide.</span></span><span class="sig-name descname"><span class="pre">Slide</span></span><a class="reference internal" href="../_modules/pptx/slide.html#Slide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.Slide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slide object. Provides access to shapes and slide-level properties.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.Slide.background">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">background</span></span><a class="headerlink" href="#pptx.slide.Slide.background" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_Background</span></code> object providing slide background properties.</p>
+<p>This property returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">_Background</span></code> object whether or not the slide
+overrides the default background or inherits it. Determining which of
+those conditions applies for this slide is accomplished using the
+<a class="reference internal" href="#pptx.slide.Slide.follow_master_background" title="pptx.slide.Slide.follow_master_background"><code class="xref py py-attr docutils literal notranslate"><span class="pre">follow_master_background</span></code></a> property.</p>
+<p>The same <code class="xref py py-class docutils literal notranslate"><span class="pre">_Background</span></code> object is returned on every call for the same
+slide object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.Slide.element">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">element</span></span><a class="headerlink" href="#pptx.slide.Slide.element" title="Permalink to this definition">¶</a></dt>
+<dd><p>The lxml element proxied by this object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.Slide.follow_master_background">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">follow_master_background</span></span><a class="headerlink" href="#pptx.slide.Slide.follow_master_background" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if this slide inherits the slide master background.</p>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> causes background inheritance from the master to be
+interrupted; if there is no custom background for this slide,
+a default background is added. If a custom background already exists
+for this slide, assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> has no effect.</p>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> causes any custom background for this slide to be
+deleted and inheritance from the master restored.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.Slide.has_notes_slide">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_notes_slide</span></span><a class="headerlink" href="#pptx.slide.Slide.has_notes_slide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if this slide has a notes slide, False otherwise. A notes
+slide is created by <a class="reference internal" href="#pptx.slide.Slide.notes_slide" title="pptx.slide.Slide.notes_slide"><code class="xref py py-attr docutils literal notranslate"><span class="pre">notes_slide</span></code></a> when one doesn’t exist; use
+this property to test for a notes slide without the possible side
+effect of creating one.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.Slide.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.slide.Slide.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representing the internal name of this slide. Returns an empty
+string (<cite>‘’</cite>) if no name is assigned. Assigning an empty string or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> to this property causes any name to be removed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.Slide.notes_slide">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notes_slide</span></span><a class="headerlink" href="#pptx.slide.Slide.notes_slide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the <a class="reference internal" href="#pptx.slide.NotesSlide" title="pptx.slide.NotesSlide"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotesSlide</span></code></a> instance for this slide. If the slide does
+not have a notes slide, one is created. The same single instance is
+returned on each call.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.slide.Slide.placeholders">
+<span class="sig-name descname"><span class="pre">placeholders</span></span><a class="reference internal" href="../_modules/pptx/slide.html#Slide.placeholders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.Slide.placeholders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instance of <a class="reference internal" href="#pptx.shapes.shapetree.SlidePlaceholders" title="pptx.shapes.shapetree.SlidePlaceholders"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlidePlaceholders</span></code></a> containing sequence of placeholder
+shapes in this slide.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.slide.Slide.shapes">
+<span class="sig-name descname"><span class="pre">shapes</span></span><a class="reference internal" href="../_modules/pptx/slide.html#Slide.shapes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.Slide.shapes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instance of <a class="reference internal" href="shapes.html#pptx.shapes.shapetree.SlideShapes" title="pptx.shapes.shapetree.SlideShapes"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideShapes</span></code></a> containing sequence of shape objects
+appearing on this slide.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.Slide.slide_id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">slide_id</span></span><a class="headerlink" href="#pptx.slide.Slide.slide_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The integer value that uniquely identifies this slide within this
+presentation. The slide id does not change if the position of this
+slide in the slide sequence is changed by adding, rearranging, or
+deleting slides.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.Slide.slide_layout">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">slide_layout</span></span><a class="headerlink" href="#pptx.slide.Slide.slide_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.slide.SlideLayout" title="pptx.slide.SlideLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideLayout</span></code></a> object this slide inherits appearance from.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="slidelayouts-objects">
+<h2><a class="reference internal" href="#pptx.slide.SlideLayouts" title="pptx.slide.SlideLayouts"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideLayouts</span></code></a> objects<a class="headerlink" href="#slidelayouts-objects" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#pptx.slide.SlideLayouts" title="pptx.slide.SlideLayouts"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideLayouts</span></code></a> object is accessed using the
+<a class="reference internal" href="#pptx.slide.SlideMaster.slide_layouts" title="pptx.slide.SlideMaster.slide_layouts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">slide_layouts</span></code></a> property of <a class="reference internal" href="#pptx.slide.SlideMaster" title="pptx.slide.SlideMaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMaster</span></code></a>, typically:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_layouts</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_master</span><span class="o">.</span><span class="n">slide_layouts</span>
+</pre></div>
+</div>
+<p>As a convenience, since most presentations have only a single slide master, the
+<a class="reference internal" href="#pptx.slide.SlideLayouts" title="pptx.slide.SlideLayouts"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideLayouts</span></code></a> collection for the first master may be accessed directly from the
+<a class="reference internal" href="presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slide_layouts</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span>
+</pre></div>
+</div>
+<p>This class is not intended to be constructed directly.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayouts">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.slide.</span></span><span class="sig-name descname"><span class="pre">SlideLayouts</span></span><a class="reference internal" href="../_modules/pptx/slide.html#SlideLayouts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideLayouts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sequence of slide layouts belonging to a slide-master.</p>
+<p>Supports indexed access, len(), iteration, index() and remove().</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayouts.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/slide.html#SlideLayouts.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideLayouts.get_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return SlideLayout object having <em>name</em> or <em>default</em> if not found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayouts.index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide_layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/slide.html#SlideLayouts.index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideLayouts.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return zero-based index of <em>slide_layout</em> in this collection.</p>
+<p>Raises ValueError if <em>slide_layout</em> is not present in this collection.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayouts.part">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">part</span></span><a class="headerlink" href="#pptx.slide.SlideLayouts.part" title="Permalink to this definition">¶</a></dt>
+<dd><p>The package part containing this object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayouts.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slide_layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/slide.html#SlideLayouts.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideLayouts.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove <em>slide_layout</em> from the collection.</p>
+<p>Raises ValueError when <em>slide_layout</em> is in use; a slide layout which is the
+basis for one or more slides cannot be removed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="slidelayout-objects">
+<h2><a class="reference internal" href="#pptx.slide.SlideLayout" title="pptx.slide.SlideLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideLayout</span></code></a> objects<a class="headerlink" href="#slidelayout-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayout">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.slide.</span></span><span class="sig-name descname"><span class="pre">SlideLayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">part</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/slide.html#SlideLayout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slide layout object. Provides access to placeholders, regular shapes, and
+slide layout-level properties.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayout.placeholders">
+<span class="sig-name descname"><span class="pre">placeholders</span></span><a class="reference internal" href="../_modules/pptx/slide.html#SlideLayout.placeholders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideLayout.placeholders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">LayoutPlaceholders</span></code> containing sequence of placeholder
+shapes in this slide layout, sorted in <em>idx</em> order.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayout.shapes">
+<span class="sig-name descname"><span class="pre">shapes</span></span><a class="reference internal" href="../_modules/pptx/slide.html#SlideLayout.shapes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideLayout.shapes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">LayoutShapes</span></code> containing the sequence of shapes
+appearing on this slide layout.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayout.slide_master">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">slide_master</span></span><a class="headerlink" href="#pptx.slide.SlideLayout.slide_master" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slide master from which this slide layout inherits properties.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.SlideLayout.used_by_slides">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">used_by_slides</span></span><a class="headerlink" href="#pptx.slide.SlideLayout.used_by_slides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tuple of slide objects based on this slide layout.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="slidemasters-objects">
+<h2><a class="reference internal" href="#pptx.slide.SlideMasters" title="pptx.slide.SlideMasters"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMasters</span></code></a> objects<a class="headerlink" href="#slidemasters-objects" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#pptx.slide.SlideMasters" title="pptx.slide.SlideMasters"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMasters</span></code></a> object is accessed using the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">slide_masters</span></code> property of <a class="reference internal" href="presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a>, typically:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_masters</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_masters</span>
+</pre></div>
+</div>
+<p>As a convenience, since most presentations have only a single slide master, the
+first master may be accessed directly from the <a class="reference internal" href="presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> object without indexing
+the collection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slide_master</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_master</span>
+</pre></div>
+</div>
+<p>This class is not intended to be constructed directly.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.slide.SlideMasters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.slide.</span></span><span class="sig-name descname"><span class="pre">SlideMasters</span></span><a class="reference internal" href="../_modules/pptx/slide.html#SlideMasters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideMasters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sequence of <a class="reference internal" href="#pptx.slide.SlideMaster" title="pptx.slide.SlideMaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMaster</span></code></a> objects belonging to a presentation.</p>
+<p>Has list access semantics, supporting indexed access, len(), and iteration.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.SlideMasters.part">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">part</span></span><a class="headerlink" href="#pptx.slide.SlideMasters.part" title="Permalink to this definition">¶</a></dt>
+<dd><p>The package part containing this object</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="slidemaster-objects">
+<h2><a class="reference internal" href="#pptx.slide.SlideMaster" title="pptx.slide.SlideMaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMaster</span></code></a> objects<a class="headerlink" href="#slidemaster-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.slide.SlideMaster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.slide.</span></span><span class="sig-name descname"><span class="pre">SlideMaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">part</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/slide.html#SlideMaster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideMaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slide master object. Provides access to slide layouts. Access to
+placeholders, regular shapes, and slide master-level properties is
+inherited from <code class="xref py py-class docutils literal notranslate"><span class="pre">_BaseMaster</span></code>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.slide.SlideMaster.slide_layouts">
+<span class="sig-name descname"><span class="pre">slide_layouts</span></span><a class="reference internal" href="../_modules/pptx/slide.html#SlideMaster.slide_layouts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.SlideMaster.slide_layouts" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.slide.SlideLayouts" title="pptx.slide.SlideLayouts"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideLayouts</span></code></a> object providing access to this slide-master’s layouts.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="slideplaceholders-objects">
+<h2><a class="reference internal" href="#pptx.shapes.shapetree.SlidePlaceholders" title="pptx.shapes.shapetree.SlidePlaceholders"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlidePlaceholders</span></code></a> objects<a class="headerlink" href="#slideplaceholders-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.shapes.shapetree.SlidePlaceholders">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.shapes.shapetree.</span></span><span class="sig-name descname"><span class="pre">SlidePlaceholders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/shapes/shapetree.html#SlidePlaceholders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.shapes.shapetree.SlidePlaceholders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collection of placeholder shapes on a slide. Supports iteration,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">len()</span></code>, and dictionary-style lookup on the <cite>idx</cite> value of the
+placeholders it contains.</p>
+</dd></dl>
+
+</section>
+<section id="notesslide-objects">
+<h2><a class="reference internal" href="#pptx.slide.NotesSlide" title="pptx.slide.NotesSlide"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotesSlide</span></code></a> objects<a class="headerlink" href="#notesslide-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.slide.NotesSlide">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.slide.</span></span><span class="sig-name descname"><span class="pre">NotesSlide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">part</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/slide.html#NotesSlide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.NotesSlide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notes slide object.</p>
+<p>Provides access to slide notes placeholder and other shapes on the notes handout
+page.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.slide.NotesSlide.background">
+<span class="sig-name descname"><span class="pre">background</span></span><a class="headerlink" href="#pptx.slide.NotesSlide.background" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_Background</span></code> object providing slide background properties.</p>
+<p>This property returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">_Background</span></code> object whether or not the
+slide, master, or layout has an explicitly defined background.</p>
+<p>The same <code class="xref py py-class docutils literal notranslate"><span class="pre">_Background</span></code> object is returned on every call for the same
+slide object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.NotesSlide.element">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">element</span></span><a class="headerlink" href="#pptx.slide.NotesSlide.element" title="Permalink to this definition">¶</a></dt>
+<dd><p>The lxml element proxied by this object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.NotesSlide.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.slide.NotesSlide.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representing the internal name of this slide. Returns an empty
+string (<cite>‘’</cite>) if no name is assigned. Assigning an empty string or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> to this property causes any name to be removed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.NotesSlide.notes_placeholder">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notes_placeholder</span></span><a class="headerlink" href="#pptx.slide.NotesSlide.notes_placeholder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the notes placeholder on this notes slide, the shape that
+contains the actual notes text. Return <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no notes placeholder
+is present; while this is probably uncommon, it can happen if the
+notes master does not have a body placeholder, or if the notes
+placeholder has been deleted from the notes slide.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.NotesSlide.notes_text_frame">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notes_text_frame</span></span><a class="headerlink" href="#pptx.slide.NotesSlide.notes_text_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the text frame of the notes placeholder on this notes slide,
+or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if there is no notes placeholder. This is a shortcut to
+accommodate the common case of simply adding “notes” text to the
+notes “page”.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.slide.NotesSlide.part">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">part</span></span><a class="headerlink" href="#pptx.slide.NotesSlide.part" title="Permalink to this definition">¶</a></dt>
+<dd><p>The package part containing this object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.slide.NotesSlide.placeholders">
+<span class="sig-name descname"><span class="pre">placeholders</span></span><a class="reference internal" href="../_modules/pptx/slide.html#NotesSlide.placeholders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.NotesSlide.placeholders" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">NotesSlidePlaceholders</span></code> containing the sequence of
+placeholder shapes in this notes slide.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.slide.NotesSlide.shapes">
+<span class="sig-name descname"><span class="pre">shapes</span></span><a class="reference internal" href="../_modules/pptx/slide.html#NotesSlide.shapes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pptx.slide.NotesSlide.shapes" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">NotesSlideShapes</span></code> containing the sequence of shape
+objects appearing on this notes slide.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Slides</a><ul>
+<li><a class="reference internal" href="#slides-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Slides</span></code> objects</a></li>
+<li><a class="reference internal" href="#slide-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Slide</span></code> objects</a></li>
+<li><a class="reference internal" href="#slidelayouts-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideLayouts</span></code> objects</a></li>
+<li><a class="reference internal" href="#slidelayout-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideLayout</span></code> objects</a></li>
+<li><a class="reference internal" href="#slidemasters-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMasters</span></code> objects</a></li>
+<li><a class="reference internal" href="#slidemaster-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideMaster</span></code> objects</a></li>
+<li><a class="reference internal" href="#slideplaceholders-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlidePlaceholders</span></code> objects</a></li>
+<li><a class="reference internal" href="#notesslide-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotesSlide</span></code> objects</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="presentation.html"
+                          title="previous chapter">Presentations</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="shapes.html"
+                          title="next chapter">Shapes</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="shapes.html" title="Shapes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="presentation.html" title="Presentations"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Slides</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

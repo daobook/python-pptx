@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.chart.datalabel &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.datalabel</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.chart.datalabel</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Data label-related objects.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">..text.text</span> <span class="kn">import</span> <span class="n">Font</span><span class="p">,</span> <span class="n">TextFrame</span>
+<span class="kn">from</span> <span class="nn">..util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<div class="viewcode-block" id="DataLabels"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.datalabel.DataLabels">[docs]</a><span class="k">class</span> <span class="nc">DataLabels</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provides access to properties of data labels for a plot or a series.</span>
+
+<span class="sd">    This is not a collection and does not provide access to individual data</span>
+<span class="sd">    labels. Access to individual labels is via the |Point| object. The</span>
+<span class="sd">    properties this object provides control formatting of *all* the data</span>
+<span class="sd">    labels in its scope.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dLbls</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DataLabels</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">dLbls</span>
+
+<div class="viewcode-block" id="DataLabels.font"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.datalabel.DataLabels.font">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">font</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |Font| object that provides access to the text properties for</span>
+<span class="sd">        these data labels, such as bold, italic, etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">defRPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">defRPr</span>
+        <span class="n">font</span> <span class="o">=</span> <span class="n">Font</span><span class="p">(</span><span class="n">defRPr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">font</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write string specifying the format for the numbers on this set</span>
+<span class="sd">        of data labels. Returns &#39;General&#39; if no number format has been set.</span>
+<span class="sd">        Note that this format string has no effect on rendered data labels</span>
+<span class="sd">        when :meth:`number_format_is_linked` is |True|. Assigning a format</span>
+<span class="sd">        string to this property automatically sets</span>
+<span class="sd">        :meth:`number_format_is_linked` to |False|.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">numFmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">numFmt</span>
+        <span class="k">if</span> <span class="n">numFmt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;General&quot;</span>
+        <span class="k">return</span> <span class="n">numFmt</span><span class="o">.</span><span class="n">formatCode</span>
+
+    <span class="nd">@number_format</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">number_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_numFmt</span><span class="p">()</span><span class="o">.</span><span class="n">formatCode</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_format_is_linked</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_format_is_linked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean specifying whether number formatting should be</span>
+<span class="sd">        taken from the source spreadsheet rather than the value of</span>
+<span class="sd">        :meth:`number_format`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">numFmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">numFmt</span>
+        <span class="k">if</span> <span class="n">numFmt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">souceLinked</span> <span class="o">=</span> <span class="n">numFmt</span><span class="o">.</span><span class="n">sourceLinked</span>
+        <span class="k">if</span> <span class="n">souceLinked</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">numFmt</span><span class="o">.</span><span class="n">sourceLinked</span>
+
+    <span class="nd">@number_format_is_linked</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">number_format_is_linked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">numFmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_numFmt</span><span class="p">()</span>
+        <span class="n">numFmt</span><span class="o">.</span><span class="n">sourceLinked</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write :ref:`XlDataLabelPosition` enumeration value specifying</span>
+<span class="sd">        the position of the data labels with respect to their data point, or</span>
+<span class="sd">        |None| if no position is specified. Assigning |None| causes</span>
+<span class="sd">        PowerPoint to choose the default position, which varies by chart</span>
+<span class="sd">        type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dLblPos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">dLblPos</span>
+        <span class="k">if</span> <span class="n">dLblPos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">dLblPos</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@position</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_dLblPos</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_dLblPos</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">show_category_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write. True when name of category should appear in label.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showCatName</span><span class="p">()</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@show_category_name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">show_category_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showCatName</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">show_legend_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write. True when data label displays legend-color swatch.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showLegendKey</span><span class="p">()</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@show_legend_key</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">show_legend_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showLegendKey</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">show_percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write. True when data label displays percentage.</span>
+
+<span class="sd">        This option is not operative on all chart types. Percentage appears</span>
+<span class="sd">        on polar charts such as pie and donut.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showPercent</span><span class="p">()</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@show_percentage</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">show_percentage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showPercent</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">show_series_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write. True when data label displays series name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showSerName</span><span class="p">()</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@show_series_name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">show_series_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showSerName</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">show_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write. True when label displays numeric value of datapoint.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showVal</span><span class="p">()</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@show_value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">show_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_showVal</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DataLabel"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.datalabel.DataLabel">[docs]</a><span class="k">class</span> <span class="nc">DataLabel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The data label associated with an individual data point.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ser</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DataLabel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">ser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_idx</span> <span class="o">=</span> <span class="n">idx</span>
+
+<div class="viewcode-block" id="DataLabel.font"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.datalabel.DataLabel.font">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">font</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The |Font| object providing text formatting for this data label.</span>
+
+<span class="sd">        This font object is used to customize the appearance of automatically</span>
+<span class="sd">        inserted text, such as the data point value. The font applies to the</span>
+<span class="sd">        entire data label. More granular control of the appearance of custom</span>
+<span class="sd">        data label text is controlled by a font object on runs in the text</span>
+<span class="sd">        frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">txPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_or_add_txPr</span><span class="p">()</span>
+        <span class="n">text_frame</span> <span class="o">=</span> <span class="n">TextFrame</span><span class="p">(</span><span class="n">txPr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">paragraph</span> <span class="o">=</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">font</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return |True| if this data label has a text frame (implying it has</span>
+<span class="sd">        custom data label text), and |False| otherwise. Assigning |True|</span>
+<span class="sd">        causes a text frame to be added if not already present. Assigning</span>
+<span class="sd">        |False| causes any existing text frame to be removed along with any</span>
+<span class="sd">        text contained in the text frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dLbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dLbl</span>
+        <span class="k">if</span> <span class="n">dLbl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">dLbl</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;c:tx/c:rich&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@has_text_frame</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">has_text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_or_add_tx_rich</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_remove_tx_rich</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write :ref:`XlDataLabelPosition` member specifying the position</span>
+<span class="sd">        of this data label with respect to its data point, or |None| if no</span>
+<span class="sd">        position is specified. Assigning |None| causes PowerPoint to choose</span>
+<span class="sd">        the default position, which varies by chart type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dLbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dLbl</span>
+        <span class="k">if</span> <span class="n">dLbl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">dLblPos</span> <span class="o">=</span> <span class="n">dLbl</span><span class="o">.</span><span class="n">dLblPos</span>
+        <span class="k">if</span> <span class="n">dLblPos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">dLblPos</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@position</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dLbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dLbl</span>
+            <span class="k">if</span> <span class="n">dLbl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="n">dLbl</span><span class="o">.</span><span class="n">_remove_dLblPos</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="n">dLbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_or_add_dLbl</span><span class="p">()</span>
+        <span class="n">dLbl</span><span class="o">.</span><span class="n">get_or_add_dLblPos</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |TextFrame| instance for this data label, containing the text of the</span>
+<span class="sd">        data label and providing access to its text formatting properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rich</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_or_add_rich</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">TextFrame</span><span class="p">(</span><span class="n">rich</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_dLbl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the |CT_DLbl| instance referring specifically to this</span>
+<span class="sd">        individual data label (having the same index value), or |None| if not</span>
+<span class="sd">        present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ser</span><span class="o">.</span><span class="n">get_dLbl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_idx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_or_add_dLbl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The ``CT_DLbl`` instance referring specifically to this individual</span>
+<span class="sd">        data label, newly created if not yet present in the XML.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ser</span><span class="o">.</span><span class="n">get_or_add_dLbl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_idx</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_or_add_rich</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the `c:rich` element representing the text frame for this data</span>
+<span class="sd">        label, newly created with its ancestors if not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dLbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_or_add_dLbl</span><span class="p">()</span>
+
+        <span class="c1"># having a c:spPr or c:txPr when a c:tx is present causes the &quot;can&#39;t</span>
+        <span class="c1"># save&quot; bug on bubble charts. Remove c:spPr and c:txPr when present.</span>
+        <span class="n">dLbl</span><span class="o">.</span><span class="n">_remove_spPr</span><span class="p">()</span>
+        <span class="n">dLbl</span><span class="o">.</span><span class="n">_remove_txPr</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">dLbl</span><span class="o">.</span><span class="n">get_or_add_rich</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_or_add_tx_rich</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the `c:tx` element for this data label, with its `c:rich`</span>
+<span class="sd">        child and descendants, newly created if not yet present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dLbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_or_add_dLbl</span><span class="p">()</span>
+
+        <span class="c1"># having a c:spPr or c:txPr when a c:tx is present causes the &quot;can&#39;t</span>
+        <span class="c1"># save&quot; bug on bubble charts. Remove c:spPr and c:txPr when present.</span>
+        <span class="n">dLbl</span><span class="o">.</span><span class="n">_remove_spPr</span><span class="p">()</span>
+        <span class="n">dLbl</span><span class="o">.</span><span class="n">_remove_txPr</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">dLbl</span><span class="o">.</span><span class="n">get_or_add_tx_rich</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_or_add_txPr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the `c:txPr` element for this data label.</span>
+
+<span class="sd">        The `c:txPr` element and its parent `c:dLbl` element are created if</span>
+<span class="sd">        not yet present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dLbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_or_add_dLbl</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dLbl</span><span class="o">.</span><span class="n">get_or_add_txPr</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_remove_tx_rich</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove any `c:tx/c:rich` child of the `c:dLbl` element for this data</span>
+<span class="sd">        label. Do nothing if that element is not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dLbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dLbl</span>
+        <span class="k">if</span> <span class="n">dLbl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">dLbl</span><span class="o">.</span><span class="n">remove_tx_rich</span><span class="p">()</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.datalabel</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

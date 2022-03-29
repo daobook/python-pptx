@@ -1,0 +1,814 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.text.text &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.text.text</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pptx.text.text</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Text-related objects such as TextFrame and Paragraph.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pptx.compat</span> <span class="kn">import</span> <span class="n">to_unicode</span>
+<span class="kn">from</span> <span class="nn">pptx.dml.fill</span> <span class="kn">import</span> <span class="n">FillFormat</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.dml</span> <span class="kn">import</span> <span class="n">MSO_FILL</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.lang</span> <span class="kn">import</span> <span class="n">MSO_LANGUAGE_ID</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.text</span> <span class="kn">import</span> <span class="n">MSO_AUTO_SIZE</span><span class="p">,</span> <span class="n">MSO_UNDERLINE</span>
+<span class="kn">from</span> <span class="nn">pptx.opc.constants</span> <span class="kn">import</span> <span class="n">RELATIONSHIP_TYPE</span> <span class="k">as</span> <span class="n">RT</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.simpletypes</span> <span class="kn">import</span> <span class="n">ST_TextWrappingType</span>
+<span class="kn">from</span> <span class="nn">pptx.shapes</span> <span class="kn">import</span> <span class="n">Subshape</span>
+<span class="kn">from</span> <span class="nn">pptx.text.fonts</span> <span class="kn">import</span> <span class="n">FontFiles</span>
+<span class="kn">from</span> <span class="nn">pptx.text.layout</span> <span class="kn">import</span> <span class="n">TextFitter</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Centipoints</span><span class="p">,</span> <span class="n">Emu</span><span class="p">,</span> <span class="n">lazyproperty</span><span class="p">,</span> <span class="n">Pt</span>
+
+
+<div class="viewcode-block" id="TextFrame"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text.TextFrame">[docs]</a><span class="k">class</span> <span class="nc">TextFrame</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The part of a shape that contains its text.</span>
+
+<span class="sd">    Not all shapes have a text frame. Corresponds to the ``&lt;p:txBody&gt;`` element that can</span>
+<span class="sd">    appear as a child element of ``&lt;p:sp&gt;``. Not intended to be constructed directly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txBody</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TextFrame</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span> <span class="o">=</span> <span class="n">txBody</span>
+
+<div class="viewcode-block" id="TextFrame.add_paragraph"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text.TextFrame.add_paragraph">[docs]</a>    <span class="k">def</span> <span class="nf">add_paragraph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return new |_Paragraph| instance appended to the sequence of</span>
+<span class="sd">        paragraphs contained in this text frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span><span class="o">.</span><span class="n">add_p</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">_Paragraph</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">auto_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The type of automatic resizing that should be used to fit the text of</span>
+<span class="sd">        this shape within its bounding box when the text would otherwise</span>
+<span class="sd">        extend beyond the shape boundaries. May be |None|,</span>
+<span class="sd">        ``MSO_AUTO_SIZE.NONE``, ``MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT``, or</span>
+<span class="sd">        ``MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">autofit</span>
+
+    <span class="nd">@auto_size</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">auto_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">autofit</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="TextFrame.clear"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text.TextFrame.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove all paragraphs except one empty one.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span><span class="o">.</span><span class="n">p_lst</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TextFrame.fit_text"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text.TextFrame.fit_text">[docs]</a>    <span class="k">def</span> <span class="nf">fit_text</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">font_family</span><span class="o">=</span><span class="s2">&quot;Calibri&quot;</span><span class="p">,</span>
+        <span class="n">max_size</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+        <span class="n">bold</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">italic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">font_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit text-frame text entirely within bounds of its shape.</span>
+
+<span class="sd">        Make the text in this text frame fit entirely within the bounds of</span>
+<span class="sd">        its shape by setting word wrap on and applying the &quot;best-fit&quot; font</span>
+<span class="sd">        size to all the text it contains. :attr:`TextFrame.auto_size` is set</span>
+<span class="sd">        to :attr:`MSO_AUTO_SIZE.NONE`. The font size will not be set larger</span>
+<span class="sd">        than *max_size* points. If the path to a matching TrueType font is</span>
+<span class="sd">        provided as *font_file*, that font file will be used for the font</span>
+<span class="sd">        metrics. If *font_file* is |None|, best efforts are made to locate</span>
+<span class="sd">        a font file with matchhing *font_family*, *bold*, and *italic*</span>
+<span class="sd">        installed on the current system (usually succeeds if the font is</span>
+<span class="sd">        installed).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---no-op when empty as fit behavior not defined for that case---</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="c1"># pragma: no cover</span>
+
+        <span class="n">font_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_fit_font_size</span><span class="p">(</span>
+            <span class="n">font_family</span><span class="p">,</span> <span class="n">max_size</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">,</span> <span class="n">font_file</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_fit</span><span class="p">(</span><span class="n">font_family</span><span class="p">,</span> <span class="n">font_size</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">margin_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |Length| value representing the inset of text from the bottom text</span>
+<span class="sd">        frame border. :meth:`pptx.util.Inches` provides a convenient way of</span>
+<span class="sd">        setting the value, e.g. ``text_frame.margin_bottom = Inches(0.05)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">bIns</span>
+
+    <span class="nd">@margin_bottom</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">margin_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emu</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">bIns</span> <span class="o">=</span> <span class="n">emu</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">margin_left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inset of text from left text frame border as |Length| value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">lIns</span>
+
+    <span class="nd">@margin_left</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">margin_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emu</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">lIns</span> <span class="o">=</span> <span class="n">emu</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">margin_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inset of text from right text frame border as |Length| value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">rIns</span>
+
+    <span class="nd">@margin_right</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">margin_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emu</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">rIns</span> <span class="o">=</span> <span class="n">emu</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">margin_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inset of text from top text frame border as |Length| value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">tIns</span>
+
+    <span class="nd">@margin_top</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">margin_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emu</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bodyPr</span><span class="o">.</span><span class="n">tIns</span> <span class="o">=</span> <span class="n">emu</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">paragraphs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Immutable sequence of |_Paragraph| instances corresponding to the</span>
+<span class="sd">        paragraphs in this text frame. A text frame always contains at least</span>
+<span class="sd">        one paragraph.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">_Paragraph</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span><span class="o">.</span><span class="n">p_lst</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Unicode/str containing all text in this text-frame.</span>
+
+<span class="sd">        Read/write. The return value is a str (unicode) containing all text in this</span>
+<span class="sd">        text-frame. A line-feed character (``&quot;\\n&quot;``) separates the text for each</span>
+<span class="sd">        paragraph. A vertical-tab character (``&quot;\\v&quot;``) appears for each line break</span>
+<span class="sd">        (aka. soft carriage-return) encountered.</span>
+
+<span class="sd">        The vertical-tab character is how PowerPoint represents a soft carriage return</span>
+<span class="sd">        in clipboard text, which is why that encoding was chosen.</span>
+
+<span class="sd">        Assignment replaces all text in the text frame. The assigned value can be</span>
+<span class="sd">        a 7-bit ASCII string, a UTF-8 encoded 8-bit string, or unicode. A bytes value</span>
+<span class="sd">        (such as a Python 2 ``str``) is converted to unicode assuming UTF-8 encoding.</span>
+<span class="sd">        A new paragraph is added for each line-feed character (``&quot;\\n&quot;``) encountered.</span>
+<span class="sd">        A line-break (soft carriage-return) is inserted for each vertical-tab character</span>
+<span class="sd">        (``&quot;\\v&quot;``) encountered.</span>
+
+<span class="sd">        Any control character other than newline, tab, or vertical-tab are escaped as</span>
+<span class="sd">        plain-text like &quot;_x001B_&quot; (for ESC (ASCII 32) in this example).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paragraph</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">)</span>
+
+    <span class="nd">@text</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="n">txBody</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span>
+        <span class="n">txBody</span><span class="o">.</span><span class="n">clear_content</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">p_text</span> <span class="ow">in</span> <span class="n">to_unicode</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">txBody</span><span class="o">.</span><span class="n">add_p</span><span class="p">()</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">append_text</span><span class="p">(</span><span class="n">p_text</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vertical_anchor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write member of :ref:`MsoVerticalAnchor` enumeration or |None|,</span>
+<span class="sd">        representing the vertical alignment of text in this text frame.</span>
+<span class="sd">        |None| indicates the effective value should be inherited from this</span>
+<span class="sd">        object&#39;s style hierarchy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span><span class="o">.</span><span class="n">bodyPr</span><span class="o">.</span><span class="n">anchor</span>
+
+    <span class="nd">@vertical_anchor</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">vertical_anchor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">bodyPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span><span class="o">.</span><span class="n">bodyPr</span>
+        <span class="n">bodyPr</span><span class="o">.</span><span class="n">anchor</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">word_wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read-write setting determining whether lines of text in this shape</span>
+<span class="sd">        are wrapped to fit within the shape&#39;s width. Valid values are True,</span>
+<span class="sd">        False, or None. True and False turn word wrap on and off,</span>
+<span class="sd">        respectively. Assigning None to word wrap causes any word wrap</span>
+<span class="sd">        setting to be removed from the text frame, causing it to inherit this</span>
+<span class="sd">        setting from its style hierarchy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">ST_TextWrappingType</span><span class="o">.</span><span class="n">SQUARE</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">ST_TextWrappingType</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="kc">None</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">}[</span><span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span><span class="o">.</span><span class="n">bodyPr</span><span class="o">.</span><span class="n">wrap</span><span class="p">]</span>
+
+    <span class="nd">@word_wrap</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">word_wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>  <span class="c1"># pragma: no cover</span>
+                <span class="s2">&quot;assigned value must be True, False, or None, got </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">value</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span><span class="o">.</span><span class="n">bodyPr</span><span class="o">.</span><span class="n">wrap</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="kc">True</span><span class="p">:</span> <span class="n">ST_TextWrappingType</span><span class="o">.</span><span class="n">SQUARE</span><span class="p">,</span>
+            <span class="kc">False</span><span class="p">:</span> <span class="n">ST_TextWrappingType</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span>
+            <span class="kc">None</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">}[</span><span class="n">value</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_apply_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">font_family</span><span class="p">,</span> <span class="n">font_size</span><span class="p">,</span> <span class="n">is_bold</span><span class="p">,</span> <span class="n">is_italic</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Arrange text in this text frame to fit inside its extents.</span>
+
+<span class="sd">        This is accomplished by setting auto size off, wrap on, and setting the font of</span>
+<span class="sd">        all its text to `font_family`, `font_size`, `is_bold`, and `is_italic`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auto_size</span> <span class="o">=</span> <span class="n">MSO_AUTO_SIZE</span><span class="o">.</span><span class="n">NONE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_wrap</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_font</span><span class="p">(</span><span class="n">font_family</span><span class="p">,</span> <span class="n">font_size</span><span class="p">,</span> <span class="n">is_bold</span><span class="p">,</span> <span class="n">is_italic</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_best_fit_font_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">family</span><span class="p">,</span> <span class="n">max_size</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">,</span> <span class="n">font_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the largest integer point size not greater than *max_size*</span>
+<span class="sd">        that allows all the text in this text frame to fit inside its extents</span>
+<span class="sd">        when rendered using the font described by *family*, *bold*, and</span>
+<span class="sd">        *italic*. If *font_file* is specified, it is used to calculate the</span>
+<span class="sd">        fit, whether or not it matches *family*, *bold*, and *italic*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">font_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">font_file</span> <span class="o">=</span> <span class="n">FontFiles</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextFitter</span><span class="o">.</span><span class="n">best_fit_font_size</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extents</span><span class="p">,</span> <span class="n">max_size</span><span class="p">,</span> <span class="n">font_file</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_bodyPr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_txBody</span><span class="o">.</span><span class="n">bodyPr</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_extents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A (cx, cy) 2-tuple representing the effective rendering area for text</span>
+<span class="sd">        within this text frame when margins are taken into account.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">margin_left</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">margin_right</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">margin_top</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">margin_bottom</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_font</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">family</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the font properties of all the text in this text frame to</span>
+<span class="sd">        *family*, *size*, *bold*, and *italic*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">iter_rPrs</span><span class="p">(</span><span class="n">txBody</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">txBody</span><span class="o">.</span><span class="n">p_lst</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">elm</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">content_children</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">elm</span><span class="o">.</span><span class="n">get_or_add_rPr</span><span class="p">()</span>
+                <span class="c1"># generate a:endParaRPr for each &lt;a:p&gt; element</span>
+                <span class="k">yield</span> <span class="n">p</span><span class="o">.</span><span class="n">get_or_add_endParaRPr</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">set_rPr_font</span><span class="p">(</span><span class="n">rPr</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">):</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">Font</span><span class="p">(</span><span class="n">rPr</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">bold</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">italic</span> <span class="o">=</span> <span class="n">family</span><span class="p">,</span> <span class="n">Pt</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span>
+
+        <span class="n">txBody</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span>
+        <span class="k">for</span> <span class="n">rPr</span> <span class="ow">in</span> <span class="n">iter_rPrs</span><span class="p">(</span><span class="n">txBody</span><span class="p">):</span>
+            <span class="n">set_rPr_font</span><span class="p">(</span><span class="n">rPr</span><span class="p">,</span> <span class="n">family</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bold</span><span class="p">,</span> <span class="n">italic</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Font"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text.Font">[docs]</a><span class="k">class</span> <span class="nc">Font</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Character properties object, providing font size, font name, bold,</span>
+<span class="sd">    italic, etc. Corresponds to ``&lt;a:rPr&gt;`` child element of a run. Also</span>
+<span class="sd">    appears as ``&lt;a:defRPr&gt;`` and ``&lt;a:endParaRPr&gt;`` in paragraph and</span>
+<span class="sd">    ``&lt;a:defRPr&gt;`` in list style elements.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rPr</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Font</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span> <span class="o">=</span> <span class="n">rPr</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bold</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set boolean bold value of |Font|, e.g.</span>
+<span class="sd">        ``paragraph.font.bold = True``. If set to |None|, the bold setting is</span>
+<span class="sd">        cleared and is inherited from an enclosing shape&#39;s setting, or a</span>
+<span class="sd">        setting in a style or master. Returns None if no bold attribute is</span>
+<span class="sd">        present, meaning the effective bold value is inherited from a master</span>
+<span class="sd">        or the theme.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">b</span>
+
+    <span class="nd">@bold</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">bold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="Font.color"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text.Font.color">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |ColorFormat| instance that provides access to the color settings</span>
+<span class="sd">        for this font.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">MSO_FILL</span><span class="o">.</span><span class="n">SOLID</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span></div>
+
+<div class="viewcode-block" id="Font.fill"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text.Font.fill">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">fill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |FillFormat| instance for this font, providing access to fill</span>
+<span class="sd">        properties such as fill color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">FillFormat</span><span class="o">.</span><span class="n">from_fill_parent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">italic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set boolean italic value of |Font| instance, with the same</span>
+<span class="sd">        behaviors as bold with respect to None values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">i</span>
+
+    <span class="nd">@italic</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">italic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">language_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the language id of this |Font| instance. The language id</span>
+<span class="sd">        is a member of the :ref:`MsoLanguageId` enumeration. Assigning |None|</span>
+<span class="sd">        removes any language setting, the same behavior as assigning</span>
+<span class="sd">        `MSO_LANGUAGE_ID.NONE`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lang</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">lang</span>
+        <span class="k">if</span> <span class="n">lang</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MSO_LANGUAGE_ID</span><span class="o">.</span><span class="n">NONE</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">lang</span>
+
+    <span class="nd">@language_id</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">language_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">MSO_LANGUAGE_ID</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get or set the typeface name for this |Font| instance, causing the</span>
+<span class="sd">        text it controls to appear in the named font, if a matching font is</span>
+<span class="sd">        found. Returns |None| if the typeface is currently inherited from the</span>
+<span class="sd">        theme. Setting it to |None| removes any override of the theme</span>
+<span class="sd">        typeface.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">latin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">latin</span>
+        <span class="k">if</span> <span class="n">latin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">latin</span><span class="o">.</span><span class="n">typeface</span>
+
+    <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">_remove_latin</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">latin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">get_or_add_latin</span><span class="p">()</span>
+            <span class="n">latin</span><span class="o">.</span><span class="n">typeface</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write |Length| value or |None|, indicating the font height in</span>
+<span class="sd">        English Metric Units (EMU). |None| indicates the font size should be</span>
+<span class="sd">        inherited from its style hierarchy, such as a placeholder or document</span>
+<span class="sd">        defaults (usually 18pt). |Length| is a subclass of |int| having</span>
+<span class="sd">        properties for convenient conversion into points or other length</span>
+<span class="sd">        units. Likewise, the :class:`pptx.util.Pt` class allows convenient</span>
+<span class="sd">        specification of point values::</span>
+
+<span class="sd">            &gt;&gt; font.size = Pt(24)</span>
+<span class="sd">            &gt;&gt; font.size</span>
+<span class="sd">            304800</span>
+<span class="sd">            &gt;&gt; font.size.pt</span>
+<span class="sd">            24.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">sz</span>
+        <span class="k">if</span> <span class="n">sz</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">Centipoints</span><span class="p">(</span><span class="n">sz</span><span class="p">)</span>
+
+    <span class="nd">@size</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emu</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">emu</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">sz</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sz</span> <span class="o">=</span> <span class="n">Emu</span><span class="p">(</span><span class="n">emu</span><span class="p">)</span><span class="o">.</span><span class="n">centipoints</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">sz</span> <span class="o">=</span> <span class="n">sz</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">underline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write. |True|, |False|, |None|, or a member of the</span>
+<span class="sd">        :ref:`MsoTextUnderlineType` enumeration indicating the underline</span>
+<span class="sd">        setting for this font. |None| is the default and indicates the</span>
+<span class="sd">        underline setting should be inherited from the style hierarchy, such</span>
+<span class="sd">        as from a placeholder. |True| indicates single underline. |False|</span>
+<span class="sd">        indicates no underline. Other settings such as double and wavy</span>
+<span class="sd">        underlining are indicated with members of the</span>
+<span class="sd">        :ref:`MsoTextUnderlineType` enumeration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">u</span>
+        <span class="k">if</span> <span class="n">u</span> <span class="ow">is</span> <span class="n">MSO_UNDERLINE</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">u</span> <span class="ow">is</span> <span class="n">MSO_UNDERLINE</span><span class="o">.</span><span class="n">SINGLE_LINE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">u</span>
+
+    <span class="nd">@underline</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">underline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">MSO_UNDERLINE</span><span class="o">.</span><span class="n">SINGLE_LINE</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">MSO_UNDERLINE</span><span class="o">.</span><span class="n">NONE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<span class="k">class</span> <span class="nc">_Hyperlink</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Text run hyperlink object. Corresponds to ``&lt;a:hlinkClick&gt;`` child</span>
+<span class="sd">    element of the run&#39;s properties element (``&lt;a:rPr&gt;``).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rPr</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_Hyperlink</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span> <span class="o">=</span> <span class="n">rPr</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write. The URL of the hyperlink. URL can be on http, https,</span>
+<span class="sd">        mailto, or file scheme; others may work.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hlinkClick</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">target_ref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hlinkClick</span><span class="o">.</span><span class="n">rId</span><span class="p">)</span>
+
+    <span class="nd">@address</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="c1"># implements all three of add, change, and remove hyperlink</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hlinkClick</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_remove_hlinkClick</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_hlinkClick</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_hlinkClick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="n">rId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">relate_to</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">RT</span><span class="o">.</span><span class="n">HYPERLINK</span><span class="p">,</span> <span class="n">is_external</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">add_hlinkClick</span><span class="p">(</span><span class="n">rId</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_hlinkClick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">hlinkClick</span>
+
+    <span class="k">def</span> <span class="nf">_remove_hlinkClick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hlinkClick</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">drop_rel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hlinkClick</span><span class="o">.</span><span class="n">rId</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rPr</span><span class="o">.</span><span class="n">_remove_hlinkClick</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="_Paragraph"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text._Paragraph">[docs]</a><span class="k">class</span> <span class="nc">_Paragraph</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Paragraph object. Not intended to be constructed directly.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_Paragraph</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span> <span class="o">=</span> <span class="n">p</span>
+
+<div class="viewcode-block" id="_Paragraph.add_line_break"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text._Paragraph.add_line_break">[docs]</a>    <span class="k">def</span> <span class="nf">add_line_break</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add line break at end of this paragraph.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">add_br</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="_Paragraph.add_run"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text._Paragraph.add_run">[docs]</a>    <span class="k">def</span> <span class="nf">add_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a new run appended to the runs in this paragraph.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">add_r</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">_Run</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">alignment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Horizontal alignment of this paragraph, represented by either</span>
+<span class="sd">        a member of the enumeration :ref:`PpParagraphAlignment` or |None|.</span>
+<span class="sd">        The value |None| indicates the paragraph should &#39;inherit&#39; its</span>
+<span class="sd">        effective value from its style hierarchy. Assigning |None| removes</span>
+<span class="sd">        any explicit setting, causing its inherited value to be used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pPr</span><span class="o">.</span><span class="n">algn</span>
+
+    <span class="nd">@alignment</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">alignment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pPr</span><span class="o">.</span><span class="n">algn</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="_Paragraph.clear"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text._Paragraph.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove all content from this paragraph. Paragraph properties are</span>
+<span class="sd">        preserved. Content includes runs, line breaks, and fields.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">elm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">content_children</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">elm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">font</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |Font| object containing default character properties for the runs in</span>
+<span class="sd">        this paragraph. These character properties override default properties</span>
+<span class="sd">        inherited from parent objects such as the text frame the paragraph is</span>
+<span class="sd">        contained in and they may be overridden by character properties set at</span>
+<span class="sd">        the run level.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Font</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_defRPr</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read-write integer indentation level of this paragraph, having a</span>
+<span class="sd">        range of 0-8 inclusive. 0 represents a top-level paragraph and is the</span>
+<span class="sd">        default value. Indentation level is most commonly encountered in a</span>
+<span class="sd">        bulleted list, as is found on a word bullet slide.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pPr</span><span class="o">.</span><span class="n">lvl</span>
+
+    <span class="nd">@level</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pPr</span><span class="o">.</span><span class="n">lvl</span> <span class="o">=</span> <span class="n">level</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Numeric or |Length| value specifying the space between baselines in</span>
+<span class="sd">        successive lines of this paragraph. A value of |None| indicates no</span>
+<span class="sd">        explicit value is assigned and its effective value is inherited from</span>
+<span class="sd">        the paragraph&#39;s style hierarchy. A numeric value, e.g. `2` or `1.5`,</span>
+<span class="sd">        indicates spacing is applied in multiples of line heights. A |Length|</span>
+<span class="sd">        value such as ``Pt(12)`` indicates spacing is a fixed height. The</span>
+<span class="sd">        |Pt| value class is a convenient way to apply line spacing in units</span>
+<span class="sd">        of points.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">pPr</span>
+        <span class="k">if</span> <span class="n">pPr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">pPr</span><span class="o">.</span><span class="n">line_spacing</span>
+
+    <span class="nd">@line_spacing</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">line_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">pPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">get_or_add_pPr</span><span class="p">()</span>
+        <span class="n">pPr</span><span class="o">.</span><span class="n">line_spacing</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">runs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Immutable sequence of |_Run| objects corresponding to the runs in</span>
+<span class="sd">        this paragraph.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_Run</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">r_lst</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">space_after</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |Length| value specifying the spacing to appear between this</span>
+<span class="sd">        paragraph and the subsequent paragraph. A value of |None| indicates</span>
+<span class="sd">        no explicit value is assigned and its effective value is inherited</span>
+<span class="sd">        from the paragraph&#39;s style hierarchy. |Length| objects provide</span>
+<span class="sd">        convenience properties, such as ``.pt`` and ``.inches``, that allow</span>
+<span class="sd">        easy conversion to various length units.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">pPr</span>
+        <span class="k">if</span> <span class="n">pPr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">pPr</span><span class="o">.</span><span class="n">space_after</span>
+
+    <span class="nd">@space_after</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">space_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">pPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">get_or_add_pPr</span><span class="p">()</span>
+        <span class="n">pPr</span><span class="o">.</span><span class="n">space_after</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">space_before</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |Length| value specifying the spacing to appear between this</span>
+<span class="sd">        paragraph and the prior paragraph. A value of |None| indicates no</span>
+<span class="sd">        explicit value is assigned and its effective value is inherited from</span>
+<span class="sd">        the paragraph&#39;s style hierarchy. |Length| objects provide convenience</span>
+<span class="sd">        properties, such as ``.pt`` and ``.cm``, that allow easy conversion</span>
+<span class="sd">        to various length units.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">pPr</span>
+        <span class="k">if</span> <span class="n">pPr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">pPr</span><span class="o">.</span><span class="n">space_before</span>
+
+    <span class="nd">@space_before</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">space_before</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">pPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">get_or_add_pPr</span><span class="p">()</span>
+        <span class="n">pPr</span><span class="o">.</span><span class="n">space_before</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;str (unicode) representation of paragraph contents.</span>
+
+<span class="sd">        Read/write. This value is formed by concatenating the text in each run and field</span>
+<span class="sd">        making up the paragraph, adding a vertical-tab character (``&quot;\\v&quot;``) for each</span>
+<span class="sd">        line-break element (`&lt;a:br&gt;`, soft carriage-return) encountered.</span>
+
+<span class="sd">        While the encoding of line-breaks as a vertical tab might be surprising at</span>
+<span class="sd">        first, doing so is consistent with PowerPoint&#39;s clipboard copy behavior and</span>
+<span class="sd">        allows a line-break to be distinguished from a paragraph boundary within the str</span>
+<span class="sd">        return value.</span>
+
+<span class="sd">        Assignment causes all content in the paragraph to be replaced. Each vertical-tab</span>
+<span class="sd">        character (``&quot;\\v&quot;``) in the assigned str is translated to a line-break, as is</span>
+<span class="sd">        each line-feed character (``&quot;\\n&quot;``). Contrast behavior of line-feed character</span>
+<span class="sd">        in `TextFrame.text` setter. If line-feed characters are intended to produce new</span>
+<span class="sd">        paragraphs, use `TextFrame.text` instead. Any other control characters in the</span>
+<span class="sd">        assigned string are escaped as a hex representation like &quot;_x001B_&quot; (for ESC</span>
+<span class="sd">        (ASCII 27) in this example).</span>
+
+<span class="sd">        The assigned value can be a 7-bit ASCII byte string (Python 2 str), a UTF-8</span>
+<span class="sd">        encoded 8-bit byte string (Python 2 str), or unicode. Bytes values are converted</span>
+<span class="sd">        to unicode assuming UTF-8 encoding.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">elm</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">elm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">content_children</span><span class="p">)</span>
+
+    <span class="nd">@text</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">append_text</span><span class="p">(</span><span class="n">to_unicode</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_defRPr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |CT_TextCharacterProperties| instance (&lt;a:defRPr&gt; element) that</span>
+<span class="sd">        defines the default run properties for runs in this paragraph. Causes</span>
+<span class="sd">        the element to be added if not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pPr</span><span class="o">.</span><span class="n">get_or_add_defRPr</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_pPr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |CT_TextParagraphProperties| instance for this paragraph, the</span>
+<span class="sd">        &lt;a:pPr&gt; element containing its paragraph properties. Causes the</span>
+<span class="sd">        element to be added if not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">get_or_add_pPr</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="_Run"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text._Run">[docs]</a><span class="k">class</span> <span class="nc">_Run</span><span class="p">(</span><span class="n">Subshape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Text run object. Corresponds to ``&lt;a:r&gt;`` child element in a paragraph.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_Run</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_r</span> <span class="o">=</span> <span class="n">r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">font</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |Font| instance containing run-level character properties for the</span>
+<span class="sd">        text in this run. Character properties can be and perhaps most often</span>
+<span class="sd">        are inherited from parent objects such as the paragraph and slide</span>
+<span class="sd">        layout the run is contained in. Only those specifically overridden at</span>
+<span class="sd">        the run level are contained in the font object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">get_or_add_rPr</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Font</span><span class="p">(</span><span class="n">rPr</span><span class="p">)</span>
+
+<div class="viewcode-block" id="_Run.hyperlink"><a class="viewcode-back" href="../../../api/text.html#pptx.text.text._Run.hyperlink">[docs]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">hyperlink</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |_Hyperlink| instance acting as proxy for any ``&lt;a:hlinkClick&gt;``</span>
+<span class="sd">        element under the run properties element. Created on demand, the</span>
+<span class="sd">        hyperlink object is available whether an ``&lt;a:hlinkClick&gt;`` element</span>
+<span class="sd">        is present or not, and creates or deletes that element as appropriate</span>
+<span class="sd">        in response to actions on its methods and attributes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">get_or_add_rPr</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">_Hyperlink</span><span class="p">(</span><span class="n">rPr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write. A unicode string containing the text in this run.</span>
+
+<span class="sd">        Assignment replaces all text in the run. The assigned value can be a 7-bit ASCII</span>
+<span class="sd">        string, a UTF-8 encoded 8-bit string, or unicode. String values are converted to</span>
+<span class="sd">        unicode assuming UTF-8 encoding.</span>
+
+<span class="sd">        Any other control characters in the assigned string other than tab or newline</span>
+<span class="sd">        are escaped as a hex representation. For example, ESC (ASCII 27) is escaped as</span>
+<span class="sd">        &quot;_x001B_&quot;. Contrast the behavior of `TextFrame.text` and `_Paragraph.text` with</span>
+<span class="sd">        respect to line-feed and vertical-tab characters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">text</span>
+
+    <span class="nd">@text</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">to_unicode</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.text.text</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

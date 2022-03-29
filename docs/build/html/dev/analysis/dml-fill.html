@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Fill (for shapes) &#8212; python-pptx 0.6.21 documentation</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Gradient Fill" href="dml-gradient.html" />
+    <link rel="prev" title="Color" href="dml-color.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dml-gradient.html" title="Gradient Fill"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dml-color.html" title="Color"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Fill (for shapes)</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="fill-for-shapes">
+<h1>Fill (for shapes)<a class="headerlink" href="#fill-for-shapes" title="Permalink to this headline">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>In simple terms, <em>fill</em> is the color of a shape. The term <em>fill</em> is used to
+distinguish from <em>line</em>, the border around a shape, which can have a different
+color. It turns out that a line has a fill all its own, but that’s another
+topic.</p>
+<p>While having a solid color fill is perhaps most common, it is just one of
+several possible fill types. A shape can have the following types of fill:</p>
+<ul class="simple">
+<li><p>solid (color)</p></li>
+<li><p>gradient – a smooth transition between multiple colors (see
+<a class="reference internal" href="dml-gradient.html#gradientfill"><span class="std std-ref">Gradient Fill</span></a>)</p></li>
+<li><p>picture – in which an image “shows through” and is cropped by the boundaries
+of the shape</p></li>
+<li><p>pattern – in which a small square of pixels (tile) is repeated to fill the
+shape</p></li>
+<li><p>background (no fill) – the body of the shape is transparent, allowing
+whatever is behind it to show through.</p></li>
+</ul>
+<p>Elements that can have a fill include autoshape, line, text (treating each
+glyph as a shape), table, table cell, and slide background.</p>
+</section>
+<section id="scope">
+<h2>Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h2>
+<p>This analysis initially focused on solid fill for an autoshape (including
+text box). Later, pattern fills were added and then analysis for gradient
+fills. Picture fills are still outstanding.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FillFormat.type</span></code> – <code class="docutils literal notranslate"><span class="pre">MSO_FILL.SOLID</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> for a start</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FillFormat.solid()</span></code> – changes fill type to <cite>&lt;a:solidFill&gt;</cite></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FillFormat.patterned()</span></code> – changes fill type to <cite>&lt;a:pattFill&gt;</cite></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FillFormat.fore_color</span></code> – read/write foreground color</p></li>
+</ul>
+<p><strong>maybe later:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FillFormat.transparency</span></code> – adds/changes &lt;a:alpha&gt; or something</p></li>
+</ul>
+</section>
+<section id="protocol">
+<h2>Protocol<a class="headerlink" href="#protocol" title="Permalink to this headline">¶</a></h2>
+<p><strong>Accessing fill.</strong> A shape object has a <cite>.fill</cite> property that returns
+a <cite>FillFormat</cite> object. The <cite>.fill</cite> property is idempotent; it always returns
+the same <cite>FillFormat</cite> object for a given shape object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">fill</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">fill</span><span class="p">,</span> <span class="n">FillFormat</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Fill type.</strong> A fill has a type, indicated by a member of <cite>MSO_FILL</cite> on
+<cite>FillFormat.type</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">type</span>
+<span class="go">MSO_FILL.SOLID (1)</span>
+</pre></div>
+</div>
+<p>The fill type may also be <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>, indicating the shape’s fill is inherited
+from the style hierarchy (generally the theme linked to the slide master).
+This is the default for a new shape:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_shape</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">type</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+<p>The fill type partially determines the valid calls on the fill:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">type</span>
+<span class="go">1  # MSO_FILL.SOLID</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span> <span class="o">=</span> <span class="s1">&#39;anything&#39;</span>
+<span class="go">AttributeError: can&#39;t set attribute  # .fore_color is read-only</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fore_color</span> <span class="o">=</span> <span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">fore_color</span><span class="p">,</span> <span class="n">ColorFormat</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fore_color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mh">0x3F</span><span class="p">,</span> <span class="mh">0x2c</span><span class="p">,</span> <span class="mh">0x36</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fore_color</span><span class="o">.</span><span class="n">theme_color</span> <span class="o">=</span> <span class="n">MSO_THEME_COLOR</span><span class="o">.</span><span class="n">ACCENT_1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fore_color</span><span class="o">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">transparency</span>
+<span class="go">0.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">transparency</span> <span class="o">=</span> <span class="mf">0.25</span>  <span class="c1"># sets opacity to 75%</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sp</span><span class="o">.</span><span class="n">fill</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># removes any fill, fill is inherited from theme</span>
+
+<span class="go">fill.solid()</span>
+<span class="go">fill.fore_color.rgb = RGBColor(0x01, 0x23, 0x45)</span>
+<span class="go">fill.fore_color.theme_color = MSO_THEME_COLOR.ACCENT_1</span>
+<span class="go">fill.fore_color.brightness = 0.25</span>
+<span class="go">fill.transparency = 0.25</span>
+<span class="go">shape.fill = None</span>
+<span class="go">fill.background()  # is almost free once the rest is in place</span>
+</pre></div>
+</div>
+<p><strong>Pattern Fill.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">fill</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">type</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">patterned</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">type</span>
+<span class="go">2  # MSO_FILL.PATTERNED</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mi">79</span><span class="p">,</span> <span class="mi">129</span><span class="p">,</span> <span class="mi">189</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">back_color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mi">239</span><span class="p">,</span> <span class="mi">169</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="related-items-from-microsoft-vba-api">
+<h2>Related items from Microsoft VBA API<a class="headerlink" href="#related-items-from-microsoft-vba-api" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles/fillformat-object-powerpoint">MSDN FillFormat Object</a></p></li>
+</ul>
+</section>
+<section id="enumerations">
+<h2>Enumerations<a class="headerlink" href="#enumerations" title="Permalink to this headline">¶</a></h2>
+<section id="msofilltype">
+<h3>MsoFillType<a class="headerlink" href="#msofilltype" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://msdn.microsoft.com/EN-US/library/office/ff861408.aspx">http://msdn.microsoft.com/EN-US/library/office/ff861408.aspx</a></p>
+<dl class="simple">
+<dt><strong>msoFillBackground</strong></dt><dd><p>5 – Fill is the same as the background.</p>
+</dd>
+<dt><strong>msoFillGradient</strong></dt><dd><p>3 – Gradient fill.</p>
+</dd>
+<dt><strong>msoFillPatterned</strong></dt><dd><p>2 – Patterned fill.</p>
+</dd>
+<dt><strong>msoFillPicture</strong></dt><dd><p>6 – Picture fill.</p>
+</dd>
+<dt><strong>msoFillSolid</strong></dt><dd><p>1 – Solid fill.</p>
+</dd>
+<dt><strong>msoFillTextured</strong></dt><dd><p>4 – Textured fill.</p>
+</dd>
+<dt><strong>msoFillMixed</strong></dt><dd><p>-2 – Mixed fill.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="Permalink to this headline">¶</a></h2>
+<p>Inherited fill on autoshape:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:spPr&gt;</span>
+   ...
+  <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;roundRect&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:avLst/&gt;</span>
+  <span class="nt">&lt;/a:prstGeom&gt;</span>
+<span class="nt">&lt;/p:spPr&gt;</span>
+</pre></div>
+</div>
+<p>Solid RGB color on autoshape:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:spPr&gt;</span>
+   ...
+  <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;roundRect&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:avLst/&gt;</span>
+  <span class="nt">&lt;/a:prstGeom&gt;</span>
+  <span class="nt">&lt;a:solidFill&gt;</span>
+    <span class="nt">&lt;a:srgbClr</span> <span class="na">val=</span><span class="s">&quot;2CB731&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:solidFill&gt;</span>
+<span class="nt">&lt;/p:spPr&gt;</span>
+</pre></div>
+</div>
+<p>Patterned fill:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:pattFill</span> <span class="na">prst=</span><span class="s">&quot;ltDnDiag&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;a:fgClr&gt;</span>
+    <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:fgClr&gt;</span>
+  <span class="nt">&lt;a:bgClr&gt;</span>
+    <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent6&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:bgClr&gt;</span>
+<span class="nt">&lt;/a:pattFill&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="xml-semantics">
+<h2>XML semantics<a class="headerlink" href="#xml-semantics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>No `prst` attribute.</strong> When an <cite>a:pattFill</cite> element contains no <cite>prst</cite>
+attribute, the pattern defaults to 5% (dotted). This is the first one in
+the pattern gallery in the PowerPoint UI.</p></li>
+<li><p><strong>No `fgClr` or `bgClr` elements.</strong> When an <cite>a:pattFill</cite> element contains
+no <cite>fgClr</cite> or <cite>bgClr</cite> chile elements, the colors default to black and white
+respectively.</p></li>
+</ul>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ShapeProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;xfrm&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Transform2D&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_Geometry&quot;</span>                               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_FillProperties&quot;</span>                         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ln&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_EffectProperties&quot;</span>                       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scene3d&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Scene3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sp3d&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Shape3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bwMode&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_BlackWhiteMode&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_Geometry&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custGeom&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_CustomGeometry2D&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;prstGeom&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_PresetGeometry2D&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_FillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noFill&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_NoFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;solidFill&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SolidColorFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gradFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_GradientFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;blipFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_BlipFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pattFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PatternFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grpFill&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_GroupFillProperties&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_EffectProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectList&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectDag&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectContainer&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_BlipFillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;blip&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Blip&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;srcRect&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_RelativeRect&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- EG_FillModeProperties --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tile&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TileInfoProperties&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;stretch&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_StretchInfoProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;dpi&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:unsignedInt&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rotWithShape&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GradientFillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gsLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GradientStopList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- EG_ShadeProperties --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lin&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_LinearShadeProperties&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;path&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_PathShadeProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tileRect&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_RelativeRect&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;flip&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_TileFlipMode&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rotWithShape&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GroupFillProperties&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NoFillProperties&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_PatternFillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;fgClr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Color&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bgClr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Color&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;prst&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_PresetPatternVal&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Color&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;EG_ColorChoice&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_SolidColorFillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;EG_ColorChoice&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_ColorChoice&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scrgbClr&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_ScRgbColor&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;srgbClr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_SRgbColor&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hslClr&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_HslColor&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sysClr&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_SystemColor&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;schemeClr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SchemeColor&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;prstClr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_PresetColor&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_PresetPatternVal&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct5&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct10&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct20&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct25&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct30&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct40&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct50&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct60&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct70&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct75&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct80&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pct90&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;horz&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;vert&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;ltHorz&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;ltVert&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dkHorz&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dkVert&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;narHorz&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;narVert&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dashHorz&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dashVert&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;cross&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dnDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;upDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;ltDnDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;ltUpDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dkDnDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dkUpDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;wdDnDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;wdUpDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dashDnDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dashUpDiag&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;diagCross&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;smCheck&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;lgCheck&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;smGrid&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;lgGrid&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dotGrid&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;smConfetti&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;lgConfetti&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;horzBrick&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;diagBrick&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;solidDmnd&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;openDmnd&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dotDmnd&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;plaid&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;sphere&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;weave&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;divot&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;shingle&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;wave&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;trellis&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;zigZag&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Fill (for shapes)</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#scope">Scope</a></li>
+<li><a class="reference internal" href="#protocol">Protocol</a></li>
+<li><a class="reference internal" href="#related-items-from-microsoft-vba-api">Related items from Microsoft VBA API</a></li>
+<li><a class="reference internal" href="#enumerations">Enumerations</a><ul>
+<li><a class="reference internal" href="#msofilltype">MsoFillType</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#xml-semantics">XML semantics</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="dml-color.html"
+                          title="previous chapter">Color</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="dml-gradient.html"
+                          title="next chapter">Gradient Fill</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dml-gradient.html" title="Gradient Fill"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dml-color.html" title="Color"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Fill (for shapes)</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>
