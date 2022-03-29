@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Bar Chart &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Chart - Plots" href="cht-plots.html" />
+    <link rel="prev" title="Pie Chart" href="cht-pie-chart.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-plots.html" title="Chart - Plots"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-pie-chart.html" title="Pie Chart"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Bar Chart</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="bar-chart">
+<h1>Bar Chart<a class="headerlink" href="#bar-chart" title="永久链接至标题">¶</a></h1>
+<p>The bar chart is a fundamental plot type, used for both column and bar charts
+by specifying the bar direction. It is also used for the clustered, stacked,
+and stacked 100% varieties by specifying grouping and overlap.</p>
+<section id="gap-width">
+<h2>Gap Width<a class="headerlink" href="#gap-width" title="永久链接至标题">¶</a></h2>
+<p>A gap appears between the bar or clustered bars for each category on a bar
+chart. The default width for this gap is 150% of the bar width. It can be set
+between 0 and 500% of the bar width. In the MS API this is set using the
+property <cite>ChartGroup.GapWidth</cite>.</p>
+<p>Proposed protocol:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bar_plot</span><span class="p">,</span> <span class="n">BarPlot</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar_plot</span><span class="o">.</span><span class="n">gap_width</span>
+<span class="go">150</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar_plot</span><span class="o">.</span><span class="n">gap_width</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar_plot</span><span class="o">.</span><span class="n">gap_width</span>
+<span class="go">300</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar_plot</span><span class="o">.</span><span class="n">gap_width</span> <span class="o">=</span> <span class="mi">700</span>
+<span class="go">ValueError: gap width must be in range 0-500 (percent)</span>
+</pre></div>
+</div>
+</section>
+<section id="overlap">
+<h2>Overlap<a class="headerlink" href="#overlap" title="永久链接至标题">¶</a></h2>
+<p>In a bar chart having two or more series, the bars for each category are
+clustered together for ready comparison. By default, these bars are directly
+adjacent to each other, visually “touching”.</p>
+<p>The bars can be made to overlap each other or have a space between them using
+the <em>overlap</em> property. Its values range between -100 and 100, representing
+the percentage of the bar width by which to overlap adjacent bars. A setting
+of -100 creates a gap of a full bar width and a setting of 100 causes all the
+bars in a category to be superimposed. The default value is 0.</p>
+<p>Proposed protocol:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bar_plot</span> <span class="o">=</span> <span class="n">chart</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bar_plot</span><span class="p">,</span> <span class="n">BarPlot</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar_plot</span><span class="o">.</span><span class="n">overlap</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar_plot</span><span class="o">.</span><span class="n">overlap</span> <span class="o">=</span> <span class="o">-</span><span class="mi">50</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar_plot</span><span class="o">.</span><span class="n">overlap</span>
+<span class="go">-50</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bar_plot</span><span class="o">.</span><span class="n">overlap</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="go">ValueError: overlap must be in range -100..100 (percent)</span>
+</pre></div>
+</div>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p>Minimal working XML for a single-series column plot. Note this does not
+reference values in a spreadsheet.:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39; standalone=&#39;yes&#39;?&gt;</span>
+<span class="nt">&lt;c:chartSpace</span> <span class="na">xmlns:c=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/chart&quot;</span>
+              <span class="na">xmlns:a=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot;</span>
+              <span class="na">xmlns:r=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;c:chart&gt;</span>
+    <span class="nt">&lt;c:plotArea&gt;</span>
+      <span class="nt">&lt;c:barChart&gt;</span>
+        <span class="nt">&lt;c:barDir</span> <span class="na">val=</span><span class="s">&quot;col&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:grouping</span> <span class="na">val=</span><span class="s">&quot;clustered&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:ser&gt;</span>
+          <span class="nt">&lt;c:idx</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:order</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:cat&gt;</span>
+            <span class="nt">&lt;c:strLit&gt;</span>
+              <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;c:v&gt;</span>Foo<span class="nt">&lt;/c:v&gt;</span>
+              <span class="nt">&lt;/c:pt&gt;</span>
+            <span class="nt">&lt;/c:strLit&gt;</span>
+          <span class="nt">&lt;/c:cat&gt;</span>
+          <span class="nt">&lt;c:val&gt;</span>
+            <span class="nt">&lt;c:numLit&gt;</span>
+              <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;c:v&gt;</span>4.3<span class="nt">&lt;/c:v&gt;</span>
+              <span class="nt">&lt;/c:pt&gt;</span>
+            <span class="nt">&lt;/c:numLit&gt;</span>
+          <span class="nt">&lt;/c:val&gt;</span>
+        <span class="nt">&lt;/c:ser&gt;</span>
+        <span class="nt">&lt;c:dLbls&gt;</span>
+          <span class="nt">&lt;c:showLegendKey</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showVal</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showCatName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showSerName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showPercent</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showBubbleSize</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/c:dLbls&gt;</span>
+        <span class="nt">&lt;c:gapWidth</span> <span class="na">val=</span><span class="s">&quot;300&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:overlap</span> <span class="na">val=</span><span class="s">&quot;-20&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:axId</span> <span class="na">val=</span><span class="s">&quot;-2068027336&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:axId</span> <span class="na">val=</span><span class="s">&quot;-2113994440&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/c:barChart&gt;</span>
+      <span class="nt">&lt;c:catAx&gt;</span>
+        <span class="nt">&lt;c:axId</span> <span class="na">val=</span><span class="s">&quot;-2068027336&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:scaling/&gt;</span>
+        <span class="nt">&lt;c:delete</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:axPos</span> <span class="na">val=</span><span class="s">&quot;b&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:crossAx</span> <span class="na">val=</span><span class="s">&quot;-2113994440&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/c:catAx&gt;</span>
+      <span class="nt">&lt;c:valAx&gt;</span>
+        <span class="nt">&lt;c:axId</span> <span class="na">val=</span><span class="s">&quot;-2113994440&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:scaling/&gt;</span>
+        <span class="nt">&lt;c:delete</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:axPos</span> <span class="na">val=</span><span class="s">&quot;l&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:crossAx</span> <span class="na">val=</span><span class="s">&quot;-2068027336&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/c:valAx&gt;</span>
+    <span class="nt">&lt;/c:plotArea&gt;</span>
+  <span class="nt">&lt;/c:chart&gt;</span>
+<span class="nt">&lt;/c:chartSpace&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_BarChart&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;barDir&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_BarDir&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grouping&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_BarGrouping&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;varyColors&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_BarSer&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gapWidth&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_GapAmount&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;overlap&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Overlap&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;serLines&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_BarSer&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;idx&quot;</span>              <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;order&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tx&quot;</span>               <span class="na">type=</span><span class="s">&quot;CT_SerTx&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>             <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;invertIfNegative&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pictureOptions&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_PictureOptions&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dPt&quot;</span>              <span class="na">type=</span><span class="s">&quot;CT_DPt&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;trendline&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Trendline&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;errBars&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_ErrBars&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cat&quot;</span>              <span class="na">type=</span><span class="s">&quot;CT_AxDataSource&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span>              <span class="na">type=</span><span class="s">&quot;CT_NumDataSource&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;shape&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_Shape&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="cm">&lt;!-- gap-width --&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GapAmount&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_GapAmount&quot;</span> <span class="na">default=</span><span class="s">&quot;150%&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_GapAmount&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:union</span> <span class="na">memberTypes=</span><span class="s">&quot;ST_GapAmountPercent ST_GapAmountUShort&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_GapAmountPercent&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:pattern</span> <span class="na">value=</span><span class="s">&quot;0*(([0-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_GapAmountUShort&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:unsignedShort&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;500&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="cm">&lt;!-- overlap --&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Overlap&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Overlap&quot;</span> <span class="na">default=</span><span class="s">&quot;0%&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Overlap&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:union</span> <span class="na">memberTypes=</span><span class="s">&quot;ST_OverlapPercent ST_OverlapByte&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_OverlapPercent&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:pattern</span> <span class="na">value=</span><span class="s">&quot;(-?0*(([0-9])|([1-9][0-9])|100))%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_OverlapByte&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:byte&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;-100&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Bar Chart</a><ul>
+<li><a class="reference internal" href="#gap-width">Gap Width</a></li>
+<li><a class="reference internal" href="#overlap">Overlap</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="cht-pie-chart.html"
+                          title="上一章">Pie Chart</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="cht-plots.html"
+                          title="下一章">Chart - Plots</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-plots.html" title="Chart - Plots"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-pie-chart.html" title="Pie Chart"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Bar Chart</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Development Practices &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Vision" href="philosophy.html" />
+    <link rel="prev" title="Understanding xmlchemy" href="xmlchemy.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="philosophy.html" title="Vision"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="xmlchemy.html" title="Understanding xmlchemy"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Development Practices</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="development-practices">
+<h1>Development Practices<a class="headerlink" href="#development-practices" title="永久链接至标题">¶</a></h1>
+<section id="release-procedure">
+<h2>Release procedure<a class="headerlink" href="#release-procedure" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>merge outstanding feature branch(es) into develop</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">develop</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">git</span> <span class="pre">merge</span> <span class="pre">--no-ff</span> <span class="pre">{feature-branch}</span></code></p></li>
+</ul>
+</li>
+<li><p>complete release updates</p>
+<ul>
+<li><p>update version number in <cite>pptx/__init__.py</cite></p></li>
+<li><p>update setup.py (shouldn’t usually be any changes)</p></li>
+<li><p>update README.py, in particular, the release history</p></li>
+<li><p>update doc/index.rst</p></li>
+<li><p>confirm docs compile without errors</p></li>
+<li><p>run all tests (behave, nosetests, tox)</p></li>
+<li><p>create trial distribution (make clean sdist)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">'Release</span> <span class="pre">v0.2.2'</span></code></p></li>
+<li><p>merge develop into master</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">master</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">git</span> <span class="pre">merge</span> <span class="pre">--no-ff</span> <span class="pre">develop</span></code></p></li>
+</ul>
+</li>
+<li><p>create tag for new version</p>
+<ul>
+<li><p>$ <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">tag</span> <span class="pre">-a</span> <span class="pre">v0.2.5</span> <span class="pre">-m</span> <span class="pre">'Release</span> <span class="pre">version</span> <span class="pre">0.2.5'</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>release uploaded to PyPI</p>
+<ul>
+<li><p>upload: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">upload</span></code></p></li>
+</ul>
+</li>
+<li><p>synchronize local repo with github</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">git</span> <span class="pre">push</span> <span class="pre">scanny</span> <span class="pre">develop</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">git</span> <span class="pre">push</span> <span class="pre">scanny</span> <span class="pre">master</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">git</span> <span class="pre">push</span> <span class="pre">--tags</span></code></p></li>
+</ul>
+</li>
+<li><p>docs regenerated</p>
+<ul>
+<li><p>trigger regeneration of docs on RTD.org</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="creating-a-hand-modified-package">
+<h2>Creating a hand-modified package<a class="headerlink" href="#creating-a-hand-modified-package" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>remove file, e.g. /docProps/core.xml</p></li>
+<li><p>remove reference from [Content_Types].xml</p></li>
+<li><p>remove relationship(s) from _rels/.rels or wherever they are</p></li>
+</ul>
+<p>Repackage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="o">../</span><span class="n">no</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">props</span><span class="o">.</span><span class="n">pptx</span> <span class="o">&amp;&amp;</span> <span class="nb">zip</span> <span class="o">-</span><span class="n">Dqr</span> <span class="o">../</span><span class="n">no</span><span class="o">-</span><span class="n">core</span><span class="o">-</span><span class="n">props</span><span class="o">.</span><span class="n">pptx</span> <span class="o">.</span>
+</pre></div>
+</div>
+</section>
+<section id="procedure-adding-a-new-feature">
+<h2>Procedure – Adding a new feature<a class="headerlink" href="#procedure-adding-a-new-feature" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>issue added to github issue tracker</p></li>
+<li><p>git feature branch created</p></li>
+<li><p>working analysis documented</p></li>
+<li><p>acceptance test failing (not just raising exceptions)</p></li>
+<li><p>recursively, outside in:</p>
+<ul>
+<li><p>unit test failing</p></li>
+<li><p>next level method(s) written</p></li>
+<li><p>unit test passing</p></li>
+</ul>
+</li>
+<li><p>all tests passing</p>
+<ul>
+<li><p>unit</p></li>
+<li><p>acceptance</p></li>
+<li><p>tox</p></li>
+<li><p>visual confirmation of behavior in PowerPoint</p></li>
+</ul>
+</li>
+<li><p>documentation updated as required</p>
+<ul>
+<li><p>API additions</p></li>
+<li><p>example code</p></li>
+</ul>
+</li>
+<li><p>feature branch committed, rebased if required</p></li>
+<li><p>feature branch merged into develop</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">flow</span> <span class="pre">feature</span> <span class="pre">finish</span> <span class="pre">paragraph-level</span></code></p></li>
+</ul>
+</li>
+<li><p>changes pushed to github</p></li>
+<li><p>issue closed</p></li>
+</ul>
+<section id="outside-in-layers">
+<h3>Outside-in layers<a class="headerlink" href="#outside-in-layers" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>API wrapper method (if applicable)</p></li>
+<li><p>Internal API method</p></li>
+<li><p>objectify manipulation layer</p></li>
+<li><p>perhaps others</p></li>
+</ul>
+</section>
+</section>
+<section id="creating-slide-images-for-documentation">
+<h2>Creating slide images for documentation<a class="headerlink" href="#creating-slide-images-for-documentation" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Desired slide created using a test script</p></li>
+<li><p>Zoom slide to 100% with: click on slide, View &gt; Zoom &gt; Zoom… &gt; 100% &gt; OK</p></li>
+<li><p>Screenshot file on desktop using Cmd-Shift-4, Space, click</p></li>
+<li><p>Load into PhotoShop and crop, keeping dark gray border</p></li>
+<li><p>Save as PNG, scaled to 280 x 210px</p></li>
+<li><p>Completed image saved in <code class="docutils literal notranslate"><span class="pre">doc/_static/img/</span></code></p></li>
+</ul>
+</section>
+<section id="acceptance-testing-with-behave">
+<h2>Acceptance testing with <code class="docutils literal notranslate"><span class="pre">behave</span></code><a class="headerlink" href="#acceptance-testing-with-behave" title="永久链接至标题">¶</a></h2>
+<p>… using <em>behave</em> for now for acceptance testing …</p>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="永久链接至标题">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">behave</span>
+</pre></div>
+</div>
+</section>
+<section id="tutorial">
+<h3>Tutorial<a class="headerlink" href="#tutorial" title="永久链接至标题">¶</a></h3>
+<p>The <a class="reference external" href="http://packages.python.org/behave/tutorial.html">behave tutorial</a> is well worth working through.</p>
+<p>And this more detailed set of <a class="reference external" href="http://jenisys.github.com/behave.example/index.html">examples and tutorials</a> is great for getting
+the practicalities down.</p>
+</section>
+<section id="behave-resources">
+<h3><code class="docutils literal notranslate"><span class="pre">behave</span></code> Resources<a class="headerlink" href="#behave-resources" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://xp123.com/articles/invest-in-good-stories-and-smart-tasks/">INVEST in Good Stories, and SMART Tasks</a></p></li>
+<li><p><a class="reference external" href="http://cuke4ninja.com/sec_cucumber_jargon.html">The Secret Ninja Cucumber Scrolls</a></p></li>
+<li><p><a class="reference external" href="http://www.knwang.com/behavior-driven-outside-in-development-explai">Behavior Driven Outside In Development Explained, Part 1</a></p></li>
+<li><p>The <a class="reference external" href="http://packages.python.org/behave/index.html">behave website</a> contains excellent documentation on installing and
+using behave.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Development Practices</a><ul>
+<li><a class="reference internal" href="#release-procedure">Release procedure</a></li>
+<li><a class="reference internal" href="#creating-a-hand-modified-package">Creating a hand-modified package</a></li>
+<li><a class="reference internal" href="#procedure-adding-a-new-feature">Procedure – Adding a new feature</a><ul>
+<li><a class="reference internal" href="#outside-in-layers">Outside-in layers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-slide-images-for-documentation">Creating slide images for documentation</a></li>
+<li><a class="reference internal" href="#acceptance-testing-with-behave">Acceptance testing with <code class="docutils literal notranslate"><span class="pre">behave</span></code></a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#tutorial">Tutorial</a></li>
+<li><a class="reference internal" href="#behave-resources"><code class="docutils literal notranslate"><span class="pre">behave</span></code> Resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="xmlchemy.html"
+                          title="上一章">Understanding <code class="docutils literal notranslate"><span class="pre">xmlchemy</span></code></a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="philosophy.html"
+                          title="下一章">Vision</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="philosophy.html" title="Vision"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="xmlchemy.html" title="Understanding xmlchemy"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Development Practices</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

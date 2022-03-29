@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.chart.series &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">模块代码</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.series</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>pptx.chart.series 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Series-related objects.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">pptx.chart.datalabel</span> <span class="kn">import</span> <span class="n">DataLabels</span>
+<span class="kn">from</span> <span class="nn">pptx.chart.marker</span> <span class="kn">import</span> <span class="n">Marker</span>
+<span class="kn">from</span> <span class="nn">pptx.chart.point</span> <span class="kn">import</span> <span class="n">BubblePoints</span><span class="p">,</span> <span class="n">CategoryPoints</span><span class="p">,</span> <span class="n">XyPoints</span>
+<span class="kn">from</span> <span class="nn">pptx.compat</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">pptx.dml.chtfmt</span> <span class="kn">import</span> <span class="n">ChartFormat</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<div class="viewcode-block" id="_BaseSeries"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series._BaseSeries">[文档]</a><span class="k">class</span> <span class="nc">_BaseSeries</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for |BarSeries| and other series classes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ser</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_BaseSeries</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">ser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ser</span> <span class="o">=</span> <span class="n">ser</span>
+
+<div class="viewcode-block" id="_BaseSeries.format"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series._BaseSeries.format">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |ChartFormat| instance for this series, providing access to shape</span>
+<span class="sd">        properties such as fill and line.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ChartFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ser</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The zero-based integer index of this series as reported in its</span>
+<span class="sd">        `c:ser/c:idx` element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">idx</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The string label given to this series, appears as the title of the</span>
+<span class="sd">        column for this series in the Excel worksheet. It also appears as the</span>
+<span class="sd">        label for this series in the legend.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;./c:tx//c:pt/c:v/text()&quot;</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">names</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">name</span></div>
+
+
+<span class="k">class</span> <span class="nc">_BaseCategorySeries</span><span class="p">(</span><span class="n">_BaseSeries</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for |BarSeries| and other category chart series classes.&quot;&quot;&quot;</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">data_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|DataLabels| object controlling data labels for this series.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DataLabels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ser</span><span class="o">.</span><span class="n">get_or_add_dLbls</span><span class="p">())</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |CategoryPoints| object providing access to individual data</span>
+<span class="sd">        points in this series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CategoryPoints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ser</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read-only. A sequence containing the float values for this series, in</span>
+<span class="sd">        the order they appear on the chart.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">iter_values</span><span class="p">():</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">val</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">ptCount_val</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">val</span><span class="o">.</span><span class="n">pt_v</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iter_values</span><span class="p">())</span>
+
+
+<span class="k">class</span> <span class="nc">_MarkerMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mixin class providing `.marker` property for line-type chart series. The</span>
+<span class="sd">    line-type charts are Line, XY, and Radar.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">marker</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |Marker| instance for this series, providing access to data point</span>
+<span class="sd">        marker properties such as fill and line. Setting these properties</span>
+<span class="sd">        determines the appearance of markers for all points in this series</span>
+<span class="sd">        that are not overridden by settings at the point level.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Marker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ser</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AreaSeries"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.AreaSeries">[文档]</a><span class="k">class</span> <span class="nc">AreaSeries</span><span class="p">(</span><span class="n">_BaseCategorySeries</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data point series belonging to an area plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="BarSeries"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.BarSeries">[文档]</a><span class="k">class</span> <span class="nc">BarSeries</span><span class="p">(</span><span class="n">_BaseCategorySeries</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A data point series belonging to a bar plot.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">invert_if_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |True| if a point having a value less than zero should appear with a</span>
+<span class="sd">        fill different than those with a positive value. |False| if the fill</span>
+<span class="sd">        should be the same regardless of the bar&#39;s value. When |True|, a bar</span>
+<span class="sd">        with a solid fill appears with white fill; in a bar with gradient</span>
+<span class="sd">        fill, the direction of the gradient is reversed, e.g. dark -&gt; light</span>
+<span class="sd">        instead of light -&gt; dark. The term &quot;invert&quot; here should be understood</span>
+<span class="sd">        to mean &quot;invert the *direction* of the *fill gradient*&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">invertIfNegative</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">invertIfNegative</span>
+        <span class="k">if</span> <span class="n">invertIfNegative</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">invertIfNegative</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@invert_if_negative</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">invert_if_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">invertIfNegative</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_invertIfNegative</span><span class="p">()</span>
+        <span class="n">invertIfNegative</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="LineSeries"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.LineSeries">[文档]</a><span class="k">class</span> <span class="nc">LineSeries</span><span class="p">(</span><span class="n">_BaseCategorySeries</span><span class="p">,</span> <span class="n">_MarkerMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data point series belonging to a line plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean specifying whether to use curve smoothing to</span>
+<span class="sd">        form the line connecting the data points in this series into</span>
+<span class="sd">        a continuous curve. If |False|, a series of straight line segments</span>
+<span class="sd">        are used to connect the points.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">smooth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">smooth</span>
+        <span class="k">if</span> <span class="n">smooth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">smooth</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@smooth</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_smooth</span><span class="p">()</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="PieSeries"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.PieSeries">[文档]</a><span class="k">class</span> <span class="nc">PieSeries</span><span class="p">(</span><span class="n">_BaseCategorySeries</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data point series belonging to a pie plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RadarSeries"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.RadarSeries">[文档]</a><span class="k">class</span> <span class="nc">RadarSeries</span><span class="p">(</span><span class="n">_BaseCategorySeries</span><span class="p">,</span> <span class="n">_MarkerMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data point series belonging to a radar plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="XySeries"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.XySeries">[文档]</a><span class="k">class</span> <span class="nc">XySeries</span><span class="p">(</span><span class="n">_BaseSeries</span><span class="p">,</span> <span class="n">_MarkerMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data point series belonging to an XY (scatter) plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="XySeries.iter_values"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.XySeries.iter_values">[文档]</a>    <span class="k">def</span> <span class="nf">iter_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate each float Y value in this series, in the order they appear</span>
+<span class="sd">        on the chart. A value of `None` represents a missing Y value</span>
+<span class="sd">        (corresponding to a blank Excel cell).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">yVal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">yVal</span>
+        <span class="k">if</span> <span class="n">yVal</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">yVal</span><span class="o">.</span><span class="n">ptCount_val</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">yVal</span><span class="o">.</span><span class="n">pt_v</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XySeries.points"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.XySeries.points">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |XyPoints| object providing access to individual data points in</span>
+<span class="sd">        this series.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">XyPoints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ser</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read-only. A sequence containing the float values for this series, in</span>
+<span class="sd">        the order they appear on the chart.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_values</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="BubbleSeries"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.BubbleSeries">[文档]</a><span class="k">class</span> <span class="nc">BubbleSeries</span><span class="p">(</span><span class="n">XySeries</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A data point series belonging to a bubble plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BubbleSeries.points"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.series.BubbleSeries.points">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |BubblePoints| object providing access to individual data point</span>
+<span class="sd">        objects used to discover and adjust the formatting and data labels of</span>
+<span class="sd">        a data point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">BubblePoints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ser</span><span class="p">)</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">SeriesCollection</span><span class="p">(</span><span class="n">Sequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A sequence of |Series| objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_elm</span><span class="p">):</span>
+        <span class="c1"># *parent_elm* can be either a c:plotArea or xChart element</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SeriesCollection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">parent_elm</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">ser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">sers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">_SeriesFactory</span><span class="p">(</span><span class="n">ser</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">sers</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_SeriesFactory</span><span class="p">(</span><span class="n">ser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an instance of the appropriate subclass of _BaseSeries based on the</span>
+<span class="sd">    xChart element *ser* appears in.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xChart_tag</span> <span class="o">=</span> <span class="n">ser</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span><span class="o">.</span><span class="n">tag</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">SeriesCls</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:areaChart&quot;</span><span class="p">):</span> <span class="n">AreaSeries</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:barChart&quot;</span><span class="p">):</span> <span class="n">BarSeries</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:bubbleChart&quot;</span><span class="p">):</span> <span class="n">BubbleSeries</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:doughnutChart&quot;</span><span class="p">):</span> <span class="n">PieSeries</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:lineChart&quot;</span><span class="p">):</span> <span class="n">LineSeries</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:pieChart&quot;</span><span class="p">):</span> <span class="n">PieSeries</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:radarChart&quot;</span><span class="p">):</span> <span class="n">RadarSeries</span><span class="p">,</span>
+            <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:scatterChart&quot;</span><span class="p">):</span> <span class="n">XySeries</span><span class="p">,</span>
+        <span class="p">}[</span><span class="n">xChart_tag</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;series class for </span><span class="si">%s</span><span class="s2"> not yet implemented&quot;</span> <span class="o">%</span> <span class="n">xChart_tag</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">SeriesCls</span><span class="p">(</span><span class="n">ser</span><span class="p">)</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >模块代码</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.series</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

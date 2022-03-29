@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Text - Auto-fit text to shape &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Text" href="txt-text.html" />
+    <link rel="prev" title="Text - Fit text to shape" href="txt-fit-text.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="txt-text.html" title="Text"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="txt-fit-text.html" title="Text - Fit text to shape"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Text - Auto-fit text to shape</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="text-auto-fit-text-to-shape">
+<h1>Text - Auto-fit text to shape<a class="headerlink" href="#text-auto-fit-text-to-shape" title="永久链接至标题">¶</a></h1>
+<p>An AutoShape has a text frame, referred to in the PowerPoint UI as the
+shape’s <em>Text Box</em>. One of the settings provided is <em>Autofit</em>, which can be
+one of “Do not autofit”, “Resize text to fit shape”, or “Resize shape to fit
+text”. The scope of this analysis is how best to implement the “Resize text
+to fit shape” behavior.</p>
+<p>A robust implementation would be complex and would lead the project outside
+the currently intended scope. In particular, because the shape size, text
+content, the “full” point size of the text, and the autofit and wrap settings
+of the text frame all interact to determine the proper “fit” of adjusted
+text, all events that could change the state of any of these five factors
+would need to be coupled to an “update” method. There would also need to be
+at least two “fitting” algorithms, one for when wrap was turned on and
+another for when it was off.</p>
+<p>The initial solution we’ll pursue is a special-purpose method on TextFrame
+that reduces the permutations of these variables to one and places
+responsibility on the developer to call it at the appropriate time. The
+method will calculate based on the current text and shape size, set wrap on,
+and set auto_size to fit text to the shape. If any of the variables change,
+the developer will be responsible for re-calling the method.</p>
+<section id="current-constraints">
+<h2>Current constraints<a class="headerlink" href="#current-constraints" title="永久链接至标题">¶</a></h2>
+<section id="textframe-autofit-text">
+<h3><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.autofit_text()</span></code><a class="headerlink" href="#textframe-autofit-text" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>User must manually set all shape text to a uniform 12pt default full-size
+font point size.</p>
+<ul>
+<li><p>This is intended to be done before the call, but might work okay if done
+after too, as long as it matches the default 12pt.</p></li>
+</ul>
+</li>
+<li><p>Only 12pt “full-size” is supported. There is no mechanism to specify other
+sizes.</p></li>
+<li><p>Unconditionally sets autofit and wrap.</p></li>
+<li><p>Path to font file must be provided manually.</p></li>
+<li><p>User must manually set the font typeface of all shape text to match the
+provided font file.</p></li>
+</ul>
+</section>
+</section>
+<section id="incremental-enhancements">
+<h2>Incremental enhancements<a class="headerlink" href="#incremental-enhancements" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p><strong>.fit_text() or .autofit_text().</strong> Two related methods are used to fit
+text in a shape using different approaches. <code class="docutils literal notranslate"><span class="pre">TextFrame.autofit_text()</span></code>
+uses the <cite>TEXT_TO_FIT_SHAPE</cite> autofit setting to shrink a full-size
+paragraph of text. Later edits to that text using PowerPoint will re-fit
+the text automatically, up to the original (full-size) font size.</p>
+<p><code class="docutils literal notranslate"><span class="pre">TextFrame.fit_text()</span></code> takes the approach of simply setting the font size
+for all text in the shape to the best-fit size. No automatic resizing
+occurs on later edits in PowerPoint, although the user can switch on
+auto-fit for that text box, perhaps after setting the full-size point size
+to their preferred size.</p>
+</li>
+<li><p><strong>Specified full point size.</strong> Allow the point size maximum to be
+specified; defaults to 18pt. All text in the shape is set to this size
+before calculating the best-fit based on that size.</p></li>
+<li><p><strong>Specified font.</strong> In the process, this specifies the font to use,
+although it may require a tuple specifying the type family name as well as
+the bold and italic states, plus a file path.</p></li>
+<li><p><strong>Auto-locate installed font file.</strong> Search for and use the appropriate
+locally-installed font file corresponding to the selected typeface. On
+Windows, the font directory can be located using a registry key, and is
+perhaps often <cite>C:WindowsFonts</cite>. However the font filename is not the same
+as the UI typeface name, so some mapping would be required, including
+detecting whether bold and/or italic were specified.</p></li>
+<li><p><strong>Accommodate line breaks.</strong> Either from <cite>&lt;a:br&gt;</cite> elements or multiple
+paragraphs. Would involve ending lines at a break, other than the last
+paragraph.</p></li>
+<li><p><strong>Add line space reduction.</strong> PowerPoint always reduces line spacing by as
+much as 20% to maximize the font size used. Add this factor into the
+calculation to improve the exact match likelihood for font scale and
+lnSpcReduction and thereby reduce occurence of “jumping” of text to a new
+size on edit.</p></li>
+</ul>
+</section>
+<section id="candidate-protocol">
+<h2>Candidate Protocol<a class="headerlink" href="#candidate-protocol" title="永久链接至标题">¶</a></h2>
+<p>Shape size and text are set before calling
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.autofit_text()</span></code> or <a class="reference internal" href="../../api/text.html#pptx.text.text.TextFrame.fit_text" title="pptx.text.text.TextFrame.fit_text"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.fit_text()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Lorem ipsum .. post facto.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">auto_size</span><span class="p">,</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">word_wrap</span><span class="p">,</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">_font_scale</span>
+<span class="go">(None, False, None)</span>
+</pre></div>
+</div>
+<p>Calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.autofit_text()</span></code> turns on auto fit (text to shape),
+switches on word wrap, and calculates the best-fit font scaling factor:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">autofit_text</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">auto_size</span><span class="p">,</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">word_wrap</span><span class="p">,</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">_font_scale</span>
+<span class="go">(TEXT_TO_FIT_SHAPE (2), True, 55.0)</span>
+</pre></div>
+</div>
+<p>Calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.fit_text()</span></code> produces the same sized text, but autofit
+is not turned on. Rather the actual font size for text in the shape is set to
+the calculated “best fit” point size:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">fit_text</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">auto_size</span><span class="p">,</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">word_wrap</span><span class="p">,</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">_font_scale</span>
+<span class="go">(None, True, None)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">pt</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+</section>
+<section id="proposed-pp-behavior">
+<h2>Proposed <cite>python-pptx</cite> behavior<a class="headerlink" href="#proposed-pp-behavior" title="永久链接至标题">¶</a></h2>
+<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.fit_text()</span></code> method produces the following side effects:</p>
+<ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextFrame.auto_size</span></code> is set to
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextFrame.word_wrap</span></code> is set to <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p>A suitable value is calculated for <cite>&lt;a:normAutofit fontScale=”?”/&gt;</cite>. The
+<cite>fontScale</cite> attribute is set to this value and the <cite>lnSpcReduction</cite>
+attribute is removed, if present.</p></li>
+</ul>
+<p>The operation can be undone by assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">MSO_AUTO_SIZE.NONE</span></code>,
+or <code class="xref py py-attr docutils literal notranslate"><span class="pre">MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT</span></code> to <cite>TextFrame.auto_size</cite>.</p>
+</section>
+<section id="powerpoint-behavior">
+<h2>PowerPoint behavior<a class="headerlink" href="#powerpoint-behavior" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>PowerPoint shrinks text in whole-number font sizes.</p></li>
+<li><p>The behavior interacts with <em>Wrap text in shape</em>. The behavior we want here
+is only when wrap is turned on. When wrap is off, only height and manual
+line breaks are taken into account. Long lines simply extend outside the
+box.</p></li>
+<li><p>When assigning a font size to a shape, PowerPoint applies that font size at
+the run level, adding a <cite>sz</cite> attribute to the <cite>&lt;a:rPr&gt;</cite> element for every
+content child of every <cite>&lt;a:p&gt;</cite> element in the shape. The sentinel
+<cite>&lt;a:endParaRPr&gt;</cite> element also gets a <cite>sz</cite> attribute set to that size, but
+only in the last paragraph, it appears.</p></li>
+</ul>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;p:txBody&gt;</span></code> for default new textbox:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:txBody&gt;</span>
+  <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;none&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:spAutoFit/&gt;</span>  <span class="cm">&lt;!-- fit shape to text --&gt;</span>
+  <span class="nt">&lt;/a:bodyPr&gt;</span>
+  <span class="nt">&lt;a:lstStyle/&gt;</span>
+  <span class="nt">&lt;a:p/&gt;</span>
+<span class="nt">&lt;/p:txBody&gt;</span>
+</pre></div>
+</div>
+<p>8” x 0.5” text box, default margins, defaulting to 18pt “full-size” text,
+auto-reduced to 10pt. <code class="docutils literal notranslate"><span class="pre">&lt;a:t&gt;</span></code> element text wrapped for compact display:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:txBody&gt;</span>
+  <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;square&quot;</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:normAutofit</span> <span class="na">fontScale=</span><span class="s">&quot;55000&quot;</span> <span class="na">lnSpcReduction=</span><span class="s">&quot;20000&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:bodyPr&gt;</span>
+  <span class="nt">&lt;a:lstStyle/&gt;</span>
+  <span class="nt">&lt;a:p&gt;</span>
+    <span class="nt">&lt;a:r&gt;</span>
+      <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:t&gt;</span>The art and craft of designing typefaces is called type design.
+           Designers of typefaces are called type designers and are often
+           employed by type foundries. In digital typography, type
+           designers are sometimes also called font developers or font
+           designers.<span class="nt">&lt;/a:t&gt;</span>
+    <span class="nt">&lt;/a:r&gt;</span>
+    <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:p&gt;</span>
+<span class="nt">&lt;/p:txBody&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextBody&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bodyPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextBodyProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lstStyle&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextListStyle&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;p&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TextParagraph&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextBodyProperties&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;prstTxWarp&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PresetTextShape&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>      <span class="cm">&lt;!-- EG_TextAutofit --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noAutofit&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextNoAutofit&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;normAutofit&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextNormalAutofit&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spAutoFit&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextShapeAutofit&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scene3d&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Scene3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>      <span class="cm">&lt;!-- EG_Text3D --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sp3d&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Shape3D&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;flatTx&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_FlatText&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rot&quot;</span>              <span class="na">type=</span><span class="s">&quot;ST_Angle&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spcFirstLastPara&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;vertOverflow&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TextVertOverflowType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;horzOverflow&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TextHorzOverflowType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;vert&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_TextVerticalType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;wrap&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_TextWrappingType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;lIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;tIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;numCol&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_TextColumnCount&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spcCol&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_PositiveCoordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rtlCol&quot;</span>           <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;fromWordArt&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;anchor&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_TextAnchoringType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;anchorCtr&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;forceAA&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;upright&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;compatLnSpc&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextNormalAutofit&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;fontScale&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_TextFontScalePercentOrPercentString&quot;</span>
+                 <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;100%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;lnSpcReduction&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_TextSpacingPercentOrPercentString&quot;</span>
+                 <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;0%&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextShapeAutofit&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextNoAutofit&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextFontScalePercentOrPercentString&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:union</span> <span class="na">memberTypes=</span><span class="s">&quot;ST_TextFontScalePercent s:ST_Percentage&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextFontScalePercent&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;ST_PercentageDecimal&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;1000&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;100000&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Percentage&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- s:ST_Percentage --&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:pattern</span> <span class="na">value=</span><span class="s">&quot;-?[0-9]+(\.[0-9]+)?%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Text - Auto-fit text to shape</a><ul>
+<li><a class="reference internal" href="#current-constraints">Current constraints</a><ul>
+<li><a class="reference internal" href="#textframe-autofit-text"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.autofit_text()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#incremental-enhancements">Incremental enhancements</a></li>
+<li><a class="reference internal" href="#candidate-protocol">Candidate Protocol</a></li>
+<li><a class="reference internal" href="#proposed-pp-behavior">Proposed <cite>python-pptx</cite> behavior</a></li>
+<li><a class="reference internal" href="#powerpoint-behavior">PowerPoint behavior</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="txt-fit-text.html"
+                          title="上一章">Text - Fit text to shape</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="txt-text.html"
+                          title="下一章">Text</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="txt-text.html" title="Text"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="txt-fit-text.html" title="Text - Fit text to shape"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Text - Auto-fit text to shape</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

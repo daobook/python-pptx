@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>使用演示文稿 &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Working with Slides" href="slides.html" />
+    <link rel="prev" title="快速上手" href="quickstart.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="slides.html" title="Working with Slides"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="quickstart.html" title="快速上手"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">使用演示文稿</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="working-with-presentations">
+<h1>使用演示文稿<a class="headerlink" href="#working-with-presentations" title="永久链接至标题">¶</a></h1>
+<p><cite>python-pptx</cite> 允许您创建新的演示文稿，以及对现有的演示文稿进行更改。实际上，它只允许您更改现有的演示文稿；只是，如果你一开始的演讲没有任何幻灯片，你会觉得你是在从零开始。</p>
+<p>然而，演示文稿的外观在很大程度上是由删除所有幻灯片后剩下的部分决定的，特别是主题、幻灯片母片和从幻灯片母片派生出来的幻灯片布局。让我们通过例子一步一步地来了解它，从你可以对演示文稿做的两件事开始，打开并保存它。</p>
+<section id="opening-a-presentation">
+<h2>打开演示文稿<a class="headerlink" href="#opening-a-presentation" title="永久链接至标题">¶</a></h2>
+<p>最简单的方法是打开新的演示文稿，而不需要指定要打开的文件:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.pptx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This creates a new presentation from the built-in default template and saves it
+unchanged to a file named ‘test.pptx’. A couple things to note:</p>
+<ul class="simple">
+<li><p>The so-called “default template” is actually just a PowerPoint file that
+doesn’t have any slides in it, stored with the installed <cite>python-pptx</cite> package. It’s
+the same as what you would get if you created a new presentation from a fresh
+PowerPoint install, a 4x3 aspect ratio presentation based on the “White”
+template. Well, except it won’t contain any slides. PowerPoint always adds
+a blank first slide by default.</p></li>
+<li><p>You don’t need to do anything to it before you save it. If you want to see
+exactly what that template contains, just look in the ‘test.pptx’ file this
+creates.</p></li>
+<li><p>We’ve called it a <em>template</em>, but in fact it’s just a regular PowerPoint file
+with all the slides removed. Actual PowerPoint template files (.potx files)
+are something a bit different. More on those later maybe, but you won’t need
+them to work with <cite>python-pptx</cite>.</p></li>
+</ul>
+<section id="really-opening-a-presentation">
+<h3>REALLY opening a presentation<a class="headerlink" href="#really-opening-a-presentation" title="永久链接至标题">¶</a></h3>
+<p>Okay, so if you want any control at all to speak of over the final
+presentation, or if you want to change an existing presentation, you need to
+open one with a filename:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="s1">&#39;existing-prs-file.pptx&#39;</span><span class="p">)</span>
+<span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;new-file-name.pptx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Things to note:</p>
+<ul class="simple">
+<li><p>You can open any PowerPoint 2007 or later file this way (.ppt files from
+PowerPoint 2003 and earlier won’t work). While you might not be able to
+manipulate all the contents yet, whatever is already in there will load and
+save just fine. The feature set is still being built out, so you can’t add or
+change things like Notes Pages yet, but if the presentation has them <cite>python-pptx</cite> is
+polite enough to leave them alone and smart enough to save them without
+actually understanding what they are.</p></li>
+<li><p>If you use the same filename to open and save the file, <cite>python-pptx</cite> will obediently
+overwrite the original file without a peep. You’ll want to make sure that’s
+what you intend.</p></li>
+</ul>
+</section>
+<section id="opening-a-file-like-presentation">
+<h3>Opening a ‘file-like’ presentation<a class="headerlink" href="#opening-a-file-like-presentation" title="永久链接至标题">¶</a></h3>
+<p><cite>python-pptx</cite> can open a presentation from a so-called <em>file-like</em> object. It can also
+save to a file-like object. This can be handy when you want to get the source
+or target presentation over a network connection or from a database and don’t
+want to (or aren’t allowed to) fuss with interacting with the file system. In
+practice this means you can pass an open file or StringIO/BytesIO stream object
+to open or save a presentation like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;foobar.pptx&#39;</span><span class="p">)</span>
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># or</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;foobar.pptx&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">source_stream</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="n">source_stream</span><span class="p">)</span>
+<span class="n">source_stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="n">target_stream</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">target_stream</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Okay, so you’ve got a presentation open and are pretty sure you can save it
+somewhere later. Next step is to get a slide in there …</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">使用演示文稿</a><ul>
+<li><a class="reference internal" href="#opening-a-presentation">打开演示文稿</a><ul>
+<li><a class="reference internal" href="#really-opening-a-presentation">REALLY opening a presentation</a></li>
+<li><a class="reference internal" href="#opening-a-file-like-presentation">Opening a ‘file-like’ presentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="quickstart.html"
+                          title="上一章">快速上手</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="slides.html"
+                          title="下一章">Working with Slides</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="slides.html" title="Working with Slides"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="quickstart.html" title="快速上手"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">使用演示文稿</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

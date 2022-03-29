@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Chart - Date Axis &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Chart - Categories" href="cht-categories.html" />
+    <link rel="prev" title="Chart - Data Labels" href="cht-data-labels.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-categories.html" title="Chart - Categories"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-data-labels.html" title="Chart - Data Labels"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Date Axis</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="chart-date-axis">
+<span id="cht-date-axis"></span><h1>Chart - Date Axis<a class="headerlink" href="#chart-date-axis" title="永久链接至标题">¶</a></h1>
+<p>A date axis maintains a linear relationship between axis distance and elapsed
+time in days, months, or years, even if the data items do not include values
+for each base time unit. This is in contrast to a category axis, which uses
+the independent axis values themselves to determine the discrete set of
+categories.</p>
+<p>The date axis does this by essentially creating a “logical category” for each
+base time unit in a range, whether the data contains a value for that time
+unit or not.</p>
+<p>Variations in the number of days in a month (or year) is also taken care of
+automatically. This would otherwise cause month starts to appear at days not
+the first of the month.</p>
+<p>This does not make the category axis continuous, however the “grain” of the
+discrete units can be quite small in comparison to the axis length. The
+individual base unit divisions can but are not typically represented
+graphically. The granularity of major and minor divisions is specified as
+a property on the date axis.</p>
+<section id="ms-api">
+<h2>MS API<a class="headerlink" href="#ms-api" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Axis.CategoryType = XL_CATEGORY_TYPE.TIME</p></li>
+<li><p>Axis.BaseUnit = XL_TIME_UNIT.DAYS</p></li>
+</ul>
+</section>
+<section id="enumerations">
+<h2>Enumerations<a class="headerlink" href="#enumerations" title="永久链接至标题">¶</a></h2>
+<dl class="simple">
+<dt>XL_CATEGORY_TYPE</dt><dd><ul class="simple">
+<li><p>.AUTOMATIC (-4105)</p></li>
+<li><p>.CATEGORY (2)</p></li>
+<li><p>.TIME (3)</p></li>
+</ul>
+</dd>
+<dt>XL_TIME_UNIT</dt><dd><p><a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/ff746136.aspx">https://msdn.microsoft.com/en-us/library/office/ff746136.aspx</a>
+* .DAYS (0)
+* .MONTHS (1)
+* .YEARS (2)</p>
+</dd>
+</dl>
+</section>
+<section id="xml-semantics">
+<h2>XML Semantics<a class="headerlink" href="#xml-semantics" title="永久链接至标题">¶</a></h2>
+<section id="changing-category-axis-between-c-catax-and-c-dateax">
+<h3>Changing category axis between <cite>c:catAx</cite> and <cite>c:dateAx</cite><a class="headerlink" href="#changing-category-axis-between-c-catax-and-c-dateax" title="永久链接至标题">¶</a></h3>
+<p>In the MS API, DateAxis.CategoryType is used to discover the category type,
+but is also used to change an axis from a date axis to a category axis and
+back. Note the corresponding property in <cite>python-pptx</cite> is read-only for now.</p>
+<p>Changing from a category to date axis leaves the base, major, and minor unit
+elements in place. They apply again (instead of the defaults) if the axis is
+changed back:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">c</span><span class="p">:</span><span class="n">baseTimeUnit</span> <span class="n">val</span><span class="o">=</span><span class="s2">&quot;days&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">c</span><span class="p">:</span><span class="n">majorUnit</span> <span class="n">val</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">c</span><span class="p">:</span><span class="n">majorTimeUnit</span> <span class="n">val</span><span class="o">=</span><span class="s2">&quot;months&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">c</span><span class="p">:</span><span class="n">minorUnit</span> <span class="n">val</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="choice-of-date-axis">
+<h3>Choice of date axis<a class="headerlink" href="#choice-of-date-axis" title="永久链接至标题">¶</a></h3>
+<p>PowerPoint automatically uses a <cite>c:dateAx</cite> element if the category labels in
+Excel are dates (numbers with date formatting).</p>
+<p><cite>python-pptx</cite> uses a <cite>c:dateAx</cite> element if the category labels in the chart data
+object are datetime.date or datetime.datetime objects.</p>
+<p>Note that <cite>python-pptx</cite> does not change the category axis type when using
+<cite>Chart.replace_data()</cite>.</p>
+<p>A date axis is only available on an area, bar (including column), or line
+chart.</p>
+</section>
+<section id="multi-level-categories-and-date-axis">
+<h3>Multi-level categories and date axis<a class="headerlink" href="#multi-level-categories-and-date-axis" title="永久链接至标题">¶</a></h3>
+<p>Multi-level categories are mutually exclusive with a date axis.</p>
+<p>A <cite>c:multiLvlStrRef</cite> element is the only one that can enclose a multi-level
+category hierarchy. There is no provision for any or all the levels under
+this element to be other than string values (as the ‘Str’ in its name
+implies).</p>
+</section>
+<section id="automatic-axis-type">
+<h3>Automatic axis type<a class="headerlink" href="#automatic-axis-type" title="永久链接至标题">¶</a></h3>
+<p>The <cite>c:auto</cite> element under <cite>c:catAx</cite> or <cite>c:dateAx</cite> controls whether the
+category axis changes automatically between category and date types.</p>
+</section>
+</section>
+<section id="specimen-xml">
+<h2>Specimen XML<a class="headerlink" href="#specimen-xml" title="永久链接至标题">¶</a></h2>
+<p>Series having date categories:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:ser&gt;</span>
+  <span class="nt">&lt;c:idx</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:order</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:tx&gt;</span>
+    <span class="nt">&lt;c:strRef&gt;</span>
+      <span class="nt">&lt;c:f&gt;</span>Sheet1!$B$1<span class="nt">&lt;/c:f&gt;</span>
+      <span class="nt">&lt;c:strCache&gt;</span>
+        <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;c:v&gt;</span>Buzz<span class="nt">&lt;/c:v&gt;</span>
+        <span class="nt">&lt;/c:pt&gt;</span>
+      <span class="nt">&lt;/c:strCache&gt;</span>
+    <span class="nt">&lt;/c:strRef&gt;</span>
+  <span class="nt">&lt;/c:tx&gt;</span>
+  <span class="nt">&lt;c:marker&gt;</span>
+    <span class="nt">&lt;c:symbol</span> <span class="na">val=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/c:marker&gt;</span>
+  <span class="nt">&lt;c:cat&gt;</span>
+    <span class="nt">&lt;c:numRef&gt;</span>
+      <span class="nt">&lt;c:f&gt;</span>Sheet1!$A$2:$A$520<span class="nt">&lt;/c:f&gt;</span>
+      <span class="nt">&lt;c:numCache&gt;</span>
+        <span class="nt">&lt;c:formatCode&gt;</span>mm\-dd\-yyyy<span class="nt">&lt;/c:formatCode&gt;</span>
+        <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;c:v&gt;</span>42156.0<span class="nt">&lt;/c:v&gt;</span>
+        <span class="nt">&lt;/c:pt&gt;</span>
+        <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;c:v&gt;</span>42157.0<span class="nt">&lt;/c:v&gt;</span>
+        <span class="nt">&lt;/c:pt&gt;</span>
+        <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;c:v&gt;</span>42158.0<span class="nt">&lt;/c:v&gt;</span>
+        <span class="nt">&lt;/c:pt&gt;</span>
+      <span class="nt">&lt;/c:numCache&gt;</span>
+    <span class="nt">&lt;/c:numRef&gt;</span>
+  <span class="nt">&lt;/c:cat&gt;</span>
+  <span class="nt">&lt;c:val&gt;</span>
+    <span class="nt">&lt;c:numRef&gt;</span>
+      <span class="nt">&lt;c:f&gt;</span>Sheet1!$B$2:$B$520<span class="nt">&lt;/c:f&gt;</span>
+      <span class="nt">&lt;c:numCache&gt;</span>
+        <span class="nt">&lt;c:formatCode&gt;</span>0.0<span class="nt">&lt;/c:formatCode&gt;</span>
+        <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;c:v&gt;</span>19.65943065775559<span class="nt">&lt;/c:v&gt;</span>
+        <span class="nt">&lt;/c:pt&gt;</span>
+        <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;c:v&gt;</span>20.13705095574664<span class="nt">&lt;/c:v&gt;</span>
+        <span class="nt">&lt;/c:pt&gt;</span>
+        <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;c:v&gt;</span>19.48264757927654<span class="nt">&lt;/c:v&gt;</span>
+        <span class="nt">&lt;/c:pt&gt;</span>
+      <span class="nt">&lt;/c:numCache&gt;</span>
+    <span class="nt">&lt;/c:numRef&gt;</span>
+  <span class="nt">&lt;/c:val&gt;</span>
+</pre></div>
+</div>
+<p>Plot area having date axis:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:plotArea&gt;</span>
+  <span class="nt">&lt;c:lineChart&gt;</span>
+    <span class="nt">&lt;c:ser&gt;</span>
+      <span class="nt">&lt;c:idx</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;c:order</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;c:tx&gt;</span>
+        <span class="nt">&lt;c:strRef&gt;</span>
+          <span class="nt">&lt;c:f&gt;</span>Sheet1!$B$1<span class="nt">&lt;/c:f&gt;</span>
+          <span class="nt">&lt;c:strCache&gt;</span>
+            <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;c:v&gt;</span>Series 1<span class="nt">&lt;/c:v&gt;</span>
+            <span class="nt">&lt;/c:pt&gt;</span>
+          <span class="nt">&lt;/c:strCache&gt;</span>
+        <span class="nt">&lt;/c:strRef&gt;</span>
+      <span class="nt">&lt;/c:tx&gt;</span>
+      <span class="nt">&lt;c:cat&gt;</span>
+        <span class="nt">&lt;c:numRef&gt;</span>
+          <span class="nt">&lt;c:f&gt;</span>Sheet1!$A$2:$A$4<span class="nt">&lt;/c:f&gt;</span>
+          <span class="nt">&lt;c:numCache&gt;</span>
+            <span class="nt">&lt;c:formatCode&gt;</span>d\-mmm<span class="nt">&lt;/c:formatCode&gt;</span>
+            <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;c:v&gt;</span>42370.0<span class="nt">&lt;/c:v&gt;</span>
+            <span class="nt">&lt;/c:pt&gt;</span>
+            <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;c:v&gt;</span>42371.0<span class="nt">&lt;/c:v&gt;</span>
+            <span class="nt">&lt;/c:pt&gt;</span>
+            <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;c:v&gt;</span>42372.0<span class="nt">&lt;/c:v&gt;</span>
+            <span class="nt">&lt;/c:pt&gt;</span>
+          <span class="nt">&lt;/c:numCache&gt;</span>
+        <span class="nt">&lt;/c:numRef&gt;</span>
+      <span class="nt">&lt;/c:cat&gt;</span>
+      <span class="nt">&lt;c:val&gt;</span>
+        <span class="nt">&lt;c:numRef&gt;</span>
+          <span class="nt">&lt;c:f&gt;</span>Sheet1!$B$2:$B$4<span class="nt">&lt;/c:f&gt;</span>
+          <span class="nt">&lt;c:numCache&gt;</span>
+            <span class="nt">&lt;c:formatCode&gt;</span>General<span class="nt">&lt;/c:formatCode&gt;</span>
+            <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;c:v&gt;</span>4.3<span class="nt">&lt;/c:v&gt;</span>
+            <span class="nt">&lt;/c:pt&gt;</span>
+            <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;c:v&gt;</span>2.5<span class="nt">&lt;/c:v&gt;</span>
+            <span class="nt">&lt;/c:pt&gt;</span>
+            <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;c:v&gt;</span>3.5<span class="nt">&lt;/c:v&gt;</span>
+            <span class="nt">&lt;/c:pt&gt;</span>
+          <span class="nt">&lt;/c:numCache&gt;</span>
+        <span class="nt">&lt;/c:numRef&gt;</span>
+      <span class="nt">&lt;/c:val&gt;</span>
+      <span class="nt">&lt;c:smooth</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/c:ser&gt;</span>
+    <span class="nt">&lt;c:axId</span> <span class="na">val=</span><span class="s">&quot;2142588392&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:axId</span> <span class="na">val=</span><span class="s">&quot;2106388088&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/c:lineChart&gt;</span>
+  <span class="nt">&lt;c:dateAx&gt;</span>
+    <span class="nt">&lt;c:axId</span> <span class="na">val=</span><span class="s">&quot;2142588392&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:scaling&gt;</span>
+      <span class="nt">&lt;c:orientation</span> <span class="na">val=</span><span class="s">&quot;minMax&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/c:scaling&gt;</span>
+    <span class="nt">&lt;c:delete</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:axPos</span> <span class="na">val=</span><span class="s">&quot;b&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:numFmt</span> <span class="na">formatCode=</span><span class="s">&quot;d\-mmm&quot;</span> <span class="na">sourceLinked=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:majorTickMark</span> <span class="na">val=</span><span class="s">&quot;out&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:minorTickMark</span> <span class="na">val=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:tickLblPos</span> <span class="na">val=</span><span class="s">&quot;nextTo&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:crossAx</span> <span class="na">val=</span><span class="s">&quot;2106388088&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:crosses</span> <span class="na">val=</span><span class="s">&quot;autoZero&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:auto</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:lblOffset</span> <span class="na">val=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:baseTimeUnit</span> <span class="na">val=</span><span class="s">&quot;days&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/c:dateAx&gt;</span>
+  <span class="nt">&lt;c:valAx&gt;</span>
+    <span class="nt">&lt;c:axId</span> <span class="na">val=</span><span class="s">&quot;2106388088&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:scaling&gt;</span>
+      <span class="nt">&lt;c:orientation</span> <span class="na">val=</span><span class="s">&quot;minMax&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/c:scaling&gt;</span>
+    <span class="nt">&lt;c:delete</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:axPos</span> <span class="na">val=</span><span class="s">&quot;l&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:majorGridlines/&gt;</span>
+    <span class="nt">&lt;c:numFmt</span> <span class="na">formatCode=</span><span class="s">&quot;General&quot;</span> <span class="na">sourceLinked=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:majorTickMark</span> <span class="na">val=</span><span class="s">&quot;out&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:minorTickMark</span> <span class="na">val=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:tickLblPos</span> <span class="na">val=</span><span class="s">&quot;nextTo&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:crossAx</span> <span class="na">val=</span><span class="s">&quot;2142588392&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:crosses</span> <span class="na">val=</span><span class="s">&quot;autoZero&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:crossBetween</span> <span class="na">val=</span><span class="s">&quot;between&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/c:valAx&gt;</span>
+<span class="nt">&lt;/c:plotArea&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Understanding Date-Based Axis Versus Category-Based Axis in Trend Charts
+<a class="reference external" href="http://www.quepublishing.com/articles/article.aspx?p=1642672&amp;seqNum=2">http://www.quepublishing.com/articles/article.aspx?p=1642672&amp;seqNum=2</a></p></li>
+</ul>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_PlotArea&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="cm">&lt;!-- 17 others --&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;valAx&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_ValAx&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;catAx&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_CatAx&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dateAx&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_DateAx&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;serAx&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_SerAx&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dTable&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_DTable&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_CatAx&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scaling&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Scaling&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;delete&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axPos&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_AxPos&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;title&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Title&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numFmt&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumFmt&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tickLblPos&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_TickLblPos&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossAx&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span>                                                    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crosses&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_Crosses&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossesAt&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Double&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;auto&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lblAlgn&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_LblAlgn&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lblOffset&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_LblOffset&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tickLblSkip&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Skip&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tickMarkSkip&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Skip&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noMultiLvlLbl&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_DateAx&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scaling&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Scaling&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;delete&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axPos&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_AxPos&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;title&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Title&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numFmt&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumFmt&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tickLblPos&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_TickLblPos&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossAx&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span>                                                    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crosses&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_Crosses&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossesAt&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Double&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;auto&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lblOffset&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_LblOffset&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;baseTimeUnit&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TimeUnit&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorUnit&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_AxisUnit&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorTimeUnit&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TimeUnit&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorUnit&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_AxisUnit&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorTimeUnit&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TimeUnit&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ValAx&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scaling&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Scaling&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;delete&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axPos&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_AxPos&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;title&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Title&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numFmt&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumFmt&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tickLblPos&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_TickLblPos&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossAx&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span>                                                    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crosses&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Crosses&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossesAt&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Double&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossBetween&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_CrossBetween&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorUnit&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_AxisUnit&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorUnit&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_AxisUnit&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dispUnits&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_DispUnits&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_SerAx&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_AxShared&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tickLblSkip&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Skip&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tickMarkSkip&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Skip&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_AxShared&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scaling&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Scaling&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;delete&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axPos&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_AxPos&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;title&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Title&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numFmt&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumFmt&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tickLblPos&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_TickLblPos&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossAx&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crosses&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Crosses&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossesAt&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Double&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_AxisUnit&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_AxisUnit&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ChartLines&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Crosses&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Crosses&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Scaling&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;logBase&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_LogBase&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;orientation&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Orientation&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;max&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Double&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;min&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Double&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NumFmt&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;formatCode&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;sourceLinked&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TickLblPos&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_TickLblPos&quot;</span> <span class="na">default=</span><span class="s">&quot;nextTo&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TickMark&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_TickMark&quot;</span> <span class="na">default=</span><span class="s">&quot;cross&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TimeUnit&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_TimeUnit&quot;</span> <span class="na">default=</span><span class="s">&quot;days&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Boolean&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Double&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:double&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_AxisUnit&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:double&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minExclusive</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Crosses&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;autoZero&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;max&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;min&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TickLblPos&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;high&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;low&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;nextTo&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TickMark&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;cross&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;in&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;out&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TimeUnit&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;days&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;months&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;years&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Chart - Date Axis</a><ul>
+<li><a class="reference internal" href="#ms-api">MS API</a></li>
+<li><a class="reference internal" href="#enumerations">Enumerations</a></li>
+<li><a class="reference internal" href="#xml-semantics">XML Semantics</a><ul>
+<li><a class="reference internal" href="#changing-category-axis-between-c-catax-and-c-dateax">Changing category axis between <cite>c:catAx</cite> and <cite>c:dateAx</cite></a></li>
+<li><a class="reference internal" href="#choice-of-date-axis">Choice of date axis</a></li>
+<li><a class="reference internal" href="#multi-level-categories-and-date-axis">Multi-level categories and date axis</a></li>
+<li><a class="reference internal" href="#automatic-axis-type">Automatic axis type</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#specimen-xml">Specimen XML</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="cht-data-labels.html"
+                          title="上一章">Chart - Data Labels</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="cht-categories.html"
+                          title="下一章">Chart - Categories</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-categories.html" title="Chart - Categories"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-data-labels.html" title="Chart - Data Labels"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Date Axis</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

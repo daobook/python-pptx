@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Slide Background &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Notes Slide" href="sld-notes-slide.html" />
+    <link rel="prev" title="Analysis" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="sld-notes-slide.html" title="Notes Slide"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Analysis"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Slide Background</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="slide-background">
+<span id="slidebackground"></span><h1>Slide Background<a class="headerlink" href="#slide-background" title="永久链接至标题">¶</a></h1>
+<p>A slide inherits its background from its layout or master (and possibly
+theme), in that order. Each slide can also override its inherited background
+settings.</p>
+<p>A background is essentially a container for a fill.</p>
+<section id="protocol">
+<h2>Protocol<a class="headerlink" href="#protocol" title="永久链接至标题">¶</a></h2>
+<p><strong>Access slide background.</strong> <cite>Slide.background</cite> is the <cite>Background</cite> object
+for the slide. Its presence is unconditional and the same <cite>Background</cite> object
+is provided on each access for a particular <cite>Slide</cite> instance. Its presence
+does not imply an explicitly applied slide background:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">background</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">background</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">background</span>
+<span class="go">&lt;pptx.shared.Background object at 0x0...&gt;</span>
+</pre></div>
+</div>
+<p><strong>Detect explicitly-applied slide background.</strong> A slide inherits its
+background unless an explicitly-defined background has been applied to the
+slide. The presence of an “override” background is determined by
+interrogating the <cite>.follow_master_background</cite> property on each slide:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span><span class="o">.</span><span class="n">follow_master_background</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p><strong>Override inheritance of background.</strong> Assigning <cite>False</cite> to
+<cite>.follow_master_background</cite> adds a “blank” background to the slide, which
+then no longer inherits any layout or master background:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span><span class="o">.</span><span class="n">follow_master_background</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span><span class="o">.</span><span class="n">follow_master_background</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Note that this step is not necessary to override inheritance. Merely
+specifying a background fill will also interrupt inheritance. This approach
+might be the easiest way though, if all you want is to interrupt inheritance
+and don’t want to apply a particular fill.</p>
+<p><strong>Restore inheritance of slide background.</strong> Any explicitly-applied slide
+background can be removed by assigning <cite>True</cite> to
+<cite>.follow_master_background</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span><span class="o">.</span><span class="n">follow_master_background</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span><span class="o">.</span><span class="n">follow_master_background</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p><strong>Access background fill.</strong> The <cite>FillFormat</cite> object for a slide background is
+accessed using the background’s <cite>.fill</cite> property. Note that merely accessing
+this property will suppress inheritance of background for this slide. This
+shouldn’t normally be a problem as there would be little reason to access the
+property without intention to change it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">background</span><span class="o">.</span><span class="n">fill</span>
+<span class="go">&lt;pptx.dml.fill.FillFormat object at 0x0...&gt;</span>
+</pre></div>
+</div>
+<p><strong>Apply solid color background.</strong> A background color is specified in the same
+way as fill is specified for a shape. Note that the <cite>FillFormat</cite> object also
+supports applying theme colors and patterns:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span> <span class="o">=</span> <span class="n">background</span><span class="o">.</span><span class="n">fill</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Minimal <cite>p:bg</cite>?:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">cSld</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">bg</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">bgPr</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">noFill</span><span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">effectLst</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">bgPr</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">bg</span><span class="o">&gt;</span>
+  <span class="o">...</span>
+<span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">cSld</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="schema-excerpt">
+<h2>Schema excerpt<a class="headerlink" href="#schema-excerpt" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sld&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Slide&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Slide&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cSld&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_CommonSlideData&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;clrMapOvr&quot;</span>  <span class="na">type=</span><span class="s">&quot;a:CT_ColorMappingOverride&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;transition&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SlideTransition&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;timing&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_SlideTiming&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showMasterSp&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showMasterPhAnim&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;show&quot;</span>             <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_CommonSlideData&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bg&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Background&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spTree&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_GroupShape&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custDataLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_CustomerDataList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;controls&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ControlList&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Background&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>  <span class="cm">&lt;!-- EG_Background - one and only one --&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bgPr&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_BackgroundProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bgRef&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_StyleMatrixReference&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bwMode&quot;</span> <span class="na">type=</span><span class="s">&quot;a:ST_BlackWhiteMode&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;white&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_BackgroundProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;a:EG_FillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;a:EG_EffectProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;shadeToTitle&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_FillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noFill&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_NoFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;solidFill&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SolidColorFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gradFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_GradientFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;blipFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_BlipFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pattFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PatternFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grpFill&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_GroupFillProperties&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_EffectProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectList&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectDag&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectContainer&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_SlideId&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:unsignedInt&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;256&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxExclusive</span> <span class="na">value=</span><span class="s">&quot;2147483648&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Slide Background</a><ul>
+<li><a class="reference internal" href="#protocol">Protocol</a></li>
+<li><a class="reference internal" href="#schema-excerpt">Schema excerpt</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="index.html"
+                          title="上一章">Analysis</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="sld-notes-slide.html"
+                          title="下一章">Notes Slide</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="sld-notes-slide.html" title="Notes Slide"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Analysis"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Slide Background</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>About Part Relationships &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Web Resources" href="web_resources.html" />
+    <link rel="prev" title="About Open XML Packaging" href="about_packaging.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="web_resources.html" title="Web Resources"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="about_packaging.html" title="About Open XML Packaging"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Resources</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">About Part Relationships</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="about-part-relationships">
+<h1>About Part Relationships<a class="headerlink" href="#about-part-relationships" title="永久链接至标题">¶</a></h1>
+<section id="understanding-part-relationships">
+<h2>Understanding Part Relationships<a class="headerlink" href="#understanding-part-relationships" title="永久链接至标题">¶</a></h2>
+<p>An Open XML package part can have one or more relationships to other parts in
+the package. For example, a slide layout has a relationship to the slide
+master it inherits properties from. And if the slide layout includes an image,
+such as a company logo, it will also have a relationship to the image part
+corresponding to that logo’s image file.</p>
+<p>Conceptually, a part relationship might be stated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Part</span> <span class="n">x</span> <span class="ow">is</span> <span class="n">related</span> <span class="n">to</span> <span class="n">part</span> <span class="n">y</span> <span class="n">of</span> <span class="nb">type</span> <span class="n">z</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>While these relationships are reciprocal in a way of thinking (e.g. part y is
+also related to part x), in Open XML they are generally defined in one
+direction only. For example, a slide may have a relationship to an image it
+contains, but an image never has a stated relationships to a slide. One
+exception to this is slide masters and slide layouts. A slide layout has a
+relationship to the slide master it inherits from at the same time the slide
+master has a relationship to each of the slide layouts that inherit from it.</p>
+<p>In the example above, part x can be referred to as the <em>source part</em> or
+<em>from-part</em>, part y as the <em>target part</em> or <em>to-part</em>, and type z as the
+<em>relationship type</em>. The relationship type essentially ends up being the part
+type of the target part (e.g. image, slide master, etc.).</p>
+<section id="inbound-and-outbound-relationships">
+<h3>Inbound and outbound relationships<a class="headerlink" href="#inbound-and-outbound-relationships" title="永久链接至标题">¶</a></h3>
+<p>Each relationship is <em>outbound</em> for its source part and <em>inbound</em> for its
+target part. The <em>outbound</em> relationships of a part are those found in its
+<em>part relationship item</em>, commonly referred to as its “rels file”. Only
+outbound relationships are recorded in the package. Inbound relationships are
+purely abstract, although they can be inferred from outbound relationships if
+an application had a need for them.</p>
+<p>Not all parts can have outbound relationships. For example, image and
+presentation properties parts never have outbound relationships. All parts,
+however, participate in at least one inbound relationship. Any part with no
+inbound relationships could be removed from the package without consequence,
+and probably should be. For example, if upon saving it was noticed that a
+particular image had no inbound relationships, that image would be better not
+written to the package. <em>(Makes me wonder whether loading a package by walking
+its relationship graph might be a good idea in some instances.)</em></p>
+</section>
+<section id="direct-and-indirect-relationship-references">
+<h3>Direct and indirect relationship references<a class="headerlink" href="#direct-and-indirect-relationship-references" title="永久链接至标题">¶</a></h3>
+<p>Each relationship is recorded as a relationship element in the rels file
+belonging to a specific part. (The package relationship item <code class="docutils literal notranslate"><span class="pre">/_rels/.rels</span></code>
+is the only exception, it belongs to the package, not to any part). Each
+relationship entry specifies a part-local relationship id (rId) for the
+relationship, the relationship type (essentially the part type of the target,
+e.g. slide, image), and a path the target part file. The source part is not
+explicitly stated in the relationship entry, it is implicitly the part
+the .rels file belongs to.</p>
+<p>These can be thought of as <em>external relationship references</em> in that the rels
+file is a separate package item, external to the part itself. However, in
+certain cases, a relationship may be referenced within the XML of the
+from-part. These can be thought of as <em>internal relationship references</em>.</p>
+<p>As an example of where an internal relationship reference is required,
+consider a slide containing images of three different products. Each picture
+has a corresponding &lt;p:pic&gt; element in the slide’s shape tree, each of which
+must specify the particular image file it displays, distinguishing it from the
+other two image files related to the slide.</p>
+<p>The picture elements specify which of the related images to display using the
+part-local relationship id (rId) matching the required image, ‘rId2’ in the
+example below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">blipFill</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">blip</span> <span class="n">r</span><span class="p">:</span><span class="n">embed</span><span class="o">=</span><span class="s2">&quot;rId2&quot;</span><span class="o">&gt;</span>
+    <span class="o">...</span>
+  <span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">blip</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">blipFill</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Which is an indirect reference to <code class="docutils literal notranslate"><span class="pre">image1.png</span></code> specified as the target of
+‘rId2’ in the slide’s rels file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;Relationships xmlns=&quot;http://.../relationships&quot;&gt;
+  &lt;Relationship Id=&quot;rId1&quot; Type=&quot;http://.../slideLayout&quot; Target=&quot;.../slideLayout2.xml&quot;/&gt;
+  &lt;Relationship Id=&quot;rId2&quot; Type=&quot;http://.../image&quot; Target=&quot;.../image1.png&quot;/&gt;
+&lt;/Relationships&gt;
+</pre></div>
+</div>
+<p>This indirection makes sense as a way to limit the coupling of presentation
+parts to the mechanics of package composition. For example, when the XML for
+the slide part in the example above is being composed, the slide can determine
+the reference to the image it’s displaying without reference outside its own
+natural scope. In contrast, determining the eventual location and filename of
+that image in any particular package that was saved would require the slide
+code to have visibility into the packaging process, which would prevent
+packaging being delegated to a separate, black-box module.</p>
+</section>
+<section id="implicit-and-explicit-relationships">
+<h3>Implicit and explicit relationships<a class="headerlink" href="#implicit-and-explicit-relationships" title="永久链接至标题">¶</a></h3>
+<p>There is also a distinction between implicit and explicit relationships which
+is described in the spec (ECMA-376-1) in section 9.2. I haven’t encountered
+those yet in the context of PresentationML (the spec uses an example of
+footnotes from WordprocessingML), so I do not discuss them here.</p>
+</section>
+</section>
+<section id="relationship-mechanics">
+<h2>Relationship Mechanics<a class="headerlink" href="#relationship-mechanics" title="永久链接至标题">¶</a></h2>
+<section id="relationship-life-cycle">
+<h3>Relationship life-cycle<a class="headerlink" href="#relationship-life-cycle" title="永久链接至标题">¶</a></h3>
+<p>A representation of a relationship must operate effectively in two distinct
+situations, in-package and in-memory. They must also support lifecycle
+transitions from in-package to in-memory and from in-memory back to
+in-package.</p>
+</section>
+<section id="abstract-model">
+<h3>Abstract model<a class="headerlink" href="#abstract-model" title="永久链接至标题">¶</a></h3>
+<p>Each relationship has the following abstract attributes</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="source">
+<span class="sig-name descname"><span class="pre">source</span></span><a class="headerlink" href="#source" title="永久链接至目标">¶</a></dt>
+<dd><p>The “from-part” of the relationship.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#id" title="永久链接至目标">¶</a></dt>
+<dd><p>Source-local unique identifier for this relationship. Each source part’s
+relationship ids should be a sequence of consecutive integers starting from
+1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="target_type">
+<span class="sig-name descname"><span class="pre">target_type</span></span><a class="headerlink" href="#target_type" title="永久链接至目标">¶</a></dt>
+<dd><p>The content type of the relationship’s to-part.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="target">
+<span class="sig-name descname"><span class="pre">target</span></span><a class="headerlink" href="#target" title="永久链接至目标">¶</a></dt>
+<dd><p>A direct reference to the relationship’s to-part.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="maintaining-relationships-by-dynamic-parts-e-g-slides">
+<h2>Maintaining relationships by dynamic parts (e.g. Slides)<a class="headerlink" href="#maintaining-relationships-by-dynamic-parts-e-g-slides" title="永久链接至标题">¶</a></h2>
+<p>How will dynamic parts (like Slide) interact with its relationship list?</p>
+<p>? Should it just add items to the relationship list when it creates new things?</p>
+<p>? Does it need some sort of lookup capability in order to delete? Or just have a delete
+relationship method on _Relationships or something like that.</p>
+<p>Need to come up with a plausible set of use cases to think about a design.
+Right now the only use case is loading a template into a presentation and
+saving a presentation.</p>
+<ul class="simple">
+<li><p>Add an image to a slide.</p></li>
+<li><p>Change a slide’s slide layout</p></li>
+<li><p>comment, notesSlide, tag, image, and slideLayout are the only outbound
+relationship types for a slide, although I expect there are some other
+DrawingML bits I haven’t accounted for yet.</p></li>
+</ul>
+<p>On reflection I’m thinking there’s not too much urgency on noodling this out
+too far, the present construction should work fine for now and be able to be
+extended without disrupting other code too much.</p>
+</section>
+<section id="scrap">
+<h2>SCRAP<a class="headerlink" href="#scrap" title="永久链接至标题">¶</a></h2>
+<section id="rationale-for-relationship-to-be-an-association-class">
+<h3>Rationale for Relationship to be an association class<a class="headerlink" href="#rationale-for-relationship-to-be-an-association-class" title="永久链接至标题">¶</a></h3>
+<p>When loaded into memory, each relationship target must be a reference to an
+active part object (or at least a part key that can be resolved to a
+reference, but why do this lookup multiple times?). This is both because those
+relationships can change and also because the package path, while it can be
+calculated at runtime, is not guaranteed to be stable (e.g. a new slide can be
+inserted between two existing ones) and is not finally resolved until the
+presentation is saved.</p>
+</section>
+<section id="general-description-of-package-relationships-items">
+<h3>General description of package relationships items<a class="headerlink" href="#general-description-of-package-relationships-items" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>Relationships items specify the relationships between parts of the package,
+although they are not themselves a part.</p></li>
+<li><p>All relationship items are XML documents having a filename with the
+extension ‘.rels’ located in a directory named ‘_rels’ located in the same
+directory as the part.</p></li>
+<li><p>The package relationship item has the URI ‘/_rels/.rels’.</p></li>
+<li><p>Part relationship items have the same filename as the part whose
+relationships they describe, with the ‘.rels’ extension appended as a
+suffix. For example, the relationship item for a part named
+<code class="docutils literal notranslate"><span class="pre">/ppt/slides/slide1.xml</span></code> would have the URI
+<code class="docutils literal notranslate"><span class="pre">/ppt/slides/_rels/slide1.xml.rels</span></code>.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">About Part Relationships</a><ul>
+<li><a class="reference internal" href="#understanding-part-relationships">Understanding Part Relationships</a><ul>
+<li><a class="reference internal" href="#inbound-and-outbound-relationships">Inbound and outbound relationships</a></li>
+<li><a class="reference internal" href="#direct-and-indirect-relationship-references">Direct and indirect relationship references</a></li>
+<li><a class="reference internal" href="#implicit-and-explicit-relationships">Implicit and explicit relationships</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#relationship-mechanics">Relationship Mechanics</a><ul>
+<li><a class="reference internal" href="#relationship-life-cycle">Relationship life-cycle</a></li>
+<li><a class="reference internal" href="#abstract-model">Abstract model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#maintaining-relationships-by-dynamic-parts-e-g-slides">Maintaining relationships by dynamic parts (e.g. Slides)</a></li>
+<li><a class="reference internal" href="#scrap">SCRAP</a><ul>
+<li><a class="reference internal" href="#rationale-for-relationship-to-be-an-association-class">Rationale for Relationship to be an association class</a></li>
+<li><a class="reference internal" href="#general-description-of-package-relationships-items">General description of package relationships items</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="about_packaging.html"
+                          title="上一章">About Open XML Packaging</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="web_resources.html"
+                          title="下一章">Web Resources</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="web_resources.html" title="Web Resources"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="about_packaging.html" title="About Open XML Packaging"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Resources</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">About Part Relationships</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Chart Data &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Chart - Tick Labels" href="cht-tick-labels.html" />
+    <link rel="prev" title="SlideShapes.add_chart()" href="cht-add-chart.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-tick-labels.html" title="Chart - Tick Labels"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-add-chart.html" title="SlideShapes.add_chart()"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart Data</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="chart-data">
+<h1>Chart Data<a class="headerlink" href="#chart-data" title="永久链接至标题">¶</a></h1>
+<p>The data behind a chart–its category labels and its series names and
+values–turns out to be a pivotal object in both the construction of a new
+chart and updating the data behind an existing chart.</p>
+<p>The first role of <a class="reference internal" href="../../api/chart-data.html#pptx.chart.data.ChartData" title="pptx.chart.data.ChartData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartData</span></code></a> is to act as a data transfer object, allowing
+the data for a chart to be accumulated over multiple calls such as
+<cite>.add_series()</cite>. This avoids the need to assemble and send a complex nested
+structure of primitives to method calls.</p>
+<p>In addition to this, <a class="reference internal" href="../../api/chart-data.html#pptx.chart.data.ChartData" title="pptx.chart.data.ChartData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartData</span></code></a> also takes on the role of broker to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ChartXmlWriter</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">WorkbookWriter</span></code> which know how to assemble the
+<code class="docutils literal notranslate"><span class="pre">&lt;c:chartSpace&gt;</span></code> XML and Excel workbook for a chart, respectively. This is
+sensible because neither of these objects can operate without a chart data
+instance to provide the data they need and doing so concentrates the coupling
+to the latter two objects into one place.</p>
+<section id="protocol">
+<h2>Protocol<a class="headerlink" href="#protocol" title="永久链接至标题">¶</a></h2>
+<p>A <a class="reference internal" href="../../api/chart-data.html#pptx.chart.data.ChartData" title="pptx.chart.data.ChartData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartData</span></code></a> object is constructed directly as needed, and used for either
+creating a new chart or for replacing the data behind an existing one.</p>
+<p>Creating a new chart:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chart_data</span> <span class="o">=</span> <span class="n">ChartData</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chart_data</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="s1">&#39;Foo&#39;</span><span class="p">,</span> <span class="s1">&#39;Bar&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chart_data</span><span class="o">.</span><span class="n">add_series</span><span class="p">(</span><span class="s1">&#39;Series 1&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chart_data</span><span class="o">.</span><span class="n">add_series</span><span class="p">(</span><span class="s1">&#39;Series 2&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graphic_frame</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_chart</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">XL_CHART_TYPE</span><span class="o">.</span><span class="n">COLUMN_CLUSTERED</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">chart_data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chart</span> <span class="o">=</span> <span class="n">graphicFrame</span><span class="o">.</span><span class="n">chart</span>
+</pre></div>
+</div>
+<p>Changing the data behind an existing chart:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chart_data</span> <span class="o">=</span> <span class="n">ChartData</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chart_data</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="s1">&#39;Foobar&#39;</span><span class="p">,</span> <span class="s1">&#39;Barbaz&#39;</span><span class="p">,</span> <span class="s1">&#39;Bazfoo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chart_data</span><span class="o">.</span><span class="n">add_series</span><span class="p">(</span><span class="s1">&#39;New Series 1&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mf">5.6</span><span class="p">,</span> <span class="mf">6.7</span><span class="p">,</span> <span class="mf">7.8</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chart_data</span><span class="o">.</span><span class="n">add_series</span><span class="p">(</span><span class="s1">&#39;New Series 2&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chart_data</span><span class="o">.</span><span class="n">add_series</span><span class="p">(</span><span class="s1">&#39;New Series 3&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mf">8.9</span><span class="p">,</span> <span class="mf">9.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chart</span><span class="o">.</span><span class="n">replace_data</span><span class="p">(</span><span class="n">chart_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the dimensions of the replacement data can differ from that of the
+existing chart.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Chart Data</a><ul>
+<li><a class="reference internal" href="#protocol">Protocol</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="cht-add-chart.html"
+                          title="上一章">SlideShapes.add_chart()</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="cht-tick-labels.html"
+                          title="下一章">Chart - Tick Labels</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-tick-labels.html" title="Chart - Tick Labels"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-add-chart.html" title="SlideShapes.add_chart()"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart Data</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Chart - Points &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Radar Chart" href="cht-radar-chart.html" />
+    <link rel="prev" title="Doughnut Chart" href="cht-doughnut-chart.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-radar-chart.html" title="Radar Chart"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-doughnut-chart.html" title="Doughnut Chart"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Points</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="chart-points">
+<h1>Chart - Points<a class="headerlink" href="#chart-points" title="永久链接至标题">¶</a></h1>
+<p>A chart may be understood as a graph of a function, formed by rendering
+a finite number of ordered pairs (e.g. (x, y)) in one of several graphical
+formats such as bar, pie, or bubble.</p>
+<p>A functon can be expressed as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <em>x</em> is the input to the function and <em>y</em> is the output. <em>x</em> is known
+more formally as the function’s <em>argument</em>, and <em>y</em> as its <em>value</em>. The set
+of possible input (x) values is the <em>domain</em> of the function. The set of
+possible output (y) values is the function’s <em>range</em>.</p>
+<p>In PowerPoint, the function is perhaps rarely mathematical; perhaps more
+commonly, the x and y values are correlated observations, facts to be
+communicated graphically as a set. Still these terms borrowed from
+mathematics provide convenient language for describing aspects of PowerPoint
+charts.</p>
+<p>PowerPoint charts can be divided broadly into <em>category</em> types, which take
+a discrete argument, and <em>XY</em> (aka. scatter) types which take a continuous
+argument. For category types, the argument is one of a discrete set of
+categories, expressed as a label, such as “Blue”, “Red”, and “Green”. The
+argument for an XY type is a real number. In both cases, the <em>value</em> of each
+data point is a real number.</p>
+<p>The argument is commonly associated with the horizontal axis of the chart and
+the value with the vertical axis; these would be the X and Y axis
+respectively on an XY chart. However the 2D orientation of the axes is
+reversed in some char types (bar charts in particular) and takes other forms
+in chart types such as radar and doughnut. In the MS API, the axis associated
+with the argument is known as the <em>category axis</em> and the other is the <em>value
+axis</em>. This terminology is used across all chart types (including XY) as
+a matter of convention.</p>
+<section id="series">
+<h2>Series<a class="headerlink" href="#series" title="永久链接至标题">¶</a></h2>
+<p>A chart can have one or more series. A series is a set of ordered pairs that
+are related in some way and meant to be distinguished graphically on the
+chart, often so they can be compared. For example, one series could represent
+Q1 financial results, depicted as a blue line, and a second series represent
+Q2 financial results with a red line.</p>
+<p>In a standard chart, all series share the same domain (e.g. the same X axis).
+In a category chart, all series also share the same set of categories. In an
+XY chart, the domain values are continuous; so in general, each data point in
+each XY series will in have a distinct argument (x value).</p>
+<p>In the MS API, there are multiple members on Series related to data points:</p>
+<ul class="simple">
+<li><p>Values</p></li>
+<li><p>XValues</p></li>
+<li><p>Points</p></li>
+</ul>
+<p>Note that <em>Categories</em> is not in this set. <code class="docutils literal notranslate"><span class="pre">CategoryCollection</span></code> is a member
+of <code class="docutils literal notranslate"><span class="pre">ChartGroup</span></code> (named Plot in <cite>python-pptx</cite>) in the MS API.</p>
+<p><strong>Values</strong> is the Excel range address at which the series values are stored.
+A set of constant values can be assigned in the MS API but this is not
+supported in <cite>python-pptx</cite>.</p>
+<p><strong>XValues</strong> is the Excel range address at which the series arguments are
+stored when the chart is one of the XY types. X values replace categories for
+an XY chart.</p>
+<p><strong>Points</strong> is a sequence of Point objects, each of which provides access to
+the formatting of the graphical representation of the data point. Notably, it
+does not allow changing the category, x or y value, or size (for a bubble
+chart).</p>
+<p>Every chart type supported by MS Office charts has the concept of data
+points.</p>
+<p>Informally, a data point is an atomic element of the content depicted by the
+chart.</p>
+<p>MS Office charts do not have a firm distinction for data points.</p>
+<p>In all cases, points belong to a <em>series</em>.</p>
+<p>There is some distinction between a data point for a category chart and one
+for an XY (scatter) chart.</p>
+<p>The API</p>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_point_count</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+    <span class="n">xVal</span><span class="o">.</span><span class="n">ptCount_val</span><span class="p">,</span> <span class="n">yVal</span><span class="o">.</span><span class="n">ptCount_val</span><span class="p">,</span> <span class="n">bubbleSize</span><span class="o">.</span><span class="n">ptCount_val</span>
+<span class="p">)</span>
+
+<span class="n">invariant</span><span class="p">(</span><span class="n">ptCount_val</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">idx</span><span class="p">))</span>
+
+<span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">pt_v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+    <span class="n">pts</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;.//c:pt[@val=</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="n">idx</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="n">pts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pt</span><span class="o">.</span><span class="n">v</span>
+
+<span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">~=</span> <span class="n">Point</span><span class="p">(</span><span class="n">xVal</span><span class="o">.</span><span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">yVal</span><span class="o">.</span><span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">bubbleSize</span><span class="o">.</span><span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="point-membership-hypothesis">
+<h2>Point membership hypothesis:<a class="headerlink" href="#point-membership-hypothesis" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>Visual alignment is not significant. A range may be anywhere in relation to
+the other data point ranges.</p></li>
+<li><p>Sequence is low row/col to high row/col in the Excel range, regardless of
+the “direction” in which the cells are selected. This seems to be enforced
+by a validation “correction” of the range string in the UI ‘Select Data’
+dialog.</p></li>
+<li><p>The number (count) of x, y, or size values is the number of cells in the
+range. This corresponds directly to <a class="reference external" href="mailto:ptCount/&#37;&#52;&#48;val">ptCount/<span>&#64;</span>val</a> for that data source
+sequence.</p></li>
+<li><p>The number of points in the series is the minimum of the x, y, and size
+value counts (ptCount).</p></li>
+<li><p>The ordered set of values for a point is formed by simple indexing within
+each value sequence. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">point</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_values</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">y_values</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">sizes</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>When any value sequence in the set runs out of elements, no further points
+are formed.</p>
+<p>All values of each data source sequence are written to the XML; values are
+not truncated because they lack a counter part in one of the other
+sequences. Consequently, the ptCount values will not necessarily match.</p>
+</li>
+</ul>
+</section>
+<section id="experiment-ironpython">
+<h2>Experiment (IronPython):<a class="headerlink" href="#experiment-ironpython" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Create a chart with three X-values and four Y-values. .XValues has three
+and .Values has four members. How many points are in Series.Points?</p></li>
+</ul>
+<p>Observations:</p>
+<ul class="simple">
+<li><p>4 X, 4 Y, 4 size – 4 points</p></li>
+<li><p>3 X, 4 Y, 4 size – 3 points</p></li>
+<li><p>4 X, 3 Y, 4 size – 3 points</p></li>
+<li><p>4 X, 4 Y, 3 size – 3 points</p></li>
+</ul>
+<p>Points with blank (y) values still count as a point.
+Points with blank (y) values still count as a point.</p>
+<p>Explain how …</p>
+<p>Hypothesis: An x, y, or size value index always starts at zero, at the
+beginning of the range, and increments to ptCount-1.</p>
+<p>Hypothesis: ptCount is always based on the number of cells in the Excel
+range, including blank cells at the start and end.</p>
+<p>ptCount and pt behavior on range including blank cell at end.</p>
+<p>xVal//ptCount can be different than yVal//ptCount</p>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<p>Point-related elements are stored under <cite>c:ser</cite>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ScatterStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_ScatterStyle&quot;</span> <span class="na">default=</span><span class="s">&quot;marker&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ScatterSer&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;idx&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;order&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tx&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_SerTx&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>        <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;marker&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_Marker&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dPt&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_DPt&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;trendline&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Trendline&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;errBars&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ErrBars&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;xVal&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_AxDataSource&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;yVal&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_NumDataSource&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;smooth&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_AxDataSource&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;multiLvlStrRef&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_MultiLvlStrRef&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numRef&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumRef&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numLit&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumData&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;strRef&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_StrRef&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;strLit&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_StrData&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_DLbls&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbl&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_DLbl&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numFmt&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_NumFmt&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>            <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>            <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLblPos&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_DLblPos&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showLegendKey&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showVal&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showCatName&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showSerName&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showPercent&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showBubbleSize&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;separator&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showLeaderLines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;leaderLines&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_DLbl&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;idx&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;layout&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Layout&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tx&quot;</span>             <span class="na">type=</span><span class="s">&quot;CT_Tx&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numFmt&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumFmt&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLblPos&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_DLblPos&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showLegendKey&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showVal&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showCatName&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showSerName&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showPercent&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showBubbleSize&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;separator&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_DPt&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;idx&quot;</span>              <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;invertIfNegative&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;marker&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_Marker&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bubble3D&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;explosion&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>             <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pictureOptions&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_PictureOptions&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Marker&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;symbol&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_MarkerStyle&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;size&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_MarkerSize&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_MarkerStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_MarkerStyle&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_MarkerSize&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_MarkerSize&quot;</span> <span class="na">default=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NumData&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;formatCode&quot;</span> <span class="na">type=</span><span class="s">&quot;s:ST_Xstring&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ptCount&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pt&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumVal&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NumDataSource&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numRef&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_NumRef&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numLit&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_NumData&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NumRef&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;f&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numCache&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_NumData&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_MarkerSize&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:unsignedByte&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;72&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_MarkerStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;circle&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dash&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;diamond&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dot&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;picture&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;plus&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;square&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;star&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;triangle&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;x&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;auto&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_ScatterStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;line&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;lineMarker&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;marker&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;smooth&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;smoothMarker&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Chart - Points</a><ul>
+<li><a class="reference internal" href="#series">Series</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#point-membership-hypothesis">Point membership hypothesis:</a></li>
+<li><a class="reference internal" href="#experiment-ironpython">Experiment (IronPython):</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="cht-doughnut-chart.html"
+                          title="上一章">Doughnut Chart</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="cht-radar-chart.html"
+                          title="下一章">Radar Chart</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-radar-chart.html" title="Radar Chart"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-doughnut-chart.html" title="Doughnut Chart"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Points</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

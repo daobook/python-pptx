@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Table-related objects &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="ChartData objects" href="chart-data.html" />
+    <link rel="prev" title="Placeholders" href="placeholders.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="chart-data.html" title="ChartData objects"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="placeholders.html" title="Placeholders"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Table-related objects</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="table-related-objects">
+<span id="table-api"></span><h1>Table-related objects<a class="headerlink" href="#table-related-objects" title="永久链接至标题">¶</a></h1>
+<section id="table-objects">
+<h2><a class="reference internal" href="#pptx.table.Table" title="pptx.table.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> objects<a class="headerlink" href="#table-objects" title="永久链接至标题">¶</a></h2>
+<p>A <a class="reference internal" href="#pptx.table.Table" title="pptx.table.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> object is added to a slide using the
+<a class="reference internal" href="shapes.html#pptx.shapes.shapetree.SlideShapes.add_table" title="pptx.shapes.shapetree.SlideShapes.add_table"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_table()</span></code></a> method on <a class="reference internal" href="shapes.html#pptx.shapes.shapetree.SlideShapes" title="pptx.shapes.shapetree.SlideShapes"><code class="xref py py-class docutils literal notranslate"><span class="pre">SlideShapes</span></code></a>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.table.Table">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.table.</span></span><span class="sig-name descname"><span class="pre">Table</span></span><a class="reference internal" href="../_modules/pptx/table.html#Table"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table.Table" title="永久链接至目标">¶</a></dt>
+<dd><p>A DrawingML table object.</p>
+<p>Not intended to be constructed directly, use
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Slide.shapes.add_table()</span></code> to add a table to a slide.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.table.Table.cell">
+<span class="sig-name descname"><span class="pre">cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/table.html#Table.cell"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table.Table.cell" title="永久链接至目标">¶</a></dt>
+<dd><p>Return cell at <em>row_idx</em>, <em>col_idx</em>.</p>
+<p>Return value is an instance of <a class="reference internal" href="#pptx.table._Cell" title="pptx.table._Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Cell</span></code></a>. <em>row_idx</em> and <em>col_idx</em> are
+zero-based, e.g. cell(0, 0) is the top, left cell in the table.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.table.Table.columns">
+<span class="sig-name descname"><span class="pre">columns</span></span><a class="reference internal" href="../_modules/pptx/table.html#Table.columns"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table.Table.columns" title="永久链接至目标">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_ColumnCollection</span></code> instance for this table.</p>
+<p>Provides access to <a class="reference internal" href="#pptx.table._Column" title="pptx.table._Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Column</span></code></a> objects representing the table’s columns. <a class="reference internal" href="#pptx.table._Column" title="pptx.table._Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Column</span></code></a>
+objects are accessed using list notation, e.g. <code class="docutils literal notranslate"><span class="pre">col</span> <span class="pre">=</span> <span class="pre">tbl.columns[0]</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table.Table.first_col">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">first_col</span></span><a class="headerlink" href="#pptx.table.Table.first_col" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean property which, when true, indicates the first
+column should be formatted differently, as for a side-heading column
+at the far left of the table.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table.Table.first_row">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">first_row</span></span><a class="headerlink" href="#pptx.table.Table.first_row" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean property which, when true, indicates the first
+row should be formatted differently, e.g. for column headings.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table.Table.horz_banding">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">horz_banding</span></span><a class="headerlink" href="#pptx.table.Table.horz_banding" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean property which, when true, indicates the rows of
+the table should appear with alternating shading.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.table.Table.iter_cells">
+<span class="sig-name descname"><span class="pre">iter_cells</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/table.html#Table.iter_cells"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table.Table.iter_cells" title="永久链接至目标">¶</a></dt>
+<dd><p>Generate _Cell object for each cell in this table.</p>
+<p>Each grid cell is generated in left-to-right, top-to-bottom order.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table.Table.last_col">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_col</span></span><a class="headerlink" href="#pptx.table.Table.last_col" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean property which, when true, indicates the last
+column should be formatted differently, as for a row totals column at
+the far right of the table.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table.Table.last_row">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">last_row</span></span><a class="headerlink" href="#pptx.table.Table.last_row" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean property which, when true, indicates the last
+row should be formatted differently, as for a totals row at the
+bottom of the table.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.table.Table.rows">
+<span class="sig-name descname"><span class="pre">rows</span></span><a class="reference internal" href="../_modules/pptx/table.html#Table.rows"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table.Table.rows" title="永久链接至目标">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_RowCollection</span></code> instance for this table.</p>
+<p>Provides access to <a class="reference internal" href="#pptx.table._Row" title="pptx.table._Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Row</span></code></a> objects representing the table’s rows. <a class="reference internal" href="#pptx.table._Row" title="pptx.table._Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Row</span></code></a> objects
+are accessed using list notation, e.g. <code class="docutils literal notranslate"><span class="pre">col</span> <span class="pre">=</span> <span class="pre">tbl.rows[0]</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table.Table.vert_banding">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vert_banding</span></span><a class="headerlink" href="#pptx.table.Table.vert_banding" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean property which, when true, indicates the columns
+of the table should appear with alternating shading.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="column-objects">
+<h2><a class="reference internal" href="#pptx.table._Column" title="pptx.table._Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Column</span></code></a> objects<a class="headerlink" href="#column-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.table._Column">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.table.</span></span><span class="sig-name descname"><span class="pre">_Column</span></span><a class="reference internal" href="../_modules/pptx/table.html#_Column"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table._Column" title="永久链接至目标">¶</a></dt>
+<dd><p>Table column</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Column.width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#pptx.table._Column.width" title="永久链接至目标">¶</a></dt>
+<dd><p>Width of column in EMU.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="row-objects">
+<h2><a class="reference internal" href="#pptx.table._Row" title="pptx.table._Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Row</span></code></a> objects<a class="headerlink" href="#row-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.table._Row">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.table.</span></span><span class="sig-name descname"><span class="pre">_Row</span></span><a class="reference internal" href="../_modules/pptx/table.html#_Row"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table._Row" title="永久链接至目标">¶</a></dt>
+<dd><p>Table row</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Row.cells">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cells</span></span><a class="headerlink" href="#pptx.table._Row.cells" title="永久链接至目标">¶</a></dt>
+<dd><p>Read-only reference to collection of cells in row. An individual cell
+is referenced using list notation, e.g. <code class="docutils literal notranslate"><span class="pre">cell</span> <span class="pre">=</span> <span class="pre">row.cells[0]</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Row.height">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#pptx.table._Row.height" title="永久链接至目标">¶</a></dt>
+<dd><p>Height of row in EMU.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="cell-objects">
+<h2><a class="reference internal" href="#pptx.table._Cell" title="pptx.table._Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Cell</span></code></a> objects<a class="headerlink" href="#cell-objects" title="永久链接至标题">¶</a></h2>
+<p>A <a class="reference internal" href="#pptx.table._Cell" title="pptx.table._Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Cell</span></code></a> object represents a single table cell at a particular row/column
+location in the table. <a class="reference internal" href="#pptx.table._Cell" title="pptx.table._Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Cell</span></code></a> objects are not constructed directly. A
+reference to a <a class="reference internal" href="#pptx.table._Cell" title="pptx.table._Cell"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Cell</span></code></a> object is obtained using the <a class="reference internal" href="#pptx.table.Table.cell" title="pptx.table.Table.cell"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Table.cell()</span></code></a> method,
+specifying the cell’s row/column location. A cell object can also be obtained
+using the <a class="reference internal" href="#pptx.table._Row.cells" title="pptx.table._Row.cells"><code class="xref py py-attr docutils literal notranslate"><span class="pre">_Row.cells</span></code></a> collection.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.table._Cell">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.table.</span></span><span class="sig-name descname"><span class="pre">_Cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/table.html#_Cell"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table._Cell" title="永久链接至目标">¶</a></dt>
+<dd><p>Table cell</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.table._Cell.fill">
+<span class="sig-name descname"><span class="pre">fill</span></span><a class="reference internal" href="../_modules/pptx/table.html#_Cell.fill"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table._Cell.fill" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="dml.html#pptx.dml.fill.FillFormat" title="pptx.dml.fill.FillFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">FillFormat</span></code></a> instance for this cell, providing access to fill
+properties such as foreground color.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.is_merge_origin">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_merge_origin</span></span><a class="headerlink" href="#pptx.table._Cell.is_merge_origin" title="永久链接至目标">¶</a></dt>
+<dd><p>True if this cell is the top-left grid cell in a merged cell.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.is_spanned">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_spanned</span></span><a class="headerlink" href="#pptx.table._Cell.is_spanned" title="永久链接至目标">¶</a></dt>
+<dd><p>True if this cell is spanned by a merge-origin cell.</p>
+<p>A merge-origin cell “spans” the other grid cells in its merge range,
+consuming their area and “shadowing” the spanned grid cells.</p>
+<p>Note this value is <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> for a merge-origin cell. A merge-origin
+cell spans other grid cells, but is not itself a spanned cell.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.margin_left">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margin_left</span></span><a class="headerlink" href="#pptx.table._Cell.margin_left" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write integer value of left margin of cell as a <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a> value
+object. If assigned <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>, the default value is used, 0.1 inches for
+left and right margins and 0.05 inches for top and bottom.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.margin_right">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margin_right</span></span><a class="headerlink" href="#pptx.table._Cell.margin_right" title="永久链接至目标">¶</a></dt>
+<dd><p>Right margin of cell.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.margin_top">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margin_top</span></span><a class="headerlink" href="#pptx.table._Cell.margin_top" title="永久链接至目标">¶</a></dt>
+<dd><p>Top margin of cell.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.margin_bottom">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">margin_bottom</span></span><a class="headerlink" href="#pptx.table._Cell.margin_bottom" title="永久链接至目标">¶</a></dt>
+<dd><p>Bottom margin of cell.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.table._Cell.merge">
+<span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_cell</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/table.html#_Cell.merge"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table._Cell.merge" title="永久链接至目标">¶</a></dt>
+<dd><p>Create merged cell from this cell to <em>other_cell</em>.</p>
+<p>This cell and <em>other_cell</em> specify opposite corners of the merged
+cell range. Either diagonal of the cell region may be specified in
+either order, e.g. self=bottom-right, other_cell=top-left, etc.</p>
+<p>Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> if the specified range already contains merged
+cells anywhere within its extents or if <em>other_cell</em> is not in the
+same table as <em>self</em>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.span_height">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">span_height</span></span><a class="headerlink" href="#pptx.table._Cell.span_height" title="永久链接至目标">¶</a></dt>
+<dd><p>int count of rows spanned by this cell.</p>
+<p>The value of this property may be misleading (often 1) on cells where
+<cite>.is_merge_origin</cite> is not <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>, since only a merge-origin cell
+contains complete span information. This property is only intended
+for use on cells known to be a merge origin by testing
+<cite>.is_merge_origin</cite>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.span_width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">span_width</span></span><a class="headerlink" href="#pptx.table._Cell.span_width" title="永久链接至目标">¶</a></dt>
+<dd><p>int count of columns spanned by this cell.</p>
+<p>The value of this property may be misleading (often 1) on cells where
+<cite>.is_merge_origin</cite> is not <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>, since only a merge-origin cell
+contains complete span information. This property is only intended
+for use on cells known to be a merge origin by testing
+<cite>.is_merge_origin</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.table._Cell.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/table.html#_Cell.split"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.table._Cell.split" title="永久链接至目标">¶</a></dt>
+<dd><p>Remove merge from this (merge-origin) cell.</p>
+<p>The merged cell represented by this object will be “unmerged”,
+yielding a separate unmerged cell for each grid cell previously
+spanned by this merge.</p>
+<p>Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> when this cell is not a merge-origin cell. Test
+with <cite>.is_merge_origin</cite> before calling.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.text">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text</span></span><a class="headerlink" href="#pptx.table._Cell.text" title="永久链接至目标">¶</a></dt>
+<dd><p>Unicode (str in Python 3) representation of cell contents.</p>
+<p>The returned string will contain a newline character (<code class="docutils literal notranslate"><span class="pre">&quot;\n&quot;</span></code>) separating each
+paragraph and a vertical-tab (<code class="docutils literal notranslate"><span class="pre">&quot;\v&quot;</span></code>) character for each line break (soft
+carriage return) in the cell’s text.</p>
+<p>Assignment to <em>text</em> replaces all text currently contained in the cell. A
+newline character (<code class="docutils literal notranslate"><span class="pre">&quot;\n&quot;</span></code>) in the assigned text causes a new paragraph to be
+started. A vertical-tab (<code class="docutils literal notranslate"><span class="pre">&quot;\v&quot;</span></code>) character in the assigned text causes
+a line-break (soft carriage-return) to be inserted. (The vertical-tab character
+appears in clipboard text copied from PowerPoint as its encoding of
+line-breaks.)</p>
+<p>Either bytes (Python 2 str) or unicode (Python 3 str) can be assigned. Bytes can
+be 7-bit ASCII or UTF-8 encoded 8-bit bytes. Bytes values are converted to
+unicode assuming UTF-8 encoding (which correctly decodes ASCII).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.text_frame">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text_frame</span></span><a class="headerlink" href="#pptx.table._Cell.text_frame" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="text.html#pptx.text.text.TextFrame" title="pptx.text.text.TextFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextFrame</span></code></a> instance containing the text that appears in the cell.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.table._Cell.vertical_anchor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vertical_anchor</span></span><a class="headerlink" href="#pptx.table._Cell.vertical_anchor" title="永久链接至目标">¶</a></dt>
+<dd><p>Vertical alignment of this cell.</p>
+<p>This value is a member of the <a class="reference internal" href="enum/MsoVerticalAnchor.html#msoverticalanchor"><span class="std std-ref">MSO_VERTICAL_ANCHOR</span></a> enumeration or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>. A value of <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates the cell has no explicitly
+applied vertical anchor setting and its effective value is inherited
+from its style-hierarchy ancestors.</p>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> to this property causes any explicitly applied
+vertical anchor setting to be cleared and inheritance of its
+effective value to be restored.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Table-related objects</a><ul>
+<li><a class="reference internal" href="#table-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code> objects</a></li>
+<li><a class="reference internal" href="#column-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Column</span></code> objects</a></li>
+<li><a class="reference internal" href="#row-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Row</span></code> objects</a></li>
+<li><a class="reference internal" href="#cell-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Cell</span></code> objects</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="placeholders.html"
+                          title="上一章">Placeholders</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="chart-data.html"
+                          title="下一章">ChartData objects</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="chart-data.html" title="ChartData objects"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="placeholders.html" title="Placeholders"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Table-related objects</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

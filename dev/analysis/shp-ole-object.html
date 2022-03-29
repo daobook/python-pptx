@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Shape - OLE Object &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Movie" href="shp-movie.html" />
+    <link rel="prev" title="Graphic Frame" href="shp-graphfrm.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="shp-movie.html" title="Movie"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="shp-graphfrm.html" title="Graphic Frame"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Shape - OLE Object</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="shape-ole-object">
+<h1>Shape - OLE Object<a class="headerlink" href="#shape-ole-object" title="永久链接至标题">¶</a></h1>
+<p>An embedded Excel worksheet can appear as a shape on a slide. The shape itself is a
+graphics-frame, in which the worksheet “file” is embedded. The Excel binary appears as
+an additional part in the package. Other file types such as DOCX and PDF can also be
+embedded in a similar way.</p>
+<p>Support for different file (object) types is OS dependent. For example, there is no
+support for embedded PPTX objects on MacOS although there is for Windows. Excel (XLSX)
+and Word (DOCX) are the two common denominators.</p>
+<section id="proposed-protocol">
+<h2>Proposed protocol<a class="headerlink" href="#proposed-protocol" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">PROG_ID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shapes</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shapes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_ole_object</span><span class="p">(</span>
+<span class="go">        &quot;worksheet.xlsx&quot;, PROG_ID.EXCEL, left, top, width, height</span>
+<span class="go">    )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span>
+<span class="go">&lt;pptx.shapes.graphfrm.GraphicFrame instance at 0x00000008&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">shape_type</span>
+<span class="go">MSO_SHAPE_TYPE.EMBEDDED_OLE_OBJECT</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ole_format</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">ole_format</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ole_format</span>
+<span class="go">&lt;pptx.shapes.graphfrm._OleFormat instance at 0x00000010&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ole_format</span><span class="o">.</span><span class="n">blob</span>
+<span class="go">&lt;bytes instance at 0x00000018&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ole_format</span><span class="o">.</span><span class="n">prog_id</span>
+<span class="go">&#39;Excel.Sheet.12&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ole_format</span><span class="o">.</span><span class="n">show_as_icon</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</section>
+<section id="powerpoint-ui-behaviors">
+<h2>PowerPoint UI behaviors<a class="headerlink" href="#powerpoint-ui-behaviors" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p><strong>Insert a blank object.</strong> PowerPoint allows a “new”, blank OLE object to be inserted by
+selecting the type. The available types appear to be determined by a set of
+“registered” OLE server applications.</p>
+<p>This behavior seems quite bound to some user interaction to fill out the object and in
+any case is outside the abilities of <cite>python-pptx</cite> running on an arbitrary OS. This
+behavior will have no counterpart in <cite>python-pptx</cite>. Only the “insert-from-file” mode
+will be available in <cite>python-pptx</cite>.</p>
+</li>
+<li><p><strong>Auto-detect `progId` from file.</strong> When the “insert-from-file” option is chosen,
+PowerPoint automatically detects the <cite>progId</cite> (str OLE server identifier, intuitively
+“file-type”) for the inserted file.</p>
+<p>This would be a lot of work for <cite>python-pptx</cite> to accomplish and in the end would be
+partial at best. The base case would be that <cite>python-pptx</cite> requires <cite>progId</cite> to be
+specified by the caller. <cite>python-pptx</cite> will provide an Enum that provides ready access
+to common str <cite>progId</cite> cases like Excel Worksheet, Word Document, and PowerPoint
+Presentation. Other cases could be resolved by experimentation and inspecting the XML
+to determine the appropriate str <cite>progId</cite> value.</p>
+</li>
+<li><p><strong>Show as preview.</strong> PowerPoint allows the option to show the embedded object as
+either a “preview” of the content or as an icon. The preview is an image (EMF for XLSX
+and perhaps other MS Office applications) and I expect it is provided by the OLE
+server application (Excel in the XLSX case) which renders to an image instead of
+rendering to the screen.</p>
+<p><cite>python-pptx</cite> has no access to an OLE server and therefore cannot request this image.
+Only the “display as icon” mode will be supported in <cite>python-pptx</cite>. For this reason,
+the <cite>python-pptx</cite> call will have no <cite>display_as_icon</cite> parameter and that “value” will
+always be True.</p>
+</li>
+<li><p><strong>User-selectable and partially-generated icon.</strong> When “display-as-icon” is selected,
+PowerPoint generates a composite icon that combines a graphical icon and a caption.
+Together, these typically look like a file icon that appears on the user’s desktop,
+except the file-name portion is a generic file-type name like “Microsoft Excel
+Workbook”.</p>
+<p>The icon portion can be replaced with an arbitrary icon selected by the user (Windows
+only). The icon can be selected from a <cite>.ico</cite> file or an icon library or from the
+resource area of an <cite>.exe</cite> file.</p>
+<p>The resulting image in the PPTX package is a Windows Meta File (WMF/EMF), a vector
+format, perhaps to allow smooth scaling.</p>
+<p>In the general case (i.e. non-Windows OS), <cite>python-pptx</cite> has neither the option of
+extracting icons from an arbitrary icon or resource library or</p>
+</li>
+<li><p><strong>Link to file rather than embed.</strong> When inserting an object from a file, a user can
+choose to link the selected file rather than embed it. This option appears in the
+Windows version only.</p>
+<p>The only difference in the slide XML is the appearance of a <cite>&lt;p:link&gt;</cite> element under
+<cite>&lt;p:oleObj&gt;</cite> rather than a <cite>&lt;p:embed&gt;</cite> element. In this case, the relationship
+referred to by <cite>r:id</cite> attribute of <cite>p:oleObj</cite> is an external link to the target file
+and no OLE object part is added to the PPTX package.</p>
+</li>
+<li><p><strong>Auto-position and size.</strong> In the PowerPoint UI, the OLE object is inserted at a
+fixed size and in a default location. Afterward the shape can be repositioned and
+resized to suit. In the API, the position and size are specified in the call.</p></li>
+</ul>
+</section>
+<section id="ms-api-protocol">
+<h2>MS API Protocol<a class="headerlink" href="#ms-api-protocol" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Shapes</span><span class="o">.</span><span class="n">AddOLEObject</span><span class="p">(</span>
+    <span class="n">Left</span><span class="p">,</span> <span class="n">Top</span><span class="p">,</span> <span class="n">Width</span><span class="p">,</span> <span class="n">Height</span><span class="p">,</span>
+    <span class="n">ClassName</span><span class="p">,</span>
+    <span class="n">FileName</span><span class="p">,</span>
+    <span class="n">DisplayAsIcon</span><span class="p">,</span>
+    <span class="n">IconFileName</span><span class="p">,</span>
+    <span class="n">IconIndex</span><span class="p">,</span>
+    <span class="n">IconLabel</span><span class="p">,</span>
+    <span class="n">Link</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ul>
+<li><p><cite>Left, Top, Width</cite> and <cite>Height</cite> specify the position and size of the graphic-frame
+object. They also specify the size of the icon image when <cite>display_as_icon</cite> is True
+and the size of the preview image when <cite>display_as_icon</cite> is False or omitted. These
+are all optional, and are determined by PowerPoint if not specified. I believe the
+shape is placed centered in the slide if the position is not specified and the size is
+determined by the icon or preview graphic if not specified.</p>
+<p>PowerPoint updates these values in the icon-image element to track those of the
+graphic-frame shape when the user changes the size of the graphic-frame shape, but it
+seems to ignore these values when they don’t agree.</p>
+</li>
+<li><p><cite>ClassName</cite> identifies the “file-type” or more precisely, the OLE server (program)
+used to “open” the embedded or linked file. This is used only when a new, empty object
+is being added because otherwise PowerPoint derives this from the file specified with
+<cite>FileName</cite></p>
+<p>This can be either the OLE long class name or the ProgID for the object that’s to be
+created, but a class-name ends up being converted to a ProgID. Either the ClassName or
+FileName argument for the object must be specified, but not both. ClassName triggers
+the “insert-newly-created-object” mode and FileName triggers “insert-existing-object”
+mode.</p>
+</li>
+<li><p><cite>DisplayAsIcon</cite> (optional boolean) determines whether the OLE object will be displayed
+as an icon or as a “preview”. The default is <cite>False</cite>.</p></li>
+<li><p><cite>IconFileName</cite> allows the user to specify an <em>icon file</em> containing the icon to
+display when <cite>DisplayAsIcon</cite> is <cite>True</cite>. If not specified, a default icon for the OLE
+class is used. Note that this file can contain a collection of images, which is why
+the <cite>IconIndex</cite> parameter is available. These icon files are Windows specific and
+would not typically be found in other operating systems.</p></li>
+<li><p><cite>IconIndex</cite> specifies the index of the desired icon within <cite>IconFileName</cite>. The first
+icon in the file has the index number 0 (zero). If an icon with the given index number
+doesn’t exist in IconFileName, the icon with the index number 1 (the second icon in
+the file) is used. The default value is 0 (zero).</p></li>
+<li><p><cite>IconLabel</cite> is a str label (caption) to be displayed beneath the icon. By default,
+this is like “Microsoft Excel Worksheet”. This caption is integrated into the
+specified “display-as-icon” image.</p></li>
+<li><p><cite>Link</cite> is a boolean flag that determines whether the OLE object will be linked to the
+file from which it was created (rather than embedded). If you specified a value for
+ClassName, this argument must be msoFalse (linking is not an option in
+“insert-newly-created-object” mode).</p></li>
+</ul>
+</section>
+<section id="candiate-protocol">
+<h2>Candiate protocol<a class="headerlink" href="#candiate-protocol" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SlideShapes</span><span class="o">.</span><span class="n">add_ole_object</span><span class="p">(</span>
+    <span class="n">object_file</span><span class="p">,</span>
+    <span class="n">prog_id</span><span class="p">,</span>
+    <span class="n">left</span><span class="p">,</span>
+    <span class="n">top</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">icon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">link</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><cite>python-pptx</cite> only supports adding an OLE object in “display-as-icon” mode. It has no
+way of soliciting a preview image from an OLE server application, so that option is not
+practical for us.</p>
+<ul>
+<li><p><cite>object_file</cite> is the file containing the object to be inserted. It may be either a str
+path to the file or a (binary) file-like object (typically <cite>io.Bytes</cite>) containing the
+bytes of the file and implementing file-object semantics like <cite>.read()</cite> and <cite>.seek()</cite>.</p></li>
+<li><p><cite>prog_id</cite> is a PROG_ID Enum member or str identifier like <cite>“Excel.Sheet.12”</cite>
+specifying the “type” of the object in terms of what application is used to “open” it.
+In Microsoft parlance, this identifies the OLE server called upon to operate on this
+object.</p>
+<p>The <cite>pptx.enum.shapes.PROG_ID</cite> enumeration defines these values for common cases like
+an Excel workbook, an Word document, or another PowerPoint presentation. Probably we
+should also include PDFs and any other common cases we can think of.</p>
+<p>A regular <cite>str</cite> value can be discovered by inspecting the XML of an example
+presentation and these will work just the same as a <cite>PROG_ID</cite> Enum value, allowing
+ready expansion to other OLE object types.</p>
+<p>I expect that a file of any type could be included, even if it doesn’t have an OLE
+server application and it could then at least be accessed via <cite>python-pptx</cite>, although
+I don’t suppose it would do anything useful from the PowerPoint UI. In any case, I
+don’t believe it would raise an error and there wouldn’t be anything we could (or
+would probably want) to do to stop someone from doing that.</p>
+</li>
+<li><p><cite>left</cite> and <cite>top</cite> are each an Emu object (or an int interpreted as Emu) and specify the
+position of the inserted-object shape.</p></li>
+<li><p><cite>width</cite> and <cite>height</cite> are optional Emu/int objects and together specify the size of the
+graphic-frame object. Their use is not required and perhaps even discouraged unless
+the defaults of 1.00” (914400 EMU) wide and .84” (771480 EMU) tall do not suit for
+some reason, perhaps because the provided icon image is a non-standard size. The
+default size is that when a user inserts an object displayed as an icon in the
+PowerPoint UI and I at least have been unable to make it look better by resizing it.</p></li>
+<li><p><cite>icon</cite> is an arbitrary image that appears in the graphic-frame object in lieu of the
+inserted object. It is optional, because a default icon is provided for each of the
+members of <cite>PROG_ID</cite> and this image need not be specified when <cite>prog_id</cite> is an
+instance of <cite>PROG_ID</cite>. Like an image object used in <cite>SlideShapes.add_picture()</cite>, this
+object can be either a <cite>str</cite> path or a file-like object (typically <cite>io.BytesIO</cite>)
+containing the image.</p>
+<p>This parameter is technically optional, but is required when <cite>prog_id</cite> is not an
+member of <cite>PROG_ID</cite> (because in that case we have no default icon available). The
+caller can always specify a custom icon image, even when inserting an object type
+available in <cite>PROG_ID</cite>. In that case, the image provided is used instead of the
+default icon.</p>
+</li>
+<li><p><cite>link</cite> is a boolean indicating the object should be linked rather than embedded.
+Linking probably only works in a Windows environment. This option may not be
+implemented in the initial release and this parameter will not appear in that case.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shapes</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedded_xlsx_shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">AddOLEObject</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p>relationships:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39; standalone=&#39;yes&#39;?&gt;</span>
+<span class="nt">&lt;Relationships</span> <span class="na">xmlns=</span><span class="s">&quot;http://schemas.openxmlformats.org/package/2006/relationships&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Relationship</span> <span class="na">Id=</span><span class="s">&quot;x&quot;</span> <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/image&quot;</span> <span class="na">Target=</span><span class="s">&quot;../media/image4.emf&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;Relationship</span> <span class="na">Id=</span><span class="s">&quot;x&quot;</span> <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesSlide&quot;</span> <span class="na">Target=</span><span class="s">&quot;../notesSlides/notesSlide1.xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;Relationship</span> <span class="na">Id=</span><span class="s">&quot;x&quot;</span> <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/package&quot;</span> <span class="na">Target=</span><span class="s">&quot;../embeddings/Microsoft_Excel_Worksheet.xlsx&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;Relationship</span> <span class="na">Id=</span><span class="s">&quot;x&quot;</span> <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout&quot;</span> <span class="na">Target=</span><span class="s">&quot;../slideLayouts/slideLayout14.xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;Relationship</span> <span class="na">Id=</span><span class="s">&quot;x&quot;</span> <span class="na">Type=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing&quot;</span> <span class="na">Target=</span><span class="s">&quot;../drawings/vmlDrawing1.vml&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/Relationships&gt;</span>
+</pre></div>
+</div>
+<p>simple column chart:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:graphicFrame&gt;</span>
+  <span class="nt">&lt;p:nvGraphicFramePr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">name=</span><span class="s">&quot;Object 1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:extLst&gt;</span>
+        <span class="nt">&lt;a:ext</span> <span class="na">uri=</span><span class="s">&quot;{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a16:creationId</span> <span class="na">xmlns:a16=</span><span class="s">&quot;http://schemas.microsoft.com/office/drawing/2014/main&quot;</span> <span class="na">id=</span><span class="s">&quot;{9DA7C2C3-4766-419F-9ED0-2856E43424DD}&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:ext&gt;</span>
+      <span class="nt">&lt;/a:extLst&gt;</span>
+    <span class="nt">&lt;/p:cNvPr&gt;</span>
+    <span class="nt">&lt;p:cNvGraphicFramePr&gt;</span>
+      <span class="nt">&lt;a:graphicFrameLocks</span> <span class="na">noChangeAspect=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvGraphicFramePr&gt;</span>
+    <span class="nt">&lt;p:nvPr&gt;</span>
+      <span class="nt">&lt;p:extLst&gt;</span>
+        <span class="nt">&lt;p:ext</span> <span class="na">uri=</span><span class="s">&quot;{D42A27DB-BD31-4B8C-83A1-F6EECF244321}&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;p14:modId</span> <span class="na">xmlns:p14=</span><span class="s">&quot;http://schemas.microsoft.com/office/powerpoint/2010/main&quot;</span> <span class="na">val=</span><span class="s">&quot;2099550745&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/p:ext&gt;</span>
+      <span class="nt">&lt;/p:extLst&gt;</span>
+    <span class="nt">&lt;/p:nvPr&gt;</span>
+  <span class="nt">&lt;/p:nvGraphicFramePr&gt;</span>
+  <span class="nt">&lt;p:xfrm&gt;</span>
+    <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;1792101&quot;</span> <span class="na">y=</span><span class="s">&quot;2202989&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;659686&quot;</span> <span class="na">cy=</span><span class="s">&quot;1371600&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/p:xfrm&gt;</span>
+  <span class="nt">&lt;a:graphic&gt;</span>
+    <span class="nt">&lt;a:graphicData</span> <span class="na">uri=</span><span class="s">&quot;http://schemas.openxmlformats.org/presentationml/2006/ole&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;mc:AlternateContent</span> <span class="na">xmlns:mc=</span><span class="s">&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;mc:Choice</span> <span class="na">xmlns:v=</span><span class="s">&quot;urn:schemas-microsoft-com:vml&quot;</span> <span class="na">Requires=</span><span class="s">&quot;v&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;p:oleObj</span> <span class="na">spid=</span><span class="s">&quot;_x0000_s1058&quot;</span> <span class="na">name=</span><span class="s">&quot;Worksheet&quot;</span> <span class="na">showAsIcon=</span><span class="s">&quot;1&quot;</span> <span class="na">r:id=</span><span class="s">&quot;rId4&quot;</span> <span class="na">imgW=</span><span class="s">&quot;381148&quot;</span> <span class="na">imgH=</span><span class="s">&quot;792690&quot;</span> <span class="na">progId=</span><span class="s">&quot;Excel.Sheet.12&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;p:embed/&gt;</span>
+          <span class="nt">&lt;/p:oleObj&gt;</span>
+        <span class="nt">&lt;/mc:Choice&gt;</span>
+        <span class="nt">&lt;mc:Fallback&gt;</span>
+          <span class="nt">&lt;p:oleObj</span> <span class="na">name=</span><span class="s">&quot;Worksheet&quot;</span> <span class="na">showAsIcon=</span><span class="s">&quot;1&quot;</span> <span class="na">r:id=</span><span class="s">&quot;rId4&quot;</span> <span class="na">imgW=</span><span class="s">&quot;381148&quot;</span> <span class="na">imgH=</span><span class="s">&quot;792690&quot;</span> <span class="na">progId=</span><span class="s">&quot;Excel.Sheet.12&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;p:embed/&gt;</span>
+            <span class="nt">&lt;p:pic&gt;</span>
+              <span class="nt">&lt;p:nvPicPr&gt;</span>
+                <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;0&quot;</span> <span class="na">name=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;p:cNvPicPr/&gt;</span>
+                <span class="nt">&lt;p:nvPr/&gt;</span>
+              <span class="nt">&lt;/p:nvPicPr&gt;</span>
+              <span class="nt">&lt;p:blipFill&gt;</span>
+                <span class="nt">&lt;a:blip</span> <span class="na">r:embed=</span><span class="s">&quot;rId5&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;a:stretch&gt;</span>
+                  <span class="nt">&lt;a:fillRect/&gt;</span>
+                <span class="nt">&lt;/a:stretch&gt;</span>
+              <span class="nt">&lt;/p:blipFill&gt;</span>
+              <span class="nt">&lt;p:spPr&gt;</span>
+                <span class="nt">&lt;a:xfrm&gt;</span>
+                  <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;1792101&quot;</span> <span class="na">y=</span><span class="s">&quot;2202989&quot;</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;659686&quot;</span> <span class="na">cy=</span><span class="s">&quot;1371600&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/a:xfrm&gt;</span>
+                <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;rect&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;a:avLst/&gt;</span>
+                <span class="nt">&lt;/a:prstGeom&gt;</span>
+              <span class="nt">&lt;/p:spPr&gt;</span>
+            <span class="nt">&lt;/p:pic&gt;</span>
+          <span class="nt">&lt;/p:oleObj&gt;</span>
+        <span class="nt">&lt;/mc:Fallback&gt;</span>
+      <span class="nt">&lt;/mc:AlternateContent&gt;</span>
+    <span class="nt">&lt;/a:graphicData&gt;</span>
+  <span class="nt">&lt;/a:graphic&gt;</span>
+<span class="nt">&lt;/p:graphicFrame&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GraphicalObjectFrame&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nvGraphicFramePr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GraphicalObjectFrameNonVisual&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;xfrm&quot;</span>             <span class="na">type=</span><span class="s">&quot;a:CT_Transform2D&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">ref=</span><span class="s">&quot;a:graphic&quot;</span><span class="nt">/&gt;</span>  <span class="cm">&lt;!-- type=&quot;CT_GraphicalObject&quot; --&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bwMode&quot;</span> <span class="na">type=</span><span class="s">&quot;a:ST_BlackWhiteMode&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GraphicalObjectFrameNonVisual&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cNvPr&quot;</span>             <span class="na">type=</span><span class="s">&quot;a:CT_NonVisualDrawingProps&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cNvGraphicFramePr&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_NonVisualGraphicFrameProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nvPr&quot;</span>              <span class="na">type=</span><span class="s">&quot;CT_ApplicationNonVisualDrawingProps&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NonVisualGraphicFrameProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;graphicFrameLocks&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GraphicalObjectFrameLocking&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GraphicalObjectFrameLocking&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;noGrp&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;noDrilldown&quot;</span>    <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;noSelect&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;noChangeAspect&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;noMove&quot;</span>         <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;noResize&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GraphicalObject&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;graphicData&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GraphicalObjectData&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_GraphicalObjectData&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:any</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span> <span class="na">processContents=</span><span class="s">&quot;strict&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="cm">&lt;!-- contains &quot;http://schemas.openxmlformats.org/presentationml/2006/ole&quot; for an</span>
+<span class="cm">       OLE-object graphic-frame --&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;uri&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:token&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;oleObj&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OleObject&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_OleObject&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;embed&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OleObjectEmbed&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;link&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OleObjectLink&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pic&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Picture&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spid&quot;</span> <span class="na">type=</span><span class="s">&quot;a:ST_ShapeID&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showAsIcon&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">ref=</span><span class="s">&quot;r:id&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;imgW&quot;</span> <span class="na">type=</span><span class="s">&quot;a:ST_PositiveCoordinate32&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;imgH&quot;</span> <span class="na">type=</span><span class="s">&quot;a:ST_PositiveCoordinate32&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;progId&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_OleObjectEmbed&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;followColorScheme&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_OleObjectFollowColorScheme&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span>
+    <span class="na">default=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Shape - OLE Object</a><ul>
+<li><a class="reference internal" href="#proposed-protocol">Proposed protocol</a></li>
+<li><a class="reference internal" href="#powerpoint-ui-behaviors">PowerPoint UI behaviors</a></li>
+<li><a class="reference internal" href="#ms-api-protocol">MS API Protocol</a></li>
+<li><a class="reference internal" href="#candiate-protocol">Candiate protocol</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="shp-graphfrm.html"
+                          title="上一章">Graphic Frame</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="shp-movie.html"
+                          title="下一章">Movie</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="shp-movie.html" title="Movie"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="shp-graphfrm.html" title="Graphic Frame"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Shape - OLE Object</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Slide &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Slide Master" href="sld-master.html" />
+    <link rel="prev" title="Base Slide" href="sld-base.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="sld-master.html" title="Slide Master"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="sld-base.html" title="Base Slide"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Slide</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="slide">
+<span id="id1"></span><h1>Slide<a class="headerlink" href="#slide" title="永久链接至标题">¶</a></h1>
+<p>A slide is the fundamental visual content container in a presentation, that
+content taking the form of shape objects.</p>
+<p>The slides in a presentation are owned by the presentation object. In
+particular, the unique identifier of a slide, the slide id, is assigned and
+managed by the presentation part, and is not recorded in the slide XML.</p>
+<p>A slide master and slide layout are both closely related to slide and the three
+share the majority of their properties and behaviors.</p>
+<section id="slide-id">
+<h2>Slide ID<a class="headerlink" href="#slide-id" title="永久链接至标题">¶</a></h2>
+<p>PowerPoint assigns a unique integer identifier to a slide when it is created.
+Note that this identifier is only present in the presentation part, and maps
+to a relationship ID; it is not recorded in the XML of the slide itself.
+Therefore the identifier is only unique within a presentation. The ID takes
+the form of an integer starting at 256 and incrementing by one for each new
+slide. Changing the ordering of the slides does not change the id. The id of
+a deleted slide is not reused, although I’m not sure whether it’s clever
+enough not to reuse the id of the last added slide when it’s been deleted as
+there doesn’t seem to be any record in the XML of the max value assigned.</p>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p>Example presentation XML showing sldIdLst:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:presentation</span>
+    <span class="na">xmlns:a=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot;</span>
+    <span class="na">xmlns:p=</span><span class="s">&quot;http://schemas.openxmlformats.org/presentationml/2006/main&quot;</span>
+    <span class="na">xmlns:r=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;</span>
+    <span class="nt">&gt;</span>
+  <span class="nt">&lt;p:sldMasterIdLst&gt;</span>
+    <span class="nt">&lt;p:sldMasterId</span> <span class="na">id=</span><span class="s">&quot;2147483648&quot;</span> <span class="na">r:id=</span><span class="s">&quot;rId1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/p:sldMasterIdLst&gt;</span>
+
+  <span class="nt">&lt;p:sldIdLst&gt;</span>
+    <span class="nt">&lt;p:sldId</span> <span class="na">r:id=</span><span class="s">&quot;rId7&quot;</span> <span class="na">id=</span><span class="s">&quot;256&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/p:sldIdLst&gt;</span>
+
+  <span class="nt">&lt;p:sldSz</span> <span class="na">cx=</span><span class="s">&quot;12192000&quot;</span> <span class="na">cy=</span><span class="s">&quot;6858000&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;p:notesSz</span> <span class="na">cx=</span><span class="s">&quot;6858000&quot;</span> <span class="na">cy=</span><span class="s">&quot;9144000&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/p:presentation&gt;</span>
+</pre></div>
+</div>
+<p>Example slide contents:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39; standalone=&#39;yes&#39;?&gt;</span>
+<span class="nt">&lt;p:sld</span>
+    <span class="na">xmlns:a=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot;</span>
+    <span class="na">xmlns:p=</span><span class="s">&quot;http://schemas.openxmlformats.org/presentationml/2006/main&quot;</span>
+    <span class="na">xmlns:r=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;</span>
+    <span class="nt">&gt;</span>
+  <span class="nt">&lt;p:cSld&gt;</span>
+    <span class="nt">&lt;p:spTree&gt;</span>
+      <span class="nt">&lt;p:nvGrpSpPr&gt;</span>
+        <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">name=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;p:cNvGrpSpPr/&gt;</span>
+        <span class="nt">&lt;p:nvPr/&gt;</span>
+      <span class="nt">&lt;/p:nvGrpSpPr&gt;</span>
+      <span class="nt">&lt;p:grpSpPr/&gt;</span>
+      <span class="nt">&lt;p:graphicFrame&gt;</span>
+        <span class="nt">&lt;p:nvGraphicFramePr&gt;</span>
+          <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">name=</span><span class="s">&quot;Chart 1&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;p:cNvGraphicFramePr&gt;</span>
+            <span class="nt">&lt;a:graphicFrameLocks</span> <span class="na">noGrp=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/p:cNvGraphicFramePr&gt;</span>
+          <span class="nt">&lt;p:nvPr/&gt;</span>
+        <span class="nt">&lt;/p:nvGraphicFramePr&gt;</span>
+        <span class="nt">&lt;p:xfrm&gt;</span>
+          <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;3801533&quot;</span> <span class="na">y=</span><span class="s">&quot;956733&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;8128000&quot;</span> <span class="na">cy=</span><span class="s">&quot;5418667&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/p:xfrm&gt;</span>
+        <span class="nt">&lt;a:graphic&gt;</span>
+          <span class="nt">&lt;a:graphicData</span> <span class="na">uri=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/chart&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;c:chart</span> <span class="na">xmlns:c=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/chart&quot;</span> <span class="na">r:id=</span><span class="s">&quot;rId2&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/a:graphicData&gt;</span>
+        <span class="nt">&lt;/a:graphic&gt;</span>
+      <span class="nt">&lt;/p:graphicFrame&gt;</span>
+    <span class="nt">&lt;/p:spTree&gt;</span>
+  <span class="nt">&lt;/p:cSld&gt;</span>
+  <span class="nt">&lt;p:clrMapOvr&gt;</span>
+    <span class="nt">&lt;a:masterClrMapping/&gt;</span>
+  <span class="nt">&lt;/p:clrMapOvr&gt;</span>
+<span class="nt">&lt;/p:sld&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="schema-excerpt">
+<h2>Schema excerpt<a class="headerlink" href="#schema-excerpt" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sld&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Slide&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Slide&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cSld&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_CommonSlideData&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;clrMapOvr&quot;</span>  <span class="na">type=</span><span class="s">&quot;a:CT_ColorMappingOverride&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;transition&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SlideTransition&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;timing&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_SlideTiming&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showMasterSp&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showMasterPhAnim&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;show&quot;</span>             <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Presentation&quot;</span><span class="nt">&gt;</span>
+  <span class="cm">&lt;!-- ... --&gt;</span>
+  <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sldIdLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SlideIdList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="cm">&lt;!-- ... --&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_SlideIdList&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sldId&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SlideIdListEntry&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_SlideIdListEntry&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_SlideId&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">ref=</span><span class="s">&quot;r:id&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_CommonSlideData&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bg&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Background&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spTree&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_GroupShape&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custDataLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_CustomerDataList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;controls&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ControlList&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Background&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bgPr&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_BackgroundProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bgRef&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_StyleMatrixReference&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bwMode&quot;</span> <span class="na">type=</span><span class="s">&quot;a:ST_BlackWhiteMode&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;white&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_BackgroundProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;a:EG_FillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;a:EG_EffectProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;shadeToTitle&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_SlideId&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:unsignedInt&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;256&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxExclusive</span> <span class="na">value=</span><span class="s">&quot;2147483648&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Slide</a><ul>
+<li><a class="reference internal" href="#slide-id">Slide ID</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#schema-excerpt">Schema excerpt</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="sld-base.html"
+                          title="上一章">Base Slide</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="sld-master.html"
+                          title="下一章">Slide Master</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="sld-master.html" title="Slide Master"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="sld-base.html" title="Base Slide"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Slide</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

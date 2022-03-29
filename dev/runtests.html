@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Running the test suite &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Understanding xmlchemy" href="xmlchemy.html" />
+    <link rel="prev" title="Excel Number Formats" href="../api/enum/ExcelNumFormat.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="xmlchemy.html" title="Understanding xmlchemy"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../api/enum/ExcelNumFormat.html" title="Excel Number Formats"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Running the test suite</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="running-the-test-suite">
+<h1>Running the test suite<a class="headerlink" href="#running-the-test-suite" title="永久链接至标题">¶</a></h1>
+<p><cite>python-pptx</cite> has a robust test suite, comprising over 600 tests at the time of writing,
+both at the acceptance test and unit test levels. <code class="docutils literal notranslate"><span class="pre">pytest</span></code> is used for unit
+tests, with help from the excellent <code class="docutils literal notranslate"><span class="pre">mock</span></code> library. <code class="docutils literal notranslate"><span class="pre">behave</span></code> is used for
+acceptance tests.</p>
+<p>You can run the tests from the source working directory using the following
+commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ py.test
+============================ test session starts ============================
+platform darwin -- Python 2.7.5 -- pytest-2.4.2
+plugins: cov
+collected 301 items
+
+tests/test_oxml.py .........................................
+tests/test_presentation.py ...................
+tests/test_spec.py ........
+tests/test_text.py ..........................
+tests/test_util.py ...............
+tests/opc/test_packaging.py .....................................................
+tests/opc/test_rels.py ..............
+tests/parts/test_coreprops.py .
+tests/parts/test_image.py ...........
+tests/parts/test_part.py ........
+tests/parts/test_slides.py ..................
+tests/shapes/test_autoshape.py ....................
+tests/shapes/test_picture.py .
+tests/shapes/test_placeholder.py .
+tests/shapes/test_shape.py ...........
+tests/shapes/test_shapetree.py ..............
+tests/shapes/test_table.py ........................................
+
+======================= 301 passed in 2.00 seconds ======================
+
+$ behave
+Feature: Add a text box to a slide
+  In order to accommodate a requirement for free-form text on a slide
+  As a presentation developer
+  I need the ability to place a text box on a slide
+
+  Scenario: Add a text box to a slide
+    Given I have a reference to a blank slide
+    When I add a text box to the slide&#39;s shape collection
+    And I save the presentation
+    Then the text box appears in the slide
+
+# ... more output ...
+
+13 features passed, 0 failed, 0 skipped
+30 scenarios passed, 0 failed, 0 skipped
+120 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m1.3s
+</pre></div>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="../api/enum/ExcelNumFormat.html"
+                          title="上一章">Excel Number Formats</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="xmlchemy.html"
+                          title="下一章">Understanding <code class="docutils literal notranslate"><span class="pre">xmlchemy</span></code></a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="xmlchemy.html" title="Understanding xmlchemy"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../api/enum/ExcelNumFormat.html" title="Excel Number Formats"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Running the test suite</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

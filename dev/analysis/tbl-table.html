@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Table &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="How table styles work" href="tbl-table-style.html" />
+    <link rel="prev" title="Cell Merge" href="tbl-merge.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="tbl-table-style.html" title="How table styles work"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="tbl-merge.html" title="Cell Merge"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Table</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="table">
+<span id="id1"></span><h1>Table<a class="headerlink" href="#table" title="永久链接至标题">¶</a></h1>
+<p>One of the shapes available for placing on a PowerPoint slide is the <em>table</em>.
+As shapes go, it is one of the more complex. In addition to having standard
+shape properties such as position and size, it contains what amount to
+sub-shapes that each have properties of their own. Prominent among these
+sub-element types are row, column, and cell.</p>
+<section id="table-properties">
+<h2>Table Properties<a class="headerlink" href="#table-properties" title="永久链接至标题">¶</a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">first_row</span></code></dt><dd><p>read/write boolean property which, when true, indicates the first row should
+be formatted differently, as for a heading row at the top of the table.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">first_col</span></code></dt><dd><p>read/write boolean property which, when true, indicates the first column
+should be formatted differently, as for a side-heading column at the far
+left of the table.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">last_row</span></code></dt><dd><p>read/write boolean property which, when true, indicates the last row should
+be formatted differently, as for a totals row at the bottom of the table.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">last_col</span></code></dt><dd><p>read/write boolean property which, when true, indicates the last column
+should be formatted differently, as for a side totals column at the far
+right of the table.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">horz_banding</span></code></dt><dd><p>read/write boolean property indicating whether alternate color “banding”
+should be applied to the body rows.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vert_banding</span></code></dt><dd><p>read/write boolean property indicating whether alternate color “banding”
+should be applied to the table columns.</p>
+</dd>
+</dl>
+</section>
+<section id="powerpoint-ui-behavior">
+<h2>PowerPoint UI behavior<a class="headerlink" href="#powerpoint-ui-behavior" title="永久链接至标题">¶</a></h2>
+<p>The MS PowerPoint® client exhibits the following behavior related to table
+properties:</p>
+<dl class="simple">
+<dt>Upon insertion of a default, empty table</dt><dd><p><cite>&lt;a:tblPr firstRow=”1” bandRow=”1”&gt;</cite> A <cite>tblPr</cite> element is present with a
+<cite>firstRow</cite> and <cite>bandRow</cite> attribute, each set to True.</p>
+</dd>
+<dt>After setting <cite>firstRow</cite> property off</dt><dd><p><cite>&lt;a:tblPr bandRow=”1”&gt;</cite> The <cite>firstRow</cite> attribute is removed, not set to
+<cite>0</cite> or <cite>false</cite>.</p>
+</dd>
+</dl>
+<p>The <cite>&lt;a:tblPr&gt;</cite> element is always present, even when it contains no
+attributes, because it contains an <cite>&lt;a:tableStyleId&gt;</cite> element, even when the
+table style is set to none using the UI.</p>
+</section>
+<section id="api-requirements">
+<h2>API requirements<a class="headerlink" href="#api-requirements" title="永久链接至标题">¶</a></h2>
+<section id="table-class">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code> class<a class="headerlink" href="#table-class" title="永久链接至标题">¶</a></h3>
+<p>Properties and methods required for a <code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code> shape.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">apply_style(style_id)</span></code> – change the style of the table. Not sure what the
+domain of <code class="docutils literal notranslate"><span class="pre">style_id</span></code> is.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cell(row,</span> <span class="pre">col)</span></code> – method to access an individual <code class="xref py py-class docutils literal notranslate"><span class="pre">_Cell</span></code> object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">columns</span></code> – collection of <code class="xref py py-class docutils literal notranslate"><span class="pre">_Column</span></code> objects, each corresponding to
+a column in the table, in left-to-right order.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">first_col</span></code> – read/write boolean property which, when true, indicates the
+first column should be formatted differently, as for a side-heading column at
+the far left of the table.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">first_row</span></code> – read/write boolean property which, when true, indicates the
+first row should be formatted differently, as for a heading row at the top of
+the table.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">horz_banding</span></code> – read/write boolean property indicating whether alternate
+color “banding” should be applied to the body rows.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">last_col</span></code> – read/write boolean property which, when true, indicates the
+last column should be formatted differently, as for a side totals column at
+the far right of the table.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">last_row</span></code> – read/write boolean property which, when true, indicates the
+last row should be formatted differently, as for a totals row at the bottom
+of the table.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rows</span></code> – collection of <code class="xref py py-class docutils literal notranslate"><span class="pre">_Row</span></code> objects, each corresponding to a row in the
+table, in top-to-bottom order.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vert_banding</span></code> – read/write boolean property indicating whether alternate
+color “banding” should be applied to the table columns.</p></li>
+</ul>
+</section>
+<section id="cell-class">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">_Cell</span></code> class<a class="headerlink" href="#cell-class" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">text_frame</span></code> – container for text in the cell.</p></li>
+<li><p>borders, something like LineProperties on each side</p></li>
+<li><p>inset (margins)</p></li>
+<li><p>anchor and anchor_center</p></li>
+<li><p>horzOverflow, not sure what this is exactly, maybe wrap or auto-resize to
+fit.</p></li>
+</ul>
+</section>
+<section id="column-class">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">_Column</span></code> class<a class="headerlink" href="#column-class" title="永久链接至标题">¶</a></h3>
+<p>Provide the properties and methods appropriate to a table column.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code> – read/write integer width of the column in English Metric Units</p></li>
+<li><p>perhaps <code class="docutils literal notranslate"><span class="pre">delete()</span></code> method</p></li>
+</ul>
+</section>
+<section id="columncollection-class">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">_ColumnCollection</span></code> class<a class="headerlink" href="#columncollection-class" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">add(before)</span></code> – add a new column to the left of the column having index
+<em>before</em>, returning a reference to the new column. <em>before</em> defaults to
+<code class="docutils literal notranslate"><span class="pre">-1</span></code>, which adds the column as the last column in the table.</p></li>
+</ul>
+</section>
+<section id="row-class">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">_Row</span></code> class<a class="headerlink" href="#row-class" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code> – read/write integer height of the row in English Metric Units
+(EMU).</p></li>
+</ul>
+</section>
+<section id="rowcollection-class">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">_RowCollection</span></code> class<a class="headerlink" href="#rowcollection-class" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">add(before)</span></code> – add a new row before the row having index <em>before</em>,
+returning a reference to the new row. <em>before</em> defaults to <code class="docutils literal notranslate"><span class="pre">-1</span></code>, which adds
+the row as the last row in the table.</p></li>
+</ul>
+</section>
+</section>
+<section id="behavior">
+<h2>Behavior<a class="headerlink" href="#behavior" title="永久链接至标题">¶</a></h2>
+<section id="table-width-and-column-widths">
+<h3>Table width and column widths<a class="headerlink" href="#table-width-and-column-widths" title="永久链接至标题">¶</a></h3>
+<p>A table is created by specifying a row and column count, a position, and an
+overall size. Initial column widths are set by dividing the overall width by
+the number of columns, resolving any rounding errors in the last column.
+Conversely, when a column’s width is specified, the table width is adjusted to
+the sum of the widths of all columns. Initial row heights are set similarly and
+overall table height adjusted to the sum of row heights when a row’s height is
+specified.</p>
+</section>
+</section>
+<section id="ms-api-analysis">
+<h2>MS API Analysis<a class="headerlink" href="#ms-api-analysis" title="永久链接至标题">¶</a></h2>
+<p>MS API method to add a table is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Shapes</span><span class="o">.</span><span class="n">AddTable</span><span class="p">(</span><span class="n">NumRows</span><span class="p">,</span> <span class="n">NumColumns</span><span class="p">,</span> <span class="n">Left</span><span class="p">,</span> <span class="n">Top</span><span class="p">,</span> <span class="n">Width</span><span class="p">,</span> <span class="n">Height</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There is a <cite>Shape.HasTable</cite> property which is true when a (<cite>GraphicFrame</cite>)
+shape contains a table.</p>
+<p>Most interesting <cite>Table</cite> members:</p>
+<ul class="simple">
+<li><p><cite>Cell(row, col)</cite> method to access individual cells.</p></li>
+<li><p><cite>Columns</cite> collection reference, with <cite>Add</cite> method (<cite>Delete</cite> method is
+on <cite>Column</cite> object)</p></li>
+<li><p><cite>Rows</cite> collection reference</p></li>
+<li><p><cite>FirstCol</cite> and <cite>FirstRow</cite> boolean properties that indicate whether to apply
+special formatting from theme or whatever to first column/row.</p></li>
+<li><p><cite>LastCol</cite>, <cite>LastRow</cite>, and <cite>HorizBanding</cite>, all also boolean with similar
+behaviors.</p></li>
+<li><p><cite>TableStyle</cite> read-only to table style in theme. <cite>Table.ApplyStyle()</cite> method
+is used to set table style.</p></li>
+<li><p><cite>Columns.Add()</cite></p></li>
+<li><p><cite>Rows.Add()</cite></p></li>
+</ul>
+<p><a class="reference external" href="http://msdn.microsoft.com/en-us/library/office/ff746286(v=office.14).aspx">Column Members</a> page on MSDN.</p>
+<ul class="simple">
+<li><p>Delete()</p></li>
+<li><p>Width property</p></li>
+</ul>
+<p><a class="reference external" href="http://msdn.microsoft.com/en-us/library/office/ff744136(v=office.14).aspx">Cell Members</a> page on MSDN.</p>
+<ul class="simple">
+<li><p>Merge() and Split() methods</p></li>
+<li><p>Borders reference to Borders collection of LineFormat objects</p></li>
+<li><p>Shape reference to shape object that cell is or has.</p></li>
+</ul>
+<p><a class="reference external" href="http://msdn.microsoft.com/en-us/library/office/ff745240(v=office.14).aspx">LineFormat Members</a> page on MSDN.</p>
+<ul class="simple">
+<li><p>ForeColor</p></li>
+<li><p>Weight</p></li>
+</ul>
+</section>
+<section id="xml-semantics">
+<h2>XML Semantics<a class="headerlink" href="#xml-semantics" title="永久链接至标题">¶</a></h2>
+<p>A <cite>tableStyles.xml</cite> part is present in default document, containing the
+single (default) style “Medium Style 2 - Accent 1”. Colors are specified
+indirectly by reference to theme-specified values.</p>
+<section id="specimen-xml">
+<h3>Specimen XML<a class="headerlink" href="#specimen-xml" title="永久链接至标题">¶</a></h3>
+<p>Default table produced by PowerPoint:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:graphicFrame&gt;</span>
+  <span class="nt">&lt;p:nvGraphicFramePr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">name=</span><span class="s">&quot;Table 1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvGraphicFramePr&gt;</span>
+      <span class="nt">&lt;a:graphicFrameLocks</span> <span class="na">noGrp=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvGraphicFramePr&gt;</span>
+    <span class="nt">&lt;p:nvPr/&gt;</span>
+  <span class="nt">&lt;/p:nvGraphicFramePr&gt;</span>
+  <span class="nt">&lt;p:xfrm&gt;</span>
+    <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;1524000&quot;</span> <span class="na">y=</span><span class="s">&quot;1397000&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;6096000&quot;</span> <span class="na">cy=</span><span class="s">&quot;741680&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/p:xfrm&gt;</span>
+  <span class="nt">&lt;a:graphic&gt;</span>
+    <span class="nt">&lt;a:graphicData</span> <span class="na">uri=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/table&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:tbl&gt;</span>
+        <span class="nt">&lt;a:tblPr</span> <span class="na">firstRow=</span><span class="s">&quot;1&quot;</span> <span class="na">bandRow=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:tableStyleId&gt;</span>{5C22544A-7EE6-4342-B048-85BDC9FD1C3A}<span class="nt">&lt;/a:tableStyleId&gt;</span>
+        <span class="nt">&lt;/a:tblPr&gt;</span>
+        <span class="nt">&lt;a:tblGrid&gt;</span>
+          <span class="nt">&lt;a:gridCol</span> <span class="na">w=</span><span class="s">&quot;3048000&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;a:gridCol</span> <span class="na">w=</span><span class="s">&quot;3048000&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:tblGrid&gt;</span>
+        <span class="nt">&lt;a:tr</span> <span class="na">h=</span><span class="s">&quot;370840&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:tc&gt;</span>
+            <span class="nt">&lt;a:txBody&gt;</span>
+              <span class="nt">&lt;a:bodyPr/&gt;</span>
+              <span class="nt">&lt;a:lstStyle/&gt;</span>
+              <span class="nt">&lt;a:p&gt;</span>
+                <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;/a:p&gt;</span>
+            <span class="nt">&lt;/a:txBody&gt;</span>
+            <span class="nt">&lt;a:tcPr/&gt;</span>
+          <span class="nt">&lt;/a:tc&gt;</span>
+          <span class="nt">&lt;a:tc&gt;</span>
+            <span class="nt">&lt;a:txBody&gt;</span>
+              <span class="nt">&lt;a:bodyPr/&gt;</span>
+              <span class="nt">&lt;a:lstStyle/&gt;</span>
+              <span class="nt">&lt;a:p&gt;</span>
+                <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;/a:p&gt;</span>
+            <span class="nt">&lt;/a:txBody&gt;</span>
+            <span class="nt">&lt;a:tcPr/&gt;</span>
+          <span class="nt">&lt;/a:tc&gt;</span>
+        <span class="nt">&lt;/a:tr&gt;</span>
+        <span class="nt">&lt;a:tr</span> <span class="na">h=</span><span class="s">&quot;370840&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:tc&gt;</span>
+            <span class="nt">&lt;a:txBody&gt;</span>
+              <span class="nt">&lt;a:bodyPr/&gt;</span>
+              <span class="nt">&lt;a:lstStyle/&gt;</span>
+              <span class="nt">&lt;a:p&gt;</span>
+                <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;/a:p&gt;</span>
+            <span class="nt">&lt;/a:txBody&gt;</span>
+            <span class="nt">&lt;a:tcPr/&gt;</span>
+          <span class="nt">&lt;/a:tc&gt;</span>
+          <span class="nt">&lt;a:tc&gt;</span>
+            <span class="nt">&lt;a:txBody&gt;</span>
+              <span class="nt">&lt;a:bodyPr/&gt;</span>
+              <span class="nt">&lt;a:lstStyle/&gt;</span>
+              <span class="nt">&lt;a:p&gt;</span>
+                <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;/a:p&gt;</span>
+            <span class="nt">&lt;/a:txBody&gt;</span>
+            <span class="nt">&lt;a:tcPr/&gt;</span>
+          <span class="nt">&lt;/a:tc&gt;</span>
+        <span class="nt">&lt;/a:tr&gt;</span>
+      <span class="nt">&lt;/a:tbl&gt;</span>
+    <span class="nt">&lt;/a:graphicData&gt;</span>
+  <span class="nt">&lt;/a:graphic&gt;</span>
+<span class="nt">&lt;/p:graphicFrame&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="schema-excerpt">
+<h2>Schema excerpt<a class="headerlink" href="#schema-excerpt" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tbl&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Table&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Table&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tblPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TableProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tblGrid&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TableGrid&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tr&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_TableRow&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TableProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_FillProperties&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_EffectProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tableStyle&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TableStyle&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tableStyleId&quot;</span> <span class="na">type=</span><span class="s">&quot;s:ST_Guid&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rtl&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;firstRow&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;firstCol&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;lastRow&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;lastCol&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bandRow&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bandCol&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TableGrid&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gridCol&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TableCol&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TableCol&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;w&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Coordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TableRow&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tc&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_TableCell&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;h&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Coordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TableCell&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txBody&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextBody&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tcPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TableCellProperties&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rowSpan&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span>     <span class="na">default=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;gridSpan&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span>     <span class="na">default=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;hMerge&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;vMerge&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextBody&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bodyPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextBodyProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lstStyle&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextListStyle&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;p&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TextParagraph&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TableCellProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lnL&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lnR&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lnT&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lnB&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lnTlToBr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lnBlToTr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cell3D&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Cell3D&quot;</span>                 <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_FillProperties&quot;</span>                          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;headers&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Headers&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;marL&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span>         <span class="na">default=</span><span class="s">&quot;91440&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;marR&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span>         <span class="na">default=</span><span class="s">&quot;91440&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;marT&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span>         <span class="na">default=</span><span class="s">&quot;45720&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;marB&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span>         <span class="na">default=</span><span class="s">&quot;45720&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;vert&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_TextVerticalType&quot;</span>     <span class="na">default=</span><span class="s">&quot;horz&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;anchor&quot;</span>       <span class="na">type=</span><span class="s">&quot;ST_TextAnchoringType&quot;</span>    <span class="na">default=</span><span class="s">&quot;t&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;anchorCtr&quot;</span>    <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>             <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;horzOverflow&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_TextHorzOverflowType&quot;</span> <span class="na">default=</span><span class="s">&quot;clip&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Coordinate&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:union</span> <span class="na">memberTypes=</span><span class="s">&quot;ST_CoordinateUnqualified s:ST_UniversalMeasure&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_CoordinateUnqualified&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:long&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;-27273042329600&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;27273042316900&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_UniversalMeasure&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:pattern</span> <span class="na">value=</span><span class="s">&quot;-?[0-9]+(\.[0-9]+)?(mm|cm|in|pt|pc|pi)&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="http://msdn.microsoft.com/en-us/library/office/ff744530.aspx">Table.FirstCol Property page on MSDN</a></p>
+<ul class="simple">
+<li><p>ISO-IEC-29500-1, Section 21.1.3 (DrawingML) Tables, pp3331</p></li>
+<li><p>ISO-IEC-29500-1, Section 21.1.3.13 tbl (Table), pp3344</p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Table</a><ul>
+<li><a class="reference internal" href="#table-properties">Table Properties</a></li>
+<li><a class="reference internal" href="#powerpoint-ui-behavior">PowerPoint UI behavior</a></li>
+<li><a class="reference internal" href="#api-requirements">API requirements</a><ul>
+<li><a class="reference internal" href="#table-class"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code> class</a></li>
+<li><a class="reference internal" href="#cell-class"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Cell</span></code> class</a></li>
+<li><a class="reference internal" href="#column-class"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Column</span></code> class</a></li>
+<li><a class="reference internal" href="#columncollection-class"><code class="xref py py-class docutils literal notranslate"><span class="pre">_ColumnCollection</span></code> class</a></li>
+<li><a class="reference internal" href="#row-class"><code class="xref py py-class docutils literal notranslate"><span class="pre">_Row</span></code> class</a></li>
+<li><a class="reference internal" href="#rowcollection-class"><code class="xref py py-class docutils literal notranslate"><span class="pre">_RowCollection</span></code> class</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#behavior">Behavior</a><ul>
+<li><a class="reference internal" href="#table-width-and-column-widths">Table width and column widths</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ms-api-analysis">MS API Analysis</a></li>
+<li><a class="reference internal" href="#xml-semantics">XML Semantics</a><ul>
+<li><a class="reference internal" href="#specimen-xml">Specimen XML</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#schema-excerpt">Schema excerpt</a></li>
+<li><a class="reference internal" href="#resources">Resources</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="tbl-merge.html"
+                          title="上一章">Cell Merge</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="tbl-table-style.html"
+                          title="下一章">How table styles work</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="tbl-table-style.html" title="How table styles work"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="tbl-merge.html" title="Cell Merge"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Table</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

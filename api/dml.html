@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>DrawingML objects &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Image" href="image.html" />
+    <link rel="prev" title="Click Action-related Objects" href="action.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="image.html" title="Image"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="action.html" title="Click Action-related Objects"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DrawingML objects</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="drawingml-objects">
+<span id="dml-api"></span><h1>DrawingML objects<a class="headerlink" href="#drawingml-objects" title="永久链接至标题">¶</a></h1>
+<p>Low-level drawing elements like fill and color that appear repeatedly in
+various aspects of shapes.</p>
+<section id="chartformat-objects">
+<h2><a class="reference internal" href="#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> objects<a class="headerlink" href="#chartformat-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.dml.chtfmt.ChartFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.dml.chtfmt.</span></span><span class="sig-name descname"><span class="pre">ChartFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/chtfmt.html#ChartFormat"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.chtfmt.ChartFormat" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> object provides access to visual shape properties for
+chart elements like <code class="xref py py-class docutils literal notranslate"><span class="pre">Axis</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code>, and <a class="reference internal" href="chart.html#pptx.chart.axis.MajorGridlines" title="pptx.chart.axis.MajorGridlines"><code class="xref py py-class docutils literal notranslate"><span class="pre">MajorGridlines</span></code></a>. It has two
+properties, <a class="reference internal" href="#pptx.dml.chtfmt.ChartFormat.fill" title="pptx.dml.chtfmt.ChartFormat.fill"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fill</span></code></a> and <a class="reference internal" href="#pptx.dml.chtfmt.ChartFormat.line" title="pptx.dml.chtfmt.ChartFormat.line"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line</span></code></a>, which return a <a class="reference internal" href="#pptx.dml.fill.FillFormat" title="pptx.dml.fill.FillFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">FillFormat</span></code></a>
+and <a class="reference internal" href="#pptx.dml.line.LineFormat" title="pptx.dml.line.LineFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineFormat</span></code></a> object respectively. The <a class="reference internal" href="#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> object is
+provided by the <code class="xref py py-attr docutils literal notranslate"><span class="pre">format</span></code> property on the target axis, series, etc.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.dml.chtfmt.ChartFormat.fill">
+<span class="sig-name descname"><span class="pre">fill</span></span><a class="reference internal" href="../_modules/pptx/dml/chtfmt.html#ChartFormat.fill"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.chtfmt.ChartFormat.fill" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.dml.fill.FillFormat" title="pptx.dml.fill.FillFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">FillFormat</span></code></a> instance for this object, providing access to fill
+properties such as fill color.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.dml.chtfmt.ChartFormat.line">
+<span class="sig-name descname"><span class="pre">line</span></span><a class="reference internal" href="../_modules/pptx/dml/chtfmt.html#ChartFormat.line"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.chtfmt.ChartFormat.line" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.dml.line.LineFormat" title="pptx.dml.line.LineFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineFormat</span></code></a> object providing access to the visual properties of
+this object, such as line color and line style.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="fillformat-objects">
+<h2><a class="reference internal" href="#pptx.dml.fill.FillFormat" title="pptx.dml.fill.FillFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">FillFormat</span></code></a> objects<a class="headerlink" href="#fillformat-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.dml.fill.</span></span><span class="sig-name descname"><span class="pre">FillFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eg_fill_properties_parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/fill.html#FillFormat"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.fill.FillFormat" title="永久链接至目标">¶</a></dt>
+<dd><p>Provides access to the current fill properties object and provides
+methods to change the fill type.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.back_color">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">back_color</span></span><a class="headerlink" href="#pptx.dml.fill.FillFormat.back_color" title="永久链接至目标">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#pptx.dml.color.ColorFormat" title="pptx.dml.color.ColorFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFormat</span></code></a> object representing background color.</p>
+<p>This property is only applicable to pattern fills and lines.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.background">
+<span class="sig-name descname"><span class="pre">background</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/fill.html#FillFormat.background"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.fill.FillFormat.background" title="永久链接至目标">¶</a></dt>
+<dd><p>Sets the fill type to noFill, i.e. transparent.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.fore_color">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fore_color</span></span><a class="headerlink" href="#pptx.dml.fill.FillFormat.fore_color" title="永久链接至目标">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#pptx.dml.color.ColorFormat" title="pptx.dml.color.ColorFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFormat</span></code></a> instance representing the foreground color of
+this fill.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.gradient">
+<span class="sig-name descname"><span class="pre">gradient</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/fill.html#FillFormat.gradient"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.fill.FillFormat.gradient" title="永久链接至目标">¶</a></dt>
+<dd><p>Sets the fill type to gradient.</p>
+<p>If the fill is not already a gradient, a default gradient is added.
+The default gradient corresponds to the default in the built-in
+PowerPoint “White” template. This gradient is linear at angle
+90-degrees (upward), with two stops. The first stop is Accent-1 with
+tint 100%, shade 100%, and satMod 130%. The second stop is Accent-1
+with tint 50%, shade 100%, and satMod 350%.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.gradient_angle">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gradient_angle</span></span><a class="headerlink" href="#pptx.dml.fill.FillFormat.gradient_angle" title="永久链接至目标">¶</a></dt>
+<dd><p>Angle in float degrees of line of a linear gradient.</p>
+<p>Read/Write. May be <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>, indicating the angle should be inherited
+from the style hierarchy. An angle of 0.0 corresponds to
+a left-to-right gradient. Increasing angles represent
+counter-clockwise rotation of the line, for example 90.0 represents
+a bottom-to-top gradient. Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> when the fill type is
+not MSO_FILL_TYPE.GRADIENT. Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> for a non-linear
+gradient (e.g. a radial gradient).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.gradient_stops">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gradient_stops</span></span><a class="headerlink" href="#pptx.dml.fill.FillFormat.gradient_stops" title="永久链接至目标">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GradientStops</span></code> object providing access to stops of this gradient.</p>
+<p>Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> when fill is not gradient (call <cite>fill.gradient()</cite>
+first). Each stop represents a color between which the gradient
+smoothly transitions.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.pattern">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pattern</span></span><a class="headerlink" href="#pptx.dml.fill.FillFormat.pattern" title="永久链接至目标">¶</a></dt>
+<dd><p>Return member of <a class="reference internal" href="enum/MsoPatternType.html#msopatterntype"><span class="std std-ref">MSO_PATTERN_TYPE</span></a> indicating fill pattern.</p>
+<p>Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> when fill is not patterned (call
+<cite>fill.patterned()</cite> first). Returns <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no pattern has been set;
+PowerPoint may display the default <cite>PERCENT_5</cite> pattern in this case.
+Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> will remove any explicit pattern setting, although
+relying on the default behavior is discouraged and may produce
+rendering differences across client applications.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.patterned">
+<span class="sig-name descname"><span class="pre">patterned</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/fill.html#FillFormat.patterned"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.fill.FillFormat.patterned" title="永久链接至目标">¶</a></dt>
+<dd><p>Selects the pattern fill type.</p>
+<p>Note that calling this method does not by itself set a foreground or
+background color of the pattern. Rather it enables subsequent
+assignments to properties like fore_color to set the pattern and
+colors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.solid">
+<span class="sig-name descname"><span class="pre">solid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/fill.html#FillFormat.solid"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.fill.FillFormat.solid" title="永久链接至目标">¶</a></dt>
+<dd><p>Sets the fill type to solid, i.e. a solid color. Note that calling
+this method does not set a color or by itself cause the shape to
+appear with a solid color fill; rather it enables subsequent
+assignments to properties like fore_color to set the color.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.fill.FillFormat.type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#pptx.dml.fill.FillFormat.type" title="永久链接至目标">¶</a></dt>
+<dd><p>Return a value from the <a class="reference internal" href="enum/MsoFillType.html#msofilltype"><span class="std std-ref">MSO_FILL_TYPE</span></a> enumeration corresponding
+to the type of this fill.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="lineformat-objects">
+<h2><a class="reference internal" href="#pptx.dml.line.LineFormat" title="pptx.dml.line.LineFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineFormat</span></code></a> objects<a class="headerlink" href="#lineformat-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.dml.line.LineFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.dml.line.</span></span><span class="sig-name descname"><span class="pre">LineFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/line.html#LineFormat"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.line.LineFormat" title="永久链接至目标">¶</a></dt>
+<dd><p>Provides access to line properties such as color, style, and width.</p>
+<p>A LineFormat object is typically accessed via the <code class="docutils literal notranslate"><span class="pre">.line</span></code> property of
+a shape such as <a class="reference internal" href="shapes.html#pptx.shapes.autoshape.Shape" title="pptx.shapes.autoshape.Shape"><code class="xref py py-class docutils literal notranslate"><span class="pre">Shape</span></code></a> or <a class="reference internal" href="shapes.html#pptx.shapes.picture.Picture" title="pptx.shapes.picture.Picture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Picture</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.dml.line.LineFormat.color">
+<span class="sig-name descname"><span class="pre">color</span></span><a class="reference internal" href="../_modules/pptx/dml/line.html#LineFormat.color"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.line.LineFormat.color" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.dml.color.ColorFormat" title="pptx.dml.color.ColorFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFormat</span></code></a> instance that provides access to the color settings
+for this line. Essentially a shortcut for <code class="docutils literal notranslate"><span class="pre">line.fill.fore_color</span></code>.
+As a side-effect, accessing this property causes the line fill type
+to be set to <code class="docutils literal notranslate"><span class="pre">MSO_FILL.SOLID</span></code>. If this sounds risky for your use
+case, use <code class="docutils literal notranslate"><span class="pre">line.fill.type</span></code> to non-destructively discover the
+existing fill type.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.line.LineFormat.dash_style">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dash_style</span></span><a class="headerlink" href="#pptx.dml.line.LineFormat.dash_style" title="永久链接至目标">¶</a></dt>
+<dd><p>Return value indicating line style.</p>
+<p>Returns a member of <a class="reference internal" href="enum/MsoLineDashStyle.html#msolinedashstyle"><span class="std std-ref">MSO_LINE_DASH_STYLE</span></a> indicating line style, or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no explicit value has been set. When no explicit value has
+been set, the line dash style is inherited from the style hierarchy.</p>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> removes any existing explicitly-defined dash style.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.dml.line.LineFormat.fill">
+<span class="sig-name descname"><span class="pre">fill</span></span><a class="reference internal" href="../_modules/pptx/dml/line.html#LineFormat.fill"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.line.LineFormat.fill" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.dml.fill.FillFormat" title="pptx.dml.fill.FillFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">FillFormat</span></code></a> instance for this line, providing access to fill
+properties such as foreground color.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.line.LineFormat.width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#pptx.dml.line.LineFormat.width" title="永久链接至目标">¶</a></dt>
+<dd><p>The width of the line expressed as an integer number of <a class="reference internal" href="../user/autoshapes.html#emu"><span class="std std-ref">English
+Metric Units</span></a>. The returned value is an instance of <a class="reference internal" href="util.html#pptx.util.Length" title="pptx.util.Length"><code class="xref py py-class docutils literal notranslate"><span class="pre">Length</span></code></a>,
+a value class having properties such as <cite>.inches</cite>, <cite>.cm</cite>, and <cite>.pt</cite>
+for converting the value into convenient units.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="colorformat-objects">
+<h2><a class="reference internal" href="#pptx.dml.color.ColorFormat" title="pptx.dml.color.ColorFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFormat</span></code></a> objects<a class="headerlink" href="#colorformat-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.dml.color.ColorFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.dml.color.</span></span><span class="sig-name descname"><span class="pre">ColorFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eg_colorChoice_parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/color.html#ColorFormat"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.color.ColorFormat" title="永久链接至目标">¶</a></dt>
+<dd><p>Provides access to color settings such as RGB color, theme color, and
+luminance adjustments.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.color.ColorFormat.brightness">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">brightness</span></span><a class="headerlink" href="#pptx.dml.color.ColorFormat.brightness" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write float value between -1.0 and 1.0 indicating the brightness
+adjustment for this color, e.g. -0.25 is 25% darker and 0.4 is 40%
+lighter. 0 means no brightness adjustment.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.color.ColorFormat.rgb">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rgb</span></span><a class="headerlink" href="#pptx.dml.color.ColorFormat.rgb" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.dml.color.RGBColor" title="pptx.dml.color.RGBColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">RGBColor</span></code></a> value of this color, or None if no RGB color is explicitly
+defined for this font. Setting this value to an <a class="reference internal" href="#pptx.dml.color.RGBColor" title="pptx.dml.color.RGBColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">RGBColor</span></code></a> instance
+causes its type to change to MSO_COLOR_TYPE.RGB. If the color was a
+theme color with a brightness adjustment, the brightness adjustment
+is removed when changing it to an RGB color.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.color.ColorFormat.theme_color">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">theme_color</span></span><a class="headerlink" href="#pptx.dml.color.ColorFormat.theme_color" title="永久链接至目标">¶</a></dt>
+<dd><p>Theme color value of this color.</p>
+<p>Value is a member of <a class="reference internal" href="enum/MsoThemeColorIndex.html#msothemecolorindex"><span class="std std-ref">MSO_THEME_COLOR_INDEX</span></a>, e.g.
+<code class="docutils literal notranslate"><span class="pre">MSO_THEME_COLOR.ACCENT_1</span></code>. Raises AttributeError on access if the
+color is not type <code class="docutils literal notranslate"><span class="pre">MSO_COLOR_TYPE.SCHEME</span></code>. Assigning a member of
+<a class="reference internal" href="enum/MsoThemeColorIndex.html#msothemecolorindex"><span class="std std-ref">MSO_THEME_COLOR_INDEX</span></a> causes the color’s type to change to
+<code class="docutils literal notranslate"><span class="pre">MSO_COLOR_TYPE.SCHEME</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.color.ColorFormat.type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#pptx.dml.color.ColorFormat.type" title="永久链接至目标">¶</a></dt>
+<dd><p>Read-only. A value from <a class="reference internal" href="enum/MsoColorType.html#msocolortype"><span class="std std-ref">MSO_COLOR_TYPE</span></a>, either RGB or SCHEME,
+corresponding to the way this color is defined, or None if no color
+is defined at the level of this font.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="rgbcolor-objects">
+<h2><a class="reference internal" href="#pptx.dml.color.RGBColor" title="pptx.dml.color.RGBColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">RGBColor</span></code></a> objects<a class="headerlink" href="#rgbcolor-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.dml.color.RGBColor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.dml.color.</span></span><span class="sig-name descname"><span class="pre">RGBColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/color.html#RGBColor"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.color.RGBColor" title="永久链接至目标">¶</a></dt>
+<dd><p>Immutable value object defining a particular RGB color.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.dml.color.RGBColor.from_string">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb_hex_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/color.html#RGBColor.from_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.color.RGBColor.from_string" title="永久链接至目标">¶</a></dt>
+<dd><p>Return a new instance from an RGB color hex string like <code class="docutils literal notranslate"><span class="pre">'3C2F80'</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="shadowformat-objects">
+<h2><a class="reference internal" href="#pptx.dml.effect.ShadowFormat" title="pptx.dml.effect.ShadowFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShadowFormat</span></code></a> objects<a class="headerlink" href="#shadowformat-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.dml.effect.ShadowFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.dml.effect.</span></span><span class="sig-name descname"><span class="pre">ShadowFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spPr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/dml/effect.html#ShadowFormat"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.dml.effect.ShadowFormat" title="永久链接至目标">¶</a></dt>
+<dd><p>Provides access to shadow effect on a shape.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.dml.effect.ShadowFormat.inherit">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inherit</span></span><a class="headerlink" href="#pptx.dml.effect.ShadowFormat.inherit" title="永久链接至目标">¶</a></dt>
+<dd><p>True if shape inherits shadow settings.</p>
+<p>Read/write. An explicitly-defined shadow setting on a shape causes
+this property to return <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code>. A shape with no explicitly-defined
+shadow setting inherits its shadow settings from the style hierarchy
+(and so returns <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>).</p>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> causes any explicitly-defined shadow setting to be
+removed and inheritance is restored. Note this has the side-effect of
+removing <strong>all</strong> explicitly-defined effects, such as glow and
+reflection, and restoring inheritance for all effects on the shape.
+Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> causes the inheritance link to be broken and <strong>no</strong>
+effects to appear on the shape.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">DrawingML objects</a><ul>
+<li><a class="reference internal" href="#chartformat-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code> objects</a></li>
+<li><a class="reference internal" href="#fillformat-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">FillFormat</span></code> objects</a></li>
+<li><a class="reference internal" href="#lineformat-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineFormat</span></code> objects</a></li>
+<li><a class="reference internal" href="#colorformat-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorFormat</span></code> objects</a></li>
+<li><a class="reference internal" href="#rgbcolor-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">RGBColor</span></code> objects</a></li>
+<li><a class="reference internal" href="#shadowformat-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShadowFormat</span></code> objects</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="action.html"
+                          title="上一章">Click Action-related Objects</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="image.html"
+                          title="下一章">Image</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="image.html" title="Image"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="action.html" title="Click Action-related Objects"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DrawingML objects</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

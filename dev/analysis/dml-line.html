@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Line format &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Core Document Properties" href="pkg-coreprops.html" />
+    <link rel="prev" title="Gradient Fill" href="dml-gradient.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="pkg-coreprops.html" title="Core Document Properties"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="dml-gradient.html" title="Gradient Fill"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Line format</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="line-format">
+<h1>Line format<a class="headerlink" href="#line-format" title="永久链接至标题">¶</a></h1>
+<section id="intial-scope">
+<h2>Intial scope<a class="headerlink" href="#intial-scope" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Shape.line, Connector.line to follow, then Cell.border(s).line, possibly
+text underline and font.line (character outline)</p></li>
+</ul>
+</section>
+<section id="protocol">
+<h2>Protocol<a class="headerlink" href="#protocol" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">line</span>
+<span class="go">&lt;pptx.dml.line.LineFormat instance at x123456789&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">fore_color</span>
+<span class="go">&lt;pptx.dml.line.LineFormat instance at x123456789&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="永久链接至标题">¶</a></h2>
+<p>definitely spike on this one.</p>
+<p>start with line.color, first an object to hang members off of</p>
+<p>Issue: How to accommodate these competing requirements:</p>
+<ul class="simple">
+<li><p>Polymorphism in parent shape. More than one type of shape can have a line
+and possibly several (table cell border, Run/text, and text underline use
+the same CT_LineProperties element, and perhaps others).</p></li>
+<li><p>The line object cannot hold onto a <cite>&lt;a:ln&gt;</cite> element, even if that was
+a good idea, because it is an optional child; not having an <cite>&lt;a:ln&gt;</cite>
+element is a legitimate and common situation, indicating line formatting
+should be inherited from the theme or perhaps a layout placeholder.</p></li>
+<li><p>Needing to accommodate XML changing might not be important, could make that
+operation immutable, such that changing the shape XML returns a new shape,
+not changing the existing one in-place.</p></li>
+<li><p>maybe having the following ‘line_format_owner_interface’, delegating
+create, read, and delete of the <cite>&lt;a:ln&gt;</cite> element to the parent, and
+allowing LineFormat to take responsibility for update.</p>
+<ul>
+<li><p>line.parent has the shape having the line format</p></li>
+<li><p>parent.ln has the <cite>&lt;a:ln&gt;</cite> element or None, delegating access to the parent</p></li>
+<li><p>ln = parent.add_ln()</p></li>
+<li><p>parent.remove_ln()</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="ms-api">
+<h2>MS API<a class="headerlink" href="#ms-api" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><div class="line-block">
+<div class="line">LineFormat</div>
+<div class="line"><a class="reference external" href="https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles/lineformat-object-powerpoint">https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles/lineformat-object-powerpoint</a></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">LineFormat.DashStyle</div>
+<div class="line"><a class="reference external" href="https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles/lineformat-dashstyle-property-powerpoint">https://msdn.microsoft.com/en-us/vba/powerpoint-vba/articles/lineformat-dashstyle-property-powerpoint</a></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line">MsoLineDashStyle Enumeration</div>
+<div class="line"><a class="reference external" href="https://msdn.microsoft.com/en-us/library/aa432639(v=office.12).aspx">https://msdn.microsoft.com/en-us/library/aa432639(v=office.12).aspx</a></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 11%" />
+<col style="width: 53%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Name</p></td>
+<td><p>Value</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>msoLineDash</p></td>
+<td><p>4</p></td>
+<td><p>Line consists of dashes only.</p></td>
+</tr>
+<tr class="row-odd"><td><p>msoLineDashDot</p></td>
+<td><p>5</p></td>
+<td><p>Line is a dash-dot pattern.</p></td>
+</tr>
+<tr class="row-even"><td><p>msoLineDashDotDot</p></td>
+<td><p>6</p></td>
+<td><p>Line is a dash-dot-dot pattern.</p></td>
+</tr>
+<tr class="row-odd"><td><p>msoLineDashStyleMixed</p></td>
+<td><p>-2</p></td>
+<td><p>Not supported.</p></td>
+</tr>
+<tr class="row-even"><td><p>msoLineLongDash</p></td>
+<td><p>7</p></td>
+<td><p>Line consists of long dashes.</p></td>
+</tr>
+<tr class="row-odd"><td><p>msoLineLongDashDot</p></td>
+<td><p>8</p></td>
+<td><p>Line is a long dash-dot pattern.</p></td>
+</tr>
+<tr class="row-even"><td><p>msoLineRoundDot</p></td>
+<td><p>3</p></td>
+<td><p>Line is made up of round dots.</p></td>
+</tr>
+<tr class="row-odd"><td><p>msoLineSolid</p></td>
+<td><p>1</p></td>
+<td><p>Line is solid.</p></td>
+</tr>
+<tr class="row-even"><td><p>msoLineSquareDot</p></td>
+<td><p>2</p></td>
+<td><p>Line is made up of square dots.</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</section>
+<section id="specimen-xml">
+<h2>Specimen XML<a class="headerlink" href="#specimen-xml" title="永久链接至标题">¶</a></h2>
+<p>solid line color:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:spPr&gt;</span>
+  <span class="nt">&lt;a:xfrm&gt;</span>
+    <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;950964&quot;</span> <span class="na">y=</span><span class="s">&quot;2925277&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;1257921&quot;</span> <span class="na">cy=</span><span class="s">&quot;619967&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:xfrm&gt;</span>
+  <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;curvedConnector3&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:avLst/&gt;</span>
+  <span class="nt">&lt;/a:prstGeom&gt;</span>
+  <span class="nt">&lt;a:ln&gt;</span>
+    <span class="nt">&lt;a:solidFill&gt;</span>
+      <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:solidFill&gt;</span>
+  <span class="nt">&lt;/a:ln&gt;</span>
+<span class="nt">&lt;/p:spPr&gt;</span>
+</pre></div>
+</div>
+<p>little bit of everything:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:spPr&gt;</span>
+  <span class="nt">&lt;a:xfrm&gt;</span>
+    <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;950964&quot;</span> <span class="na">y=</span><span class="s">&quot;1101493&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;1257921&quot;</span> <span class="na">cy=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:xfrm&gt;</span>
+  <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;line&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:avLst/&gt;</span>
+  <span class="nt">&lt;/a:prstGeom&gt;</span>
+  <span class="nt">&lt;a:ln</span> <span class="na">w=</span><span class="s">&quot;57150&quot;</span> <span class="na">cap=</span><span class="s">&quot;rnd&quot;</span> <span class="na">cmpd=</span><span class="s">&quot;thickThin&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:gradFill</span> <span class="na">flip=</span><span class="s">&quot;none&quot;</span> <span class="na">rotWithShape=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:gsLst&gt;</span>
+        <span class="nt">&lt;a:gs</span> <span class="na">pos=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:gs&gt;</span>
+        <span class="nt">&lt;a:gs</span> <span class="na">pos=</span><span class="s">&quot;100000&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:srgbClr</span> <span class="na">val=</span><span class="s">&quot;FFFFFF&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:gs&gt;</span>
+      <span class="nt">&lt;/a:gsLst&gt;</span>
+      <span class="nt">&lt;a:lin</span> <span class="na">ang=</span><span class="s">&quot;0&quot;</span> <span class="na">scaled=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:tileRect/&gt;</span>
+    <span class="nt">&lt;/a:gradFill&gt;</span>
+    <span class="nt">&lt;a:prstDash</span> <span class="na">val=</span><span class="s">&quot;sysDash&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:bevel/&gt;</span>
+    <span class="nt">&lt;a:headEnd</span> <span class="na">type=</span><span class="s">&quot;oval&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:tailEnd</span> <span class="na">type=</span><span class="s">&quot;diamond&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:ln&gt;</span>
+<span class="nt">&lt;/p:spPr&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ShapeProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;xfrm&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Transform2D&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_Geometry&quot;</span>                               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_FillProperties&quot;</span>                         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ln&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_EffectProperties&quot;</span>                       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scene3d&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Scene3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sp3d&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Shape3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bwMode&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_BlackWhiteMode&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_LineProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_LineFillProperties&quot;</span>                     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_LineDashProperties&quot;</span>                     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_LineJoinProperties&quot;</span>                     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;headEnd&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_LineEndProperties&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tailEnd&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_LineEndProperties&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;w&quot;</span>    <span class="na">type=</span><span class="s">&quot;ST_LineWidth&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;cap&quot;</span>  <span class="na">type=</span><span class="s">&quot;ST_LineCap&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;cmpd&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_CompoundLine&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;algn&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_PenAlignment&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_LineFillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noFill&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_NoFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;solidFill&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SolidColorFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gradFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_GradientFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pattFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PatternFillProperties&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_LineDashProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;prstDash&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_PresetLineDashProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custDash&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_DashStopList&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_PresetLineDashProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_PresetLineDashVal&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_LineJoinProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;round&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_LineJoinRound&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bevel&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_LineJoinBevel&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;miter&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_LineJoinMiterProperties&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_EffectProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectList&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectDag&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectContainer&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_LineWidth&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;ST_Coordinate32Unqualified&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;20116800&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Coordinate32Unqualified&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:int&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_PresetLineDashVal&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;solid&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dot&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dash&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;lgDash&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;dashDot&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;lgDashDot&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;lgDashDotDot&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;sysDash&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;sysDot&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;sysDashDot&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;sysDashDotDot&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Line format</a><ul>
+<li><a class="reference internal" href="#intial-scope">Intial scope</a></li>
+<li><a class="reference internal" href="#protocol">Protocol</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
+<li><a class="reference internal" href="#ms-api">MS API</a></li>
+<li><a class="reference internal" href="#specimen-xml">Specimen XML</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="dml-gradient.html"
+                          title="上一章">Gradient Fill</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="pkg-coreprops.html"
+                          title="下一章">Core Document Properties</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="pkg-coreprops.html" title="Core Document Properties"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="dml-gradient.html" title="Gradient Fill"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Line format</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Master Placeholders &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="CT_PresetGeometry2D" href="../shp-preset-geom.html" />
+    <link rel="prev" title="Layout Placeholders" href="layout-placeholders.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="../shp-preset-geom.html" title="CT_PresetGeometry2D"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="layout-placeholders.html" title="Layout Placeholders"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Analysis</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Placeholders</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Master Placeholders</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="master-placeholders">
+<h1>Master Placeholders<a class="headerlink" href="#master-placeholders" title="永久链接至标题">¶</a></h1>
+<section id="candidate-protocol">
+<h2>Candidate protocol<a class="headerlink" href="#candidate-protocol" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slide_master</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_master</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_master</span><span class="o">.</span><span class="n">shapes</span>
+<span class="go">&lt;pptx.shapes.slidemaster.MasterShapes object at 0x10a4df150&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_master</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;pptx.shapes.placeholder.MasterPlaceholder object at 0x104e60290&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">master_placeholders</span> <span class="o">=</span> <span class="n">slide_master</span><span class="o">.</span><span class="n">placeholders</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">master_placeholders</span>
+<span class="go">&lt;pptx.shapes.shapetree.MasterPlaceholders object at 0x104371290&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">master_placeholders</span><span class="p">)</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">master_placeholders</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;title&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">master_placeholders</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">idx</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">master_placeholders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;body&#39;</span><span class="p">)</span>
+<span class="go">&lt;pptx.shapes.placeholder.MasterPlaceholder object at 0x104e60290&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">master_placeholders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="o">=</span><span class="mi">666</span><span class="p">)</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+</section>
+<section id="example-xml">
+<h2>Example XML<a class="headerlink" href="#example-xml" title="永久链接至标题">¶</a></h2>
+<p>Slide master placeholder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">sp</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">nvSpPr</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">cNvPr</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Text Placeholder 2&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">cNvSpPr</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">spLocks</span> <span class="n">noGrp</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">cNvSpPr</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">nvPr</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">ph</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;body&quot;</span> <span class="n">idx</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">nvPr</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">nvSpPr</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">spPr</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">xfrm</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">off</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;457200&quot;</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;1600200&quot;</span><span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">ext</span> <span class="n">cx</span><span class="o">=</span><span class="s2">&quot;8229600&quot;</span> <span class="n">cy</span><span class="o">=</span><span class="s2">&quot;4525963&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">xfrm</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">prstGeom</span> <span class="n">prst</span><span class="o">=</span><span class="s2">&quot;rect&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">avLst</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">prstGeom</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">spPr</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">p</span><span class="p">:</span><span class="n">txBody</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">bodyPr</span> <span class="n">vert</span><span class="o">=</span><span class="s2">&quot;horz&quot;</span> <span class="n">lIns</span><span class="o">=</span><span class="s2">&quot;91440&quot;</span> <span class="n">tIns</span><span class="o">=</span><span class="s2">&quot;45720&quot;</span> <span class="n">rIns</span><span class="o">=</span><span class="s2">&quot;91440&quot;</span>
+              <span class="n">bIns</span><span class="o">=</span><span class="s2">&quot;45720&quot;</span> <span class="n">rtlCol</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">normAutofit</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">bodyPr</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">lstStyle</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">p</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">pPr</span> <span class="n">lvl</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">r</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">rPr</span> <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en-US&quot;</span> <span class="n">smtClean</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">t</span><span class="o">&gt;</span><span class="n">Click</span> <span class="n">to</span> <span class="n">edit</span> <span class="n">Master</span> <span class="n">text</span> <span class="n">styles</span><span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">t</span><span class="o">&gt;</span>
+      <span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">r</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">p</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">p</span><span class="o">&gt;</span>
+      <span class="o">...</span> <span class="ow">and</span> <span class="n">others</span> <span class="n">through</span> <span class="n">lvl</span><span class="o">=</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="n">five</span> <span class="n">total</span>
+    <span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">p</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">txBody</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">p</span><span class="p">:</span><span class="n">sp</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="behaviors">
+<h2>Behaviors<a class="headerlink" href="#behaviors" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Master placeholder specifies size, position, geometry, and text body
+properties, such as margins (inset) and autofit</p></li>
+<li><p>It appears a slide master permits at most five placeholders, at most one
+each of title, body, date, footer, and slide number</p></li>
+<li><p>A master placeholder is always a <cite>&lt;p:sp&gt;</cite> (autoshape) element. It does not
+allow the insertion of content, although text entered in the shape somehow
+becomes the prompt text for inheriting placeholders.</p></li>
+<li><p>Hypothesis:</p>
+<ul>
+<li><p>Layout inherits properties from master based only on type (e.g. body,
+dt), with no bearing on idx value.</p></li>
+<li><p>Slide inherits from layout strictly on idx value.</p></li>
+<li><p>Need to experiment to see if position and size are inherited on body
+placeholder by type or if idx has any effect</p>
+<ul>
+<li><p>expanded/repackaged, change body ph idx on layout and see if still
+inherits position.</p></li>
+<li><p>result: slide layout still appears with the proper position and size,
+however the slide placeholder appears at (0, 0) and apparently with
+size of (0, 0).</p></li>
+</ul>
+</li>
+<li><p>What behavior is exhibited when a slide layout contains two body
+placeholders, neither of which has a matching idx value and neither of
+which has a specified size or position?</p>
+<ul>
+<li><p>result: both placeholders are present, directly superimposed upon each
+other. They both inherit position and fill.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>GUI doesn’t seem to provide a way to add additional “footer” placeholders</p></li>
+<li><p>Does the MS API include populated object placeholders in the Placeholders
+collection?</p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Master Placeholders</a><ul>
+<li><a class="reference internal" href="#candidate-protocol">Candidate protocol</a></li>
+<li><a class="reference internal" href="#example-xml">Example XML</a></li>
+<li><a class="reference internal" href="#behaviors">Behaviors</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="layout-placeholders.html"
+                          title="上一章">Layout Placeholders</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="../shp-preset-geom.html"
+                          title="下一章"><code class="docutils literal notranslate"><span class="pre">CT_PresetGeometry2D</span></code></a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="../shp-preset-geom.html" title="CT_PresetGeometry2D"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="layout-placeholders.html" title="Layout Placeholders"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Analysis</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Placeholders</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Master Placeholders</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

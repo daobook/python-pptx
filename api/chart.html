@@ -1,0 +1,1584 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Charts &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Text-related objects" href="text.html" />
+    <link rel="prev" title="ChartData objects" href="chart-data.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="text.html" title="Text-related objects"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="chart-data.html" title="ChartData objects"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Charts</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="charts">
+<span id="chart-api"></span><h1>Charts<a class="headerlink" href="#charts" title="永久链接至标题">¶</a></h1>
+<p><cite>python-pptx</cite> provides an API for adding and manipulating charts. A chart object, like
+a table, is not a shape. Rather it is a graphical object contained in
+a <a class="reference internal" href="shapes.html#pptx.shapes.graphfrm.GraphicFrame" title="pptx.shapes.graphfrm.GraphicFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphicFrame</span></code></a> shape. The shape API, such as position, size, shape id, and
+name, are provided by the graphic frame shape. The chart itself is accessed
+using the <code class="xref py py-attr docutils literal notranslate"><span class="pre">chart</span></code> property on the graphic frame shape.</p>
+<section id="chart-objects">
+<h2><a class="reference internal" href="#pptx.chart.chart.Chart" title="pptx.chart.chart.Chart"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chart</span></code></a> objects<a class="headerlink" href="#chart-objects" title="永久链接至标题">¶</a></h2>
+<p>The <a class="reference internal" href="#pptx.chart.chart.Chart" title="pptx.chart.chart.Chart"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chart</span></code></a> object is the root of a generally hierarchical graph of component
+objects that together provide access to the properties and methods required
+to specify and format a chart.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.chart.</span></span><span class="sig-name descname"><span class="pre">Chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chartSpace</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chart_part</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/chart/chart.html#Chart"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.chart.Chart" title="永久链接至目标">¶</a></dt>
+<dd><p>A chart object.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.category_axis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">category_axis</span></span><a class="headerlink" href="#pptx.chart.chart.Chart.category_axis" title="永久链接至目标">¶</a></dt>
+<dd><p>The category axis of this chart. In the case of an XY or Bubble
+chart, this is the X axis. Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> if no category
+axis is defined (as is the case for a pie chart, for example).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.chart_style">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">chart_style</span></span><a class="headerlink" href="#pptx.chart.chart.Chart.chart_style" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write integer index of chart style used to format this chart.
+Range is from 1 to 48. Value is <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no explicit style has been
+assigned, in which case the default chart style is used. Assigning
+<code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> causes any explicit setting to be removed. The integer index
+corresponds to the style’s position in the chart style gallery in the
+PowerPoint UI.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.chart_title">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">chart_title</span></span><a class="headerlink" href="#pptx.chart.chart.Chart.chart_title" title="永久链接至目标">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pptx.chart.chart.ChartTitle" title="pptx.chart.chart.ChartTitle"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartTitle</span></code></a> object providing access to title properties.</p>
+<p>Calling this property is destructive in the sense it adds a chart
+title element (<cite>c:title</cite>) to the chart XML if one is not already
+present. Use <a class="reference internal" href="#pptx.chart.chart.Chart.has_title" title="pptx.chart.chart.Chart.has_title"><code class="xref py py-attr docutils literal notranslate"><span class="pre">has_title</span></code></a> to test for presence of a chart title
+non-destructively.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.chart_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">chart_type</span></span><a class="headerlink" href="#pptx.chart.chart.Chart.chart_type" title="永久链接至目标">¶</a></dt>
+<dd><p>Member of <a class="reference internal" href="enum/XlChartType.html#xlcharttype"><span class="std std-ref">XL_CHART_TYPE</span></a> enumeration specifying type of this chart.</p>
+<p>If the chart has two plots, for example, a line plot overlayed on a bar plot,
+the type reported is for the first (back-most) plot. Read-only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.font">
+<span class="sig-name descname"><span class="pre">font</span></span><a class="reference internal" href="../_modules/pptx/chart/chart.html#Chart.font"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.chart.Chart.font" title="永久链接至目标">¶</a></dt>
+<dd><p>Font object controlling text format defaults for this chart.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.has_legend">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_legend</span></span><a class="headerlink" href="#pptx.chart.chart.Chart.has_legend" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean, <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if the chart has a legend. Assigning
+<code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> causes a legend to be added to the chart if it doesn’t already
+have one. Assigning False removes any existing legend definition
+along with any existing legend settings.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.has_title">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_title</span></span><a class="headerlink" href="#pptx.chart.chart.Chart.has_title" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean, specifying whether this chart has a title.</p>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> causes a title to be added if not already present.
+Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> removes any existing title along with its text and
+settings.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.legend">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">legend</span></span><a class="headerlink" href="#pptx.chart.chart.Chart.legend" title="永久链接至目标">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pptx.chart.chart.Legend" title="pptx.chart.chart.Legend"><code class="xref py py-class docutils literal notranslate"><span class="pre">Legend</span></code></a> object providing access to the properties of the legend
+for this chart.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.plots">
+<span class="sig-name descname"><span class="pre">plots</span></span><a class="reference internal" href="../_modules/pptx/chart/chart.html#Chart.plots"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.chart.Chart.plots" title="永久链接至目标">¶</a></dt>
+<dd><p>The sequence of plots in this chart. A plot, called a <em>chart group</em>
+in the Microsoft API, is a distinct sequence of one or more series
+depicted in a particular charting type. For example, a chart having
+a series plotted as a line overlaid on three series plotted as
+columns would have two plots; the first corresponding to the three
+column series and the second to the line series. Plots are sequenced
+in the order drawn, i.e. back-most to front-most. Supports <em>len()</em>,
+membership (e.g. <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">in</span> <span class="pre">plots</span></code>), iteration, slicing, and indexed
+access (e.g. <code class="docutils literal notranslate"><span class="pre">plot</span> <span class="pre">=</span> <span class="pre">plots[i]</span></code>).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.replace_data">
+<span class="sig-name descname"><span class="pre">replace_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chart_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/chart/chart.html#Chart.replace_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.chart.Chart.replace_data" title="永久链接至目标">¶</a></dt>
+<dd><p>Use the categories and series values in the <a class="reference internal" href="chart-data.html#pptx.chart.data.ChartData" title="pptx.chart.data.ChartData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartData</span></code></a> object
+<em>chart_data</em> to replace those in the XML and Excel worksheet for this
+chart.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.series">
+<span class="sig-name descname"><span class="pre">series</span></span><a class="reference internal" href="../_modules/pptx/chart/chart.html#Chart.series"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.chart.Chart.series" title="永久链接至目标">¶</a></dt>
+<dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">SeriesCollection</span></code> object containing all the series in this
+chart. When the chart has multiple plots, all the series for the
+first plot appear before all those for the second, and so on. Series
+within a plot have an explicit ordering and appear in that sequence.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Chart.value_axis">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value_axis</span></span><a class="headerlink" href="#pptx.chart.chart.Chart.value_axis" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.axis.ValueAxis" title="pptx.chart.axis.ValueAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueAxis</span></code></a> object providing access to properties of the value
+axis of this chart. Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> if the chart has no value
+axis.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.chart.ChartTitle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.chart.</span></span><span class="sig-name descname"><span class="pre">ChartTitle</span></span><a class="reference internal" href="../_modules/pptx/chart/chart.html#ChartTitle"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.chart.ChartTitle" title="永久链接至目标">¶</a></dt>
+<dd><p>Provides properties for manipulating a chart title.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.chart.ChartTitle.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="reference internal" href="../_modules/pptx/chart/chart.html#ChartTitle.format"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.chart.ChartTitle.format" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> object providing access to line and fill formatting.</p>
+<p>Return the <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> object providing shape formatting properties
+for this chart title, such as its line color and fill.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.ChartTitle.has_text_frame">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_text_frame</span></span><a class="headerlink" href="#pptx.chart.chart.ChartTitle.has_text_frame" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write Boolean specifying whether this title has a text frame.</p>
+<p>Return <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if this chart title has a text frame, and <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code>
+otherwise. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> causes a text frame to be added if not
+already present. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> causes any existing text frame to
+be removed along with its text and formatting.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.ChartTitle.text_frame">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text_frame</span></span><a class="headerlink" href="#pptx.chart.chart.ChartTitle.text_frame" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="text.html#pptx.text.text.TextFrame" title="pptx.text.text.TextFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextFrame</span></code></a> instance for this chart title.</p>
+<p>Return a <a class="reference internal" href="text.html#pptx.text.text.TextFrame" title="pptx.text.text.TextFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextFrame</span></code></a> instance allowing read/write access to the text
+of this chart title and its text formatting properties. Accessing this
+property is destructive in the sense it adds a text frame if one is
+not present. Use <a class="reference internal" href="#pptx.chart.chart.ChartTitle.has_text_frame" title="pptx.chart.chart.ChartTitle.has_text_frame"><code class="xref py py-attr docutils literal notranslate"><span class="pre">has_text_frame</span></code></a> to test for the presence of
+a text frame non-destructively.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="legend-objects">
+<h2><a class="reference internal" href="#pptx.chart.chart.Legend" title="pptx.chart.chart.Legend"><code class="xref py py-class docutils literal notranslate"><span class="pre">Legend</span></code></a> objects<a class="headerlink" href="#legend-objects" title="永久链接至标题">¶</a></h2>
+<p>A legend provides a visual key relating each series of data points to their
+assigned meaning by mapping a color, line type, or point shape to each series
+name. A legend is optional, but there can be at most one. Most aspects of
+a legend are determined automatically, but aspects of its position may be
+specified via the API.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.chart.Legend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.chart.</span></span><span class="sig-name descname"><span class="pre">Legend</span></span><a class="reference internal" href="../_modules/pptx/chart/legend.html#Legend"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.chart.Legend" title="永久链接至目标">¶</a></dt>
+<dd><p>Represents the legend in a chart. A chart can have at most one legend.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.chart.Legend.font">
+<span class="sig-name descname"><span class="pre">font</span></span><a class="reference internal" href="../_modules/pptx/chart/legend.html#Legend.font"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.chart.Legend.font" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="text.html#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> object that provides access to the text properties for
+this legend, such as bold, italic, etc.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Legend.horz_offset">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">horz_offset</span></span><a class="headerlink" href="#pptx.chart.chart.Legend.horz_offset" title="永久链接至目标">¶</a></dt>
+<dd><p>Adjustment of the x position of the legend from its default.
+Expressed as a float between -1.0 and 1.0 representing a fraction of
+the chart width. Negative values move the legend left, positive
+values move it to the right. <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no setting is specified.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Legend.include_in_layout">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_in_layout</span></span><a class="headerlink" href="#pptx.chart.chart.Legend.include_in_layout" title="永久链接至目标">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if legend should be located inside plot area.</p>
+<p>Read/write boolean specifying whether legend should be placed inside
+the plot area. In many cases this will cause it to be superimposed on
+the chart itself. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> to this property causes any
+<cite>c:overlay</cite> element to be removed, which is interpreted the same as
+<code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>. This use case should rarely be required and assigning
+a boolean value is recommended.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.chart.Legend.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#pptx.chart.chart.Legend.position" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write <a class="reference internal" href="enum/XlLegendPosition.html#xllegendposition"><span class="std std-ref">XL_LEGEND_POSITION</span></a> enumeration value specifying the
+general region of the chart in which to place the legend.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="axis-objects">
+<h2><code class="xref py py-class docutils literal notranslate"><span class="pre">Axis</span></code> objects<a class="headerlink" href="#axis-objects" title="永久链接至标题">¶</a></h2>
+<p>A chart typically has two axes, a category axis and a value axis. In general,
+one of these is horizontal and the other is vertical, where which is which
+depends on the chart type. For example, the category axis is horizontal on
+a column chart, but vertical on a bar chart.</p>
+<p>A chart where the independent variable is in a continuous (numeric) range,
+such as an XY/scatter chart, does not have a category axis. Rather it has two
+value axes.</p>
+<p>A category is perhaps most commonly a string label, such as <code class="docutils literal notranslate"><span class="pre">'East'</span></code> or
+<code class="docutils literal notranslate"><span class="pre">'Revenue'</span></code>; however a category can also be a number or a date (although
+all categories in a chart must be the same type).</p>
+<p>When a chart’s categories are dates, the category axis is generally, but not
+necessarily a <a class="reference internal" href="#pptx.chart.axis.DateAxis" title="pptx.chart.axis.DateAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateAxis</span></code></a> object.</p>
+<p>A Chart may have zero to four axes. A pie chart, for example, has neither
+a category nor a value axis.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.axis.</span></span><span class="sig-name descname"><span class="pre">_BaseAxis</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#_BaseAxis"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis._BaseAxis" title="永久链接至目标">¶</a></dt>
+<dd><p>Base class for chart axis objects. All axis objects share these properties.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.axis_title">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">axis_title</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.axis_title" title="永久链接至目标">¶</a></dt>
+<dd><p>An <a class="reference internal" href="#pptx.chart.axis.AxisTitle" title="pptx.chart.axis.AxisTitle"><code class="xref py py-class docutils literal notranslate"><span class="pre">AxisTitle</span></code></a> object providing access to title properties.</p>
+<p>Calling this property is destructive in the sense that it adds an
+axis title element (<cite>c:title</cite>) to the axis XML if one is not already
+present. Use <a class="reference internal" href="#pptx.chart.axis._BaseAxis.has_title" title="pptx.chart.axis._BaseAxis.has_title"><code class="xref py py-attr docutils literal notranslate"><span class="pre">has_title</span></code></a> to test for presence of axis title
+non-destructively.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#_BaseAxis.format"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis._BaseAxis.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> object providing access to the shape formatting
+properties of this axis, such as its line color and fill.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.has_major_gridlines">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_major_gridlines</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.has_major_gridlines" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean value specifying whether this axis has gridlines
+at its major tick mark locations. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> to this property
+causes major gridlines to be displayed. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> causes them
+to be removed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.has_minor_gridlines">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_minor_gridlines</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.has_minor_gridlines" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean value specifying whether this axis has gridlines
+at its minor tick mark locations. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> to this property
+causes minor gridlines to be displayed. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> causes them
+to be removed.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.has_title">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_title</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.has_title" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean specifying whether this axis has a title.</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if this axis has a title, <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> otherwise. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>
+causes an axis title to be added if not already present. Assigning
+<code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> causes any existing title to be deleted.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.major_gridlines">
+<span class="sig-name descname"><span class="pre">major_gridlines</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#_BaseAxis.major_gridlines"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis._BaseAxis.major_gridlines" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.axis.MajorGridlines" title="pptx.chart.axis.MajorGridlines"><code class="xref py py-class docutils literal notranslate"><span class="pre">MajorGridlines</span></code></a> object representing the major gridlines for
+this axis.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.major_tick_mark">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">major_tick_mark</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.major_tick_mark" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write <a class="reference internal" href="enum/XlTickMark.html#xltickmark"><span class="std std-ref">XL_TICK_MARK</span></a> value specifying the type of major tick
+mark to display on this axis.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.maximum_scale">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maximum_scale</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.maximum_scale" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write float value specifying the upper limit of the value range
+for this axis, the number at the top or right of the vertical or
+horizontal value scale, respectively. The value <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates the
+upper limit should be determined automatically based on the range of
+data point values associated with the axis.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.minimum_scale">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minimum_scale</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.minimum_scale" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write float value specifying lower limit of value range, the
+number at the bottom or left of the value scale. <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no minimum
+scale has been set. The value <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates the lower limit should
+be determined automatically based on the range of data point values
+associated with the axis.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.minor_tick_mark">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minor_tick_mark</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.minor_tick_mark" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write <a class="reference internal" href="enum/XlTickMark.html#xltickmark"><span class="std std-ref">XL_TICK_MARK</span></a> value specifying the type of minor tick
+mark for this axis.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.reverse_order">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reverse_order</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.reverse_order" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write bool value specifying whether to reverse plotting order for axis.</p>
+<p>For a category axis, this reverses the order in which the categories are
+displayed. This may be desired, for example, on a (horizontal) bar-chart where
+by default the first category appears at the bottom. Since we read from
+top-to-bottom, many viewers may find it most natural for the first category to
+appear on top.</p>
+<p>For a value axis, it reverses the direction of increasing value from
+bottom-to-top to top-to-bottom.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.tick_labels">
+<span class="sig-name descname"><span class="pre">tick_labels</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#_BaseAxis.tick_labels"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis._BaseAxis.tick_labels" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.axis.TickLabels" title="pptx.chart.axis.TickLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">TickLabels</span></code></a> instance providing access to axis tick label
+formatting properties. Tick labels are the numbers appearing on
+a value axis or the category names appearing on a category axis.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.tick_label_position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tick_label_position</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.tick_label_position" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write <a class="reference internal" href="enum/XlTickLabelPosition.html#xlticklabelposition"><span class="std std-ref">XL_TICK_LABEL_POSITION</span></a> value specifying where the tick
+labels for this axis should appear.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis._BaseAxis.visible">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visible</span></span><a class="headerlink" href="#pptx.chart.axis._BaseAxis.visible" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write. <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if axis is visible, <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.axis.CategoryAxis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.axis.</span></span><span class="sig-name descname"><span class="pre">CategoryAxis</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#CategoryAxis"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis.CategoryAxis" title="永久链接至目标">¶</a></dt>
+<dd><p>A category axis of a chart.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.CategoryAxis.category_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">category_type</span></span><a class="headerlink" href="#pptx.chart.axis.CategoryAxis.category_type" title="永久链接至目标">¶</a></dt>
+<dd><p>A member of <a class="reference internal" href="enum/XlCategoryType.html#xlcategorytype"><span class="std std-ref">XL_CATEGORY_TYPE</span></a> specifying the scale type of this
+axis. Unconditionally <code class="docutils literal notranslate"><span class="pre">CATEGORY_SCALE</span></code> for a <a class="reference internal" href="#pptx.chart.axis.CategoryAxis" title="pptx.chart.axis.CategoryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoryAxis</span></code></a> object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.axis.DateAxis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.axis.</span></span><span class="sig-name descname"><span class="pre">DateAxis</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#DateAxis"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis.DateAxis" title="永久链接至目标">¶</a></dt>
+<dd><p>A category axis with dates as its category labels.</p>
+<p>This axis-type has some special display behaviors such as making length of equal
+periods equal and normalizing month start dates despite unequal month lengths.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.DateAxis.category_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">category_type</span></span><a class="headerlink" href="#pptx.chart.axis.DateAxis.category_type" title="永久链接至目标">¶</a></dt>
+<dd><p>A member of <a class="reference internal" href="enum/XlCategoryType.html#xlcategorytype"><span class="std std-ref">XL_CATEGORY_TYPE</span></a> specifying the scale type of this
+axis. Unconditionally <code class="docutils literal notranslate"><span class="pre">TIME_SCALE</span></code> for a <a class="reference internal" href="#pptx.chart.axis.DateAxis" title="pptx.chart.axis.DateAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateAxis</span></code></a> object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.axis.AxisTitle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.axis.</span></span><span class="sig-name descname"><span class="pre">AxisTitle</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#AxisTitle"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis.AxisTitle" title="永久链接至目标">¶</a></dt>
+<dd><p>Provides properties for manipulating axis title.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.axis.AxisTitle.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#AxisTitle.format"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis.AxisTitle.format" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> object providing access to shape formatting.</p>
+<p>Return the <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> object providing shape formatting properties
+for this axis title, such as its line color and fill.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.AxisTitle.has_text_frame">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_text_frame</span></span><a class="headerlink" href="#pptx.chart.axis.AxisTitle.has_text_frame" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write Boolean specifying presence of a text frame.</p>
+<p>Return <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if this axis title has a text frame, and <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code>
+otherwise. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> causes a text frame to be added if not
+already present. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> causes any existing text frame to
+be removed along with any text contained in the text frame.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.AxisTitle.text_frame">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text_frame</span></span><a class="headerlink" href="#pptx.chart.axis.AxisTitle.text_frame" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="text.html#pptx.text.text.TextFrame" title="pptx.text.text.TextFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextFrame</span></code></a> instance for this axis title.</p>
+<p>Return a <a class="reference internal" href="text.html#pptx.text.text.TextFrame" title="pptx.text.text.TextFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextFrame</span></code></a> instance allowing read/write access to the text
+of this axis title and its text formatting properties. Accessing this
+property is destructive as it adds a new text frame if not already
+present.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="value-axes">
+<h3>Value Axes<a class="headerlink" href="#value-axes" title="永久链接至标题">¶</a></h3>
+<p>Some axis properties are only relevant to value axes, in particular, those
+related to numeric values rather than text category labels.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.axis.ValueAxis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.axis.</span></span><span class="sig-name descname"><span class="pre">ValueAxis</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#ValueAxis"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis.ValueAxis" title="永久链接至目标">¶</a></dt>
+<dd><p>An axis having continuous (as opposed to discrete) values.</p>
+<p>The vertical axis is generally a value axis, however both axes of an XY-type chart
+are value axes.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.ValueAxis.crosses">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crosses</span></span><a class="headerlink" href="#pptx.chart.axis.ValueAxis.crosses" title="永久链接至目标">¶</a></dt>
+<dd><p>Member of <a class="reference internal" href="enum/XlAxisCrosses.html#xlaxiscrosses"><span class="std std-ref">XL_AXIS_CROSSES</span></a> enumeration specifying the point on
+this axis where the other axis crosses, such as auto/zero, minimum,
+or maximum. Returns <cite>XL_AXIS_CROSSES.CUSTOM</cite> when a specific numeric
+crossing point (e.g. 1.5) is defined.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.ValueAxis.crosses_at">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crosses_at</span></span><a class="headerlink" href="#pptx.chart.axis.ValueAxis.crosses_at" title="永久链接至目标">¶</a></dt>
+<dd><p>Numeric value on this axis at which the perpendicular axis crosses.
+Returns <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no crossing value is set.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.ValueAxis.major_unit">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">major_unit</span></span><a class="headerlink" href="#pptx.chart.axis.ValueAxis.major_unit" title="永久链接至目标">¶</a></dt>
+<dd><p>The float number of units between major tick marks on this value
+axis. <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> corresponds to the ‘Auto’ setting in the UI, and
+specifies the value should be calculated by PowerPoint based on the
+underlying chart data.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.ValueAxis.minor_unit">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minor_unit</span></span><a class="headerlink" href="#pptx.chart.axis.ValueAxis.minor_unit" title="永久链接至目标">¶</a></dt>
+<dd><p>The float number of units between minor tick marks on this value
+axis. <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> corresponds to the ‘Auto’ setting in the UI, and
+specifies the value should be calculated by PowerPoint based on the
+underlying chart data.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="majorgridlines-objects">
+<h2><a class="reference internal" href="#pptx.chart.axis.MajorGridlines" title="pptx.chart.axis.MajorGridlines"><code class="xref py py-class docutils literal notranslate"><span class="pre">MajorGridlines</span></code></a> objects<a class="headerlink" href="#majorgridlines-objects" title="永久链接至标题">¶</a></h2>
+<p>Gridlines are the vertical and horizontal lines that extend major tick marks
+of an axis across the chart to ease comparison of a data point with the axis
+divisions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.axis.MajorGridlines">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.axis.</span></span><span class="sig-name descname"><span class="pre">MajorGridlines</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#MajorGridlines"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis.MajorGridlines" title="永久链接至目标">¶</a></dt>
+<dd><p>Provides access to the properties of the major gridlines appearing on an axis.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.axis.MajorGridlines.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#MajorGridlines.format"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis.MajorGridlines.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> object providing access to the shape formatting
+properties of this data point, such as line and fill.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ticklabels-objects">
+<h2><a class="reference internal" href="#pptx.chart.axis.TickLabels" title="pptx.chart.axis.TickLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">TickLabels</span></code></a> objects<a class="headerlink" href="#ticklabels-objects" title="永久链接至标题">¶</a></h2>
+<p>Tick labels are the numbers appearing on a value axis or the category names
+appearing on a category axis. Certain formatting options are available for
+changing how these labels are displayed.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.axis.TickLabels">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.axis.</span></span><span class="sig-name descname"><span class="pre">TickLabels</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#TickLabels"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis.TickLabels" title="永久链接至目标">¶</a></dt>
+<dd><p>A service class providing access to formatting of axis tick mark labels.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.axis.TickLabels.font">
+<span class="sig-name descname"><span class="pre">font</span></span><a class="reference internal" href="../_modules/pptx/chart/axis.html#TickLabels.font"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.axis.TickLabels.font" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="text.html#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> object that provides access to the text properties for
+these tick labels, such as bold, italic, etc.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.TickLabels.number_format">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">number_format</span></span><a class="headerlink" href="#pptx.chart.axis.TickLabels.number_format" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write string (e.g. “$#,##0.00”) specifying the format for the
+numbers on this axis. The syntax for these strings is the same as it
+appears in the PowerPoint or Excel UI. Returns ‘General’ if no number
+format has been set. Note that this format string has no effect on
+rendered tick labels when <a class="reference internal" href="#pptx.chart.axis.TickLabels.number_format_is_linked" title="pptx.chart.axis.TickLabels.number_format_is_linked"><code class="xref py py-meth docutils literal notranslate"><span class="pre">number_format_is_linked()</span></code></a> is <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>.
+Assigning a format string to this property automatically sets
+<a class="reference internal" href="#pptx.chart.axis.TickLabels.number_format_is_linked" title="pptx.chart.axis.TickLabels.number_format_is_linked"><code class="xref py py-meth docutils literal notranslate"><span class="pre">number_format_is_linked()</span></code></a> to <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.TickLabels.number_format_is_linked">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">number_format_is_linked</span></span><a class="headerlink" href="#pptx.chart.axis.TickLabels.number_format_is_linked" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean specifying whether number formatting should be
+taken from the source spreadsheet rather than the value of
+<a class="reference internal" href="#pptx.chart.axis.TickLabels.number_format" title="pptx.chart.axis.TickLabels.number_format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">number_format()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.axis.TickLabels.offset">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#pptx.chart.axis.TickLabels.offset" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write int value in range 0-1000 specifying the spacing between
+the tick mark labels and the axis as a percentange of the default
+value. 100 if no label offset setting is present.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="baseplot-objects">
+<h2><a class="reference internal" href="#pptx.chart.plot._BasePlot" title="pptx.chart.plot._BasePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">_BasePlot</span></code></a> objects<a class="headerlink" href="#baseplot-objects" title="永久链接至标题">¶</a></h2>
+<p>A <em>plot</em> is a group of series all depicted using the same charting type, e.g.
+bar, column, line, etc. Most charts have only a single plot; however, a chart
+may have multiple, as in where a line plot appears overlaid on a bar plot in
+the same chart. In the Microsoft API, this concept has the name <em>chart
+group</em>. The term <em>plot</em> was chosen for <cite>python-pptx</cite> to avoid the common mistake of
+understanding a chart group to be a group of chart objects.</p>
+<p>Certain properties must be set at the plot level. Some of those properties
+are not present on plots of all chart types. For example, <code class="xref py py-attr docutils literal notranslate"><span class="pre">gap_width</span></code>
+is only present on a bar or column plot.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.plot._BasePlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.plot.</span></span><span class="sig-name descname"><span class="pre">_BasePlot</span></span><a class="reference internal" href="../_modules/pptx/chart/plot.html#_BasePlot"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.plot._BasePlot" title="永久链接至目标">¶</a></dt>
+<dd><p>A distinct plot that appears in the plot area of a chart. A chart may
+have more than one plot, in which case they appear as superimposed
+layers, such as a line plot appearing on top of a bar chart.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.plot._BasePlot.categories">
+<span class="sig-name descname"><span class="pre">categories</span></span><a class="reference internal" href="../_modules/pptx/chart/plot.html#_BasePlot.categories"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.plot._BasePlot.categories" title="永久链接至目标">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="#pptx.chart.category.Categories" title="pptx.chart.category.Categories"><code class="xref py py-class docutils literal notranslate"><span class="pre">Categories</span></code></a> sequence object containing
+a <a class="reference internal" href="#pptx.chart.category.Category" title="pptx.chart.category.Category"><code class="xref py py-class docutils literal notranslate"><span class="pre">Category</span></code></a> object for each of the category labels
+associated with this plot. The <a class="reference internal" href="#pptx.chart.category.Category" title="pptx.chart.category.Category"><code class="xref py py-class docutils literal notranslate"><span class="pre">Category</span></code></a> class derives from
+<code class="docutils literal notranslate"><span class="pre">str</span></code>, so the returned value can be treated as a simple sequence of
+strings for the common case where all you need is the labels in the
+order they appear on the chart. <a class="reference internal" href="#pptx.chart.category.Categories" title="pptx.chart.category.Categories"><code class="xref py py-class docutils literal notranslate"><span class="pre">Categories</span></code></a> provides
+additional properties for dealing with hierarchical categories when
+required.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.plot._BasePlot.chart">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">chart</span></span><a class="headerlink" href="#pptx.chart.plot._BasePlot.chart" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.chart.Chart" title="pptx.chart.chart.Chart"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chart</span></code></a> object containing this plot.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.plot._BasePlot.data_labels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_labels</span></span><a class="headerlink" href="#pptx.chart.plot._BasePlot.data_labels" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.chart.datalabel.DataLabels" title="pptx.chart.datalabel.DataLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabels</span></code></a> instance providing properties and methods on the
+collection of data labels associated with this plot.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.plot._BasePlot.has_data_labels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_data_labels</span></span><a class="headerlink" href="#pptx.chart.plot._BasePlot.has_data_labels" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean, <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if the series has data labels. Assigning
+<code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> causes data labels to be added to the plot. Assigning False
+removes any existing data labels.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.plot._BasePlot.series">
+<span class="sig-name descname"><span class="pre">series</span></span><a class="reference internal" href="../_modules/pptx/chart/plot.html#_BasePlot.series"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.plot._BasePlot.series" title="永久链接至目标">¶</a></dt>
+<dd><p>A sequence of <code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code> objects representing the series in this plot,
+in the order they appear in the plot.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.plot._BasePlot.vary_by_categories">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vary_by_categories</span></span><a class="headerlink" href="#pptx.chart.plot._BasePlot.vary_by_categories" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean value specifying whether to use a different color
+for each of the points in this plot. Only effective when there is
+a single series; PowerPoint automatically varies color by series when
+more than one series is present.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="barplot-objects">
+<h3><a class="reference internal" href="#pptx.chart.plot.BarPlot" title="pptx.chart.plot.BarPlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BarPlot</span></code></a> objects<a class="headerlink" href="#barplot-objects" title="永久链接至标题">¶</a></h3>
+<p>The following properties are only present on bar-type plots, which includes
+both bar and column charts.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.plot.BarPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.plot.</span></span><span class="sig-name descname"><span class="pre">BarPlot</span></span><a class="reference internal" href="../_modules/pptx/chart/plot.html#BarPlot"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.plot.BarPlot" title="永久链接至目标">¶</a></dt>
+<dd><p>A bar chart-style plot.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.plot.BarPlot.gap_width">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gap_width</span></span><a class="headerlink" href="#pptx.chart.plot.BarPlot.gap_width" title="永久链接至目标">¶</a></dt>
+<dd><p>Width of gap between bar(s) of each category, as an integer
+percentage of the bar width. The default value for a new bar chart is
+150, representing 150% or 1.5 times the width of a single bar.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.plot.BarPlot.overlap">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">overlap</span></span><a class="headerlink" href="#pptx.chart.plot.BarPlot.overlap" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write int value in range -100..100 specifying a percentage of
+the bar width by which to overlap adjacent bars in a multi-series bar
+chart. Default is 0. A setting of -100 creates a gap of a full bar
+width and a setting of 100 causes all the bars in a category to be
+superimposed. A stacked bar plot has overlap of 100 by default.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="bubbleplot-objects">
+<h3><a class="reference internal" href="#pptx.chart.plot.BubblePlot" title="pptx.chart.plot.BubblePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubblePlot</span></code></a> objects<a class="headerlink" href="#bubbleplot-objects" title="永久链接至标题">¶</a></h3>
+<p>The following properties are only present on bubble-type plots.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.plot.BubblePlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.plot.</span></span><span class="sig-name descname"><span class="pre">BubblePlot</span></span><a class="reference internal" href="../_modules/pptx/chart/plot.html#BubblePlot"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.plot.BubblePlot" title="永久链接至目标">¶</a></dt>
+<dd><p>A bubble chart plot.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.plot.BubblePlot.bubble_scale">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bubble_scale</span></span><a class="headerlink" href="#pptx.chart.plot.BubblePlot.bubble_scale" title="永久链接至目标">¶</a></dt>
+<dd><p>An integer between 0 and 300 inclusive indicating the percentage of
+the default size at which bubbles should be displayed. Assigning
+<code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> produces the same behavior as assigning <cite>100</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="category-categories-objects">
+<h3><a class="reference internal" href="#pptx.chart.category.Categories" title="pptx.chart.category.Categories"><code class="xref py py-class docutils literal notranslate"><span class="pre">Categories</span></code></a> objects<a class="headerlink" href="#category-categories-objects" title="永久链接至标题">¶</a></h3>
+<p>Category plots provide access to a <a class="reference internal" href="#pptx.chart.category.Categories" title="pptx.chart.category.Categories"><code class="xref py py-class docutils literal notranslate"><span class="pre">Categories</span></code></a> object with their
+<cite>.categories</cite> property.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.category.Categories">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.category.</span></span><span class="sig-name descname"><span class="pre">Categories</span></span><a class="reference internal" href="../_modules/pptx/chart/category.html#Categories"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.category.Categories" title="永久链接至目标">¶</a></dt>
+<dd><p>A sequence of <a class="reference internal" href="#pptx.chart.category.Category" title="pptx.chart.category.Category"><code class="xref py py-class docutils literal notranslate"><span class="pre">Category</span></code></a> objects, each representing a category
+label on the chart. Provides properties for dealing with hierarchical
+categories.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.category.Categories.depth">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">depth</span></span><a class="headerlink" href="#pptx.chart.category.Categories.depth" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an integer representing the number of hierarchical levels in
+this category collection. Returns 1 for non-hierarchical categories
+and 0 if no categories are present (generally meaning no series are
+present).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.category.Categories.flattened_labels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">flattened_labels</span></span><a class="headerlink" href="#pptx.chart.category.Categories.flattened_labels" title="永久链接至目标">¶</a></dt>
+<dd><p>Return a sequence of tuples, each containing the flattened hierarchy
+of category labels for a leaf category. Each tuple is in parent -&gt;
+child order, e.g. <code class="docutils literal notranslate"><span class="pre">('US',</span> <span class="pre">'CA',</span> <span class="pre">'San</span> <span class="pre">Francisco')</span></code>, with the leaf
+category appearing last. If this categories collection is
+non-hierarchical, each tuple will contain only a leaf category label.
+If the plot has no series (and therefore no categories), an empty
+tuple is returned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.category.Categories.levels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">levels</span></span><a class="headerlink" href="#pptx.chart.category.Categories.levels" title="永久链接至目标">¶</a></dt>
+<dd><p>Return a sequence of <a class="reference internal" href="#pptx.chart.category.CategoryLevel" title="pptx.chart.category.CategoryLevel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoryLevel</span></code></a> objects representing the
+hierarchy of this category collection. The sequence is empty when the
+category collection is not hierarchical, that is, contains only
+leaf-level categories. The levels are ordered from the leaf level to
+the root level; so the first level will contain the same categories
+as this category collection.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="category-category-objects">
+<h3><a class="reference internal" href="#pptx.chart.category.Category" title="pptx.chart.category.Category"><code class="xref py py-class docutils literal notranslate"><span class="pre">Category</span></code></a> objects<a class="headerlink" href="#category-category-objects" title="永久链接至标题">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.category.Category">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.category.</span></span><span class="sig-name descname"><span class="pre">Category</span></span><a class="reference internal" href="../_modules/pptx/chart/category.html#Category"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.category.Category" title="永久链接至目标">¶</a></dt>
+<dd><p>An extension of <cite>str</cite> that provides the category label as its string
+value, and additional attributes representing other aspects of the
+category.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.category.Category.idx">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">idx</span></span><a class="headerlink" href="#pptx.chart.category.Category.idx" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an integer representing the index reference of this category.
+For a leaf node, the index identifies the category. For a parent (or
+other ancestor) category, the index specifies the first leaf category
+that ancestor encloses.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.category.Category.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#pptx.chart.category.Category.label" title="永久链接至目标">¶</a></dt>
+<dd><p>Return the label of this category as a string.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="categorylevel-objects">
+<h3><a class="reference internal" href="#pptx.chart.category.CategoryLevel" title="pptx.chart.category.CategoryLevel"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoryLevel</span></code></a> objects<a class="headerlink" href="#categorylevel-objects" title="永久链接至标题">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.category.CategoryLevel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.category.</span></span><span class="sig-name descname"><span class="pre">CategoryLevel</span></span><a class="reference internal" href="../_modules/pptx/chart/category.html#CategoryLevel"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.category.CategoryLevel" title="永久链接至目标">¶</a></dt>
+<dd><p>A sequence of <a class="reference internal" href="#pptx.chart.category.Category" title="pptx.chart.category.Category"><code class="xref py py-class docutils literal notranslate"><span class="pre">Category</span></code></a> objects representing a single level in
+a hierarchical category collection. This object is only used when the
+categories are hierarchical, meaning they have more than one level and
+higher level categories group those at lower levels.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="datalabels-objects">
+<h2><a class="reference internal" href="#pptx.chart.datalabel.DataLabels" title="pptx.chart.datalabel.DataLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabels</span></code></a> objects<a class="headerlink" href="#datalabels-objects" title="永久链接至标题">¶</a></h2>
+<p>A <em>data label</em> is text that labels a particular data point, usually with its
+value, allowing the point to be interpreted more clearly than just visually
+comparing its marker with its axis.</p>
+<p>A <a class="reference internal" href="#pptx.chart.datalabel.DataLabels" title="pptx.chart.datalabel.DataLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabels</span></code></a> object is not a collection, such as a sequence, and it does
+not provide access to individual data points. Rather, it provides properties
+that allow all the data labels in its scope to be formatted at once.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.datalabel.</span></span><span class="sig-name descname"><span class="pre">DataLabels</span></span><a class="reference internal" href="../_modules/pptx/chart/datalabel.html#DataLabels"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.datalabel.DataLabels" title="永久链接至目标">¶</a></dt>
+<dd><p>Provides access to properties of data labels for a plot or a series.</p>
+<p>This is not a collection and does not provide access to individual data
+labels. Access to individual labels is via the <a class="reference internal" href="#pptx.chart.point.Point" title="pptx.chart.point.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> object. The
+properties this object provides control formatting of <em>all</em> the data
+labels in its scope.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels.font">
+<span class="sig-name descname"><span class="pre">font</span></span><a class="reference internal" href="../_modules/pptx/chart/datalabel.html#DataLabels.font"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.datalabel.DataLabels.font" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="text.html#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> object that provides access to the text properties for
+these data labels, such as bold, italic, etc.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels.number_format">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">number_format</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabels.number_format" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write string specifying the format for the numbers on this set
+of data labels. Returns ‘General’ if no number format has been set.
+Note that this format string has no effect on rendered data labels
+when <a class="reference internal" href="#pptx.chart.datalabel.DataLabels.number_format_is_linked" title="pptx.chart.datalabel.DataLabels.number_format_is_linked"><code class="xref py py-meth docutils literal notranslate"><span class="pre">number_format_is_linked()</span></code></a> is <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>. Assigning a format
+string to this property automatically sets
+<a class="reference internal" href="#pptx.chart.datalabel.DataLabels.number_format_is_linked" title="pptx.chart.datalabel.DataLabels.number_format_is_linked"><code class="xref py py-meth docutils literal notranslate"><span class="pre">number_format_is_linked()</span></code></a> to <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels.number_format_is_linked">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">number_format_is_linked</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabels.number_format_is_linked" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean specifying whether number formatting should be
+taken from the source spreadsheet rather than the value of
+<a class="reference internal" href="#pptx.chart.datalabel.DataLabels.number_format" title="pptx.chart.datalabel.DataLabels.number_format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">number_format()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabels.position" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write <a class="reference internal" href="enum/XlDataLabelPosition.html#xldatalabelposition"><span class="std std-ref">XL_DATA_LABEL_POSITION</span></a> enumeration value specifying
+the position of the data labels with respect to their data point, or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no position is specified. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> causes
+PowerPoint to choose the default position, which varies by chart
+type.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels.show_category_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_category_name</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabels.show_category_name" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write. True when name of category should appear in label.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels.show_legend_key">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_legend_key</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabels.show_legend_key" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write. True when data label displays legend-color swatch.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels.show_percentage">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_percentage</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabels.show_percentage" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write. True when data label displays percentage.</p>
+<p>This option is not operative on all chart types. Percentage appears
+on polar charts such as pie and donut.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels.show_series_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_series_name</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabels.show_series_name" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write. True when data label displays series name.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabels.show_value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_value</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabels.show_value" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write. True when label displays numeric value of datapoint.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.datalabel.</span></span><span class="sig-name descname"><span class="pre">DataLabel</span></span><a class="reference internal" href="../_modules/pptx/chart/datalabel.html#DataLabel"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.datalabel.DataLabel" title="永久链接至目标">¶</a></dt>
+<dd><p>The data label associated with an individual data point.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabel.font">
+<span class="sig-name descname"><span class="pre">font</span></span><a class="reference internal" href="../_modules/pptx/chart/datalabel.html#DataLabel.font"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.datalabel.DataLabel.font" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="text.html#pptx.text.text.Font" title="pptx.text.text.Font"><code class="xref py py-class docutils literal notranslate"><span class="pre">Font</span></code></a> object providing text formatting for this data label.</p>
+<p>This font object is used to customize the appearance of automatically
+inserted text, such as the data point value. The font applies to the
+entire data label. More granular control of the appearance of custom
+data label text is controlled by a font object on runs in the text
+frame.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabel.has_text_frame">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_text_frame</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabel.has_text_frame" title="永久链接至目标">¶</a></dt>
+<dd><p>Return <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if this data label has a text frame (implying it has
+custom data label text), and <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> otherwise. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>
+causes a text frame to be added if not already present. Assigning
+<code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> causes any existing text frame to be removed along with any
+text contained in the text frame.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabel.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabel.position" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write <a class="reference internal" href="enum/XlDataLabelPosition.html#xldatalabelposition"><span class="std std-ref">XL_DATA_LABEL_POSITION</span></a> member specifying the position
+of this data label with respect to its data point, or <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no
+position is specified. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> causes PowerPoint to choose
+the default position, which varies by chart type.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.datalabel.DataLabel.text_frame">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">text_frame</span></span><a class="headerlink" href="#pptx.chart.datalabel.DataLabel.text_frame" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="text.html#pptx.text.text.TextFrame" title="pptx.text.text.TextFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextFrame</span></code></a> instance for this data label, containing the text of the
+data label and providing access to its text formatting properties.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="series-objects">
+<h2><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code> objects<a class="headerlink" href="#series-objects" title="永久链接至标题">¶</a></h2>
+<p>A <em>series</em> is a sequence of data points that represent a coherent set of
+observations across each of the categories in the chart. For example, on
+a chart having regional categories “West”, “East”, and “Mid-west”, a series
+might be “Q1 Sales” and have values 42, 120, and 34. The series in this case
+coheres around the first quarter time period.</p>
+<p>In general, the type (class) of a series object depends upon the chart type.
+The following properties are available on series objects of all types.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.series._BaseSeries">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.series.</span></span><span class="sig-name descname"><span class="pre">_BaseSeries</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#_BaseSeries"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series._BaseSeries" title="永久链接至目标">¶</a></dt>
+<dd><p>Base class for <a class="reference internal" href="#pptx.chart.series.BarSeries" title="pptx.chart.series.BarSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">BarSeries</span></code></a> and other series classes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series._BaseSeries.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#_BaseSeries.format"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series._BaseSeries.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> instance for this series, providing access to shape
+properties such as fill and line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series._BaseSeries.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#pptx.chart.series._BaseSeries.index" title="永久链接至目标">¶</a></dt>
+<dd><p>The zero-based integer index of this series as reported in its
+<cite>c:ser/c:idx</cite> element.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series._BaseSeries.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.chart.series._BaseSeries.name" title="永久链接至目标">¶</a></dt>
+<dd><p>The string label given to this series, appears as the title of the
+column for this series in the Excel worksheet. It also appears as the
+label for this series in the legend.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="areaseries-objects">
+<h3><a class="reference internal" href="#pptx.chart.series.AreaSeries" title="pptx.chart.series.AreaSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">AreaSeries</span></code></a> objects<a class="headerlink" href="#areaseries-objects" title="永久链接至标题">¶</a></h3>
+<p>These properties are available on a series belonging to an area-type plot
+such as AREA_STACKED.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.series.AreaSeries">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.series.</span></span><span class="sig-name descname"><span class="pre">AreaSeries</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#AreaSeries"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.AreaSeries" title="永久链接至目标">¶</a></dt>
+<dd><p>A data point series belonging to an area plot.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.AreaSeries.data_labels">
+<span class="sig-name descname"><span class="pre">data_labels</span></span><a class="headerlink" href="#pptx.chart.series.AreaSeries.data_labels" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.chart.datalabel.DataLabels" title="pptx.chart.datalabel.DataLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabels</span></code></a> object controlling data labels for this series.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.AreaSeries.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#pptx.chart.series.AreaSeries.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> instance for this series, providing access to shape
+properties such as fill and line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.AreaSeries.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#pptx.chart.series.AreaSeries.index" title="永久链接至目标">¶</a></dt>
+<dd><p>The zero-based integer index of this series as reported in its
+<cite>c:ser/c:idx</cite> element.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.AreaSeries.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.chart.series.AreaSeries.name" title="永久链接至目标">¶</a></dt>
+<dd><p>The string label given to this series, appears as the title of the
+column for this series in the Excel worksheet. It also appears as the
+label for this series in the legend.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.AreaSeries.points">
+<span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#pptx.chart.series.AreaSeries.points" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.point.CategoryPoints" title="pptx.chart.point.CategoryPoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoryPoints</span></code></a> object providing access to individual data
+points in this series.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.AreaSeries.values">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#pptx.chart.series.AreaSeries.values" title="永久链接至目标">¶</a></dt>
+<dd><p>Read-only. A sequence containing the float values for this series, in
+the order they appear on the chart.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="barseries-objects">
+<h3><a class="reference internal" href="#pptx.chart.series.BarSeries" title="pptx.chart.series.BarSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">BarSeries</span></code></a> objects<a class="headerlink" href="#barseries-objects" title="永久链接至标题">¶</a></h3>
+<p>These properties are available on a series belonging to a bar-type plot. Note
+that column charts are also bar-type charts.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.series.BarSeries">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.series.</span></span><span class="sig-name descname"><span class="pre">BarSeries</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#BarSeries"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.BarSeries" title="永久链接至目标">¶</a></dt>
+<dd><p>A data point series belonging to a bar plot.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.BarSeries.invert_if_negative">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">invert_if_negative</span></span><a class="headerlink" href="#pptx.chart.series.BarSeries.invert_if_negative" title="永久链接至目标">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> if a point having a value less than zero should appear with a
+fill different than those with a positive value. <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> if the fill
+should be the same regardless of the bar’s value. When <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code>, a bar
+with a solid fill appears with white fill; in a bar with gradient
+fill, the direction of the gradient is reversed, e.g. dark -&gt; light
+instead of light -&gt; dark. The term “invert” here should be understood
+to mean “invert the <em>direction</em> of the <em>fill gradient</em>”.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.BarSeries.data_labels">
+<span class="sig-name descname"><span class="pre">data_labels</span></span><a class="headerlink" href="#pptx.chart.series.BarSeries.data_labels" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.chart.datalabel.DataLabels" title="pptx.chart.datalabel.DataLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabels</span></code></a> object controlling data labels for this series.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.BarSeries.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#pptx.chart.series.BarSeries.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> instance for this series, providing access to shape
+properties such as fill and line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.BarSeries.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#pptx.chart.series.BarSeries.index" title="永久链接至目标">¶</a></dt>
+<dd><p>The zero-based integer index of this series as reported in its
+<cite>c:ser/c:idx</cite> element.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.BarSeries.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.chart.series.BarSeries.name" title="永久链接至目标">¶</a></dt>
+<dd><p>The string label given to this series, appears as the title of the
+column for this series in the Excel worksheet. It also appears as the
+label for this series in the legend.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.BarSeries.points">
+<span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#pptx.chart.series.BarSeries.points" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.point.CategoryPoints" title="pptx.chart.point.CategoryPoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoryPoints</span></code></a> object providing access to individual data
+points in this series.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.BarSeries.values">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#pptx.chart.series.BarSeries.values" title="永久链接至目标">¶</a></dt>
+<dd><p>Read-only. A sequence containing the float values for this series, in
+the order they appear on the chart.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="bubbleseries-objects">
+<h3><a class="reference internal" href="#pptx.chart.series.BubbleSeries" title="pptx.chart.series.BubbleSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleSeries</span></code></a> objects<a class="headerlink" href="#bubbleseries-objects" title="永久链接至标题">¶</a></h3>
+<p>These properties are available on series belonging to a bubble chart.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.series.BubbleSeries">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.series.</span></span><span class="sig-name descname"><span class="pre">BubbleSeries</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#BubbleSeries"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.BubbleSeries" title="永久链接至目标">¶</a></dt>
+<dd><p>A data point series belonging to a bubble plot.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.BubbleSeries.points">
+<span class="sig-name descname"><span class="pre">points</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#BubbleSeries.points"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.BubbleSeries.points" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.point.BubblePoints" title="pptx.chart.point.BubblePoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubblePoints</span></code></a> object providing access to individual data point
+objects used to discover and adjust the formatting and data labels of
+a data point.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.BubbleSeries.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#pptx.chart.series.BubbleSeries.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> instance for this series, providing access to shape
+properties such as fill and line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.BubbleSeries.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#pptx.chart.series.BubbleSeries.index" title="永久链接至目标">¶</a></dt>
+<dd><p>The zero-based integer index of this series as reported in its
+<cite>c:ser/c:idx</cite> element.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.chart.series.BubbleSeries.iter_values">
+<span class="sig-name descname"><span class="pre">iter_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pptx.chart.series.BubbleSeries.iter_values" title="永久链接至目标">¶</a></dt>
+<dd><p>Generate each float Y value in this series, in the order they appear
+on the chart. A value of <cite>None</cite> represents a missing Y value
+(corresponding to a blank Excel cell).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.BubbleSeries.marker">
+<span class="sig-name descname"><span class="pre">marker</span></span><a class="headerlink" href="#pptx.chart.series.BubbleSeries.marker" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.marker.Marker" title="pptx.chart.marker.Marker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Marker</span></code></a> instance for this series, providing access to data point
+marker properties such as fill and line. Setting these properties
+determines the appearance of markers for all points in this series
+that are not overridden by settings at the point level.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.BubbleSeries.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.chart.series.BubbleSeries.name" title="永久链接至目标">¶</a></dt>
+<dd><p>The string label given to this series, appears as the title of the
+column for this series in the Excel worksheet. It also appears as the
+label for this series in the legend.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.BubbleSeries.values">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#pptx.chart.series.BubbleSeries.values" title="永久链接至目标">¶</a></dt>
+<dd><p>Read-only. A sequence containing the float values for this series, in
+the order they appear on the chart.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="lineseries-objects">
+<h3><a class="reference internal" href="#pptx.chart.series.LineSeries" title="pptx.chart.series.LineSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineSeries</span></code></a> objects<a class="headerlink" href="#lineseries-objects" title="永久链接至标题">¶</a></h3>
+<p>These properties are available on a series belonging to a line-type plot.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.series.LineSeries">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.series.</span></span><span class="sig-name descname"><span class="pre">LineSeries</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#LineSeries"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.LineSeries" title="永久链接至目标">¶</a></dt>
+<dd><p>A data point series belonging to a line plot.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.LineSeries.smooth">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">smooth</span></span><a class="headerlink" href="#pptx.chart.series.LineSeries.smooth" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write boolean specifying whether to use curve smoothing to
+form the line connecting the data points in this series into
+a continuous curve. If <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code>, a series of straight line segments
+are used to connect the points.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.LineSeries.data_labels">
+<span class="sig-name descname"><span class="pre">data_labels</span></span><a class="headerlink" href="#pptx.chart.series.LineSeries.data_labels" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.chart.datalabel.DataLabels" title="pptx.chart.datalabel.DataLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabels</span></code></a> object controlling data labels for this series.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.LineSeries.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#pptx.chart.series.LineSeries.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> instance for this series, providing access to shape
+properties such as fill and line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.LineSeries.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#pptx.chart.series.LineSeries.index" title="永久链接至目标">¶</a></dt>
+<dd><p>The zero-based integer index of this series as reported in its
+<cite>c:ser/c:idx</cite> element.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.LineSeries.marker">
+<span class="sig-name descname"><span class="pre">marker</span></span><a class="headerlink" href="#pptx.chart.series.LineSeries.marker" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.marker.Marker" title="pptx.chart.marker.Marker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Marker</span></code></a> instance for this series, providing access to data point
+marker properties such as fill and line. Setting these properties
+determines the appearance of markers for all points in this series
+that are not overridden by settings at the point level.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.LineSeries.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.chart.series.LineSeries.name" title="永久链接至目标">¶</a></dt>
+<dd><p>The string label given to this series, appears as the title of the
+column for this series in the Excel worksheet. It also appears as the
+label for this series in the legend.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.LineSeries.points">
+<span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#pptx.chart.series.LineSeries.points" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.point.CategoryPoints" title="pptx.chart.point.CategoryPoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoryPoints</span></code></a> object providing access to individual data
+points in this series.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.LineSeries.values">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#pptx.chart.series.LineSeries.values" title="永久链接至目标">¶</a></dt>
+<dd><p>Read-only. A sequence containing the float values for this series, in
+the order they appear on the chart.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="marker-objects">
+<h3><a class="reference internal" href="#pptx.chart.marker.Marker" title="pptx.chart.marker.Marker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Marker</span></code></a> objects<a class="headerlink" href="#marker-objects" title="永久链接至标题">¶</a></h3>
+<p>A marker is the small shape (e.g. diamond or circle) that “marks” each
+individual data point connected by a series line in a line-type plot.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.marker.Marker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.marker.</span></span><span class="sig-name descname"><span class="pre">Marker</span></span><a class="reference internal" href="../_modules/pptx/chart/marker.html#Marker"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.marker.Marker" title="永久链接至目标">¶</a></dt>
+<dd><p>Represents a data point marker, such as a diamond or circle, on
+a line-type chart.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.marker.Marker.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="reference internal" href="../_modules/pptx/chart/marker.html#Marker.format"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.marker.Marker.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> instance for this marker, providing access to shape
+properties such as fill and line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.marker.Marker.size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#pptx.chart.marker.Marker.size" title="永久链接至目标">¶</a></dt>
+<dd><p>An integer between 2 and 72 inclusive indicating the size of this
+marker in points. A value of <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> indicates no explicit value is
+set and the size is inherited from a higher-level setting or the
+PowerPoint default (which may be 9). Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> removes any
+explicitly assigned size, causing this value to be inherited.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.marker.Marker.element">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">element</span></span><a class="headerlink" href="#pptx.chart.marker.Marker.element" title="永久链接至目标">¶</a></dt>
+<dd><p>The lxml element proxied by this object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.marker.Marker.style">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">style</span></span><a class="headerlink" href="#pptx.chart.marker.Marker.style" title="永久链接至目标">¶</a></dt>
+<dd><p>A member of the <a class="reference internal" href="enum/XlMarkerStyle.html#xlmarkerstyle"><span class="std std-ref">XL_MARKER_STYLE</span></a> enumeration indicating the shape
+of this marker. Returns <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no explicit style has been set,
+which corresponds to the “Automatic” option in the PowerPoint UI.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="pieseries-objects">
+<h3><a class="reference internal" href="#pptx.chart.series.PieSeries" title="pptx.chart.series.PieSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">PieSeries</span></code></a> objects<a class="headerlink" href="#pieseries-objects" title="永久链接至标题">¶</a></h3>
+<p>These properties are available on a series belonging to a pie chart.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.series.PieSeries">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.series.</span></span><span class="sig-name descname"><span class="pre">PieSeries</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#PieSeries"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.PieSeries" title="永久链接至目标">¶</a></dt>
+<dd><p>A data point series belonging to a pie plot.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.PieSeries.data_labels">
+<span class="sig-name descname"><span class="pre">data_labels</span></span><a class="headerlink" href="#pptx.chart.series.PieSeries.data_labels" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.chart.datalabel.DataLabels" title="pptx.chart.datalabel.DataLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabels</span></code></a> object controlling data labels for this series.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.PieSeries.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#pptx.chart.series.PieSeries.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> instance for this series, providing access to shape
+properties such as fill and line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.PieSeries.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#pptx.chart.series.PieSeries.index" title="永久链接至目标">¶</a></dt>
+<dd><p>The zero-based integer index of this series as reported in its
+<cite>c:ser/c:idx</cite> element.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.PieSeries.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.chart.series.PieSeries.name" title="永久链接至目标">¶</a></dt>
+<dd><p>The string label given to this series, appears as the title of the
+column for this series in the Excel worksheet. It also appears as the
+label for this series in the legend.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.PieSeries.points">
+<span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#pptx.chart.series.PieSeries.points" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.point.CategoryPoints" title="pptx.chart.point.CategoryPoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoryPoints</span></code></a> object providing access to individual data
+points in this series.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.PieSeries.values">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#pptx.chart.series.PieSeries.values" title="永久链接至目标">¶</a></dt>
+<dd><p>Read-only. A sequence containing the float values for this series, in
+the order they appear on the chart.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="radarseries-objects">
+<h3><a class="reference internal" href="#pptx.chart.series.RadarSeries" title="pptx.chart.series.RadarSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">RadarSeries</span></code></a> objects<a class="headerlink" href="#radarseries-objects" title="永久链接至标题">¶</a></h3>
+<p>These properties are available on a series belonging to a radar chart.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.series.RadarSeries">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.series.</span></span><span class="sig-name descname"><span class="pre">RadarSeries</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#RadarSeries"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.RadarSeries" title="永久链接至目标">¶</a></dt>
+<dd><p>A data point series belonging to a radar plot.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.RadarSeries.data_labels">
+<span class="sig-name descname"><span class="pre">data_labels</span></span><a class="headerlink" href="#pptx.chart.series.RadarSeries.data_labels" title="永久链接至目标">¶</a></dt>
+<dd><p><a class="reference internal" href="#pptx.chart.datalabel.DataLabels" title="pptx.chart.datalabel.DataLabels"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabels</span></code></a> object controlling data labels for this series.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.RadarSeries.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#pptx.chart.series.RadarSeries.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> instance for this series, providing access to shape
+properties such as fill and line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.RadarSeries.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#pptx.chart.series.RadarSeries.index" title="永久链接至目标">¶</a></dt>
+<dd><p>The zero-based integer index of this series as reported in its
+<cite>c:ser/c:idx</cite> element.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.RadarSeries.marker">
+<span class="sig-name descname"><span class="pre">marker</span></span><a class="headerlink" href="#pptx.chart.series.RadarSeries.marker" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.marker.Marker" title="pptx.chart.marker.Marker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Marker</span></code></a> instance for this series, providing access to data point
+marker properties such as fill and line. Setting these properties
+determines the appearance of markers for all points in this series
+that are not overridden by settings at the point level.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.RadarSeries.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.chart.series.RadarSeries.name" title="永久链接至目标">¶</a></dt>
+<dd><p>The string label given to this series, appears as the title of the
+column for this series in the Excel worksheet. It also appears as the
+label for this series in the legend.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.RadarSeries.points">
+<span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#pptx.chart.series.RadarSeries.points" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.point.CategoryPoints" title="pptx.chart.point.CategoryPoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoryPoints</span></code></a> object providing access to individual data
+points in this series.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.RadarSeries.values">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#pptx.chart.series.RadarSeries.values" title="永久链接至目标">¶</a></dt>
+<dd><p>Read-only. A sequence containing the float values for this series, in
+the order they appear on the chart.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="xyseries-objects">
+<h3><a class="reference internal" href="#pptx.chart.series.XySeries" title="pptx.chart.series.XySeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">XySeries</span></code></a> objects<a class="headerlink" href="#xyseries-objects" title="永久链接至标题">¶</a></h3>
+<p>These properties are available on series belonging to an XY plot.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.series.XySeries">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.series.</span></span><span class="sig-name descname"><span class="pre">XySeries</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#XySeries"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.XySeries" title="永久链接至目标">¶</a></dt>
+<dd><p>A data point series belonging to an XY (scatter) plot.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pptx.chart.series.XySeries.iter_values">
+<span class="sig-name descname"><span class="pre">iter_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pptx/chart/series.html#XySeries.iter_values"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.XySeries.iter_values" title="永久链接至目标">¶</a></dt>
+<dd><p>Generate each float Y value in this series, in the order they appear
+on the chart. A value of <cite>None</cite> represents a missing Y value
+(corresponding to a blank Excel cell).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.XySeries.points">
+<span class="sig-name descname"><span class="pre">points</span></span><a class="reference internal" href="../_modules/pptx/chart/series.html#XySeries.points"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.series.XySeries.points" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.point.XyPoints" title="pptx.chart.point.XyPoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">XyPoints</span></code></a> object providing access to individual data points in
+this series.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.XySeries.values">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#pptx.chart.series.XySeries.values" title="永久链接至目标">¶</a></dt>
+<dd><p>Read-only. A sequence containing the float values for this series, in
+the order they appear on the chart.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.XySeries.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#pptx.chart.series.XySeries.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> instance for this series, providing access to shape
+properties such as fill and line.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.XySeries.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><a class="headerlink" href="#pptx.chart.series.XySeries.index" title="永久链接至目标">¶</a></dt>
+<dd><p>The zero-based integer index of this series as reported in its
+<cite>c:ser/c:idx</cite> element.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.series.XySeries.marker">
+<span class="sig-name descname"><span class="pre">marker</span></span><a class="headerlink" href="#pptx.chart.series.XySeries.marker" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.marker.Marker" title="pptx.chart.marker.Marker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Marker</span></code></a> instance for this series, providing access to data point
+marker properties such as fill and line. Setting these properties
+determines the appearance of markers for all points in this series
+that are not overridden by settings at the point level.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.chart.series.XySeries.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pptx.chart.series.XySeries.name" title="永久链接至目标">¶</a></dt>
+<dd><p>The string label given to this series, appears as the title of the
+column for this series in the Excel worksheet. It also appears as the
+label for this series in the legend.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="point-objects">
+<h2><a class="reference internal" href="#pptx.chart.point.Point" title="pptx.chart.point.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> objects<a class="headerlink" href="#point-objects" title="永久链接至标题">¶</a></h2>
+<p>An XY or bubble chart has a <code class="xref py py-attr docutils literal notranslate"><span class="pre">points</span></code> attribute providing access to a
+sequence of <a class="reference internal" href="#pptx.chart.point.Point" title="pptx.chart.point.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> objects. That sequence supports iteration, indexed
+access, and <code class="docutils literal notranslate"><span class="pre">len()</span></code>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.point.CategoryPoints">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.point.</span></span><span class="sig-name descname"><span class="pre">CategoryPoints</span></span><a class="reference internal" href="../_modules/pptx/chart/point.html#CategoryPoints"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.point.CategoryPoints" title="永久链接至目标">¶</a></dt>
+<dd><p>Sequence providing access to individual <a class="reference internal" href="#pptx.chart.point.Point" title="pptx.chart.point.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> objects, each
+representing the visual properties of a data point in the specified
+category series.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.point.BubblePoints">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.point.</span></span><span class="sig-name descname"><span class="pre">BubblePoints</span></span><a class="reference internal" href="../_modules/pptx/chart/point.html#BubblePoints"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.point.BubblePoints" title="永久链接至目标">¶</a></dt>
+<dd><p>Sequence providing access to the individual data points in
+a <a class="reference internal" href="#pptx.chart.series.BubbleSeries" title="pptx.chart.series.BubbleSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleSeries</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.point.XyPoints">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.point.</span></span><span class="sig-name descname"><span class="pre">XyPoints</span></span><a class="reference internal" href="../_modules/pptx/chart/point.html#XyPoints"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.point.XyPoints" title="永久链接至目标">¶</a></dt>
+<dd><p>Sequence providing access to the individual data points in an <a class="reference internal" href="#pptx.chart.series.XySeries" title="pptx.chart.series.XySeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">XySeries</span></code></a>
+object.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.chart.point.Point">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.chart.point.</span></span><span class="sig-name descname"><span class="pre">Point</span></span><a class="reference internal" href="../_modules/pptx/chart/point.html#Point"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.point.Point" title="永久链接至目标">¶</a></dt>
+<dd><p>Provides access to the properties of an individual data point in
+a series, such as the visual properties of its marker and the text and
+font of its data label.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.point.Point.data_label">
+<span class="sig-name descname"><span class="pre">data_label</span></span><a class="reference internal" href="../_modules/pptx/chart/point.html#Point.data_label"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.point.Point.data_label" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.datalabel.DataLabel" title="pptx.chart.datalabel.DataLabel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabel</span></code></a> object representing the label on this data point.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.point.Point.format">
+<span class="sig-name descname"><span class="pre">format</span></span><a class="reference internal" href="../_modules/pptx/chart/point.html#Point.format"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.point.Point.format" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="dml.html#pptx.dml.chtfmt.ChartFormat" title="pptx.dml.chtfmt.ChartFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChartFormat</span></code></a> object providing access to the shape formatting
+properties of this data point, such as line and fill.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.chart.point.Point.marker">
+<span class="sig-name descname"><span class="pre">marker</span></span><a class="reference internal" href="../_modules/pptx/chart/point.html#Point.marker"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.chart.point.Point.marker" title="永久链接至目标">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pptx.chart.marker.Marker" title="pptx.chart.marker.Marker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Marker</span></code></a> instance for this point, providing access to the visual
+properties of the data point marker, such as fill and line. Setting
+these properties overrides any value set at the series level.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Charts</a><ul>
+<li><a class="reference internal" href="#chart-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Chart</span></code> objects</a></li>
+<li><a class="reference internal" href="#legend-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Legend</span></code> objects</a></li>
+<li><a class="reference internal" href="#axis-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Axis</span></code> objects</a><ul>
+<li><a class="reference internal" href="#value-axes">Value Axes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#majorgridlines-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">MajorGridlines</span></code> objects</a></li>
+<li><a class="reference internal" href="#ticklabels-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">TickLabels</span></code> objects</a></li>
+<li><a class="reference internal" href="#baseplot-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">_BasePlot</span></code> objects</a><ul>
+<li><a class="reference internal" href="#barplot-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">BarPlot</span></code> objects</a></li>
+<li><a class="reference internal" href="#bubbleplot-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubblePlot</span></code> objects</a></li>
+<li><a class="reference internal" href="#category-categories-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Categories</span></code> objects</a></li>
+<li><a class="reference internal" href="#category-category-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Category</span></code> objects</a></li>
+<li><a class="reference internal" href="#categorylevel-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">CategoryLevel</span></code> objects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#datalabels-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataLabels</span></code> objects</a></li>
+<li><a class="reference internal" href="#series-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code> objects</a><ul>
+<li><a class="reference internal" href="#areaseries-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">AreaSeries</span></code> objects</a></li>
+<li><a class="reference internal" href="#barseries-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">BarSeries</span></code> objects</a></li>
+<li><a class="reference internal" href="#bubbleseries-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleSeries</span></code> objects</a></li>
+<li><a class="reference internal" href="#lineseries-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineSeries</span></code> objects</a></li>
+<li><a class="reference internal" href="#marker-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Marker</span></code> objects</a></li>
+<li><a class="reference internal" href="#pieseries-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">PieSeries</span></code> objects</a></li>
+<li><a class="reference internal" href="#radarseries-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">RadarSeries</span></code> objects</a></li>
+<li><a class="reference internal" href="#xyseries-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">XySeries</span></code> objects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#point-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> objects</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="chart-data.html"
+                          title="上一章">ChartData objects</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="text.html"
+                          title="下一章">Text-related objects</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="text.html" title="Text-related objects"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="chart-data.html" title="ChartData objects"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Charts</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

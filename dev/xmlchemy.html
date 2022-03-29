@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Understanding xmlchemy &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Development Practices" href="development_practices.html" />
+    <link rel="prev" title="Running the test suite" href="runtests.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="development_practices.html" title="Development Practices"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="runtests.html" title="Running the test suite"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Understanding <code class="docutils literal notranslate"><span class="pre">xmlchemy</span></code></a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="understanding-xmlchemy">
+<h1>Understanding <code class="docutils literal notranslate"><span class="pre">xmlchemy</span></code><a class="headerlink" href="#understanding-xmlchemy" title="永久链接至标题">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">xmlchemy</span></code> is an object-XML mapping layer somewhat reminiscent of
+SQLAlchemy, hence the name. Mapping XML elements to objects is not nearly as
+challenging as mapping to a relational database, so this layer is
+substantially more modest. Nevertheless, it provides a powerful and very
+useful abstraction layer around <code class="docutils literal notranslate"><span class="pre">lxml</span></code>, particularly well-suited to
+providing access to the broad schema of XML elements involved in the Open XML
+standard.</p>
+<section id="additional-topics-to-add">
+<h2>Additional topics to add …<a class="headerlink" href="#additional-topics-to-add" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>understanding complex types in Open XML</p></li>
+<li><p>understanding attribute definitions Open XML</p></li>
+<li><p>understanding simple types in Open XML</p></li>
+</ul>
+</section>
+<section id="adding-support-for-a-new-element-type">
+<h2>Adding support for a new element type<a class="headerlink" href="#adding-support-for-a-new-element-type" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>add a new custom element mapping to <code class="docutils literal notranslate"><span class="pre">pptx.oxml.__init__</span></code></p></li>
+<li><p>add a new custom element class in the appropriate <code class="docutils literal notranslate"><span class="pre">pptx.oxml</span></code> subpackage
+module</p></li>
+<li><p>Add element definition members to the class</p></li>
+<li><p>Add attribute definition members to the class</p></li>
+<li><p>Add simple type definitions to <code class="docutils literal notranslate"><span class="pre">pptx.oxml.simpletype</span></code></p></li>
+</ul>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx.oxml.xmlchemy</span> <span class="kn">import</span> <span class="n">BaseOxmlElement</span>
+
+
+<span class="k">class</span> <span class="nc">CT_Foobar</span><span class="p">(</span><span class="n">BaseOxmlElement</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Custom element class corresponding to ``CT_Foobar`` complex type</span>
+<span class="sd">    definition in pml.xsd or other Open XML schema.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hlink</span> <span class="o">=</span> <span class="n">ZeroOrOne</span><span class="p">(</span><span class="s1">&#39;a:hlink&#39;</span><span class="p">,</span> <span class="n">successors</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;a:rtl&#39;</span><span class="p">,</span> <span class="s1">&#39;a:extLst&#39;</span><span class="p">))</span>
+    <span class="n">eg_fillProperties</span> <span class="o">=</span> <span class="n">ZeroOrOneChoice</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;a:noFill&#39;</span><span class="p">),</span> <span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;a:solidFill&#39;</span><span class="p">),</span> <span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;a:gradFill&#39;</span><span class="p">),</span>
+         <span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;a:blipFill&#39;</span><span class="p">),</span> <span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;a:pattFill&#39;</span><span class="p">)),</span>
+        <span class="n">successors</span><span class="o">=</span><span class="p">(</span>
+            <span class="s1">&#39;a:effectLst&#39;</span><span class="p">,</span> <span class="s1">&#39;a:effectDag&#39;</span><span class="p">,</span> <span class="s1">&#39;a:highlight&#39;</span><span class="p">,</span> <span class="s1">&#39;a:uLnTx&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;a:uLn&#39;</span><span class="p">,</span> <span class="s1">&#39;a:uFillTx&#39;</span> <span class="s1">&#39;a:extLst&#39;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">sz</span> <span class="o">=</span> <span class="n">OptionalAttribute</span><span class="p">(</span>
+        <span class="s1">&#39;sz&#39;</span><span class="p">,</span> <span class="n">ST_SimpleType</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">ST_SimpleType</span><span class="o">.</span><span class="n">OPTION</span>
+    <span class="p">)</span>
+    <span class="n">anchor</span> <span class="o">=</span> <span class="n">OptionalAttribute</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="n">XsdBoolean</span><span class="p">)</span>
+    <span class="n">rId</span> <span class="o">=</span> <span class="n">RequiredAttribute</span><span class="p">(</span><span class="s1">&#39;r:id&#39;</span><span class="p">,</span> <span class="n">XsdString</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="protocol">
+<h2>Protocol<a class="headerlink" href="#protocol" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">foobar</span><span class="p">,</span> <span class="n">CT_Foobar</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foobar</span><span class="o">.</span><span class="n">hlink</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hlink</span> <span class="o">=</span> <span class="n">foobar</span><span class="o">.</span><span class="n">_add_hlink</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hlink</span>
+<span class="go">&lt;pptx.oxml.xyz.CT_Hyperlink object at 0x10ab4b2d0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">foobar</span><span class="o">.</span><span class="n">hlink</span> <span class="ow">is</span> <span class="n">hlink</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foobar</span><span class="o">.</span><span class="n">eg_fillProperties</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foobar</span><span class="o">.</span><span class="n">solidFill</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solidFill</span> <span class="o">=</span> <span class="n">foobar</span><span class="o">.</span><span class="n">get_or_change_to_solidFill</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solidFill</span>
+<span class="go">&lt;pptx.oxml.xyz.CT_SolidFill object at 0x10ab4b2d0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">foobar</span><span class="o">.</span><span class="n">eg_fillProperties</span> <span class="ow">is</span> <span class="n">solidFill</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">foobar</span><span class="o">.</span><span class="n">solidFill</span> <span class="ow">is</span> <span class="n">solidFill</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foobar</span><span class="o">.</span><span class="n">remove_eg_fillProperties</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foobar</span><span class="o">.</span><span class="n">eg_fillProperties</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foobar</span><span class="o">.</span><span class="n">solidFill</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+</section>
+<section id="oneandonlyone-element-declaration">
+<h2><code class="docutils literal notranslate"><span class="pre">OneAndOnlyOne</span></code> element declaration<a class="headerlink" href="#oneandonlyone-element-declaration" title="永久链接至标题">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">OneAndOnlyOne</span></code> callable generates the API for a required child
+element:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">childElement</span> <span class="o">=</span> <span class="n">OneAndOnlyOne</span><span class="p">(</span><span class="s1">&#39;ns:localTagName&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unlike the other element declarations, the call does not include
+a <code class="docutils literal notranslate"><span class="pre">successors</span></code> argument. Since no API for inserting a new element is
+generated, a successors list is not required.</p>
+<section id="generated-api">
+<h3>Generated API<a class="headerlink" href="#generated-api" title="永久链接至标题">¶</a></h3>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">childElement</span></code> property (read-only)</dt><dd><p>Holds a reference to the child element object. Raises <code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidXmlError</span></code>
+on access if the required child element is not present.</p>
+</dd>
+</dl>
+</section>
+<section id="id1">
+<h3>Protocol<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">foobar</span><span class="o">.</span><span class="n">childElement</span>
+<span class="go">&lt;pptx.oxml.xyz.CT_ChildElement object at 0x10ab4b2d0&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="requiredattribute-attribute-declaration">
+<h2><code class="docutils literal notranslate"><span class="pre">RequiredAttribute</span></code> attribute declaration<a class="headerlink" href="#requiredattribute-attribute-declaration" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reqAttr</span> <span class="o">=</span> <span class="n">RequiredAttribute</span><span class="p">(</span><span class="s1">&#39;reqAtr&#39;</span><span class="p">,</span> <span class="n">ST_SimpleType</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="id2">
+<h3>Generated API<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">childElement</span></code> property (read/write)</dt><dd><p>Referencing the property returns the type-converted value of the
+attribute as determined by the <code class="docutils literal notranslate"><span class="pre">from_xml()</span></code> method of the simple type
+class appearing in the declaration (e.g. ST_SimpleType above).
+Assignments to the property are validated by the <code class="docutils literal notranslate"><span class="pre">validate()</span></code> method of
+the simple type class, potentially raising <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> or
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Values are assigned in their natural Python type and are
+encoded to the appropriate string value by the <code class="docutils literal notranslate"><span class="pre">to_xml()</span></code> method of the
+simple type class.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="zeroorone-element-declaration">
+<h2><code class="docutils literal notranslate"><span class="pre">ZeroOrOne</span></code> element declaration<a class="headerlink" href="#zeroorone-element-declaration" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">childElement</span> <span class="o">=</span> <span class="n">ZeroOrOne</span><span class="p">(</span>
+    <span class="s1">&#39;ns:localTagName&#39;</span><span class="p">,</span> <span class="n">successors</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;ns:abc&#39;</span><span class="p">,</span> <span class="s1">&#39;ns:def&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<section id="id3">
+<h3>Generated API<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">childElement</span></code> property (read-only)</dt><dd><p>Holds a reference to the child element object, or None if the element is
+not present.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">get_or_add_childElement()</span></code> method</dt><dd><p>Returns the child element object, newly added if not present.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">_add_childElement()</span></code> empty element adder method</dt><dd><p>Returns a newly added empty child element having the declared tag name.
+Adding is unconditional and assumes the element is not already present.
+This method is called by the <code class="docutils literal notranslate"><span class="pre">get_or_add_childElement()</span></code> method as
+needed and may be called by a hand-coded <code class="docutils literal notranslate"><span class="pre">add_childElement()</span></code> method
+as needed. May be overridden to produce customized behavior.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">_new_childElement()</span></code> empty element creator method</dt><dd><p>Returns a new “loose” child element of the declared tag name. Called by
+<code class="docutils literal notranslate"><span class="pre">_add_childElement()</span></code> to obtain a new child element, it may be
+overridden to customize the element creation process.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">_insert_childElement(childElement)</span></code> element inserter method</dt><dd><p>Returns the passed <code class="docutils literal notranslate"><span class="pre">childElement</span></code> after inserting it before any
+successor elements, as listed in the <code class="docutils literal notranslate"><span class="pre">successors</span></code> argument of the
+declaration. Called by <code class="docutils literal notranslate"><span class="pre">_add_childElement()</span></code> to insert the new element
+it creates using <code class="docutils literal notranslate"><span class="pre">_new_childElement()</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">_remove_childElement()</span></code> element remover method</dt><dd><p>Removes all instances of the child element. Does not raise an error if no
+matching child elements are present.</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Understanding <code class="docutils literal notranslate"><span class="pre">xmlchemy</span></code></a><ul>
+<li><a class="reference internal" href="#additional-topics-to-add">Additional topics to add …</a></li>
+<li><a class="reference internal" href="#adding-support-for-a-new-element-type">Adding support for a new element type</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#protocol">Protocol</a></li>
+<li><a class="reference internal" href="#oneandonlyone-element-declaration"><code class="docutils literal notranslate"><span class="pre">OneAndOnlyOne</span></code> element declaration</a><ul>
+<li><a class="reference internal" href="#generated-api">Generated API</a></li>
+<li><a class="reference internal" href="#id1">Protocol</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#requiredattribute-attribute-declaration"><code class="docutils literal notranslate"><span class="pre">RequiredAttribute</span></code> attribute declaration</a><ul>
+<li><a class="reference internal" href="#id2">Generated API</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zeroorone-element-declaration"><code class="docutils literal notranslate"><span class="pre">ZeroOrOne</span></code> element declaration</a><ul>
+<li><a class="reference internal" href="#id3">Generated API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="runtests.html"
+                          title="上一章">Running the test suite</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="development_practices.html"
+                          title="下一章">Development Practices</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="development_practices.html" title="Development Practices"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="runtests.html" title="Running the test suite"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Understanding <code class="docutils literal notranslate"><span class="pre">xmlchemy</span></code></a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.util &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">模块代码</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.util</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>pptx.util 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Utility functions and classes.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">functools</span>
+
+
+<div class="viewcode-block" id="Length"><a class="viewcode-back" href="../../api/util.html#pptx.util.Length">[文档]</a><span class="k">class</span> <span class="nc">Length</span><span class="p">(</span><span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for length classes Inches, Emu, Cm, Mm, Pt, and Px. Provides</span>
+<span class="sd">    properties for converting length values to convenient units.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_EMUS_PER_INCH</span> <span class="o">=</span> <span class="mi">914400</span>
+    <span class="n">_EMUS_PER_CENTIPOINT</span> <span class="o">=</span> <span class="mi">127</span>
+    <span class="n">_EMUS_PER_CM</span> <span class="o">=</span> <span class="mi">360000</span>
+    <span class="n">_EMUS_PER_MM</span> <span class="o">=</span> <span class="mi">36000</span>
+    <span class="n">_EMUS_PER_PT</span> <span class="o">=</span> <span class="mi">12700</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">emu</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">emu</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">inches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Floating point length in inches</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EMUS_PER_INCH</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">centipoints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Integer length in hundredths of a point (1/7200 inch). Used</span>
+<span class="sd">        internally because PowerPoint stores font size in centipoints.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">_EMUS_PER_CENTIPOINT</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Floating point length in centimeters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EMUS_PER_CM</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">emu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Integer length in English Metric Units</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Floating point length in millimeters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EMUS_PER_MM</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Floating point length in points</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_EMUS_PER_PT</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Inches"><a class="viewcode-back" href="../../api/util.html#pptx.util.Inches">[文档]</a><span class="k">class</span> <span class="nc">Inches</span><span class="p">(</span><span class="n">Length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience constructor for length in inches</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">inches</span><span class="p">):</span>
+        <span class="n">emu</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">inches</span> <span class="o">*</span> <span class="n">Length</span><span class="o">.</span><span class="n">_EMUS_PER_INCH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Length</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">emu</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Centipoints"><a class="viewcode-back" href="../../api/util.html#pptx.util.Centipoints">[文档]</a><span class="k">class</span> <span class="nc">Centipoints</span><span class="p">(</span><span class="n">Length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience constructor for length in hundredths of a point</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">centipoints</span><span class="p">):</span>
+        <span class="n">emu</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">centipoints</span> <span class="o">*</span> <span class="n">Length</span><span class="o">.</span><span class="n">_EMUS_PER_CENTIPOINT</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Length</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">emu</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Cm"><a class="viewcode-back" href="../../api/util.html#pptx.util.Cm">[文档]</a><span class="k">class</span> <span class="nc">Cm</span><span class="p">(</span><span class="n">Length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience constructor for length in centimeters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cm</span><span class="p">):</span>
+        <span class="n">emu</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cm</span> <span class="o">*</span> <span class="n">Length</span><span class="o">.</span><span class="n">_EMUS_PER_CM</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Length</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">emu</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Emu"><a class="viewcode-back" href="../../api/util.html#pptx.util.Emu">[文档]</a><span class="k">class</span> <span class="nc">Emu</span><span class="p">(</span><span class="n">Length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience constructor for length in english metric units</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">emu</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Length</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">emu</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Mm"><a class="viewcode-back" href="../../api/util.html#pptx.util.Mm">[文档]</a><span class="k">class</span> <span class="nc">Mm</span><span class="p">(</span><span class="n">Length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience constructor for length in millimeters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">mm</span><span class="p">):</span>
+        <span class="n">emu</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mm</span> <span class="o">*</span> <span class="n">Length</span><span class="o">.</span><span class="n">_EMUS_PER_MM</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Length</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">emu</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Pt"><a class="viewcode-back" href="../../api/util.html#pptx.util.Pt">[文档]</a><span class="k">class</span> <span class="nc">Pt</span><span class="p">(</span><span class="n">Length</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience value class for specifying a length in points</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+        <span class="n">emu</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">points</span> <span class="o">*</span> <span class="n">Length</span><span class="o">.</span><span class="n">_EMUS_PER_PT</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Length</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">emu</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">lazyproperty</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decorator like @property, but evaluated only on first access.</span>
+
+<span class="sd">    Like @property, this can only be used to decorate methods having only</span>
+<span class="sd">    a `self` parameter, and is accessed like an attribute on an instance,</span>
+<span class="sd">    i.e. trailing parentheses are not used. Unlike @property, the decorated</span>
+<span class="sd">    method is only evaluated on first access; the resulting value is cached</span>
+<span class="sd">    and that same value returned on second and later access without</span>
+<span class="sd">    re-evaluation of the method.</span>
+
+<span class="sd">    Like @property, this class produces a *data descriptor* object, which is</span>
+<span class="sd">    stored in the __dict__ of the *class* under the name of the decorated</span>
+<span class="sd">    method (&#39;fget&#39; nominally). The cached value is stored in the __dict__ of</span>
+<span class="sd">    the *instance* under that same name.</span>
+
+<span class="sd">    Because it is a data descriptor (as opposed to a *non-data descriptor*),</span>
+<span class="sd">    its `__get__()` method is executed on each access of the decorated</span>
+<span class="sd">    attribute; the __dict__ item of the same name is &quot;shadowed&quot; by the</span>
+<span class="sd">    descriptor.</span>
+
+<span class="sd">    While this may represent a performance improvement over a property, its</span>
+<span class="sd">    greater benefit may be its other characteristics. One common use is to</span>
+<span class="sd">    construct collaborator objects, removing that &quot;real work&quot; from the</span>
+<span class="sd">    constructor, while still only executing once. It also de-couples client</span>
+<span class="sd">    code from any sequencing considerations; if it&#39;s accessed from more than</span>
+<span class="sd">    one location, it&#39;s assured it will be ready whenever needed.</span>
+
+<span class="sd">    Loosely based on: https://stackoverflow.com/a/6849299/1902513.</span>
+
+<span class="sd">    A lazyproperty is read-only. There is no counterpart to the optional</span>
+<span class="sd">    &quot;setter&quot; (or deleter) behavior of an @property. This is critically</span>
+<span class="sd">    important to maintaining its immutability and idempotence guarantees.</span>
+<span class="sd">    Attempting to assign to a lazyproperty raises AttributeError</span>
+<span class="sd">    unconditionally.</span>
+
+<span class="sd">    The parameter names in the methods below correspond to this usage</span>
+<span class="sd">    example::</span>
+
+<span class="sd">        class Obj(object)</span>
+
+<span class="sd">            @lazyproperty</span>
+<span class="sd">            def fget(self):</span>
+<span class="sd">                return &#39;some result&#39;</span>
+
+<span class="sd">        obj = Obj()</span>
+
+<span class="sd">    Not suitable for wrapping a function (as opposed to a method) because it</span>
+<span class="sd">    is not callable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fget</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;*fget* is the decorated method (a &quot;getter&quot; function).</span>
+
+<span class="sd">        A lazyproperty is read-only, so there is only an *fget* function (a</span>
+<span class="sd">        regular @property can also have an fset and fdel function). This name</span>
+<span class="sd">        was chosen for consistency with Python&#39;s `property` class which uses</span>
+<span class="sd">        this name for the corresponding parameter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---maintain a reference to the wrapped getter method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fget</span> <span class="o">=</span> <span class="n">fget</span>
+        <span class="c1"># ---adopt fget&#39;s __name__, __doc__, and other attributes</span>
+        <span class="n">functools</span><span class="o">.</span><span class="n">update_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fget</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Called on each access of &#39;fget&#39; attribute on class or instance.</span>
+
+<span class="sd">        *self* is this instance of a lazyproperty descriptor &quot;wrapping&quot; the</span>
+<span class="sd">        property method it decorates (`fget`, nominally).</span>
+
+<span class="sd">        *obj* is the &quot;host&quot; object instance when the attribute is accessed</span>
+<span class="sd">        from an object instance, e.g. `obj = Obj(); obj.fget`. *obj* is None</span>
+<span class="sd">        when accessed on the class, e.g. `Obj.fget`.</span>
+
+<span class="sd">        *type* is the class hosting the decorated getter method (`fget`) on</span>
+<span class="sd">        both class and instance attribute access.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---when accessed on class, e.g. Obj.fget, just return this</span>
+        <span class="c1"># ---descriptor instance (patched above to look like fget).</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="c1"># ---when accessed on instance, start by checking instance __dict__</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># ---on first access, __dict__ item will absent. Evaluate fget()</span>
+            <span class="c1"># ---and store that value in the (otherwise unused) host-object</span>
+            <span class="c1"># ---__dict__ value of same name (&#39;fget&#39; nominally)</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fget</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Raises unconditionally, to preserve read-only behavior.</span>
+
+<span class="sd">        This decorator is intended to implement immutable (and idempotent)</span>
+<span class="sd">        object attributes. For that reason, assignment to this property must</span>
+<span class="sd">        be explicitly prevented.</span>
+
+<span class="sd">        If this __set__ method was not present, this descriptor would become</span>
+<span class="sd">        a *non-data descriptor*. That would be nice because the cached value</span>
+<span class="sd">        would be accessed directly once set (__dict__ attrs have precedence</span>
+<span class="sd">        over non-data descriptors on instance attribute lookup). The problem</span>
+<span class="sd">        is, there would be nothing to stop assignment to the cached value,</span>
+<span class="sd">        which would overwrite the result of `fget()` and break both the</span>
+<span class="sd">        immutability and idempotence guarantees of this decorator.</span>
+
+<span class="sd">        The performance with this __set__() method in place was roughly 0.4</span>
+<span class="sd">        usec per access when measured on a 2.8GHz development machine; so</span>
+<span class="sd">        quite snappy and probably not a rich target for optimization efforts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t set attribute&quot;</span><span class="p">)</span>  <span class="c1"># pragma: no cover</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >模块代码</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.util</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

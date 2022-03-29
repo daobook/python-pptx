@@ -1,0 +1,906 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Movie &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Shape hyperlink" href="shp-hyperlink.html" />
+    <link rel="prev" title="Shape - OLE Object" href="shp-ole-object.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="shp-hyperlink.html" title="Shape hyperlink"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="shp-ole-object.html" title="Shape - OLE Object"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Movie</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="movie">
+<h1>Movie<a class="headerlink" href="#movie" title="永久链接至标题">¶</a></h1>
+<p>PowerPoint allows a video to be inserted into a slide and run in slide show
+mode. In the PowerPoint UI, a shape of this type is called a <em>movie</em>.</p>
+<p>A movie is implemented as a variant form of a <cite>p:pic</cite> element, which makes it
+closely related to a <cite>Picture</cite> object. This close relationship makes sense,
+because a movie acts very much like an image when it is not playing and the
+two shapes therefore share much of their behavior. When not playing, a movie
+shape displays a static image, called a <em>poster frame</em>.</p>
+<section id="candidate-protocol">
+<h2>Candidate Protocol<a class="headerlink" href="#candidate-protocol" title="永久链接至标题">¶</a></h2>
+<p>A video can be added to a slide by specifying a video file, position, size,
+and optional poster frame:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">movie</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_movie</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">movie_file</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">poster_frame_image</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">mime_type</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">movie</span>
+<span class="go">&lt;pptx.shape.picture.Movie object @ 0x12345678&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">movie</span><span class="o">.</span><span class="n">shape_type</span>
+<span class="go">MSO.MEDIA</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">movie</span><span class="o">.</span><span class="n">media_type</span>
+<span class="go">PP_MEDIA_TYPE.MOVIE</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">movie</span><span class="o">.</span><span class="n">media_format</span>
+<span class="go">&lt;pptx.shape.picture.MediaFormat object @ 0x123456ab&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="animation-timing-resources">
+<h2>Animation/timing resources<a class="headerlink" href="#animation-timing-resources" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Working with animation (Open XML SDK)
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/gg278329.aspx">https://msdn.microsoft.com/en-us/library/office/gg278329.aspx</a></p></li>
+<li><p>AnimationBehaviors (Collection) Members (PowerPoint)
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/ff746028.aspx">https://msdn.microsoft.com/en-us/library/office/ff746028.aspx</a></p></li>
+<li><p>AnimationBehavior Members (PowerPoint)
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/ff746141.aspx">https://msdn.microsoft.com/en-us/library/office/ff746141.aspx</a></p></li>
+<li><p>&lt;p:par&gt; stands for <em>parallel</em>, and is one of the available time containers
+(like “parallel” timing, or executing at the same time).
+<a class="reference external" href="https://folk.uio.no/annembek/inf3210/how_2_SMIL.html">https://folk.uio.no/annembek/inf3210/how_2_SMIL.html</a></p></li>
+<li><p><a class="reference external" href="https://technet.microsoft.com/en-au/library/gg278329.aspx">https://technet.microsoft.com/en-au/library/gg278329.aspx</a></p></li>
+<li><p><a class="reference external" href="http://openxmldeveloper.org/discussions/formats/f/15/t/6838.aspx">http://openxmldeveloper.org/discussions/formats/f/15/t/6838.aspx</a></p></li>
+</ul>
+</section>
+<section id="possibly-interesting-resources">
+<h2>Possibly interesting resources<a class="headerlink" href="#possibly-interesting-resources" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://apache-poi.1045710.n5.nabble.com/Question-about-embedded-video-in-PPTX-files-td5718461.html">Apache POI discussion</a></p></li>
+<li><p><a class="reference external" href="http://apache-poi.1045710.n5.nabble.com/Question-about-embedded-video-in-PPTX-files-td5718461.html">Apache POI discussion on inserting video</a></p></li>
+</ul>
+</section>
+<section id="ms-api">
+<h2>MS API<a class="headerlink" href="#ms-api" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Slide.Timeline
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/ff745382.aspx">https://msdn.microsoft.com/en-us/library/office/ff745382.aspx</a></p></li>
+<li><p>TimeLine Object
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/ff743965.aspx">https://msdn.microsoft.com/en-us/library/office/ff743965.aspx</a></p></li>
+<li><p>Shapes.AddMediaObject() (deprecated in PowerPoint 2013, see AddMediaObject2)
+<a class="reference external" href="https://msdn.microsoft.com/EN-US/library/office/ff745385.aspx">https://msdn.microsoft.com/EN-US/library/office/ff745385.aspx</a></p></li>
+<li><p>Shapes.AddMediaObject2()
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/ff744080.aspx">https://msdn.microsoft.com/en-us/library/office/ff744080.aspx</a></p></li>
+<li><p>MediaFormat
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/ff745983.aspx">https://msdn.microsoft.com/en-us/library/office/ff745983.aspx</a></p></li>
+</ul>
+</section>
+<section id="enumerations">
+<h2>Enumerations<a class="headerlink" href="#enumerations" title="永久链接至标题">¶</a></h2>
+<p>PP_MEDIA_TYPE - <a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/ff746008.aspx">https://msdn.microsoft.com/en-us/library/office/ff746008.aspx</a></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 12%" />
+<col style="width: 24%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>PP_MEDIA_TYPE.MOVIE</p></td>
+<td><p>3</p></td>
+<td><p>Movie</p></td>
+</tr>
+<tr class="row-even"><td><p>PP_MEDIA_TYPE.SOUND</p></td>
+<td><p>2</p></td>
+<td><p>Sound</p></td>
+</tr>
+<tr class="row-odd"><td><p>PP_MEDIA_TYPE.OTHER</p></td>
+<td><p>1</p></td>
+<td><p>Others</p></td>
+</tr>
+<tr class="row-even"><td><p>PP_MEDIA_TYPE.MIXED</p></td>
+<td><p>-2</p></td>
+<td><p>Mixed</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="click-behavior">
+<h2>Click Behavior<a class="headerlink" href="#click-behavior" title="永久链接至标题">¶</a></h2>
+<p>The video’s “play on click” behavior in slideshow mode is implemented by the
+use of a <cite>&lt;p:timing&gt;</cite> element in the <cite>&lt;p:sld&gt;</cite> element. No “play” button or
+slider control appears when this element is not present.</p>
+</section>
+<section id="poster-frame">
+<h2>Poster Frame<a class="headerlink" href="#poster-frame" title="永久链接至标题">¶</a></h2>
+<p>A <em>poster frame</em> is the static image displayed in the video location when the
+video is not playing. Each image that appears on the YouTube home page
+representing a video is an example of a poster frame.</p>
+<p>The poster frame is perhaps most frequently a frame from the video itself. In
+some contexts, the first frame is used by default. The poster frame can be
+undefined, or empty, and it can also be an unrelated image.</p>
+<p>Some of the example videos for this feature get a poster frame upon
+insertion; however at least one does not. In that case, a media “speaker”
+icon (stretched to fit) is shown instead.</p>
+</section>
+<section id="xml-semantics">
+<h2>XML Semantics<a class="headerlink" href="#xml-semantics" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><cite>id=</cite> of p:cTn element just needs to be unique among <cite>p:cTn</cite> elements,
+apparently.</p></li>
+</ul>
+</section>
+<section id="example-xml">
+<h2>Example XML<a class="headerlink" href="#example-xml" title="永久链接至标题">¶</a></h2>
+<p>Inserted MPEG-4 H.264 video:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cm">&lt;!--slide{n}.xml--&gt;</span>
+
+<span class="nt">&lt;p:pic&gt;</span>
+  <span class="nt">&lt;p:nvPicPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;6&quot;</span> <span class="na">name=</span><span class="s">&quot;video-filename.mp4&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:hlinkClick</span> <span class="na">r:id=</span><span class="s">&quot;&quot;</span> <span class="na">action=</span><span class="s">&quot;ppaction://media&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvPr&gt;</span>
+    <span class="nt">&lt;p:cNvPicPr&gt;</span>
+      <span class="nt">&lt;a:picLocks</span> <span class="na">noChangeAspect=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvPicPr&gt;</span>
+    <span class="nt">&lt;p:nvPr&gt;</span>
+      <span class="nt">&lt;a:videoFile</span> <span class="na">r:link=</span><span class="s">&quot;rId2&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;p:extLst&gt;</span>
+        <span class="nt">&lt;p:ext</span> <span class="na">uri=</span><span class="s">&quot;{DAA4B4D4-6D71-4841-9C94-3DE7FCFB9230}&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;p14:media</span>
+              <span class="na">xmlns:p14=</span><span class="s">&quot;http://schemas.microsoft.com/office/powerpoint/2010/main&quot;</span>
+              <span class="na">r:embed=</span><span class="s">&quot;rId1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/p:ext&gt;</span>
+      <span class="nt">&lt;/p:extLst&gt;</span>
+    <span class="nt">&lt;/p:nvPr&gt;</span>
+  <span class="nt">&lt;/p:nvPicPr&gt;</span>
+  <span class="nt">&lt;p:blipFill&gt;</span>
+    <span class="nt">&lt;a:blip</span> <span class="na">r:embed=</span><span class="s">&quot;rId4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:stretch&gt;</span>
+      <span class="nt">&lt;a:fillRect/&gt;</span>
+    <span class="nt">&lt;/a:stretch&gt;</span>
+  <span class="nt">&lt;/p:blipFill&gt;</span>
+  <span class="nt">&lt;p:spPr&gt;</span>
+    <span class="nt">&lt;a:xfrm&gt;</span>
+      <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;5059279&quot;</span> <span class="na">y=</span><span class="s">&quot;876300&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;2390526&quot;</span> <span class="na">cy=</span><span class="s">&quot;5184274&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:xfrm&gt;</span>
+    <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;rect&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:avLst/&gt;</span>
+    <span class="nt">&lt;/a:prstGeom&gt;</span>
+  <span class="nt">&lt;/p:spPr&gt;</span>
+<span class="nt">&lt;/p:pic&gt;</span>
+</pre></div>
+</div>
+<p>Regular picture shape, for comparison:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:pic&gt;</span>
+  <span class="nt">&lt;p:nvPicPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;6&quot;</span> <span class="na">name=</span><span class="s">&quot;Picture 5&quot;</span> <span class="na">descr=</span><span class="s">&quot;python-logo.gif&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvPicPr&gt;</span>
+      <span class="nt">&lt;a:picLocks</span> <span class="na">noChangeAspect=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvPicPr&gt;</span>
+    <span class="nt">&lt;p:nvPr/&gt;</span>
+  <span class="nt">&lt;/p:nvPicPr&gt;</span>
+  <span class="nt">&lt;p:blipFill&gt;</span>
+    <span class="nt">&lt;a:blip</span> <span class="na">r:embed=</span><span class="s">&quot;rId2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:stretch&gt;</span>
+      <span class="nt">&lt;a:fillRect/&gt;</span>
+    <span class="nt">&lt;/a:stretch&gt;</span>
+  <span class="nt">&lt;/p:blipFill&gt;</span>
+  <span class="nt">&lt;p:spPr&gt;</span>
+    <span class="nt">&lt;a:xfrm&gt;</span>
+      <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;5580112&quot;</span> <span class="na">y=</span><span class="s">&quot;1988840&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;2679700&quot;</span> <span class="na">cy=</span><span class="s">&quot;901700&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:xfrm&gt;</span>
+    <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;rect&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:avLst/&gt;</span>
+    <span class="nt">&lt;/a:prstGeom&gt;</span>
+  <span class="nt">&lt;/p:spPr&gt;</span>
+<span class="nt">&lt;/p:pic&gt;</span>
+
+
+<span class="cm">&lt;!--minimal (I think) p:video element--&gt;</span>
+
+<span class="nt">&lt;p:sld</span>
+    <span class="na">xmlns:a=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot;</span>
+    <span class="na">xmlns:p=</span><span class="s">&quot;http://schemas.openxmlformats.org/presentationml/2006/main&quot;</span>
+    <span class="na">xmlns:r=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;</span>
+    <span class="nt">&gt;</span>
+  <span class="nt">&lt;p:cSld&gt;</span>
+    <span class="cm">&lt;!-- ... --&gt;</span>
+  <span class="nt">&lt;/p:cSld&gt;</span>
+  <span class="nt">&lt;p:clrMapOvr&gt;</span>
+    <span class="nt">&lt;a:masterClrMapping/&gt;</span>
+  <span class="nt">&lt;/p:clrMapOvr&gt;</span>
+  <span class="nt">&lt;p:timing&gt;</span>
+    <span class="nt">&lt;p:tnLst&gt;</span>
+      <span class="nt">&lt;p:par&gt;</span>
+        <span class="nt">&lt;p:cTn</span> <span class="na">xmlns:p14=</span><span class="s">&quot;http://schemas.microsoft.com/office/powerpoint/2010/main&quot;</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">dur=</span><span class="s">&quot;indefinite&quot;</span> <span class="na">restart=</span><span class="s">&quot;never&quot;</span> <span class="na">nodeType=</span><span class="s">&quot;tmRoot&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;p:childTnLst&gt;</span>
+            <span class="nt">&lt;p:video&gt;</span>
+              <span class="nt">&lt;p:cMediaNode</span> <span class="na">vol=</span><span class="s">&quot;80000&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;7&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span> <span class="na">display=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;p:stCondLst&gt;</span>
+                    <span class="nt">&lt;p:cond</span> <span class="na">delay=</span><span class="s">&quot;indefinite&quot;</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;/p:stCondLst&gt;</span>
+                <span class="nt">&lt;/p:cTn&gt;</span>
+                <span class="nt">&lt;p:tgtEl&gt;</span>
+                  <span class="nt">&lt;p:spTgt</span> <span class="na">spid=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/p:tgtEl&gt;</span>
+              <span class="nt">&lt;/p:cMediaNode&gt;</span>
+            <span class="nt">&lt;/p:video&gt;</span>
+          <span class="nt">&lt;/p:childTnLst&gt;</span>
+        <span class="nt">&lt;/p:cTn&gt;</span>
+      <span class="nt">&lt;/p:par&gt;</span>
+    <span class="nt">&lt;/p:tnLst&gt;</span>
+  <span class="nt">&lt;/p:timing&gt;</span>
+<span class="nt">&lt;/p:sld&gt;</span>
+
+
+<span class="cm">&lt;!--p:timing element for two videos in slide, as added by PowerPoint--&gt;</span>
+
+<span class="nt">&lt;p:timing&gt;</span>
+  <span class="nt">&lt;p:tnLst&gt;</span>
+    <span class="nt">&lt;p:par&gt;</span>
+      <span class="nt">&lt;p:cTn</span> <span class="na">xmlns:p14=</span><span class="s">&quot;http://schemas.microsoft.com/office/powerpoint/2010/main&quot;</span> <span class="na">id=</span><span class="s">&quot;1&quot;</span> <span class="na">dur=</span><span class="s">&quot;indefinite&quot;</span> <span class="na">restart=</span><span class="s">&quot;never&quot;</span> <span class="na">nodeType=</span><span class="s">&quot;tmRoot&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;p:childTnLst&gt;</span>
+          <span class="nt">&lt;p:seq</span> <span class="na">concurrent=</span><span class="s">&quot;1&quot;</span> <span class="na">nextAc=</span><span class="s">&quot;seek&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">restart=</span><span class="s">&quot;whenNotActive&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span> <span class="na">evtFilter=</span><span class="s">&quot;cancelBubble&quot;</span> <span class="na">nodeType=</span><span class="s">&quot;interactiveSeq&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;p:stCondLst&gt;</span>
+                <span class="nt">&lt;p:cond</span> <span class="na">evt=</span><span class="s">&quot;onClick&quot;</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;p:tgtEl&gt;</span>
+                    <span class="nt">&lt;p:spTgt</span> <span class="na">spid=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;/p:tgtEl&gt;</span>
+                <span class="nt">&lt;/p:cond&gt;</span>
+              <span class="nt">&lt;/p:stCondLst&gt;</span>
+              <span class="nt">&lt;p:endSync</span> <span class="na">evt=</span><span class="s">&quot;end&quot;</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;p:rtn</span> <span class="na">val=</span><span class="s">&quot;all&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;/p:endSync&gt;</span>
+              <span class="nt">&lt;p:childTnLst&gt;</span>
+                <span class="nt">&lt;p:par&gt;</span>
+                  <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;p:stCondLst&gt;</span>
+                      <span class="nt">&lt;p:cond</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/p:stCondLst&gt;</span>
+                    <span class="nt">&lt;p:childTnLst&gt;</span>
+                      <span class="nt">&lt;p:par&gt;</span>
+                        <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;4&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span><span class="nt">&gt;</span>
+                          <span class="nt">&lt;p:stCondLst&gt;</span>
+                            <span class="nt">&lt;p:cond</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+                          <span class="nt">&lt;/p:stCondLst&gt;</span>
+                          <span class="nt">&lt;p:childTnLst&gt;</span>
+                            <span class="nt">&lt;p:par&gt;</span>
+                              <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;5&quot;</span> <span class="na">presetID=</span><span class="s">&quot;2&quot;</span> <span class="na">presetClass=</span><span class="s">&quot;mediacall&quot;</span> <span class="na">presetSubtype=</span><span class="s">&quot;0&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span> <span class="na">nodeType=</span><span class="s">&quot;clickEffect&quot;</span><span class="nt">&gt;</span>
+                                <span class="nt">&lt;p:stCondLst&gt;</span>
+                                  <span class="nt">&lt;p:cond</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+                                <span class="nt">&lt;/p:stCondLst&gt;</span>
+                                <span class="nt">&lt;p:childTnLst&gt;</span>
+                                  <span class="nt">&lt;p:cmd</span> <span class="na">type=</span><span class="s">&quot;call&quot;</span> <span class="na">cmd=</span><span class="s">&quot;togglePause&quot;</span><span class="nt">&gt;</span>
+                                    <span class="nt">&lt;p:cBhvr&gt;</span>
+                                      <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;6&quot;</span> <span class="na">dur=</span><span class="s">&quot;1&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span><span class="nt">/&gt;</span>
+                                      <span class="nt">&lt;p:tgtEl&gt;</span>
+                                        <span class="nt">&lt;p:spTgt</span> <span class="na">spid=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+                                      <span class="nt">&lt;/p:tgtEl&gt;</span>
+                                    <span class="nt">&lt;/p:cBhvr&gt;</span>
+                                  <span class="nt">&lt;/p:cmd&gt;</span>
+                                <span class="nt">&lt;/p:childTnLst&gt;</span>
+                              <span class="nt">&lt;/p:cTn&gt;</span>
+                            <span class="nt">&lt;/p:par&gt;</span>
+                          <span class="nt">&lt;/p:childTnLst&gt;</span>
+                        <span class="nt">&lt;/p:cTn&gt;</span>
+                      <span class="nt">&lt;/p:par&gt;</span>
+                    <span class="nt">&lt;/p:childTnLst&gt;</span>
+                  <span class="nt">&lt;/p:cTn&gt;</span>
+                <span class="nt">&lt;/p:par&gt;</span>
+              <span class="nt">&lt;/p:childTnLst&gt;</span>
+            <span class="nt">&lt;/p:cTn&gt;</span>
+            <span class="nt">&lt;p:nextCondLst&gt;</span>
+              <span class="nt">&lt;p:cond</span> <span class="na">evt=</span><span class="s">&quot;onClick&quot;</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;p:tgtEl&gt;</span>
+                  <span class="nt">&lt;p:spTgt</span> <span class="na">spid=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/p:tgtEl&gt;</span>
+              <span class="nt">&lt;/p:cond&gt;</span>
+            <span class="nt">&lt;/p:nextCondLst&gt;</span>
+          <span class="nt">&lt;/p:seq&gt;</span>
+          <span class="nt">&lt;p:video&gt;</span>
+            <span class="nt">&lt;p:cMediaNode</span> <span class="na">vol=</span><span class="s">&quot;80000&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;7&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span> <span class="na">display=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;p:stCondLst&gt;</span>
+                  <span class="nt">&lt;p:cond</span> <span class="na">delay=</span><span class="s">&quot;indefinite&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/p:stCondLst&gt;</span>
+              <span class="nt">&lt;/p:cTn&gt;</span>
+              <span class="nt">&lt;p:tgtEl&gt;</span>
+                <span class="nt">&lt;p:spTgt</span> <span class="na">spid=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;/p:tgtEl&gt;</span>
+            <span class="nt">&lt;/p:cMediaNode&gt;</span>
+          <span class="nt">&lt;/p:video&gt;</span>
+          <span class="nt">&lt;p:seq</span> <span class="na">concurrent=</span><span class="s">&quot;1&quot;</span> <span class="na">nextAc=</span><span class="s">&quot;seek&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;8&quot;</span> <span class="na">restart=</span><span class="s">&quot;whenNotActive&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span> <span class="na">evtFilter=</span><span class="s">&quot;cancelBubble&quot;</span> <span class="na">nodeType=</span><span class="s">&quot;interactiveSeq&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;p:stCondLst&gt;</span>
+                <span class="nt">&lt;p:cond</span> <span class="na">evt=</span><span class="s">&quot;onClick&quot;</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;p:tgtEl&gt;</span>
+                    <span class="nt">&lt;p:spTgt</span> <span class="na">spid=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+                  <span class="nt">&lt;/p:tgtEl&gt;</span>
+                <span class="nt">&lt;/p:cond&gt;</span>
+              <span class="nt">&lt;/p:stCondLst&gt;</span>
+              <span class="nt">&lt;p:endSync</span> <span class="na">evt=</span><span class="s">&quot;end&quot;</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;p:rtn</span> <span class="na">val=</span><span class="s">&quot;all&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;/p:endSync&gt;</span>
+              <span class="nt">&lt;p:childTnLst&gt;</span>
+                <span class="nt">&lt;p:par&gt;</span>
+                  <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;9&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;p:stCondLst&gt;</span>
+                      <span class="nt">&lt;p:cond</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/p:stCondLst&gt;</span>
+                    <span class="nt">&lt;p:childTnLst&gt;</span>
+                      <span class="nt">&lt;p:par&gt;</span>
+                        <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;10&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span><span class="nt">&gt;</span>
+                          <span class="nt">&lt;p:stCondLst&gt;</span>
+                            <span class="nt">&lt;p:cond</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+                          <span class="nt">&lt;/p:stCondLst&gt;</span>
+                          <span class="nt">&lt;p:childTnLst&gt;</span>
+                            <span class="nt">&lt;p:par&gt;</span>
+                              <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;11&quot;</span> <span class="na">presetID=</span><span class="s">&quot;2&quot;</span> <span class="na">presetClass=</span><span class="s">&quot;mediacall&quot;</span> <span class="na">presetSubtype=</span><span class="s">&quot;0&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span> <span class="na">nodeType=</span><span class="s">&quot;clickEffect&quot;</span><span class="nt">&gt;</span>
+                                <span class="nt">&lt;p:stCondLst&gt;</span>
+                                  <span class="nt">&lt;p:cond</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+                                <span class="nt">&lt;/p:stCondLst&gt;</span>
+                                <span class="nt">&lt;p:childTnLst&gt;</span>
+                                  <span class="nt">&lt;p:cmd</span> <span class="na">type=</span><span class="s">&quot;call&quot;</span> <span class="na">cmd=</span><span class="s">&quot;togglePause&quot;</span><span class="nt">&gt;</span>
+                                    <span class="nt">&lt;p:cBhvr&gt;</span>
+                                      <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;12&quot;</span> <span class="na">dur=</span><span class="s">&quot;1&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span><span class="nt">/&gt;</span>
+                                      <span class="nt">&lt;p:tgtEl&gt;</span>
+                                        <span class="nt">&lt;p:spTgt</span> <span class="na">spid=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+                                      <span class="nt">&lt;/p:tgtEl&gt;</span>
+                                    <span class="nt">&lt;/p:cBhvr&gt;</span>
+                                  <span class="nt">&lt;/p:cmd&gt;</span>
+                                <span class="nt">&lt;/p:childTnLst&gt;</span>
+                              <span class="nt">&lt;/p:cTn&gt;</span>
+                            <span class="nt">&lt;/p:par&gt;</span>
+                          <span class="nt">&lt;/p:childTnLst&gt;</span>
+                        <span class="nt">&lt;/p:cTn&gt;</span>
+                      <span class="nt">&lt;/p:par&gt;</span>
+                    <span class="nt">&lt;/p:childTnLst&gt;</span>
+                  <span class="nt">&lt;/p:cTn&gt;</span>
+                <span class="nt">&lt;/p:par&gt;</span>
+              <span class="nt">&lt;/p:childTnLst&gt;</span>
+            <span class="nt">&lt;/p:cTn&gt;</span>
+            <span class="nt">&lt;p:nextCondLst&gt;</span>
+              <span class="nt">&lt;p:cond</span> <span class="na">evt=</span><span class="s">&quot;onClick&quot;</span> <span class="na">delay=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;p:tgtEl&gt;</span>
+                  <span class="nt">&lt;p:spTgt</span> <span class="na">spid=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/p:tgtEl&gt;</span>
+              <span class="nt">&lt;/p:cond&gt;</span>
+            <span class="nt">&lt;/p:nextCondLst&gt;</span>
+          <span class="nt">&lt;/p:seq&gt;</span>
+          <span class="nt">&lt;p:video&gt;</span>
+            <span class="nt">&lt;p:cMediaNode</span> <span class="na">vol=</span><span class="s">&quot;80000&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;p:cTn</span> <span class="na">id=</span><span class="s">&quot;13&quot;</span> <span class="na">fill=</span><span class="s">&quot;hold&quot;</span> <span class="na">display=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;p:stCondLst&gt;</span>
+                  <span class="nt">&lt;p:cond</span> <span class="na">delay=</span><span class="s">&quot;indefinite&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/p:stCondLst&gt;</span>
+              <span class="nt">&lt;/p:cTn&gt;</span>
+              <span class="nt">&lt;p:tgtEl&gt;</span>
+                <span class="nt">&lt;p:spTgt</span> <span class="na">spid=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+              <span class="nt">&lt;/p:tgtEl&gt;</span>
+            <span class="nt">&lt;/p:cMediaNode&gt;</span>
+          <span class="nt">&lt;/p:video&gt;</span>
+        <span class="nt">&lt;/p:childTnLst&gt;</span>
+      <span class="nt">&lt;/p:cTn&gt;</span>
+    <span class="nt">&lt;/p:par&gt;</span>
+  <span class="nt">&lt;/p:tnLst&gt;</span>
+<span class="nt">&lt;/p:timing&gt;</span>
+
+
+
+<span class="cm">&lt;!--slide{n}.xml.rels--&gt;</span>
+
+<span class="nt">&lt;Relationships</span> <span class="na">xmlns=</span><span class="s">&quot;http://schemas.openxmlformats.org/package/2006/relationships&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Relationship</span> <span class="na">Id=</span><span class="s">&quot;rId1&quot;</span>
+      <span class="na">Type=</span><span class="s">&quot;http://schemas.microsoft.com/office/2007/relationships/media&quot;</span>
+      <span class="na">Target=</span><span class="s">&quot;../media/media1.mp4&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;Relationship</span> <span class="na">Id=</span><span class="s">&quot;rId2&quot;</span>
+      <span class="na">Type=</span><span class="s">&quot;http://sc.../officeDocument/2006/relationships/video&quot;</span>
+      <span class="na">Target=</span><span class="s">&quot;../media/media1.mp4&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;Relationship</span> <span class="na">Id=</span><span class="s">&quot;rId3&quot;</span>
+      <span class="na">Type=</span><span class="s">&quot;http://sc.../officeDocument/2006/relationships/slideLayout&quot;</span>
+      <span class="na">Target=</span><span class="s">&quot;../slideLayouts/slideLayout1.xml&quot;</span><span class="nt">/&gt;</span>
+  <span class="cm">&lt;!-- this one is the poster frame --&gt;</span>
+  <span class="nt">&lt;Relationship</span> <span class="na">Id=</span><span class="s">&quot;rId4&quot;</span>
+      <span class="na">Type=</span><span class="s">&quot;http://sc.../officeDocument/2006/relationships/image&quot;</span>
+      <span class="na">Target=</span><span class="s">&quot;../media/image1.png&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/Relationships&gt;</span>
+
+
+<span class="cm">&lt;!--[Content_Types].xml--&gt;</span>
+
+<span class="nt">&lt;Types</span> <span class="na">xmlns=</span><span class="s">&quot;http://schemas.openxmlformats.org/package/2006/content-types&quot;</span><span class="nt">&gt;</span>
+  <span class="cm">&lt;!-- ... --&gt;</span>
+  <span class="nt">&lt;Default</span> <span class="na">Extension=</span><span class="s">&quot;mp4&quot;</span> <span class="na">ContentType=</span><span class="s">&quot;video/unknown&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;Default</span> <span class="na">Extension=</span><span class="s">&quot;png&quot;</span> <span class="na">ContentType=</span><span class="s">&quot;image/png&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;Default</span> <span class="na">Extension=</span><span class="s">&quot;jpeg&quot;</span> <span class="na">ContentType=</span><span class="s">&quot;image/jpeg&quot;</span><span class="nt">/&gt;</span>
+  <span class="cm">&lt;!-- ... --&gt;</span>
+<span class="nt">&lt;/Types&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="p-video-element">
+<h2>p:video element<a class="headerlink" href="#p-video-element" title="永久链接至标题">¶</a></h2>
+<p>Provides playback controls.</p>
+<p><a class="reference external" href="http://openxmldeveloper.org/discussions/formats/f/15/p/1124/2842.aspx#2842">http://openxmldeveloper.org/discussions/formats/f/15/p/1124/2842.aspx#2842</a></p>
+</section>
+<section id="id1">
+<h2>XML Semantics<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Extension DAA4B4D4-6D71-4841-9C94-3DE7FCFB9230 is described as a
+<a class="reference external" href="https://msdn.microsoft.com/en-us/library/dd947021(v=office.12).aspx">media extension</a>. It appears to allow:</p>
+<ul>
+<li><p>“cropping” the video period (set start and stop time markers)</p></li>
+<li><p>provide for “fade-in”</p></li>
+<li><p>allow for setting bookmarks in the video for fast jumps to a particular
+location</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>This and other extensions are documented in <a class="reference external" href="media_pdf">this PDF</a>.</p></li>
+</ul>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<p>The root element of a picture shape is a <cite>p:pic (CT_Picture)</cite> element:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Picture&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nvPicPr&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PictureNonVisual&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;blipFill&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_BlipFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>     <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;style&quot;</span>    <span class="na">type=</span><span class="s">&quot;a:CT_ShapeStyle&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_PictureNonVisual&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cNvPr&quot;</span>    <span class="na">type=</span><span class="s">&quot;a:CT_NonVisualDrawingProps&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cNvPicPr&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_NonVisualPictureProperties&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nvPr&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ApplicationNonVisualDrawingProps&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NonVisualDrawingProps&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hlinkClick&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Hyperlink&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hlinkHover&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Hyperlink&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_DrawingElementId&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>          <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;descr&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>          <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;hidden&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>         <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;title&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>          <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NonVisualPictureProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;picLocks&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_PictureLocking&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;preferRelativeResize&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ApplicationNonVisualDrawingProps&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ph&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Placeholder&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;a:EG_Media&quot;</span>                              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custDataLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_CustomerDataList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;isPhoto&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;userDrawn&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_Media&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;audioCd&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_AudioCD&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;wavAudioFile&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_EmbeddedWAVAudioFile&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;audioFile&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_AudioFile&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;videoFile&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_VideoFile&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;quickTimeFile&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_QuickTimeFile&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_BlipFillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;blip&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Blip&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;srcRect&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_RelativeRect&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;EG_FillModeProperties&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;dpi&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:unsignedInt&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rotWithShape&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>     <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Blip&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;alphaBiLevel&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_AlphaBiLevelEffect&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;alphaCeiling&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_AlphaCeilingEffect&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;alphaFloor&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_AlphaFloorEffect&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;alphaInv&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_AlphaInverseEffect&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;alphaMod&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_AlphaModulateEffect&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;alphaModFix&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_AlphaModulateFixedEffect&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;alphaRepl&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_AlphaReplaceEffect&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;biLevel&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_BiLevelEffect&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;blur&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_BlurEffect&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;clrChange&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ColorChangeEffect&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;clrRepl&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_ColorReplaceEffect&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;duotone&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_DuotoneEffect&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;fillOverlay&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_FillOverlayEffect&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grayscl&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_GrayscaleEffect&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hsl&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_HSLEffect&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lum&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_LuminanceEffect&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tint&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_TintEffect&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attributeGroup</span> <span class="na">ref=</span><span class="s">&quot;AG_Blob&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;cstate&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_BlipCompression&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:attributeGroup</span> <span class="na">name=</span><span class="s">&quot;AG_Blob&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">ref=</span><span class="s">&quot;r:embed&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">ref=</span><span class="s">&quot;r:link&quot;</span>  <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:attributeGroup&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_FillModeProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tile&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TileInfoProperties&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;stretch&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_StretchInfoProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_StretchInfoProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;fillRect&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_RelativeRect&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_RelativeRect&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;l&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Percentage&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;0%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;t&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Percentage&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;0%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;r&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Percentage&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;0%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;b&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Percentage&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;0%&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ShapeProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;xfrm&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Transform2D&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;EG_Geometry&quot;</span>                                 <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;EG_FillProperties&quot;</span>                           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ln&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;EG_EffectProperties&quot;</span>                         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scene3d&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Scene3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sp3d&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Shape3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bwMode&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_BlackWhiteMode&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Transform2D&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;off&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Point2D&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ext&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_PositiveSize2D&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rot&quot;</span>   <span class="na">type=</span><span class="s">&quot;ST_Angle&quot;</span>    <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;flipH&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;flipV&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Point2D&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;x&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Coordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;y&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Coordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_PositiveSize2D&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;cx&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_PositiveCoordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;cy&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_PositiveCoordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_Geometry&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custGeom&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_CustomGeometry2D&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;prstGeom&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_PresetGeometry2D&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_FillProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noFill&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_NoFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;solidFill&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SolidColorFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gradFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_GradientFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;blipFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_BlipFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pattFill&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PatternFillProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grpFill&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_GroupFillProperties&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_EffectProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectList&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectDag&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_EffectContainer&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ShapeStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lnRef&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_StyleMatrixReference&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;fillRef&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_StyleMatrixReference&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;effectRef&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_StyleMatrixReference&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;fontRef&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_FontReference&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;notes&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_NotesSlide&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NotesSlide&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cSld&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_CommonSlideData&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;clrMapOvr&quot;</span> <span class="na">type=</span><span class="s">&quot;a:CT_ColorMappingOverride&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showMasterSp&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showMasterPhAnim&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_CommonSlideData&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bg&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Background&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spTree&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_GroupShape&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custDataLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_CustomerDataList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;controls&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ControlList&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="p-timing-related-schema-definitions">
+<h2><cite>p:timing</cite> related Schema Definitions<a class="headerlink" href="#p-timing-related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<p>The <cite>p:timing</cite> element is a child of the <cite>p:sld (CT_Slide)</cite> element:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Slide&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cSld&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_CommonSlideData&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;clrMapOvr&quot;</span>  <span class="na">type=</span><span class="s">&quot;a:CT_ColorMappingOverride&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;transition&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_SlideTransition&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;timing&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_SlideTiming&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showMasterSp&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showMasterPhAnim&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;show&quot;</span>             <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">use=</span><span class="s">&quot;optional&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_SlideTiming&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tnLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TimeNodeList&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bldLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_BuildList&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionListModify&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TimeNodeList&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;par&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TLTimeNodeParallel&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;seq&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TLTimeNodeSequence&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;excl&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_TLTimeNodeExclusive&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;anim&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_TLAnimateBehavior&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;animClr&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TLAnimateColorBehavior&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;animEffect&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TLAnimateEffectBehavior&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;animMotion&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TLAnimateMotionBehavior&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;animRot&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TLAnimateRotationBehavior&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;animScale&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TLAnimateScaleBehavior&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cmd&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TLCommandBehavior&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;set&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TLSetBehavior&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;audio&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_TLMediaNodeAudio&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;video&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_TLMediaNodeVideo&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TLTimeNodeParallel&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cTn&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TLCommonTimeNodeData&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TLTimeNodeSequence&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cTn&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_TLCommonTimeNodeData&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;prevCondLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TLTimeConditionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;nextCondLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TLTimeConditionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;concurrent&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;prevAc&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TLPreviousActionType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;nextAc&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TLNextActionType&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TLCommonTimeNodeData&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;stCondLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TLTimeConditionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;endCondLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TLTimeConditionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;endSync&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TLTimeCondition&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;iterate&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TLIterateData&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;childTnLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TimeNodeList&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;subTnLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TimeNodeList&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span>            <span class="na">type=</span><span class="s">&quot;ST_TLTimeNodeID&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;presetID&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;presetClass&quot;</span>   <span class="na">type=</span><span class="s">&quot;ST_TLTimeNodePresetClassType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;presetSubtype&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;dur&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_TLTime&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;repeatCount&quot;</span>   <span class="na">type=</span><span class="s">&quot;ST_TLTime&quot;</span>                     <span class="na">default=</span><span class="s">&quot;1000&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;repeatDur&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TLTime&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spd&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:ST_Percentage&quot;</span>               <span class="na">default=</span><span class="s">&quot;100%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;accel&quot;</span>         <span class="na">type=</span><span class="s">&quot;a:ST_PositiveFixedPercentage&quot;</span>  <span class="na">default=</span><span class="s">&quot;0%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;decel&quot;</span>         <span class="na">type=</span><span class="s">&quot;a:ST_PositiveFixedPercentage&quot;</span>  <span class="na">default=</span><span class="s">&quot;0%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;autoRev&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>                   <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;restart&quot;</span>       <span class="na">type=</span><span class="s">&quot;ST_TLTimeNodeRestartType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;fill&quot;</span>          <span class="na">type=</span><span class="s">&quot;ST_TLTimeNodeFillType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;syncBehavior&quot;</span>  <span class="na">type=</span><span class="s">&quot;ST_TLTimeNodeSyncType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;tmFilter&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;evtFilter&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;display&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;masterRel&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TLTimeNodeMasterRelation&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bldLvl&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;grpId&quot;</span>         <span class="na">type=</span><span class="s">&quot;xsd:unsignedInt&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;afterEffect&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;nodeType&quot;</span>      <span class="na">type=</span><span class="s">&quot;ST_TLTimeNodeType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;nodePh&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TLMediaNodeVideo&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cMediaNode&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TLCommonMediaNodeData&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;fullScrn&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Movie</a><ul>
+<li><a class="reference internal" href="#candidate-protocol">Candidate Protocol</a></li>
+<li><a class="reference internal" href="#animation-timing-resources">Animation/timing resources</a></li>
+<li><a class="reference internal" href="#possibly-interesting-resources">Possibly interesting resources</a></li>
+<li><a class="reference internal" href="#ms-api">MS API</a></li>
+<li><a class="reference internal" href="#enumerations">Enumerations</a></li>
+<li><a class="reference internal" href="#click-behavior">Click Behavior</a></li>
+<li><a class="reference internal" href="#poster-frame">Poster Frame</a></li>
+<li><a class="reference internal" href="#xml-semantics">XML Semantics</a></li>
+<li><a class="reference internal" href="#example-xml">Example XML</a></li>
+<li><a class="reference internal" href="#p-video-element">p:video element</a></li>
+<li><a class="reference internal" href="#id1">XML Semantics</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+<li><a class="reference internal" href="#p-timing-related-schema-definitions"><cite>p:timing</cite> related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="shp-ole-object.html"
+                          title="上一章">Shape - OLE Object</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="shp-hyperlink.html"
+                          title="下一章">Shape hyperlink</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="shp-hyperlink.html" title="Shape hyperlink"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="shp-ole-object.html" title="Shape - OLE Object"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Movie</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

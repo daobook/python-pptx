@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Chart - Plots &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Chart - Legend" href="cht-legend.html" />
+    <link rel="prev" title="Bar Chart" href="cht-bar-chart.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-legend.html" title="Chart - Legend"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-bar-chart.html" title="Bar Chart"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Plots</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="chart-plots">
+<h1>Chart - Plots<a class="headerlink" href="#chart-plots" title="永久链接至标题">¶</a></h1>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">c:chartSpace/c:chart/c:plotArea</span></code> element may occur 0..n
+<cite>xChart</cite> elements, each containing 0..n series.</p>
+<p><cite>xChart</cite> here is a placeholder name for the various plot elements, each of
+which ends with <cite>Chart</cite>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;c:barChart&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;c:lineChart&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;c:pieChart&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;c:areaChart&gt;</span></code></p></li>
+<li><p>etc. …</p></li>
+</ul>
+<p>In the Microsoft API, the term <em>chart group</em> is used for the concept these
+elements represent. Rather than a group of charts, their role is perhaps
+better described as a <em>series group</em>. The terminology is a bit vexed when it
+comes down to details. The term <em>plot</em> was chosen for the purposes of this
+library.</p>
+<p>The reason the concept of a plot is required is that more than one type of
+plotting may appear on a single chart. For example, a line chart can appear
+on top of a column chart. To be more precise, one or more series can be
+plotted as lines superimposed on one or more series plotted as columns.</p>
+<p>The two sets of series both belong to a single chart, and there is only
+a single data source to define all the series in the chart. The Excel
+workbook that provides the chart data uses only a single worksheet.</p>
+<p>Individual series can be assigned a different <em>chart type</em> using the
+PowerPoint UI; this operation causes them to be placed in a distinct <cite>xChart</cite>
+element of the corresponding type. During this operation, PowerPoint adds
+<cite>xChart</cite> elements in an order that seems to correspond to logical viewing
+order, without respect to the sequence of the series chosen. It appears area
+plots are placed in back, bar next, and line in front. This prevents plots of
+one type from obscuring the others.</p>
+<p>Note that not all combinations of chart types are possible. I’ve seen area
+overlaid with column overlaid with line. Bar cannot be combined with line,
+which seems sensible because their axes locations differ (switched
+horizontal/vertical).</p>
+<section id="feature-summary">
+<h2>Feature Summary<a class="headerlink" href="#feature-summary" title="永久链接至标题">¶</a></h2>
+<p>Most plot-level properties are particular to a chart type. One so far is
+shared by plots of almost all chart types.</p>
+<ul class="simple">
+<li><p><strong>Plot.vary_by_categories</strong> – Read/write boolean determining whether point
+markers for each category have a different color. A point marker here means
+a bar for a bar chart, a pie section, etc. This setting is only operative
+when the plot has a single series. A plot with multiple series uses varying
+colors to distinguish series rather than categories.</p></li>
+</ul>
+</section>
+<section id="candidate-protocol">
+<h2>Candidate protocol<a class="headerlink" href="#candidate-protocol" title="永久链接至标题">¶</a></h2>
+<p>Plot.vary_by_categories:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span> <span class="o">=</span> <span class="n">chart</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">vary_by_categories</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">vary_by_categories</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="o">.</span><span class="n">vary_by_categories</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</section>
+<section id="xml-semantics">
+<h2>XML Semantics<a class="headerlink" href="#xml-semantics" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">c:xChart/c:varyColors</span></code> defaults to <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> when the element
+is not present or when the element is present but its <code class="docutils literal notranslate"><span class="pre">val</span></code> attribute is
+not.</p></li>
+</ul>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_AreaChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_AreaChartShared&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Area3DChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_AreaChartShared&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gapDepth&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GapAmount&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_AreaChartShared&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grouping&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Grouping&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;varyColors&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_AreaSer&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dropLines&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Grouping&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_Grouping&quot;</span> <span class="na">default=</span><span class="s">&quot;standard&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Grouping&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;percentStacked&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;standard&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;stacked&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_BarChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_BarChartShared&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gapWidth&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GapAmount&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;overlap&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Overlap&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;serLines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Bar3DChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_BarChartShared&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gapWidth&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GapAmount&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;gapDepth&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_GapAmount&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;shape&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Shape&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_BarChartShared&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;barDir&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_BarDir&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grouping&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_BarGrouping&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;varyColors&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_BarSer&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_BarDir&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_BarDir&quot;</span> <span class="na">default=</span><span class="s">&quot;col&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_BarDir&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;bar&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;col&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_BarGrouping&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_BarGrouping&quot;</span> <span class="na">default=</span><span class="s">&quot;clustered&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_BarGrouping&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;percentStacked&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;clustered&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;standard&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;stacked&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Shape&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;cone&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;coneToMax&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;box&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;cylinder&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pyramid&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;pyramidToMax&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_LineChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;EG_LineChartShared&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hiLowLines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;upDownBars&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_UpDownBars&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;marker&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;smooth&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_LineChartShared&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;grouping&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Grouping&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;varyColors&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_LineSer&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dropLines&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_PieChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_PieChartShared&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;firstSliceAng&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_FirstSliceAng&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_PieChartShared&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;varyColors&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_PieSer&quot;</span>  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_PieSer&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_SerShared&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;explosion&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dPt&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_DPt&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cat&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_AxDataSource&quot;</span>  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_NumDataSource&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_SerShared&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;idx&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;order&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tx&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_SerTx&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>  <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_RadarChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;radarStyle&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_RadarStyle&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;varyColors&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_RadarSer&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_RadarStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_RadarStyle&quot;</span> <span class="na">default=</span><span class="s">&quot;standard&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_RadarStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;standard&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;marker&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;filled&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ScatterChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scatterStyle&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ScatterStyle&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;varyColors&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_ScatterSer&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ScatterStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_ScatterStyle&quot;</span> <span class="na">default=</span><span class="s">&quot;marker&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_ScatterStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;line&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;lineMarker&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;marker&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;smooth&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;smoothMarker&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_StockChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_LineSer&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;3&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dropLines&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hiLowLines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;upDownBars&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_UpDownBars&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_SurfaceChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_SurfaceChartShared&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;2&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Surface3DChart&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:group</span> <span class="na">ref=</span><span class="s">&quot;EG_SurfaceChartShared&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;3&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_SurfaceChartShared&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;wireframe&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_SurfaceSer&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bandFmts&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_BandFmts&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Chart - Plots</a><ul>
+<li><a class="reference internal" href="#feature-summary">Feature Summary</a></li>
+<li><a class="reference internal" href="#candidate-protocol">Candidate protocol</a></li>
+<li><a class="reference internal" href="#xml-semantics">XML Semantics</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="cht-bar-chart.html"
+                          title="上一章">Bar Chart</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="cht-legend.html"
+                          title="下一章">Chart - Legend</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-legend.html" title="Chart - Legend"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-bar-chart.html" title="Bar Chart"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Plots</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

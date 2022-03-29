@@ -1,0 +1,623 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.chart.axis &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">模块代码</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.axis</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>pptx.chart.axis 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Axis-related chart objects.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pptx.dml.chtfmt</span> <span class="kn">import</span> <span class="n">ChartFormat</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.chart</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">XL_AXIS_CROSSES</span><span class="p">,</span>
+    <span class="n">XL_CATEGORY_TYPE</span><span class="p">,</span>
+    <span class="n">XL_TICK_LABEL_POSITION</span><span class="p">,</span>
+    <span class="n">XL_TICK_MARK</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.ns</span> <span class="kn">import</span> <span class="n">qn</span>
+<span class="kn">from</span> <span class="nn">pptx.oxml.simpletypes</span> <span class="kn">import</span> <span class="n">ST_Orientation</span>
+<span class="kn">from</span> <span class="nn">pptx.shared</span> <span class="kn">import</span> <span class="n">ElementProxy</span>
+<span class="kn">from</span> <span class="nn">pptx.text.text</span> <span class="kn">import</span> <span class="n">Font</span><span class="p">,</span> <span class="n">TextFrame</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<div class="viewcode-block" id="_BaseAxis"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis._BaseAxis">[文档]</a><span class="k">class</span> <span class="nc">_BaseAxis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for chart axis objects. All axis objects share these properties.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xAx</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_BaseAxis</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">xAx</span>  <span class="c1"># axis element, c:catAx or c:valAx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xAx</span> <span class="o">=</span> <span class="n">xAx</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">axis_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;An |AxisTitle| object providing access to title properties.</span>
+
+<span class="sd">        Calling this property is destructive in the sense that it adds an</span>
+<span class="sd">        axis title element (`c:title`) to the axis XML if one is not already</span>
+<span class="sd">        present. Use :attr:`has_title` to test for presence of axis title</span>
+<span class="sd">        non-destructively.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AxisTitle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_title</span><span class="p">())</span>
+
+<div class="viewcode-block" id="_BaseAxis.format"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis._BaseAxis.format">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |ChartFormat| object providing access to the shape formatting</span>
+<span class="sd">        properties of this axis, such as its line color and fill.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ChartFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_major_gridlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean value specifying whether this axis has gridlines</span>
+<span class="sd">        at its major tick mark locations. Assigning |True| to this property</span>
+<span class="sd">        causes major gridlines to be displayed. Assigning |False| causes them</span>
+<span class="sd">        to be removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">majorGridlines</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@has_major_gridlines</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">has_major_gridlines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_majorGridlines</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_majorGridlines</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_minor_gridlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean value specifying whether this axis has gridlines</span>
+<span class="sd">        at its minor tick mark locations. Assigning |True| to this property</span>
+<span class="sd">        causes minor gridlines to be displayed. Assigning |False| causes them</span>
+<span class="sd">        to be removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">minorGridlines</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@has_minor_gridlines</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">has_minor_gridlines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_minorGridlines</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_minorGridlines</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write boolean specifying whether this axis has a title.</span>
+
+<span class="sd">        |True| if this axis has a title, |False| otherwise. Assigning |True|</span>
+<span class="sd">        causes an axis title to be added if not already present. Assigning</span>
+<span class="sd">        |False| causes any existing title to be deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@has_title</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">has_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_title</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_title</span><span class="p">()</span>
+
+<div class="viewcode-block" id="_BaseAxis.major_gridlines"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis._BaseAxis.major_gridlines">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">major_gridlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |MajorGridlines| object representing the major gridlines for</span>
+<span class="sd">        this axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MajorGridlines</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">major_tick_mark</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write :ref:`XlTickMark` value specifying the type of major tick</span>
+<span class="sd">        mark to display on this axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">majorTickMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">majorTickMark</span>
+        <span class="k">if</span> <span class="n">majorTickMark</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XL_TICK_MARK</span><span class="o">.</span><span class="n">CROSS</span>
+        <span class="k">return</span> <span class="n">majorTickMark</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@major_tick_mark</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">major_tick_mark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_majorTickMark</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">XL_TICK_MARK</span><span class="o">.</span><span class="n">CROSS</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_add_majorTickMark</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">maximum_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write float value specifying the upper limit of the value range</span>
+<span class="sd">        for this axis, the number at the top or right of the vertical or</span>
+<span class="sd">        horizontal value scale, respectively. The value |None| indicates the</span>
+<span class="sd">        upper limit should be determined automatically based on the range of</span>
+<span class="sd">        data point values associated with the axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">scaling</span><span class="o">.</span><span class="n">maximum</span>
+
+    <span class="nd">@maximum_scale</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">maximum_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">scaling</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">scaling</span>
+        <span class="n">scaling</span><span class="o">.</span><span class="n">maximum</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">minimum_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write float value specifying lower limit of value range, the</span>
+<span class="sd">        number at the bottom or left of the value scale. |None| if no minimum</span>
+<span class="sd">        scale has been set. The value |None| indicates the lower limit should</span>
+<span class="sd">        be determined automatically based on the range of data point values</span>
+<span class="sd">        associated with the axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">scaling</span><span class="o">.</span><span class="n">minimum</span>
+
+    <span class="nd">@minimum_scale</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">minimum_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">scaling</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">scaling</span>
+        <span class="n">scaling</span><span class="o">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">minor_tick_mark</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write :ref:`XlTickMark` value specifying the type of minor tick</span>
+<span class="sd">        mark for this axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">minorTickMark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">minorTickMark</span>
+        <span class="k">if</span> <span class="n">minorTickMark</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XL_TICK_MARK</span><span class="o">.</span><span class="n">CROSS</span>
+        <span class="k">return</span> <span class="n">minorTickMark</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@minor_tick_mark</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">minor_tick_mark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_minorTickMark</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">XL_TICK_MARK</span><span class="o">.</span><span class="n">CROSS</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_add_minorTickMark</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">reverse_order</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write bool value specifying whether to reverse plotting order for axis.</span>
+
+<span class="sd">        For a category axis, this reverses the order in which the categories are</span>
+<span class="sd">        displayed. This may be desired, for example, on a (horizontal) bar-chart where</span>
+<span class="sd">        by default the first category appears at the bottom. Since we read from</span>
+<span class="sd">        top-to-bottom, many viewers may find it most natural for the first category to</span>
+<span class="sd">        appear on top.</span>
+
+<span class="sd">        For a value axis, it reverses the direction of increasing value from</span>
+<span class="sd">        bottom-to-top to top-to-bottom.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">orientation</span> <span class="o">==</span> <span class="n">ST_Orientation</span><span class="o">.</span><span class="n">MAX_MIN</span>
+
+    <span class="nd">@reverse_order</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">reverse_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">ST_Orientation</span><span class="o">.</span><span class="n">MAX_MIN</span> <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="n">ST_Orientation</span><span class="o">.</span><span class="n">MIN_MAX</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="_BaseAxis.tick_labels"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis._BaseAxis.tick_labels">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">tick_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |TickLabels| instance providing access to axis tick label</span>
+<span class="sd">        formatting properties. Tick labels are the numbers appearing on</span>
+<span class="sd">        a value axis or the category names appearing on a category axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">TickLabels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tick_label_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write :ref:`XlTickLabelPosition` value specifying where the tick</span>
+<span class="sd">        labels for this axis should appear.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tickLblPos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">tickLblPos</span>
+        <span class="k">if</span> <span class="n">tickLblPos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XL_TICK_LABEL_POSITION</span><span class="o">.</span><span class="n">NEXT_TO_AXIS</span>
+        <span class="k">if</span> <span class="n">tickLblPos</span><span class="o">.</span><span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XL_TICK_LABEL_POSITION</span><span class="o">.</span><span class="n">NEXT_TO_AXIS</span>
+        <span class="k">return</span> <span class="n">tickLblPos</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@tick_label_position</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">tick_label_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">tickLblPos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_tickLblPos</span><span class="p">()</span>
+        <span class="n">tickLblPos</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">visible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write. |True| if axis is visible, |False| otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">delete</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">delete_</span>
+        <span class="k">if</span> <span class="n">delete</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">delete</span><span class="o">.</span><span class="n">val</span> <span class="k">else</span> <span class="kc">True</span>
+
+    <span class="nd">@visible</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;assigned value must be True or False, got: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">delete</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_delete_</span><span class="p">()</span>
+        <span class="n">delete</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="AxisTitle"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis.AxisTitle">[文档]</a><span class="k">class</span> <span class="nc">AxisTitle</span><span class="p">(</span><span class="n">ElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provides properties for manipulating axis title.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AxisTitle</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_title</span> <span class="o">=</span> <span class="n">title</span>
+
+<div class="viewcode-block" id="AxisTitle.format"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis.AxisTitle.format">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|ChartFormat| object providing access to shape formatting.</span>
+
+<span class="sd">        Return the |ChartFormat| object providing shape formatting properties</span>
+<span class="sd">        for this axis title, such as its line color and fill.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ChartFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read/write Boolean specifying presence of a text frame.</span>
+
+<span class="sd">        Return |True| if this axis title has a text frame, and |False|</span>
+<span class="sd">        otherwise. Assigning |True| causes a text frame to be added if not</span>
+<span class="sd">        already present. Assigning |False| causes any existing text frame to</span>
+<span class="sd">        be removed along with any text contained in the text frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="o">.</span><span class="n">tx_rich</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@has_text_frame</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">has_text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="o">.</span><span class="n">get_or_add_tx_rich</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="o">.</span><span class="n">_remove_tx</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;|TextFrame| instance for this axis title.</span>
+
+<span class="sd">        Return a |TextFrame| instance allowing read/write access to the text</span>
+<span class="sd">        of this axis title and its text formatting properties. Accessing this</span>
+<span class="sd">        property is destructive as it adds a new text frame if not already</span>
+<span class="sd">        present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rich</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_title</span><span class="o">.</span><span class="n">get_or_add_tx_rich</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">TextFrame</span><span class="p">(</span><span class="n">rich</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CategoryAxis"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis.CategoryAxis">[文档]</a><span class="k">class</span> <span class="nc">CategoryAxis</span><span class="p">(</span><span class="n">_BaseAxis</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A category axis of a chart.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">category_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A member of :ref:`XlCategoryType` specifying the scale type of this</span>
+<span class="sd">        axis. Unconditionally ``CATEGORY_SCALE`` for a |CategoryAxis| object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">XL_CATEGORY_TYPE</span><span class="o">.</span><span class="n">CATEGORY_SCALE</span></div>
+
+
+<div class="viewcode-block" id="DateAxis"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis.DateAxis">[文档]</a><span class="k">class</span> <span class="nc">DateAxis</span><span class="p">(</span><span class="n">_BaseAxis</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A category axis with dates as its category labels.</span>
+
+<span class="sd">    This axis-type has some special display behaviors such as making length of equal</span>
+<span class="sd">    periods equal and normalizing month start dates despite unequal month lengths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">category_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A member of :ref:`XlCategoryType` specifying the scale type of this</span>
+<span class="sd">        axis. Unconditionally ``TIME_SCALE`` for a |DateAxis| object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">XL_CATEGORY_TYPE</span><span class="o">.</span><span class="n">TIME_SCALE</span></div>
+
+
+<div class="viewcode-block" id="MajorGridlines"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis.MajorGridlines">[文档]</a><span class="k">class</span> <span class="nc">MajorGridlines</span><span class="p">(</span><span class="n">ElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provides access to the properties of the major gridlines appearing on an axis.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xAx</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MajorGridlines</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">xAx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xAx</span> <span class="o">=</span> <span class="n">xAx</span>  <span class="c1"># axis element, catAx or valAx</span>
+
+<div class="viewcode-block" id="MajorGridlines.format"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis.MajorGridlines.format">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |ChartFormat| object providing access to the shape formatting</span>
+<span class="sd">        properties of this data point, such as line and fill.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">majorGridlines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xAx</span><span class="o">.</span><span class="n">get_or_add_majorGridlines</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ChartFormat</span><span class="p">(</span><span class="n">majorGridlines</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TickLabels"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis.TickLabels">[文档]</a><span class="k">class</span> <span class="nc">TickLabels</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A service class providing access to formatting of axis tick mark labels.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xAx_elm</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TickLabels</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">xAx_elm</span>
+
+<div class="viewcode-block" id="TickLabels.font"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis.TickLabels.font">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">font</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The |Font| object that provides access to the text properties for</span>
+<span class="sd">        these tick labels, such as bold, italic, etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">defRPr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">defRPr</span>
+        <span class="n">font</span> <span class="o">=</span> <span class="n">Font</span><span class="p">(</span><span class="n">defRPr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">font</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write string (e.g. &quot;$#,##0.00&quot;) specifying the format for the</span>
+<span class="sd">        numbers on this axis. The syntax for these strings is the same as it</span>
+<span class="sd">        appears in the PowerPoint or Excel UI. Returns &#39;General&#39; if no number</span>
+<span class="sd">        format has been set. Note that this format string has no effect on</span>
+<span class="sd">        rendered tick labels when :meth:`number_format_is_linked` is |True|.</span>
+<span class="sd">        Assigning a format string to this property automatically sets</span>
+<span class="sd">        :meth:`number_format_is_linked` to |False|.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">numFmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">numFmt</span>
+        <span class="k">if</span> <span class="n">numFmt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;General&quot;</span>
+        <span class="k">return</span> <span class="n">numFmt</span><span class="o">.</span><span class="n">formatCode</span>
+
+    <span class="nd">@number_format</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">number_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">numFmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_numFmt</span><span class="p">()</span>
+        <span class="n">numFmt</span><span class="o">.</span><span class="n">formatCode</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_format_is_linked</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">number_format_is_linked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write boolean specifying whether number formatting should be</span>
+<span class="sd">        taken from the source spreadsheet rather than the value of</span>
+<span class="sd">        :meth:`number_format`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">numFmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">numFmt</span>
+        <span class="k">if</span> <span class="n">numFmt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">souceLinked</span> <span class="o">=</span> <span class="n">numFmt</span><span class="o">.</span><span class="n">sourceLinked</span>
+        <span class="k">if</span> <span class="n">souceLinked</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">numFmt</span><span class="o">.</span><span class="n">sourceLinked</span>
+
+    <span class="nd">@number_format_is_linked</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">number_format_is_linked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">numFmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_numFmt</span><span class="p">()</span>
+        <span class="n">numFmt</span><span class="o">.</span><span class="n">sourceLinked</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read/write int value in range 0-1000 specifying the spacing between</span>
+<span class="sd">        the tick mark labels and the axis as a percentange of the default</span>
+<span class="sd">        value. 100 if no label offset setting is present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lblOffset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">lblOffset</span>
+        <span class="k">if</span> <span class="n">lblOffset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">100</span>
+        <span class="k">return</span> <span class="n">lblOffset</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@offset</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">tag</span> <span class="o">!=</span> <span class="n">qn</span><span class="p">(</span><span class="s2">&quot;c:catAx&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;only a category axis has an offset&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_lblOffset</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">lblOffset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_add_lblOffset</span><span class="p">()</span>
+        <span class="n">lblOffset</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="ValueAxis"><a class="viewcode-back" href="../../../api/chart.html#pptx.chart.axis.ValueAxis">[文档]</a><span class="k">class</span> <span class="nc">ValueAxis</span><span class="p">(</span><span class="n">_BaseAxis</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An axis having continuous (as opposed to discrete) values.</span>
+
+<span class="sd">    The vertical axis is generally a value axis, however both axes of an XY-type chart</span>
+<span class="sd">    are value axes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">crosses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Member of :ref:`XlAxisCrosses` enumeration specifying the point on</span>
+<span class="sd">        this axis where the other axis crosses, such as auto/zero, minimum,</span>
+<span class="sd">        or maximum. Returns `XL_AXIS_CROSSES.CUSTOM` when a specific numeric</span>
+<span class="sd">        crossing point (e.g. 1.5) is defined.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">crosses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cross_xAx</span><span class="o">.</span><span class="n">crosses</span>
+        <span class="k">if</span> <span class="n">crosses</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XL_AXIS_CROSSES</span><span class="o">.</span><span class="n">CUSTOM</span>
+        <span class="k">return</span> <span class="n">crosses</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@crosses</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">crosses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">cross_xAx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cross_xAx</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">XL_AXIS_CROSSES</span><span class="o">.</span><span class="n">CUSTOM</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cross_xAx</span><span class="o">.</span><span class="n">crossesAt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="n">cross_xAx</span><span class="o">.</span><span class="n">_remove_crosses</span><span class="p">()</span>
+        <span class="n">cross_xAx</span><span class="o">.</span><span class="n">_remove_crossesAt</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">XL_AXIS_CROSSES</span><span class="o">.</span><span class="n">CUSTOM</span><span class="p">:</span>
+            <span class="n">cross_xAx</span><span class="o">.</span><span class="n">_add_crossesAt</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cross_xAx</span><span class="o">.</span><span class="n">_add_crosses</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">crosses_at</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Numeric value on this axis at which the perpendicular axis crosses.</span>
+<span class="sd">        Returns |None| if no crossing value is set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">crossesAt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cross_xAx</span><span class="o">.</span><span class="n">crossesAt</span>
+        <span class="k">if</span> <span class="n">crossesAt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">crossesAt</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@crosses_at</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">crosses_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">cross_xAx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cross_xAx</span>
+        <span class="n">cross_xAx</span><span class="o">.</span><span class="n">_remove_crosses</span><span class="p">()</span>
+        <span class="n">cross_xAx</span><span class="o">.</span><span class="n">_remove_crossesAt</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">cross_xAx</span><span class="o">.</span><span class="n">_add_crossesAt</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">major_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The float number of units between major tick marks on this value</span>
+<span class="sd">        axis. |None| corresponds to the &#39;Auto&#39; setting in the UI, and</span>
+<span class="sd">        specifies the value should be calculated by PowerPoint based on the</span>
+<span class="sd">        underlying chart data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">majorUnit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">majorUnit</span>
+        <span class="k">if</span> <span class="n">majorUnit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">majorUnit</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@major_unit</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">major_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_majorUnit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_add_majorUnit</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">minor_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The float number of units between minor tick marks on this value</span>
+<span class="sd">        axis. |None| corresponds to the &#39;Auto&#39; setting in the UI, and</span>
+<span class="sd">        specifies the value should be calculated by PowerPoint based on the</span>
+<span class="sd">        underlying chart data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">minorUnit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">minorUnit</span>
+        <span class="k">if</span> <span class="n">minorUnit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">minorUnit</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="nd">@minor_unit</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">minor_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_remove_minorUnit</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">_add_minorUnit</span><span class="p">(</span><span class="n">val</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_cross_xAx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The axis element in the same group (primary/secondary) that crosses</span>
+<span class="sd">        this axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">crossAx_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">crossAx</span><span class="o">.</span><span class="n">val</span>
+        <span class="n">expr</span> <span class="o">=</span> <span class="s1">&#39;(../c:catAx | ../c:valAx | ../c:dateAx)/c:axId[@val=&quot;</span><span class="si">%d</span><span class="s1">&quot;]&#39;</span> <span class="o">%</span> <span class="n">crossAx_id</span>
+        <span class="n">cross_axId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">expr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">cross_axId</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >模块代码</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.chart.axis</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

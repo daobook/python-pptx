@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Click Action-related Objects &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="DrawingML objects" href="dml.html" />
+    <link rel="prev" title="Text-related objects" href="text.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="dml.html" title="DrawingML objects"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="text.html" title="Text-related objects"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Click Action-related Objects</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="click-action-related-objects">
+<span id="action-api"></span><h1>Click Action-related Objects<a class="headerlink" href="#click-action-related-objects" title="永久链接至标题">¶</a></h1>
+<p>The following classes represent click and hover mouse actions, typically
+a hyperlink. Other actions such as navigating to another slide in the
+presentation or running a macro are also possible.</p>
+<section id="actionsetting-objects">
+<h2><a class="reference internal" href="#pptx.action.ActionSetting" title="pptx.action.ActionSetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">ActionSetting</span></code></a> objects<a class="headerlink" href="#actionsetting-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.action.ActionSetting">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.action.</span></span><span class="sig-name descname"><span class="pre">ActionSetting</span></span><a class="reference internal" href="../_modules/pptx/action.html#ActionSetting"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.action.ActionSetting" title="永久链接至目标">¶</a></dt>
+<dd><p>Properties specifying how a shape or run reacts to mouse actions.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.action.ActionSetting.action">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">action</span></span><a class="headerlink" href="#pptx.action.ActionSetting.action" title="永久链接至目标">¶</a></dt>
+<dd><p>Member of <a class="reference internal" href="enum/PpActionType.html#ppactiontype"><span class="std std-ref">PP_ACTION_TYPE</span></a> enumeration, such as <cite>PP_ACTION.HYPERLINK</cite>.</p>
+<p>The returned member indicates the type of action that will result when the
+specified shape or text is clicked or the mouse pointer is positioned over the
+shape during a slide show.</p>
+<p>If there is no click-action or the click-action value is not recognized (is not
+one of the official <cite>MsoPpAction</cite> values) then <cite>PP_ACTION.NONE</cite> is returned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pptx.action.ActionSetting.hyperlink">
+<span class="sig-name descname"><span class="pre">hyperlink</span></span><a class="reference internal" href="../_modules/pptx/action.html#ActionSetting.hyperlink"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.action.ActionSetting.hyperlink" title="永久链接至目标">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pptx.action.Hyperlink" title="pptx.action.Hyperlink"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hyperlink</span></code></a> object representing the hyperlink action defined on
+this click or hover mouse event. A <a class="reference internal" href="#pptx.action.Hyperlink" title="pptx.action.Hyperlink"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hyperlink</span></code></a> object is always
+returned, even if no hyperlink or other click action is defined.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.action.ActionSetting.part">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">part</span></span><a class="headerlink" href="#pptx.action.ActionSetting.part" title="永久链接至目标">¶</a></dt>
+<dd><p>The package part containing this object</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.action.ActionSetting.target_slide">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">target_slide</span></span><a class="headerlink" href="#pptx.action.ActionSetting.target_slide" title="永久链接至目标">¶</a></dt>
+<dd><p>A reference to the slide in this presentation that is the target of
+the slide jump action in this shape. Slide jump actions include
+<cite>PP_ACTION.FIRST_SLIDE</cite>, <cite>LAST_SLIDE</cite>, <cite>NEXT_SLIDE</cite>,
+<cite>PREVIOUS_SLIDE</cite>, and <cite>NAMED_SLIDE</cite>. Returns <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> for all other
+actions. In particular, the <cite>LAST_SLIDE_VIEWED</cite> action and the <cite>PLAY</cite>
+(start other presentation) actions are not supported.</p>
+<p>A slide object may be assigned to this property, which makes the
+shape an “internal hyperlink” to the assigened slide:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">slide</span><span class="p">,</span> <span class="n">target_slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">shape</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">shape</span><span class="o">.</span><span class="n">target_slide</span> <span class="o">=</span> <span class="n">target_slide</span>
+</pre></div>
+</div>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> removes any slide jump action. Note that this is
+accomplished by removing any action present (such as a hyperlink),
+without first checking that it is a slide jump action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="hyperlink-objects">
+<h2><a class="reference internal" href="#pptx.action.Hyperlink" title="pptx.action.Hyperlink"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hyperlink</span></code></a> objects<a class="headerlink" href="#hyperlink-objects" title="永久链接至标题">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pptx.action.Hyperlink">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pptx.action.</span></span><span class="sig-name descname"><span class="pre">Hyperlink</span></span><a class="reference internal" href="../_modules/pptx/action.html#Hyperlink"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#pptx.action.Hyperlink" title="永久链接至目标">¶</a></dt>
+<dd><p>Represents a hyperlink action on a shape or text run.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.action.Hyperlink.address">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">address</span></span><a class="headerlink" href="#pptx.action.Hyperlink.address" title="永久链接至目标">¶</a></dt>
+<dd><p>Read/write. The URL of the hyperlink. URL can be on http, https,
+mailto, or file scheme; others may work. Returns <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> if no
+hyperlink is defined, including when another action such as
+<cite>RUN_MACRO</cite> is defined on the object. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> removes any
+action defined on the object, whether it is a hyperlink action or
+not.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pptx.action.Hyperlink.part">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">part</span></span><a class="headerlink" href="#pptx.action.Hyperlink.part" title="永久链接至目标">¶</a></dt>
+<dd><p>The package part containing this object</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Click Action-related Objects</a><ul>
+<li><a class="reference internal" href="#actionsetting-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">ActionSetting</span></code> objects</a></li>
+<li><a class="reference internal" href="#hyperlink-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hyperlink</span></code> objects</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="text.html"
+                          title="上一章">Text-related objects</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="dml.html"
+                          title="下一章">DrawingML objects</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="dml.html" title="DrawingML objects"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="text.html" title="Text-related objects"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Click Action-related Objects</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

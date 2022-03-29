@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Chart - Data Labels &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Chart - Date Axis" href="cht-date-axis.html" />
+    <link rel="prev" title="Axis Title" href="cht-axis-title.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-date-axis.html" title="Chart - Date Axis"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-axis-title.html" title="Axis Title"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Data Labels</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="chart-data-labels">
+<h1>Chart - Data Labels<a class="headerlink" href="#chart-data-labels" title="永久链接至标题">¶</a></h1>
+<p>On a PowerPoint chart, data points may be labeled as an aid to readers.
+Typically, the label is the value of the data point, but a data label may
+have any combination of its series name, category name, and value. A number
+format may also be applied to the value displayed.</p>
+<section id="object-access">
+<h2>Object access<a class="headerlink" href="#object-access" title="永久链接至标题">¶</a></h2>
+<p>The <cite>DataLabels</cite> object is not a collection of <cite>DataLabel</cite> objects.
+<cite>DataLabels</cite> controls the formatting of the data labels for a whole series,
+so “global” settings in a way of thinking. An individual <cite>DataLabel</cite> object
+is accessed using it’s associated <cite>Point</cite> object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_label</span> <span class="o">=</span> <span class="n">chart</span><span class="o">.</span><span class="n">plot</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">series</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data_label</span>
+</pre></div>
+</div>
+<p>The two object types share many attributes.</p>
+</section>
+<section id="datalabel-font">
+<h2>DataLabel.font<a class="headerlink" href="#datalabel-font" title="永久链接至标题">¶</a></h2>
+<p>Proposed protocol:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">font</span> <span class="o">=</span> <span class="n">data_label</span><span class="o">.</span><span class="n">font</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">font</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mh">0x3C</span><span class="p">,</span> <span class="mh">0xEB</span><span class="p">,</span> <span class="mh">0x27</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="position">
+<h2>Position<a class="headerlink" href="#position" title="永久链接至标题">¶</a></h2>
+<p>There are nine choices for where a data label may be positioned relative to
+its data point marker, although the available options depend on the chart
+type. The options are specified using the <a class="reference internal" href="../../api/enum/XlDataLabelPosition.html#xldatalabelposition"><span class="std std-ref">XL_DATA_LABEL_POSITION</span></a>
+enumeration.</p>
+<p><strong>XML Semantics.</strong> The default position when no <code class="docutils literal notranslate"><span class="pre">&lt;c:dLblPos&gt;</span></code> element is
+present (common) depends on the chart type:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 70%" />
+<col style="width: 30%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>barChart (clustered)</p></td>
+<td><p>OUTSIDE_END</p></td>
+</tr>
+<tr class="row-even"><td><p>bar3DChart (clustered)</p></td>
+<td><p>OUTSIDE_END</p></td>
+</tr>
+<tr class="row-odd"><td><p>barChart (stacked)</p></td>
+<td><p>CENTER</p></td>
+</tr>
+<tr class="row-even"><td><p>barChart (percent stacked)</p></td>
+<td><p>CENTER</p></td>
+</tr>
+<tr class="row-odd"><td><p>bar3DChart (stacked)</p></td>
+<td><p>CENTER</p></td>
+</tr>
+<tr class="row-even"><td><p>bar3DChart (percent stacked)</p></td>
+<td><p>CENTER</p></td>
+</tr>
+<tr class="row-odd"><td><p>pieChart</p></td>
+<td><p>BEST_FIT</p></td>
+</tr>
+<tr class="row-even"><td><p>pie3DChart</p></td>
+<td><p>BEST_FIT</p></td>
+</tr>
+<tr class="row-odd"><td><p>ofPieChart</p></td>
+<td><p>BEST_FIT</p></td>
+</tr>
+<tr class="row-even"><td><p>areaChart</p></td>
+<td><p>CENTER</p></td>
+</tr>
+<tr class="row-odd"><td><p>area3DChart</p></td>
+<td><p>CENTER</p></td>
+</tr>
+<tr class="row-even"><td><p>doughnutChart</p></td>
+<td><p>CENTER</p></td>
+</tr>
+<tr class="row-odd"><td><p>radarChart</p></td>
+<td><p>OUTSIDE_END</p></td>
+</tr>
+<tr class="row-even"><td><p>all others</p></td>
+<td><p>RIGHT</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://msdn.microsoft.com/en-us/library/ff535061(v=office.12).aspx">http://msdn.microsoft.com/en-us/library/ff535061(v=office.12).aspx</a></p>
+<p>Proposed protocol:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data_labels</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">data_labels</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_labels</span><span class="o">.</span><span class="n">position</span>
+<span class="go">OUTSIDE_END (2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_labels</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">XL_DATA_LABEL_POSITION</span><span class="o">.</span><span class="n">INSIDE_END</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_labels</span><span class="o">.</span><span class="n">position</span>
+<span class="go">INSIDE_END (3)</span>
+</pre></div>
+</div>
+</section>
+<section id="ms-api">
+<h2>MS API<a class="headerlink" href="#ms-api" title="永久链接至标题">¶</a></h2>
+<p>The following properties from the MS API DataLabel object are of most
+interest:</p>
+<dl class="simple">
+<dt>Delete()</dt><dd><p>Deletes the DataLabel object, which might be useful for “undoing” data
+label overrides and restoring inherited behaviors.</p>
+</dd>
+<dt>AutoText</dt><dd><p>True if the object automatically generates appropriate text based on
+context. Read/write Boolean.</p>
+</dd>
+<dt>Caption</dt><dd><p>Returns or sets the data label text. Read/write String.</p>
+</dd>
+<dt>Format</dt><dd><p>Returns the line, fill, and effect formatting for the object. Read-only
+ChartFormat.</p>
+</dd>
+<dt>NumberFormat</dt><dd><p>Returns or sets the format code for the object. Read/write String.</p>
+</dd>
+<dt>NumberFormatLinked</dt><dd><p>True if the number format is linked to the cells (so that the number
+format changes in the labels when it changes in the cells). Read/write
+Boolean.</p>
+</dd>
+<dt>Orientation</dt><dd><p>Returns or sets the text orientation. Read/write Long in range -90 to 90
+(degrees).</p>
+</dd>
+<dt>Position</dt><dd><p>Returns or sets the position of the data label. Read/write
+XlDataLabelPosition.</p>
+</dd>
+<dt>Separator</dt><dd><p>Returns or sets the separator used for the data labels on a chart. Used
+when more than one value is shown, like category+value. Read/write
+Variant.</p>
+</dd>
+<dt>Shadow</dt><dd><p>Returns or sets a value that indicates whether the object has a shadow.
+Read/write Boolean.</p>
+</dd>
+<dt>ShowBubbleSize</dt><dd><p>True to show the bubble size for the data labels on a chart. False to
+hide the bubble size. Read/write Boolean.</p>
+</dd>
+<dt>ShowCategoryName</dt><dd><p>True to display the category name for the data labels on a chart. False
+to hide the category name. Read/write Boolean.</p>
+</dd>
+<dt>ShowLegendKey</dt><dd><p>True if the data label legend key is visible. This is a small square of
+the series color shown in the legend, and appears adjacent to the data
+label. Read/write Boolean.</p>
+</dd>
+<dt>ShowPercentage</dt><dd><p>True to display the percentage value for the data labels on a chart.
+False to hide the value. This might only be relevant for pie charts and
+similar. Read/write Boolean.</p>
+</dd>
+<dt>ShowSeriesName</dt><dd><p>True to show the series name for the data labels on a chart. False to
+hide the series name. Read/write Boolean.</p>
+</dd>
+<dt>ShowValue</dt><dd><p>True to display a specified chart’s data label values. False to hide the
+values. Read/write Boolean.</p>
+</dd>
+<dt>Text</dt><dd><p>Returns or sets the text for the specified object. Read/write String.</p>
+</dd>
+<dt>VerticalAlignment</dt><dd><p>Returns or sets the vertical alignment of the specified object.
+Read/write Variant.</p>
+</dd>
+</dl>
+</section>
+<section id="powerpoint-behavior">
+<h2>PowerPoint behavior<a class="headerlink" href="#powerpoint-behavior" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>A default PowerPoint bar chart does not display data labels, but it does
+have a <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbls&gt;</span></code> child element on its <code class="docutils literal notranslate"><span class="pre">&lt;c:barChart&gt;</span></code> element.</p></li>
+<li><p>Data labels are added to a chart in the UI by selecting the <em>Data Labels</em>
+drop-down menu in the Chart Layout ribbon. The options include setting the
+contents of the data label, its position relative to the point, and
+bringing up the <em>Format Data Labels</em> dialog.</p></li>
+<li><p>The default number format, when no <code class="docutils literal notranslate"><span class="pre">&lt;c:numFmt&gt;</span></code> child element appears, is
+equivalent to <code class="docutils literal notranslate"><span class="pre">&lt;c:numFmt</span> <span class="pre">formatCode=&quot;General&quot;</span> <span class="pre">sourceLinked=&quot;1&quot;/&gt;</span></code></p></li>
+</ul>
+</section>
+<section id="xml-semantics">
+<h2>XML Semantics<a class="headerlink" href="#xml-semantics" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbls&gt;</span></code> element at the plot level (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;c:barChart&gt;</span></code>) is
+overridden completely by a <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbls&gt;</span></code> element at the series level.
+Unless overridden, a <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbls&gt;</span></code> element at the plot level determines the
+content and formatting for data labels on all the plot’s series.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbl&gt;</span></code> element appears as a child of <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbls&gt;</span></code> only when the
+data label for its associated data point has overrides.</p></li>
+</ul>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbls&gt;</span></code> element is available on a plot (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;c:barChart&gt;</span></code>),
+a series (<code class="docutils literal notranslate"><span class="pre">&lt;c:ser&gt;</span></code>), and perhaps elsewhere.</p>
+<p>Default <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbls&gt;</span></code> element added by PowerPoint when selecting Data Labels
+&gt; Value from the Chart Layout ribbon:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:dLbls&gt;</span>
+  <span class="nt">&lt;c:showLegendKey</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showVal</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showCatName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showSerName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showPercent</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showBubbleSize</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/c:dLbls&gt;</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbls&gt;</span></code> element specifying the labels should appear in 10pt Bold
+Italic Arial Narrow, color Accent 6, 25% Darker:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:dLbls&gt;</span>
+  <span class="nt">&lt;c:txPr&gt;</span>
+    <span class="nt">&lt;a:bodyPr/&gt;</span>
+    <span class="nt">&lt;a:lstStyle/&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      <span class="nt">&lt;a:pPr&gt;</span>
+        <span class="nt">&lt;a:defRPr</span> <span class="na">sz=</span><span class="s">&quot;1000&quot;</span> <span class="na">b=</span><span class="s">&quot;1&quot;</span> <span class="na">i=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;a:solidFill&gt;</span>
+            <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent6&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;a:lumMod</span> <span class="na">val=</span><span class="s">&quot;75000&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/a:schemeClr&gt;</span>
+          <span class="nt">&lt;/a:solidFill&gt;</span>
+          <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Arial Narrow&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:defRPr&gt;</span>
+      <span class="nt">&lt;/a:pPr&gt;</span>
+      <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:p&gt;</span>
+  <span class="nt">&lt;/c:txPr&gt;</span>
+  <span class="nt">&lt;c:showLegendKey</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showVal</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showCatName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showSerName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showPercent</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:showBubbleSize</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/c:dLbls&gt;</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">&lt;c:dLbls&gt;</span></code> element having an individual point override for font color
+and outline box:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:dLbls&gt;</span>
+  <span class="nt">&lt;c:dLbl&gt;</span>
+    <span class="nt">&lt;c:idx</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:spPr&gt;</span>
+      <span class="cm">&lt;!-- ouline color (Red) --&gt;</span>
+      <span class="nt">&lt;a:ln&gt;</span>
+        <span class="nt">&lt;a:solidFill&gt;</span>
+          <span class="nt">&lt;a:srgbClr</span> <span class="na">val=</span><span class="s">&quot;FF0000&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:solidFill&gt;</span>
+      <span class="nt">&lt;/a:ln&gt;</span>
+    <span class="nt">&lt;/c:spPr&gt;</span>
+    <span class="nt">&lt;c:txPr&gt;</span>
+      <span class="nt">&lt;a:bodyPr/&gt;</span>
+      <span class="nt">&lt;a:lstStyle/&gt;</span>
+      <span class="nt">&lt;a:p&gt;</span>
+        <span class="nt">&lt;a:pPr&gt;</span>
+          <span class="cm">&lt;!-- font color (Green) --&gt;</span>
+          <span class="nt">&lt;a:defRPr&gt;</span>
+            <span class="nt">&lt;a:solidFill&gt;</span>
+              <span class="nt">&lt;a:srgbClr</span> <span class="na">val=</span><span class="s">&quot;00FF00&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/a:solidFill&gt;</span>
+          <span class="nt">&lt;/a:defRPr&gt;</span>
+        <span class="nt">&lt;/a:pPr&gt;</span>
+        <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:p&gt;</span>
+    <span class="nt">&lt;/c:txPr&gt;</span>
+    <span class="nt">&lt;c:showLegendKey</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:showCatName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:showSerName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/c:dLbl&gt;</span>
+  <span class="nt">&lt;c:spPr/&gt;</span>
+  <span class="cm">&lt;!-- ... --&gt;</span>
+<span class="nt">&lt;/c:dLbls&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_DLbls&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbl&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_DLbl&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;delete&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;Group_DLbls&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;Group_DLbls&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numFmt&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_NumFmt&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>            <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>            <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLblPos&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_DLblPos&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showLegendKey&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showVal&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showCatName&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showSerName&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showPercent&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showBubbleSize&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;separator&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showLeaderLines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;leaderLines&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_DLbl&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;idx&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;delete&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:group</span>   <span class="na">ref=</span><span class="s">&quot;Group_DLbl&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;Group_DLbl&quot;</span><span class="nt">&gt;</span> <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;layout&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Layout&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tx&quot;</span>             <span class="na">type=</span><span class="s">&quot;CT_Tx&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numFmt&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumFmt&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLblPos&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_DLblPos&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showLegendKey&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showVal&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showCatName&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showSerName&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showPercent&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;showBubbleSize&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;separator&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_DLblPos&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_DLblPos&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_NumFmt&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;formatCode&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;sourceLinked&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextBody&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bodyPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextBodyProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lstStyle&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextListStyle&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;p&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TextParagraph&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Tx&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;strRef&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_StrRef&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;rich&quot;</span>   <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_DLblPos&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;bestFit&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;b&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;inBase&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;inEnd&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;l&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;outEnd&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;r&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;t&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Chart - Data Labels</a><ul>
+<li><a class="reference internal" href="#object-access">Object access</a></li>
+<li><a class="reference internal" href="#datalabel-font">DataLabel.font</a></li>
+<li><a class="reference internal" href="#position">Position</a></li>
+<li><a class="reference internal" href="#ms-api">MS API</a></li>
+<li><a class="reference internal" href="#powerpoint-behavior">PowerPoint behavior</a></li>
+<li><a class="reference internal" href="#xml-semantics">XML Semantics</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="cht-axis-title.html"
+                          title="上一章">Axis Title</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="cht-date-axis.html"
+                          title="下一章">Chart - Date Axis</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-date-axis.html" title="Chart - Date Axis"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-axis-title.html" title="Axis Title"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Data Labels</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Paragraph Spacing &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Text - Fit text to shape" href="txt-fit-text.html" />
+    <link rel="prev" title="CT_PresetGeometry2D" href="shp-preset-geom.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="txt-fit-text.html" title="Text - Fit text to shape"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="shp-preset-geom.html" title="CT_PresetGeometry2D"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Paragraph Spacing</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="paragraph-spacing">
+<h1>Paragraph Spacing<a class="headerlink" href="#paragraph-spacing" title="永久链接至标题">¶</a></h1>
+<p>A paragraph has three spacing properties. It can have spacing that separates
+it from the prior paragraph, spacing that separates it from the following
+paragraph, and line spacing less than or greater than the default single line
+spacing.</p>
+<section id="candidate-protocol">
+<h2>Candidate protocol<a class="headerlink" href="#candidate-protocol" title="永久链接至标题">¶</a></h2>
+<p>Get and set space before/after:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span> <span class="o">=</span> <span class="n">TextFrame</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">space_before</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">space_before</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">space_before</span>
+<span class="go">76200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">space_before</span><span class="o">.</span><span class="n">pt</span>
+<span class="go">6.0</span>
+</pre></div>
+</div>
+<p>An existing paragraph that somehow has space before or after set in terms of
+lines (<code class="docutils literal notranslate"><span class="pre">&lt;a:spcPct&gt;</span></code>) will return a value of Length(0) for that property.</p>
+<p>Get and set line spacing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span> <span class="o">=</span> <span class="n">TextFrame</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">line_spacing</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">paragraph</span><span class="o">.</span><span class="n">line_spacing</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">line_spacing</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">line_spacing</span>
+<span class="go">228600</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">paragraph</span><span class="o">.</span><span class="n">line_spacing</span><span class="p">,</span> <span class="n">Length</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">paragraph</span><span class="o">.</span><span class="n">line_spacing</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">line_spacing</span><span class="o">.</span><span class="n">pt</span>
+<span class="go">18.0</span>
+</pre></div>
+</div>
+<ul>
+<li><p>The default value for <code class="docutils literal notranslate"><span class="pre">Paragraph.line_spacing</span></code> is 1.0 (lines).</p></li>
+<li><p>The units of the return value can be distinguished by its type. In
+practice, units can also be distinguished by magnitude. Lines are returned
+as a small-ish float. Point values are returned as a <cite>Length</cite> value.</p>
+<p>If type is the most convenient discriminator, the expression
+<cite>isinstance(line_spacing, float)</cite> will serve as an effective <cite>is_lines</cite>
+predicate.</p>
+<p>In practice, line values will rarely be greater than 3.0 and it would be
+hard to imagine a useful line spacing less than 1 pt (12700). If magnitude
+is the most convenient discriminator, 256 can be assumed to be a safe
+threshold value.</p>
+</li>
+</ul>
+</section>
+<section id="ms-api">
+<h2>MS API<a class="headerlink" href="#ms-api" title="永久链接至标题">¶</a></h2>
+<dl class="simple">
+<dt>LineRuleAfter</dt><dd><p>Determines whether line spacing after the last line in each paragraph is
+set to a specific number of points or lines. Read/write.</p>
+</dd>
+<dt>LineRuleBefore</dt><dd><p>Determines whether line spacing before the first line in each paragraph
+is set to a specific number of points or lines. Read/write.</p>
+</dd>
+<dt>LineRuleWithin</dt><dd><p>Determines whether line spacing between base lines is set to a specific
+number of points or lines. Read/write.</p>
+</dd>
+<dt>SpaceAfter</dt><dd><p>Returns or sets the amount of space after the last line in each paragraph
+of the specified text, in points or lines. Read/write.</p>
+</dd>
+<dt>SpaceBefore</dt><dd><p>Returns or sets the amount of space before the first line in each
+paragraph of the specified text, in points or lines. Read/write.</p>
+</dd>
+<dt>SpaceWithin</dt><dd><p>Returns or sets the amount of space between base lines in the specified
+text, in points or lines. Read/write.</p>
+</dd>
+</dl>
+</section>
+<section id="powerpoint-behavior">
+<h2>PowerPoint behavior<a class="headerlink" href="#powerpoint-behavior" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>The UI doesn’t appear to allow line spacing to be set in units of lines,
+although the XML and MS API allow it to be specified so.</p></li>
+</ul>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p>Default paragraph spacing:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:p&gt;</span>
+  <span class="nt">&lt;a:r&gt;</span>
+    <span class="nt">&lt;a:t&gt;</span>Paragraph with default spacing<span class="nt">&lt;/a:t&gt;</span>
+  <span class="nt">&lt;/a:r&gt;</span>
+<span class="nt">&lt;/a:p&gt;</span>
+</pre></div>
+</div>
+<p>Spacing before = 6 pt:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:p&gt;</span>
+  <span class="nt">&lt;a:pPr&gt;</span>
+    <span class="nt">&lt;a:spcBef&gt;</span>
+      <span class="nt">&lt;a:spcPts</span> <span class="na">val=</span><span class="s">&quot;600&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:spcBef&gt;</span>
+  <span class="nt">&lt;/a:pPr&gt;</span>
+  <span class="nt">&lt;a:r&gt;</span>
+    <span class="nt">&lt;a:t&gt;</span>Paragraph spacing before = 6pt<span class="nt">&lt;/a:t&gt;</span>
+  <span class="nt">&lt;/a:r&gt;</span>
+<span class="nt">&lt;/a:p&gt;</span>
+</pre></div>
+</div>
+<p>Spacing after = 12 pt:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:p&gt;</span>
+  <span class="nt">&lt;a:pPr&gt;</span>
+    <span class="nt">&lt;a:spcAft&gt;</span>
+      <span class="nt">&lt;a:spcPts</span> <span class="na">val=</span><span class="s">&quot;1200&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:spcAft&gt;</span>
+  <span class="nt">&lt;/a:pPr&gt;</span>
+  <span class="nt">&lt;a:r&gt;</span>
+    <span class="nt">&lt;a:t&gt;</span>Paragraph spacing after = 12pt<span class="nt">&lt;/a:t&gt;</span>
+  <span class="nt">&lt;/a:r&gt;</span>
+<span class="nt">&lt;/a:p&gt;</span>
+</pre></div>
+</div>
+<p>Line spacing = 24 pt:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:p&gt;</span>
+  <span class="nt">&lt;a:pPr&gt;</span>
+    <span class="nt">&lt;a:lnSpc&gt;</span>
+      <span class="nt">&lt;a:spcPts</span> <span class="na">val=</span><span class="s">&quot;2400&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:lnSpc&gt;</span>
+  <span class="nt">&lt;/a:pPr&gt;</span>
+  <span class="nt">&lt;a:r&gt;</span>
+    <span class="nt">&lt;a:t&gt;</span>Paragraph line spacing = 24pt<span class="nt">&lt;/a:t&gt;</span>
+  <span class="nt">&lt;/a:r&gt;</span>
+  <span class="nt">&lt;a:br/&gt;</span>
+  <span class="nt">&lt;a:r&gt;</span>
+    <span class="nt">&lt;a:t&gt;</span>second line<span class="nt">&lt;/a:t&gt;</span>
+  <span class="nt">&lt;/a:r&gt;</span>
+<span class="nt">&lt;/a:p&gt;</span>
+</pre></div>
+</div>
+<p>Line spacing = 2 lines:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;a:p&gt;</span>
+  <span class="nt">&lt;a:pPr&gt;</span>
+    <span class="nt">&lt;a:lnSpc&gt;</span>
+      <span class="nt">&lt;a:spcPct</span> <span class="na">val=</span><span class="s">&quot;200000&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:lnSpc&gt;</span>
+  <span class="nt">&lt;/a:pPr&gt;</span>
+  <span class="nt">&lt;a:r&gt;</span>
+    <span class="nt">&lt;a:t&gt;</span>Paragraph line spacing = 2 line<span class="nt">&lt;/a:t&gt;</span>
+  <span class="nt">&lt;/a:r&gt;</span>
+  <span class="nt">&lt;a:br/&gt;</span>
+  <span class="nt">&lt;a:r&gt;</span>
+    <span class="nt">&lt;a:t&gt;</span>second line<span class="nt">&lt;/a:t&gt;</span>
+  <span class="nt">&lt;/a:r&gt;</span>
+<span class="nt">&lt;/a:p&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="schema-excerpt">
+<h2>Schema excerpt<a class="headerlink" href="#schema-excerpt" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextParagraph&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pPr&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_TextRun&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;endParaRPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextCharacterProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lnSpc&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_TextSpacing&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spcBef&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_TextSpacing&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spcAft&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_TextSpacing&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>       <span class="cm">&lt;!-- EG_TextBulletColor --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buClrTx&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextBulletColorFollowText&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buClr&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Color&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>       <span class="cm">&lt;!-- EG_TextBulletSize --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buSzTx&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TextBulletSizeFollowText&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buSzPct&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextBulletSizePercent&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buSzPts&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextBulletSizePoint&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>       <span class="cm">&lt;!-- EG_TextBulletTypeface --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buFontTx&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TextBulletTypefaceFollowText&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buFont&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TextFont&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>       <span class="cm">&lt;!-- EG_TextBullet --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buNone&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TextNoBullet&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buAutoNum&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextAutonumberBullet&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buChar&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TextCharBullet&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;buBlip&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_TextBlipBullet&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tabLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_TextTabStopList&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;defRPr&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_TextCharacterProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span>  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;marL&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_TextMargin&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;marR&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_TextMargin&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;lvl&quot;</span>          <span class="na">type=</span><span class="s">&quot;ST_TextIndentLevelType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;indent&quot;</span>       <span class="na">type=</span><span class="s">&quot;ST_TextIndent&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;algn&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_TextAlignType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;defTabSz&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rtl&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;eaLnBrk&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;fontAlgn&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TextFontAlignType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;latinLnBrk&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;hangingPunct&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextSpacing&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spcPct&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextSpacingPercent&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spcPts&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextSpacingPoint&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:choice&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextSpacingPercent&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_TextSpacingPercentOrPercentString&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextSpacingPercentOrPercentString&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:union</span> <span class="na">memberTypes=</span><span class="s">&quot;ST_TextSpacingPercent s:ST_Percentage&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextSpacingPercent&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;ST_PercentageDecimal&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;13200000&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Percentage&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:pattern</span> <span class="na">value=</span><span class="s">&quot;-?[0-9]+(\.[0-9]+)?%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextSpacingPoint&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_TextSpacingPoint&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextSpacingPoint&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:int&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;158400&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Paragraph Spacing</a><ul>
+<li><a class="reference internal" href="#candidate-protocol">Candidate protocol</a></li>
+<li><a class="reference internal" href="#ms-api">MS API</a></li>
+<li><a class="reference internal" href="#powerpoint-behavior">PowerPoint behavior</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#schema-excerpt">Schema excerpt</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="shp-preset-geom.html"
+                          title="上一章"><code class="docutils literal notranslate"><span class="pre">CT_PresetGeometry2D</span></code></a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="txt-fit-text.html"
+                          title="下一章">Text - Fit text to shape</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="txt-fit-text.html" title="Text - Fit text to shape"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="shp-preset-geom.html" title="CT_PresetGeometry2D"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Paragraph Spacing</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

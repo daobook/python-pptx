@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Slide Placeholders &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/translations.js"></script>
+    <script src="../../../../../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" />
+    <link rel="next" title="Picture placeholder" href="picture-placeholder.html" />
+    <link rel="prev" title="Placeholders" href="../index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="picture-placeholder.html" title="Picture placeholder"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Placeholders"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Analysis</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" accesskey="U">Placeholders</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Slide Placeholders</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="slide-placeholders">
+<h1>Slide Placeholders<a class="headerlink" href="#slide-placeholders" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="picture-placeholder.html">Picture placeholder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="table-placeholder.html">Table placeholder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="placeholders-in-new-slide.html">Placeholders in new slide</a></li>
+</ul>
+</div>
+<section id="candidate-protocol">
+<h2>Candidate protocol<a class="headerlink" href="#candidate-protocol" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
+<span class="go">&lt;pptx.shapes.shapetree.SlideShapes object at 0x104e60000&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;pptx.shapes.placeholder.ShapePlaceholder object at 0x104e60020&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_placeholders</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">placeholders</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_placeholders</span>
+<span class="go">&lt;pptx.shapes.shapetree.SlidePlaceholders object at 0x104e60040&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">slide_placeholders</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">&lt;pptx.shapes.placeholder.ContentPlaceholder object at 0x104e60060&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;body&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_placeholders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">AttributeError ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">_sp</span><span class="o">.</span><span class="n">spPr</span><span class="o">.</span><span class="n">xfrm</span>
+<span class="go">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide_placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">width</span>  <span class="c1"># should inherit from layout placeholder</span>
+<span class="go">8229600</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="n">slide_placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">insert_table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">slide_placeholders</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</section>
+<section id="inheritance-behaviors">
+<h2>Inheritance behaviors<a class="headerlink" href="#inheritance-behaviors" title="永久链接至标题">¶</a></h2>
+<p>A placeholder shape on a slide is initially little more than a reference to
+its “parent” placeholder shape on the slide layout. If it is a placeholder
+shape that can accept text, it contains a <cite>&lt;p:txBody&gt;</cite> element. Position,
+size, and even geometry are inherited from the layout placeholder, which may
+in turn inherit one or more of those properties from a master placeholder.</p>
+</section>
+<section id="substitution-behaviors">
+<h2>Substitution behaviors<a class="headerlink" href="#substitution-behaviors" title="永久链接至标题">¶</a></h2>
+<p>Content may be placed into a placeholder shape two ways, by <em>insertion</em> and
+by <em>substitution</em>. Insertion is simply placing the text insertion point in
+the placeholder and typing or pasting in text. Substitution occurs when an
+object such as a table or picture is inserted into a placeholder by clicking
+on a placeholder button.</p>
+<p>An empty placeholder is always a <cite>&lt;p:sp&gt;</cite> (autoshape) element. When an object
+such as a table is inserted into the placehoder by clicking on a placeholder
+button, the <cite>&lt;p:sp&gt;</cite> element is replaced with the appropriate new shape
+element, a table element in this case. The <cite>&lt;p:ph&gt;</cite> element is retained in
+the new shape element and preserves the linkage to the layout placeholder
+such that the ‘empty’ placeholder shape can be restored if the inserted
+object is deleted.</p>
+</section>
+<section id="operations">
+<h2>Operations<a class="headerlink" href="#operations" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>clone on slide create</p></li>
+<li><p>query inherited property values</p></li>
+<li><p>substitution</p></li>
+</ul>
+</section>
+<section id="example-xml">
+<h2>Example XML<a class="headerlink" href="#example-xml" title="永久链接至标题">¶</a></h2>
+<p>Baseline textbox shape:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;2&quot;</span> <span class="na">name=</span><span class="s">&quot;TextBox 1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvSpPr</span> <span class="na">txBox=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:nvPr/&gt;</span>
+  <span class="nt">&lt;/p:nvSpPr&gt;</span>
+  <span class="nt">&lt;p:spPr&gt;</span>
+    <span class="nt">&lt;a:xfrm&gt;</span>
+      <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;3016188&quot;</span> <span class="na">y=</span><span class="s">&quot;3273093&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;1133644&quot;</span> <span class="na">cy=</span><span class="s">&quot;369332&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:xfrm&gt;</span>
+    <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;rect&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:avLst/&gt;</span>
+    <span class="nt">&lt;/a:prstGeom&gt;</span>
+    <span class="nt">&lt;a:noFill/&gt;</span>
+  <span class="nt">&lt;/p:spPr&gt;</span>
+  <span class="nt">&lt;p:txBody&gt;</span>
+    <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;none&quot;</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:spAutoFit/&gt;</span>
+    <span class="nt">&lt;/a:bodyPr&gt;</span>
+    <span class="nt">&lt;a:lstStyle/&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      <span class="nt">&lt;a:r&gt;</span>
+        <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:t&gt;</span>Some text<span class="nt">&lt;/a:t&gt;</span>
+      <span class="nt">&lt;/a:r&gt;</span>
+      <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:p&gt;</span>
+  <span class="nt">&lt;/p:txBody&gt;</span>
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>Content placeholder:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;5&quot;</span> <span class="na">name=</span><span class="s">&quot;Content Placeholder 4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvSpPr&gt;</span>
+      <span class="nt">&lt;a:spLocks</span> <span class="na">noGrp=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvSpPr&gt;</span>
+    <span class="nt">&lt;p:nvPr&gt;</span>
+      <span class="nt">&lt;p:ph</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:nvPr&gt;</span>
+  <span class="nt">&lt;/p:nvSpPr&gt;</span>
+  <span class="nt">&lt;p:spPr/&gt;</span>
+  <span class="nt">&lt;p:txBody&gt;</span>
+    <span class="nt">&lt;a:bodyPr/&gt;</span>
+    <span class="nt">&lt;a:lstStyle/&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:p&gt;</span>
+  <span class="nt">&lt;/p:txBody&gt;</span>
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+<p>Notable differences:</p>
+<ul class="simple">
+<li><p>placeholder has <cite>&lt;a:spLocks&gt;</cite> element</p></li>
+<li><p>placeholder has <cite>&lt;p:ph&gt;</cite> element</p></li>
+<li><p>placeholder has no <cite>&lt;p:spPr&gt;</cite> child elements, implying both that:</p>
+<ul>
+<li><p>all shape properties are initially inherited from the layout placeholder,
+including position, size, and geometry</p></li>
+<li><p>any specific shape property value may be overridden by specifying it on
+the inheriting shape</p></li>
+</ul>
+</li>
+</ul>
+<p>Matching slide layout placeholder:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">name=</span><span class="s">&quot;Content Placeholder 2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvSpPr&gt;</span>
+      <span class="nt">&lt;a:spLocks</span> <span class="na">noGrp=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:cNvSpPr&gt;</span>
+    <span class="nt">&lt;p:nvPr&gt;</span>
+      <span class="nt">&lt;p:ph</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/p:nvPr&gt;</span>
+  <span class="nt">&lt;/p:nvSpPr&gt;</span>
+  <span class="nt">&lt;p:spPr/&gt;</span>
+  <span class="nt">&lt;p:txBody&gt;</span>
+    <span class="nt">&lt;a:bodyPr/&gt;</span>
+    <span class="nt">&lt;a:lstStyle/&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      <span class="nt">&lt;a:pPr</span> <span class="na">lvl=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:r&gt;</span>
+        <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:t&gt;</span>Click to edit Master text styles<span class="nt">&lt;/a:t&gt;</span>
+      <span class="nt">&lt;/a:r&gt;</span>
+    <span class="nt">&lt;/a:p&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      ... and others through lvl=&quot;4&quot;, five total
+    <span class="nt">&lt;/a:p&gt;</span>
+  <span class="nt">&lt;/p:txBody&gt;</span>
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="behaviors">
+<h2>Behaviors<a class="headerlink" href="#behaviors" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>A placeholder is accessed through a slide-type object’s shape collection,
+e.g. <code class="docutils literal notranslate"><span class="pre">slide.shapes.placeholders</span></code>. The contents of the placeholders
+collection is a subset of the shapes in the shape collection.</p></li>
+<li><p>The title placeholder, if it exists, always appears first in the
+placeholders collection.</p></li>
+<li><p>Placeholders can only be top-level shapes, they cannot be nested in a group
+shape.</p></li>
+<li><p>A slide placeholder may be either an <cite>&lt;p:sp&gt;</cite> (autoshape) element or
+a <cite>&lt;p:pic&gt;</cite> or <cite>&lt;p:graphicFrame&gt;</cite> element. In either case, its relationship
+to its layout placeholder is preserved.</p></li>
+<li><p>Slide inherits from layout strictly on idx value.</p></li>
+<li><p>The placeholder with idx=”0” is the title placeholder. “0” is the default
+for the <em>idx</em> attribute on &lt;p:ph&gt;, so one with no idx attribute is the
+title placeholder.</p></li>
+<li><p>The document order of placeholders signifies their z-order and has no
+bearing on their index order. <code class="xref py py-attr docutils literal notranslate"><span class="pre">_ShapeCollection.placeholders</span></code> contains
+the placeholders in order of <em>idx</em> value, which means the title placeholder
+always appears first in the sequence, if it is present.</p></li>
+</ul>
+<section id="automatic-naming">
+<h3>Automatic naming<a class="headerlink" href="#automatic-naming" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>Most placeholders are automatically named ‘{root_name} Placeholder {num}’
+where <em>root_name</em> is something like <code class="docutils literal notranslate"><span class="pre">Chart</span></code> and num is a positive integer.
+A typical example is <code class="docutils literal notranslate"><span class="pre">Table</span> <span class="pre">Placeholder</span> <span class="pre">3</span></code>.</p></li>
+<li><p>A placeholder with vertical orientation, i.e. <code class="docutils literal notranslate"><span class="pre">&lt;p:ph</span> <span class="pre">orient=&quot;vert&quot;&gt;</span></code>, is
+prefixed with <code class="docutils literal notranslate"><span class="pre">'Vertical</span> <span class="pre">'</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">Vertical</span> <span class="pre">Text</span> <span class="pre">Placeholder</span> <span class="pre">2</span></code>.</p></li>
+<li><p>The word <code class="docutils literal notranslate"><span class="pre">'Placeholder'</span></code> is omitted when the type is ‘title’, ‘ctrTitle’,
+or ‘subTitle’.</p></li>
+</ul>
+</section>
+<section id="on-slide-creation">
+<h3>On slide creation<a class="headerlink" href="#on-slide-creation" title="永久链接至标题">¶</a></h3>
+<p>When a new slide is added to a presentation, empty placeholders are added to
+it based on the placeholders present in the specified slide layout.</p>
+<p>Only content placeholders are created automatically. Special placeholders
+must be created individually with additional calls. Special placeholders
+include header, footer, page numbers, date, and slide number; and perhaps
+others. In this respect, it seems like special placeholders on a slide layout
+are simply default settings for those placeholders in case they are added
+later.</p>
+</section>
+<section id="during-slide-life-cycle">
+<h3>During slide life-cycle<a class="headerlink" href="#during-slide-life-cycle" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>Placeholders can be deleted from slides and can be restored by calling
+methods like AddTitle on the shape collection. AddTitle raises if there’s
+already a title placeholder, so need to call .hasTitle() beforehand.</p></li>
+</ul>
+</section>
+</section>
+<section id="experimental-findings-applying-layouts">
+<h2>Experimental findings – Applying layouts<a class="headerlink" href="#experimental-findings-applying-layouts" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>Switching the layout of an empty title slide to the blank layout resulted
+in the placeholder shapes (title, subtitle) being removed.</p></li>
+<li><p>The same switch when the shapes had content (text), resulted in the shapes
+being preserved, complete with their <cite>&lt;p:ph&gt;</cite> element. Position and
+dimension values were added that preserve the height, width, top position
+but set the left position to zero.</p></li>
+<li><p>Restoring the original layout caused those position and dimension values to
+be removed (and “re-inherited”).</p></li>
+<li><p>Applying a new (or the same) style to a slide appears to reset selected
+properties such that they are re-inherited from the new layout. Size and
+position are both reset. Background color and font, at least, are not
+reset.</p></li>
+<li><p>The “Reset Layout to Default Settings” option appears to reset all shape
+properties to inherited, without exception.</p></li>
+<li><p>Content of a placeholder shape is retained and displayed, even when the
+slide layout is changed to one without a matching layout placeholder.</p></li>
+<li><p>The behavior when placeholders are added to a slide layout (from the slide
+master) may also be worth characterizing.</p>
+<ul>
+<li><p>… show master placeholder …</p></li>
+<li><p>… add (arbitrary) placeholder …</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Slide Placeholders</a><ul>
+<li><a class="reference internal" href="#candidate-protocol">Candidate protocol</a></li>
+<li><a class="reference internal" href="#inheritance-behaviors">Inheritance behaviors</a></li>
+<li><a class="reference internal" href="#substitution-behaviors">Substitution behaviors</a></li>
+<li><a class="reference internal" href="#operations">Operations</a></li>
+<li><a class="reference internal" href="#example-xml">Example XML</a></li>
+<li><a class="reference internal" href="#behaviors">Behaviors</a><ul>
+<li><a class="reference internal" href="#automatic-naming">Automatic naming</a></li>
+<li><a class="reference internal" href="#on-slide-creation">On slide creation</a></li>
+<li><a class="reference internal" href="#during-slide-life-cycle">During slide life-cycle</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#experimental-findings-applying-layouts">Experimental findings – Applying layouts</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="../index.html"
+                          title="上一章">Placeholders</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="picture-placeholder.html"
+                          title="下一章">Picture placeholder</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="picture-placeholder.html" title="Picture placeholder"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Placeholders"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Analysis</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >Placeholders</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Slide Placeholders</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

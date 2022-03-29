@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Presentation properties &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Color" href="dml-color.html" />
+    <link rel="prev" title="Hyperlinks" href="txt-hyperlink.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="dml-color.html" title="Color"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="txt-hyperlink.html" title="Hyperlinks"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Presentation properties</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="presentation-properties">
+<h1>Presentation properties<a class="headerlink" href="#presentation-properties" title="永久链接至标题">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="永久链接至标题">¶</a></h2>
+<p>The presentation object has a few interesting properties. Right now I’m
+interested in slide size.</p>
+</section>
+<section id="protocol">
+<h2>Protocol<a class="headerlink" href="#protocol" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prs</span><span class="p">,</span> <span class="n">pptx</span><span class="o">.</span><span class="n">parts</span><span class="o">.</span><span class="n">presentation</span><span class="o">.</span><span class="n">PresentationPart</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prs</span><span class="o">.</span><span class="n">slide_width</span>
+<span class="go">9144000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prs</span><span class="o">.</span><span class="n">slide_height</span>
+<span class="go">6858000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prs</span><span class="o">.</span><span class="n">slide_width</span> <span class="o">=</span> <span class="mi">11887200</span>  <span class="c1"># 13 inches</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prs</span><span class="o">.</span><span class="n">slide_height</span> <span class="o">=</span> <span class="mi">6686550</span>  <span class="c1"># 7.3125 inches</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prs</span><span class="o">.</span><span class="n">slide_width</span><span class="p">,</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_height</span>
+<span class="go">(11887200, 6686550)</span>
+</pre></div>
+</div>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p>Example presentation.xml contents:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:presentation&gt;</span>
+  <span class="nt">&lt;p:sldMasterIdLst&gt;</span>
+    <span class="nt">&lt;p:sldMasterId</span> <span class="na">id=</span><span class="s">&quot;2147483897&quot;</span> <span class="na">r:id=</span><span class="s">&quot;rId1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/p:sldMasterIdLst&gt;</span>
+  <span class="nt">&lt;p:notesMasterIdLst&gt;</span>
+    <span class="nt">&lt;p:notesMasterId</span> <span class="na">r:id=</span><span class="s">&quot;rId153&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/p:notesMasterIdLst&gt;</span>
+  <span class="nt">&lt;p:sldIdLst&gt;</span>
+    <span class="nt">&lt;p:sldId</span> <span class="na">id=</span><span class="s">&quot;772&quot;</span> <span class="na">r:id=</span><span class="s">&quot;rId3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:sldId</span> <span class="na">id=</span><span class="s">&quot;1244&quot;</span> <span class="na">r:id=</span><span class="s">&quot;rId4&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/p:sldIdLst&gt;</span>
+  <span class="nt">&lt;p:sldSz</span> <span class="na">cx=</span><span class="s">&quot;9144000&quot;</span> <span class="na">cy=</span><span class="s">&quot;6858000&quot;</span> <span class="na">type=</span><span class="s">&quot;screen4x3&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;p:notesSz</span> <span class="na">cx=</span><span class="s">&quot;6858000&quot;</span> <span class="na">cy=</span><span class="s">&quot;9296400&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;p:defaultTextStyle&gt;</span>
+    <span class="nt">&lt;a:defPPr&gt;</span>
+      <span class="nt">&lt;a:defRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:defPPr&gt;</span>
+    <span class="nt">&lt;a:lvl1pPr</span> <span class="na">algn=</span><span class="s">&quot;l&quot;</span> <span class="na">rtl=</span><span class="s">&quot;0&quot;</span> <span class="na">fontAlgn=</span><span class="s">&quot;base&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:spcBef&gt;</span>
+        <span class="nt">&lt;a:spcPct</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:spcBef&gt;</span>
+      <span class="nt">&lt;a:spcAft&gt;</span>
+        <span class="nt">&lt;a:spcPct</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:spcAft&gt;</span>
+      <span class="nt">&lt;a:defRPr</span> <span class="na">kern=</span><span class="s">&quot;1200&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a:solidFill&gt;</span>
+          <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;tx1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a:solidFill&gt;</span>
+        <span class="nt">&lt;a:latin</span> <span class="na">typeface=</span><span class="s">&quot;Arial&quot;</span> <span class="na">pitchFamily=</span><span class="s">&quot;34&quot;</span> <span class="na">charset=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:ea</span> <span class="na">typeface=</span><span class="s">&quot;ＭＳ Ｐゴシック&quot;</span> <span class="na">pitchFamily=</span><span class="s">&quot;34&quot;</span> <span class="na">charset=</span><span class="s">&quot;-128&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:cs</span> <span class="na">typeface=</span><span class="s">&quot;+mn-cs&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:defRPr&gt;</span>
+    <span class="nt">&lt;/a:lvl1pPr&gt;</span>
+  <span class="nt">&lt;/p:defaultTextStyle&gt;</span>
+<span class="nt">&lt;/p:presentation&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;presentation&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Presentation&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Presentation&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sldMasterIdLst&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_SlideMasterIdList&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;notesMasterIdLst&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_NotesMasterIdList&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;handoutMasterIdLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_HandoutMasterIdList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sldIdLst&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_SlideIdList&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sldSz&quot;</span>              <span class="na">type=</span><span class="s">&quot;CT_SlideSize&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;notesSz&quot;</span>            <span class="na">type=</span><span class="s">&quot;a:CT_PositiveSize2D&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;smartTags&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_SmartTags&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;embeddedFontLst&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_EmbeddedFontList&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custShowLst&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_CustomShowList&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;photoAlbum&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_PhotoAlbum&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;custDataLst&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_CustomerDataList&quot;</span>    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;kinsoku&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_Kinsoku&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;defaultTextStyle&quot;</span>   <span class="na">type=</span><span class="s">&quot;a:CT_TextListStyle&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;modifyVerifier&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_ModifyVerifier&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>             <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;serverZoom&quot;</span>               <span class="na">type=</span><span class="s">&quot;a:ST_Percentage&quot;</span>       <span class="na">default=</span><span class="s">&quot;50%&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;firstSlideNum&quot;</span>            <span class="na">type=</span><span class="s">&quot;xsd:int&quot;</span>               <span class="na">default=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;showSpecialPlsOnTitleSld&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rtl&quot;</span>                      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;removePersonalInfoOnSave&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;compatMode&quot;</span>               <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;strictFirstAndLastChars&quot;</span>  <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;embedTrueTypeFonts&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;saveSubsetFonts&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;autoCompressPictures&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>           <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bookmarkIdSeed&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_BookmarkIdSeed&quot;</span>     <span class="na">default=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;conformance&quot;</span>              <span class="na">type=</span><span class="s">&quot;s:ST_ConformanceClass&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_SlideSize&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;cx&quot;</span>   <span class="na">type=</span><span class="s">&quot;ST_SlideSizeCoordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;cy&quot;</span>   <span class="na">type=</span><span class="s">&quot;ST_SlideSizeCoordinate&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_SlideSizeType&quot;</span> <span class="na">default=</span><span class="s">&quot;custom&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_SlideSizeType&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;screen4x3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;letter&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;A4&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;35mm&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;overhead&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;banner&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;custom&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;ledger&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;A3&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;B4ISO&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;B5ISO&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;B4JIS&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;B5JIS&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;hagakiCard&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;screen16x9&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;screen16x10&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Presentation properties</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#protocol">Protocol</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="txt-hyperlink.html"
+                          title="上一章">Hyperlinks</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="dml-color.html"
+                          title="下一章">Color</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="dml-color.html" title="Color"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="txt-hyperlink.html" title="Hyperlinks"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Presentation properties</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

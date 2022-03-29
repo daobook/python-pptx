@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Chart - Categories &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Chart - Markers" href="cht-marker.html" />
+    <link rel="prev" title="Chart - Date Axis" href="cht-date-axis.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-marker.html" title="Chart - Markers"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-date-axis.html" title="Chart - Date Axis"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Categories</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="chart-categories">
+<span id="cht-categories"></span><h1>Chart - Categories<a class="headerlink" href="#chart-categories" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li><p>A category can be <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>, meaning the category exists, but there is no
+label for it.</p>
+<ul>
+<li><p>The string value of it can be ‘’, since it needs to be a string. But the
+.label value will be <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<section id="caveats">
+<h2>Caveats<a class="headerlink" href="#caveats" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>Categories are read from the first series in the plot. In all normal
+situations I’ve ever encountered, all series have exactly the same set of
+categories.</p>
+<p>I’m not sure why the category labels are redundantly applied to each series,
+but the fact that they are leads me to believe I must be missing something;
+I don’t believe they would repeat them like that if there wasn’t a situation
+in which they could be different between two series in the same plot.</p>
+<p>Consequently, there might be some edge cases where this won’t work quite as
+expected. At the same time, I expect it will work exactly as expected for
+99.9% of the cases, maybe 99.99%.</p>
+</li>
+<li><p>Categories are not enforced to be strictly hierarchical. So if a higher-level
+category “breaks” (gets a new value) without also a new value at the next
+level, the results might be a little weird. Like changing from USA to Canada,
+but leaving NY as the state (by leaving that cell blank).</p>
+<p>Basically, the meaning of a structure like this is ambiguous. PowerPoint
+interprets it without error and python-pptx interprets it without error, but
+the results might not exactly match up. PowerPoint seems to take the senior
+category break and show the intermediate category as blank or ‘None’. But
+I suppose it could be interpreted as the senior category just splits
+a subordinate one; it’s open to some question.</p>
+</li>
+</ul>
+</section>
+<section id="multilevel-categories">
+<h2>Multilevel Categories<a class="headerlink" href="#multilevel-categories" title="永久链接至标题">¶</a></h2>
+<p>A category chart can have more than one level of categories, where each
+individual category is nested in a higher-level category.</p>
+<p><a class="reference external" href="https://www.youtube.com/watch?v=KbyQpzA7fLo">https://www.youtube.com/watch?v=KbyQpzA7fLo</a></p>
+</section>
+<section id="acceptance-tests">
+<h2>Acceptance Tests<a class="headerlink" href="#acceptance-tests" title="永久链接至标题">¶</a></h2>
+<p>cht-plot-props.feature:</p>
+<div class="highlight-cucumber notranslate"><div class="highlight"><pre><span></span><span class="k">Scenario:</span><span class="nf"> Get CategoryPlot.categories</span>
+<span class="k">  Given </span><span class="nf">a category plot</span>
+<span class="nf">   </span><span class="k">Then </span><span class="nf">plot.categories is a Categories object</span>
+</pre></div>
+</div>
+<p>cht-categories.feature:</p>
+<div class="highlight-cucumber notranslate"><div class="highlight"><pre><span></span><span class="k">Scenario:</span><span class="nf"> Categories.__len__()</span>
+<span class="k">  Given </span><span class="nf">a Categories object having </span><span class="s">3</span><span class="nf"> categories</span>
+<span class="nf">   </span><span class="k">Then </span><span class="nf">len(categories) is </span><span class="s">3</span><span class="nf"></span>
+
+<span class="k">Scenario:</span><span class="nf"> Categories.__getitem__()</span>
+<span class="k">  Given </span><span class="nf">a Categories object having </span><span class="s">3</span><span class="nf"> categories</span>
+<span class="nf">   </span><span class="k">Then </span><span class="nf">categories[</span><span class="s">2</span><span class="nf">] is a Category object</span>
+
+<span class="k">Scenario:</span><span class="nf"> Categories.__iter__()</span>
+<span class="k">  Given </span><span class="nf">a Categories object having </span><span class="s">3</span><span class="nf"> categories</span>
+<span class="nf">   </span><span class="k">Then </span><span class="nf">iterating categories produces </span><span class="s">3</span><span class="nf"> Category objects</span>
+
+<span class="k">Scenario:</span><span class="nf"> Categories.depth</span>
+<span class="k">  Given </span><span class="nf">a Categories object having </span><span class="s">3</span><span class="nf"> levels of categories</span>
+<span class="nf">   </span><span class="k">Then </span><span class="nf">categories.depth is </span><span class="s">3</span><span class="nf"></span>
+
+<span class="k">Scenario:</span><span class="nf"> Categories.flattened</span>
+<span class="k">  Given </span><span class="nf">a Categories object having </span><span class="s">3</span><span class="nf"> levels of categories</span>
+<span class="nf">   </span><span class="k">Then </span><span class="nf">categories.flattened is tuple of </span><span class="s">3</span><span class="nf">-tuples</span>
+</pre></div>
+</div>
+<p>cht-category.feature:</p>
+<div class="highlight-cucumber notranslate"><div class="highlight"><pre><span></span><span class="k">Scenario:</span><span class="nf"> Category derives from string</span>
+<span class="k">  Given </span><span class="nf">a Category object</span>
+<span class="nf">   </span><span class="k">Then </span><span class="nf">isinstance(category, str) is True</span>
+</pre></div>
+</div>
+</section>
+<section id="xml-semantics">
+<h2>XML semantics<a class="headerlink" href="#xml-semantics" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>The hierarchy of the levels is indicated by their document order.</p></li>
+<li><p>The scope of non-leaf category entries is indicated by the ‘idx’ attribute
+value. A non-leaf category spans from the leaf node having the matching idx
+to the last leaf node not contained in its subsequent sibling.</p></li>
+<li><p>The idx value on each <cite>&lt;c:pt&gt;</cite> element identifies the element for possible
+overrides, like manual positioning or deletion (hiding). It may also key it
+to the values in the series and/or other items; the spec is silent on these
+details.</p></li>
+<li><p>I can’t find a way to set the <cite>c:noMultiLvlLbl</cite> element truthy using the UI.
+I suspect this is only an Excel option.</p></li>
+<li><p>The <cite>c:lvl</cite> element does not appear when there is only a single level of
+categories. Also in that case, a <cite>c:strCache</cite> element contains the <cite>c:pt</cite>
+elements rather than a <cite>c:multiLvlStrCache</cite> element.</p></li>
+</ul>
+<ol class="upperalpha simple" start="17">
+<li><p>What behavior is produced by a truthy value in
+<cite>c:catAx/c:noMultiLvlLbl/&#64;val</cite> when there are multiple levels of categories
+defined?</p></li>
+</ol>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p>Single-level categories (common case):</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:cat&gt;</span>
+  <span class="nt">&lt;c:strRef&gt;</span>
+    <span class="nt">&lt;c:f&gt;</span>Sheet1!$A$2:$A$5<span class="nt">&lt;/c:f&gt;</span>
+    <span class="nt">&lt;c:strCache&gt;</span>
+      <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;c:v&gt;</span>Category 1<span class="nt">&lt;/c:v&gt;</span>
+      <span class="nt">&lt;/c:pt&gt;</span>
+      <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;c:v&gt;</span>Category 2<span class="nt">&lt;/c:v&gt;</span>
+      <span class="nt">&lt;/c:pt&gt;</span>
+      <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;c:v&gt;</span>Category 3<span class="nt">&lt;/c:v&gt;</span>
+      <span class="nt">&lt;/c:pt&gt;</span>
+      <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;c:v&gt;</span>Category 4<span class="nt">&lt;/c:v&gt;</span>
+      <span class="nt">&lt;/c:pt&gt;</span>
+    <span class="nt">&lt;/c:strCache&gt;</span>
+  <span class="nt">&lt;/c:strRef&gt;</span>
+<span class="nt">&lt;/c:cat&gt;</span>
+</pre></div>
+</div>
+<p>Multi-level categories:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:cat&gt;</span>
+   <span class="nt">&lt;c:multiLvlStrRef&gt;</span>
+     <span class="nt">&lt;c:f&gt;</span>Sheet1!$C$1:$J$3<span class="nt">&lt;/c:f&gt;</span>
+     <span class="nt">&lt;c:multiLvlStrCache&gt;</span>
+       <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;8&quot;</span><span class="nt">/&gt;</span>
+       <span class="nt">&lt;c:lvl&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>county one<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>county two<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>county one<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>county two<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;4&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>county one<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;5&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>county two<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;6&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>country one<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;7&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>county two<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+       <span class="nt">&lt;/c:lvl&gt;</span>
+       <span class="nt">&lt;c:lvl&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>city one<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>city two <span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;4&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>city one<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;6&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>city two <span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+       <span class="nt">&lt;/c:lvl&gt;</span>
+       <span class="nt">&lt;c:lvl&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>UK<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+         <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;4&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;c:v&gt;</span>US<span class="nt">&lt;/c:v&gt;</span>
+         <span class="nt">&lt;/c:pt&gt;</span>
+       <span class="nt">&lt;/c:lvl&gt;</span>
+     <span class="nt">&lt;/c:multiLvlStrCache&gt;</span>
+   <span class="nt">&lt;/c:multiLvlStrRef&gt;</span>
+ <span class="nt">&lt;/c:cat&gt;</span>
+
+
+<span class="nt">&lt;c:catAx&gt;</span>
+  ...
+  <span class="nt">&lt;c:noMultiLvlLbl</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/c:catAx&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">&lt;c:cat&gt;</span></code> element is a child of a <code class="docutils literal notranslate"><span class="pre">&lt;c:ser&gt;</span></code> (series) element and is of
+the <code class="docutils literal notranslate"><span class="pre">CT_AxDataSource</span></code> type:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_AxDataSource&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;multiLvlStrRef&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_MultiLvlStrRef&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numRef&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumRef&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numLit&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumData&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;strRef&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_StrRef&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;strLit&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_StrData&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_MultiLvlStrRef&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;f&quot;</span>                <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;multiLvlStrCache&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_MultiLvlStrData&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_MultiLvlStrData&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ptCount&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Lvl&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Lvl&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pt&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_StrVal&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_StrVal&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;v&quot;</span> <span class="na">type=</span><span class="s">&quot;s:ST_Xstring&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;idx&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:unsignedInt&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_Xstring&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Chart - Categories</a><ul>
+<li><a class="reference internal" href="#caveats">Caveats</a></li>
+<li><a class="reference internal" href="#multilevel-categories">Multilevel Categories</a></li>
+<li><a class="reference internal" href="#acceptance-tests">Acceptance Tests</a></li>
+<li><a class="reference internal" href="#xml-semantics">XML semantics</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="cht-date-axis.html"
+                          title="上一章">Chart - Date Axis</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="cht-marker.html"
+                          title="下一章">Chart - Markers</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-marker.html" title="Chart - Markers"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-date-axis.html" title="Chart - Date Axis"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Chart - Categories</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

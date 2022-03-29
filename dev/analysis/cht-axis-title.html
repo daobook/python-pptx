@@ -1,0 +1,553 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Axis Title &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Chart - Data Labels" href="cht-data-labels.html" />
+    <link rel="prev" title="Chart - Chart Title" href="cht-chart-title.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-data-labels.html" title="Chart - Data Labels"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-chart-title.html" title="Chart - Chart Title"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Axis Title</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="axis-title">
+<span id="axistitle"></span><h1>Axis Title<a class="headerlink" href="#axis-title" title="永久链接至标题">¶</a></h1>
+<p>A chart axis can have a title. Theoretically, the title text can be drawn
+from a cell in the spreadsheet behind the chart; however, there is no
+mechanism for specifying this from the PowerPoint 2011 UI (Mac) and there’s
+no mention of such a procedure I could find on search. So only the “manually
+applied” axis title text will be discussed here, other than how to remove any
+elements associated with “linked” text, however they may have gotten there.</p>
+<p>The title is a rich text container, and can contain arbitrary text with
+arbitrary formatting (font, size, color, etc.). There is little but one thing
+to distinquish an axis title from an independent text box; its position is
+automatically adjusted by the chart to account for resizing and movement.</p>
+<p>An axis title is visible whenever present. The only way to “hide” it is to
+delete it, along with its contents.</p>
+<p>Although it will not be supported, it appears that axis title text can be
+specified in the XML as a cell reference in the Excel worksheet. This is
+a so-called “linked” title, and in general, any constructive operations on
+the axis title will remove any linked title present.</p>
+<section id="proposed-scope">
+<h2>Proposed Scope<a class="headerlink" href="#proposed-scope" title="永久链接至标题">¶</a></h2>
+<section id="completed">
+<h3>Completed<a class="headerlink" href="#completed" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>Axis.has_title</p></li>
+<li><p>Axis.axis_title</p></li>
+<li><p>AxisTitle.has_text_frame</p></li>
+<li><p>AxisTitle.text_frame</p></li>
+<li><p>AxisTitle.format</p></li>
+</ul>
+</section>
+<section id="pending">
+<h3>Pending<a class="headerlink" href="#pending" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>AxisTitle.orientation (this may require text frame rotation)</p></li>
+<li><p>XL_ORIENTATION enumeration</p></li>
+</ul>
+</section>
+</section>
+<section id="candidate-protocol">
+<h2>Candidate protocol<a class="headerlink" href="#candidate-protocol" title="永久链接至标题">¶</a></h2>
+<section id="typical-usage">
+<h3>Typical usage<a class="headerlink" href="#typical-usage" title="永久链接至标题">¶</a></h3>
+<p>I expect the most typical use is simply to set the text of the axis title:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_chart</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">value_axis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">axis_title</span><span class="o">.</span><span class="n">text_frame</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Foobar&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="axis-title-access">
+<h3>Axis title access<a class="headerlink" href="#axis-title-access" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Axis.has_axis_title</span></code> is used to non-destructively test for the presence of
+an axis title and may also be used to add an axis title.</p>
+<p>An axis on a newly created chart has no axis title:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_chart</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">value_axis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">has_title</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> to <code class="docutils literal notranslate"><span class="pre">.has_title</span></code> causes an empty axis title element to be
+added along with its text frame elements (when not already present):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">has_title</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">has_title</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Axis.axis_title</span></code> is used to access the <code class="docutils literal notranslate"><span class="pre">AxisTitle</span></code> object for an axis.
+It will always return an <code class="docutils literal notranslate"><span class="pre">AxisTitle</span></code> object, but it may be destructive in
+the sense that it adds an axis title if there is none:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_chart</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">value_axis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">has_title</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">axis_title</span>
+<span class="go">&lt;pptx.chart.axis.AxisTitle object at 0x65432fd&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">has_title</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">False</span></code> to <code class="docutils literal notranslate"><span class="pre">.has_title</span></code> removes the title element from the XML
+along with its contents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">has_title</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">has_title</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">None</span></code> to <code class="docutils literal notranslate"><span class="pre">Axis.axis_title</span></code> has the same effect (not sure we’ll
+actually implement this as a priority):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">has_title</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">axis_title</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span><span class="o">.</span><span class="n">has_title</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</section>
+<section id="axistitle-text-frame">
+<h3>AxisTitle.text_frame<a class="headerlink" href="#axistitle-text-frame" title="永久链接至标题">¶</a></h3>
+<p>According to the schema and the MS API, the <code class="docutils literal notranslate"><span class="pre">AxisTitle</span></code> object can contain
+either a text frame or an Excel cell reference (<code class="docutils literal notranslate"><span class="pre">&lt;c:strRef&gt;</span></code>). However, the
+only operation on the <cite>c:strRef</cite> element the library will support (for now
+anyway) is to delete it when adding a text frame.</p>
+<p>A newly added axis title will already have a text frame, but for the sake of
+completeness, <code class="docutils literal notranslate"><span class="pre">AxisTitle.has_text_frame</span></code> will allow the client to test for,
+add, and remove an axis title text frame. Assigning <code class="xref py py-class docutils literal notranslate"><span class="pre">True</span></code> to
+<code class="docutils literal notranslate"><span class="pre">.has_text_frame</span></code> causes any Excel reference (<code class="docutils literal notranslate"><span class="pre">&lt;c:strRef&gt;</span></code>) element to be
+removed and an empty text frame to be inserted. If a text frame is already
+present, no changes are made:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis_title</span><span class="o">.</span><span class="n">has_text_frame</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_title</span><span class="o">.</span><span class="n">has_text_frame</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_title</span><span class="o">.</span><span class="n">has_text_frame</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The text frame can be accessed using <code class="docutils literal notranslate"><span class="pre">AxisTitle.text_frame</span></code>. This call
+always returns a text frame object, newly created if not already present:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis_title</span><span class="o">.</span><span class="n">has_text_frame</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_title</span><span class="o">.</span><span class="n">text_frame</span>
+<span class="go">&lt;pptx.text.text.TextFrame object at 0x65432fe&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_title</span><span class="o">.</span><span class="n">has_text_frame</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</section>
+<section id="axistitle-orientation">
+<h3>AxisTitle.orientation<a class="headerlink" href="#axistitle-orientation" title="永久链接至标题">¶</a></h3>
+<p>By default, the PowerPoint UI adds an axis title for a vertical axis at 90°
+counterclockwise rotation. The MS API provides for rotation to be specified
+as an integer number of degrees between -90 and 90. Positive angles are
+interpreted as counterclockwise from the horizontal. Orientation can also be
+specified as one of the members of the <cite>XlOrientation</cite> enumeration. The
+enumeration includes values for horizontal, 90° (upward), -90° (downward),
+and (vertically) stacked:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">axis</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_chart</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">value_axis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_title</span><span class="o">.</span><span class="n">orientation</span>
+<span class="go">90</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_title</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">XL_ORIENTATION</span><span class="o">.</span><span class="n">HORIZONTAL</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">axis_title</span><span class="o">.</span><span class="n">orientation</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ms-api">
+<h2>MS API<a class="headerlink" href="#ms-api" title="永久链接至标题">¶</a></h2>
+<section id="axis-object">
+<h3>Axis object<a class="headerlink" href="#axis-object" title="永久链接至标题">¶</a></h3>
+<dl class="simple">
+<dt>Axis.AxisTitle</dt><dd><p>Provides access to the AxisTitle object for this axis.</p>
+</dd>
+<dt>Axis.HasTitle</dt><dd><p>Getting indicates presence of axis title. Setting ensures presence or
+absence of axis title.</p>
+</dd>
+</dl>
+</section>
+<section id="axistitle-object">
+<h3>AxisTitle object<a class="headerlink" href="#axistitle-object" title="永久链接至标题">¶</a></h3>
+<dl class="simple">
+<dt>AxisTitle.Format</dt><dd><p>Provides access to fill and line formatting.</p>
+</dd>
+<dt>AxisTitle.FormulaLocal</dt><dd><p>Returns or sets the cell reference for the axis title text.</p>
+</dd>
+<dt>AxisTitle.HorizontalAlignment</dt><dd><p>Not terrifically useful AFAICT unless title extends to multiple lines.</p>
+</dd>
+<dt>AxisTitle.IncludeInLayout</dt><dd><p>Might not be available via UI; no such option present on PowerPoint 2011
+for Mac.</p>
+</dd>
+<dt>AxisTitle.Orientation</dt><dd><p>An integer value from –90 to 90 degrees or one of the XlOrientation
+constants.</p>
+</dd>
+<dt>AxisTitle.Text</dt><dd><p>Returns or sets the axis title text. Setting removes any existing
+directly-applied formatting, but not title-level formatting.</p>
+</dd>
+<dt>AxisTitle.VerticalAlignment</dt><dd><p>Perhaps not terrifically useful since the textbox is automatically
+positioned and sized, so no difference is visible in the typical cases.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="powerpoint-ui-behaviors">
+<h2>PowerPoint UI Behaviors<a class="headerlink" href="#powerpoint-ui-behaviors" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>To add an axis title from the PowerPoint UI:</p>
+<p><em>Chart Layout (ribbon) &gt; Axis Titles &gt; Vertical Axis Title &gt; Rotated Title</em></p>
+</li>
+<li><p>The default title “Axis Title” appears when no text has been entered.</p></li>
+<li><p>The default orientation of a vertical axis title inserted by the UI is
+rotated 90 degrees counterclockwise. This is initially (before text is
+present) implemented using the <cite>c:txPr</cite> element. That element is removed
+when explicit title text is added.</p></li>
+</ul>
+</section>
+<section id="xlorientation-enumeration">
+<h2>XlOrientation Enumeration<a class="headerlink" href="#xlorientation-enumeration" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://msdn.microsoft.com/en-us/library/office/ff746480.aspx">https://msdn.microsoft.com/en-us/library/office/ff746480.aspx</a></p>
+<dl class="simple">
+<dt>xlDownward (-4170)</dt><dd><p>Text runs downward.</p>
+</dd>
+<dt>xlHorizontal (-4128)</dt><dd><p>Text runs horizontally.</p>
+</dd>
+<dt>xlUpward (-4171)</dt><dd><p>Text runs upward.</p>
+</dd>
+<dt>xlVertical (-4166)</dt><dd><p>Text runs downward and is centered in the cell.</p>
+</dd>
+</dl>
+</section>
+<section id="specimen-xml">
+<h2>Specimen XML<a class="headerlink" href="#specimen-xml" title="永久链接至标题">¶</a></h2>
+<p>Add axis title in UI (but don’t set text):</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:valAx&gt;</span>
+  <span class="cm">&lt;!-- ... --&gt;</span>
+  <span class="nt">&lt;c:majorGridlines/&gt;</span>
+
+  <span class="nt">&lt;c:title&gt;</span>
+    <span class="nt">&lt;c:layout/&gt;</span>
+    <span class="nt">&lt;c:overlay</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:txPr&gt;</span>
+      <span class="nt">&lt;a:bodyPr</span> <span class="na">rot=</span><span class="s">&quot;-5400000&quot;</span> <span class="na">vert=</span><span class="s">&quot;horz&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:lstStyle/&gt;</span>
+      <span class="nt">&lt;a:p&gt;</span>
+        <span class="nt">&lt;a:pPr&gt;</span>
+          <span class="nt">&lt;a:defRPr/&gt;</span>
+        <span class="nt">&lt;/a:pPr&gt;</span>
+        <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:p&gt;</span>
+    <span class="nt">&lt;/c:txPr&gt;</span>
+  <span class="nt">&lt;/c:title&gt;</span>
+
+  <span class="nt">&lt;c:numFmt</span> <span class="na">formatCode=</span><span class="s">&quot;General&quot;</span> <span class="na">sourceLinked=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+  <span class="cm">&lt;!-- ... --&gt;</span>
+<span class="nt">&lt;/c:valAx&gt;</span>
+</pre></div>
+</div>
+<p>Edit text directly in UI. Note that <cite>c:txPr</cite> element is removed when text is
+added:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;c:title&gt;</span>
+  <span class="nt">&lt;c:tx&gt;</span>
+    <span class="nt">&lt;c:rich&gt;</span>
+      <span class="nt">&lt;a:bodyPr</span> <span class="na">rot=</span><span class="s">&quot;-5400000&quot;</span> <span class="na">vert=</span><span class="s">&quot;horz&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:lstStyle/&gt;</span>
+      <span class="nt">&lt;a:p&gt;</span>
+        <span class="nt">&lt;a:pPr&gt;</span>
+          <span class="nt">&lt;a:defRPr/&gt;</span>
+        <span class="nt">&lt;/a:pPr&gt;</span>
+        <span class="nt">&lt;a:r&gt;</span>
+          <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;a:t&gt;</span>Foobar<span class="nt">&lt;/a:t&gt;</span>
+        <span class="nt">&lt;/a:r&gt;</span>
+        <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:p&gt;</span>
+    <span class="nt">&lt;/c:rich&gt;</span>
+  <span class="nt">&lt;/c:tx&gt;</span>
+  <span class="nt">&lt;c:layout/&gt;</span>
+  <span class="nt">&lt;c:overlay</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/c:title&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:group</span> <span class="na">name=</span><span class="s">&quot;EG_AxShared&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axId&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scaling&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Scaling&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;delete&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;axPos&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_AxPos&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorGridlines&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ChartLines&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;title&quot;</span>          <span class="na">type=</span><span class="s">&quot;CT_Title&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;numFmt&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_NumFmt&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;majorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;minorTickMark&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TickMark&quot;</span>          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tickLblPos&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_TickLblPos&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>           <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossAx&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crosses&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_Crosses&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;crossesAt&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Double&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:group&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Title&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tx&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_Tx&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;layout&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_Layout&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;overlay&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>           <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>    <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;txPr&quot;</span>    <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Tx&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:choice&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;strRef&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_StrRef&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;rich&quot;</span>   <span class="na">type=</span><span class="s">&quot;a:CT_TextBody&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Layout&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;manualLayout&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_ManualLayout&quot;</span>  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_ShapeProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;xfrm&quot;</span>                <span class="na">type=</span><span class="s">&quot;CT_Transform2D&quot;</span>            <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref =</span><span class="s">&quot;EG_Geometry&quot;</span>                                          <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref =</span><span class="s">&quot;EG_FillProperties&quot;</span>                                    <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ln&quot;</span>                  <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>   <span class="na">ref =</span><span class="s">&quot;EG_EffectProperties&quot;</span>                                  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scene3d&quot;</span>             <span class="na">type=</span><span class="s">&quot;CT_Scene3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sp3d&quot;</span>                <span class="na">type=</span><span class="s">&quot;CT_Shape3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>              <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bwMode&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_BlackWhiteMode&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextBody&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- text frame --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bodyPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextBodyProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lstStyle&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextListStyle&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;p&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TextParagraph&quot;</span>      <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextBodyProperties&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;prstTxWarp&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PresetTextShape&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>      <span class="cm">&lt;!-- EG_TextAutofit --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noAutofit&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextNoAutofit&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;normAutofit&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextNormalAutofit&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spAutoFit&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextShapeAutofit&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scene3d&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Scene3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>      <span class="cm">&lt;!-- EG_Text3D --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sp3d&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Shape3D&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;flatTx&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_FlatText&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rot&quot;</span>              <span class="na">type=</span><span class="s">&quot;ST_Angle&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spcFirstLastPara&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;vertOverflow&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TextVertOverflowType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;horzOverflow&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TextHorzOverflowType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;vert&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_TextVerticalType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;wrap&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_TextWrappingType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;lIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;tIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;numCol&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_TextColumnCount&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spcCol&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_PositiveCoordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rtlCol&quot;</span>           <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;fromWordArt&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;anchor&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_TextAnchoringType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;anchorCtr&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;forceAA&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;upright&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;compatLnSpc&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextListStyle&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;defPPr&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl1pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl2pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl3pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl4pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl5pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl6pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl7pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl8pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lvl9pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span>  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextVerticalType&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;horz&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;vert&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;vert270&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;wordArtVert&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;eaVert&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;mongolianVert&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;wordArtVertRtl&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Axis Title</a><ul>
+<li><a class="reference internal" href="#proposed-scope">Proposed Scope</a><ul>
+<li><a class="reference internal" href="#completed">Completed</a></li>
+<li><a class="reference internal" href="#pending">Pending</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#candidate-protocol">Candidate protocol</a><ul>
+<li><a class="reference internal" href="#typical-usage">Typical usage</a></li>
+<li><a class="reference internal" href="#axis-title-access">Axis title access</a></li>
+<li><a class="reference internal" href="#axistitle-text-frame">AxisTitle.text_frame</a></li>
+<li><a class="reference internal" href="#axistitle-orientation">AxisTitle.orientation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ms-api">MS API</a><ul>
+<li><a class="reference internal" href="#axis-object">Axis object</a></li>
+<li><a class="reference internal" href="#axistitle-object">AxisTitle object</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#powerpoint-ui-behaviors">PowerPoint UI Behaviors</a></li>
+<li><a class="reference internal" href="#xlorientation-enumeration">XlOrientation Enumeration</a></li>
+<li><a class="reference internal" href="#specimen-xml">Specimen XML</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="cht-chart-title.html"
+                          title="上一章">Chart - Chart Title</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="cht-data-labels.html"
+                          title="下一章">Chart - Data Labels</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-data-labels.html" title="Chart - Data Labels"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-chart-title.html" title="Chart - Chart Title"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Axis Title</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

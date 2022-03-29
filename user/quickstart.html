@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>快速上手 &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="使用演示文稿" href="presentations.html" />
+    <link rel="prev" title="安装" href="install.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="presentations.html" title="使用演示文稿"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="安装"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">快速上手</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="getting-started">
+<span id="examples"></span><h1>快速上手<a class="headerlink" href="#getting-started" title="永久链接至标题">¶</a></h1>
+<p>快速入门的方法是尝试下面的一些例子，以获得如何使用 <cite>python-pptx</cite> 的感觉。</p>
+<p><a class="reference internal" href="../index.html#api"><span class="std std-ref">API 文档</span></a> 可以帮助您调用签名和行为的详细信息。</p>
+<hr class="docutils" />
+<section id="hello-world-example">
+<h2>你好世界！例子<a class="headerlink" href="#hello-world-example" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/hello-world.png" src="../_images/hello-world.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="n">title_slide_layout</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">title_slide_layout</span><span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">title</span>
+<span class="n">subtitle</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello, World!&quot;</span>
+<span class="n">subtitle</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;python-pptx was here!&quot;</span>
+
+<span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.pptx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="bullet-slide-example">
+<h2>子弹幻灯片的例子<a class="headerlink" href="#bullet-slide-example" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/bullet-slide.png" src="../_images/bullet-slide.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="n">bullet_slide_layout</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">bullet_slide_layout</span><span class="p">)</span>
+<span class="n">shapes</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
+
+<span class="n">title_shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">title</span>
+<span class="n">body_shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">placeholders</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">title_shape</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Adding a Bullet Slide&#39;</span>
+
+<span class="n">tf</span> <span class="o">=</span> <span class="n">body_shape</span><span class="o">.</span><span class="n">text_frame</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Find the bullet slide layout&#39;</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Use _TextFrame.text for first bullet&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Use _TextFrame.add_paragraph() for subsequent bullets&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.pptx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>并不是所有的形状都可以包含文本，但那些包含文本的形状总是至少有一个段落，即使该段落为空，且在形状中没有文本可见。<code class="docutils literal notranslate"><span class="pre">_BaseShape.has_text_frame</span></code> 可用于确定形状是否可以包含文本。（所有形状的子类 <code class="docutils literal notranslate"><span class="pre">_BaseShape</span></code>）当 <code class="docutils literal notranslate"><span class="pre">_BaseShape.has_text_frame</span></code> 是 <code class="docutils literal notranslate"><span class="pre">True</span></code>， <code class="docutils literal notranslate"><span class="pre">_BaseShape.text_frame.paragraphs[0]</span></code> 返回第一段。第一段的文本可以使用 <code class="docutils literal notranslate"><span class="pre">text_frame.paragraphs[0].text</span></code> 设置。作为快捷方式，可写属性 <code class="docutils literal notranslate"><span class="pre">_BaseShape.text</span></code> 和 <code class="docutils literal notranslate"><span class="pre">_TextFrame.text</span></code> 来完成同样的事情。请注意，这最后两个调用删除了除了第一个段落之外的所有段落，然后再设置它所包含的文本。</p>
+</section>
+<hr class="docutils" />
+<section id="add-textbox-example">
+<h2><code class="docutils literal notranslate"><span class="pre">add_textbox()</span></code> example<a class="headerlink" href="#add-textbox-example" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/add-textbox.png" src="../_images/add-textbox.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Inches</span><span class="p">,</span> <span class="n">Pt</span>
+
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="n">blank_slide_layout</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">blank_slide_layout</span><span class="p">)</span>
+
+<span class="n">left</span> <span class="o">=</span> <span class="n">top</span> <span class="o">=</span> <span class="n">width</span> <span class="o">=</span> <span class="n">height</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">txBox</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">add_textbox</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="n">txBox</span><span class="o">.</span><span class="n">text_frame</span>
+
+<span class="n">tf</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;This is text inside a textbox&quot;</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;This is a second paragraph that&#39;s bold&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">bold</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_paragraph</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;This is a third paragraph that&#39;s big&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+
+<span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.pptx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="add-picture-example">
+<h2><code class="docutils literal notranslate"><span class="pre">add_picture()</span></code> example<a class="headerlink" href="#add-picture-example" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/add-picture.png" src="../_images/add-picture.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Inches</span>
+
+<span class="n">img_path</span> <span class="o">=</span> <span class="s1">&#39;monty-truth.png&#39;</span>
+
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="n">blank_slide_layout</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">blank_slide_layout</span><span class="p">)</span>
+
+<span class="n">left</span> <span class="o">=</span> <span class="n">top</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pic</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">add_picture</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">)</span>
+
+<span class="n">left</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">height</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">5.5</span><span class="p">)</span>
+<span class="n">pic</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">add_picture</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">)</span>
+
+<span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.pptx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="add-shape-example">
+<h2><code class="docutils literal notranslate"><span class="pre">add_shape()</span></code> example<a class="headerlink" href="#add-shape-example" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/add-shape.png" src="../_images/add-shape.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+<span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">MSO_SHAPE</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Inches</span>
+
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="n">title_only_slide_layout</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">title_only_slide_layout</span><span class="p">)</span>
+<span class="n">shapes</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
+
+<span class="n">shapes</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Adding an AutoShape&#39;</span>
+
+<span class="n">left</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">0.93</span><span class="p">)</span>  <span class="c1"># 0.93&quot; centers this overall set of shapes</span>
+<span class="n">top</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="n">width</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">1.75</span><span class="p">)</span>
+<span class="n">height</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_shape</span><span class="p">(</span><span class="n">MSO_SHAPE</span><span class="o">.</span><span class="n">PENTAGON</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+<span class="n">shape</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Step 1&#39;</span>
+
+<span class="n">left</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="n">width</span> <span class="o">-</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">width</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>  <span class="c1"># chevrons need more width for visual balance</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_shape</span><span class="p">(</span><span class="n">MSO_SHAPE</span><span class="o">.</span><span class="n">CHEVRON</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+    <span class="n">shape</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Step </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">n</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="n">width</span> <span class="o">-</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.pptx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>常量表示每个可用的自动形状（如 MSO_SHAPE.ROUNDED_RECT，MSO_SHAPE.CHEVRON 等）在 <a class="reference internal" href="../api/enum/MsoAutoShapeType.html#msoautoshapetype"><span class="std std-ref">autoshape-types</span></a> 页面上列出。</p>
+</section>
+<hr class="docutils" />
+<section id="add-table-example">
+<h2><code class="docutils literal notranslate"><span class="pre">add_table()</span></code> example<a class="headerlink" href="#add-table-example" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/add-table.png" src="../_images/add-table.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Inches</span>
+
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="n">title_only_slide_layout</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">title_only_slide_layout</span><span class="p">)</span>
+<span class="n">shapes</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
+
+<span class="n">shapes</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Adding a Table&#39;</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="n">cols</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">left</span> <span class="o">=</span> <span class="n">top</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">width</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">6.0</span><span class="p">)</span>
+<span class="n">height</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span><span class="o">.</span><span class="n">table</span>
+
+<span class="c1"># set column widths</span>
+<span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">4.0</span><span class="p">)</span>
+
+<span class="c1"># write column headings</span>
+<span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Foo&#39;</span>
+<span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Bar&#39;</span>
+
+<span class="c1"># write body cells</span>
+<span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Baz&#39;</span>
+<span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Qux&#39;</span>
+
+<span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.pptx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="extract-all-text-from-slides-in-presentation">
+<h2>从幻灯片中提取所有文本<a class="headerlink" href="#extract-all-text-from-slides-in-presentation" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+
+<span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="n">path_to_presentation</span><span class="p">)</span>
+
+<span class="c1"># text_runs will be populated with a list of strings,</span>
+<span class="c1"># one for each text run in presentation</span>
+<span class="n">text_runs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">slide</span> <span class="ow">in</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">shape</span><span class="o">.</span><span class="n">has_text_frame</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">for</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+                <span class="n">text_runs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">快速上手</a><ul>
+<li><a class="reference internal" href="#hello-world-example">你好世界！例子</a></li>
+<li><a class="reference internal" href="#bullet-slide-example">子弹幻灯片的例子</a></li>
+<li><a class="reference internal" href="#add-textbox-example"><code class="docutils literal notranslate"><span class="pre">add_textbox()</span></code> example</a></li>
+<li><a class="reference internal" href="#add-picture-example"><code class="docutils literal notranslate"><span class="pre">add_picture()</span></code> example</a></li>
+<li><a class="reference internal" href="#add-shape-example"><code class="docutils literal notranslate"><span class="pre">add_shape()</span></code> example</a></li>
+<li><a class="reference internal" href="#add-table-example"><code class="docutils literal notranslate"><span class="pre">add_table()</span></code> example</a></li>
+<li><a class="reference internal" href="#extract-all-text-from-slides-in-presentation">从幻灯片中提取所有文本</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="install.html"
+                          title="上一章">安装</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="presentations.html"
+                          title="下一章">使用演示文稿</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="presentations.html" title="使用演示文稿"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="安装"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">快速上手</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Working with Notes Slides &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Use cases" href="use-cases.html" />
+    <link rel="prev" title="Working with tables" href="table.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="use-cases.html" title="Use cases"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="table.html" title="Working with tables"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Working with Notes Slides</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="working-with-notes-slides">
+<h1>Working with Notes Slides<a class="headerlink" href="#working-with-notes-slides" title="永久链接至标题">¶</a></h1>
+<p>A slide can have notes associated with it. These are perhaps most commonly
+encountered in the notes pane, below the slide in PowerPoint “Normal” view
+where it may say “Click to add notes”.</p>
+<p>The notes added here appear each time that slide is present in the main pane.
+They also appear in <em>Presenter View</em> and in <em>Notes Page</em> view, both available
+from the menu.</p>
+<p>Notes can contain rich text, commonly bullets, bold, varying font sizes and
+colors, etc. The Notes Page view has somewhat more powerful tools for editing
+the notes text than the note pane in Normal view.</p>
+<p>In the API and the underlying XML, the object that contains the text is known
+as a <em>Notes Slide</em>. This is because internally, a notes slide is actually
+a specialized instance of a slide. It contains shapes, many of which are
+placeholders, and allows inserting of new shapes such as pictures (a logo
+perhaps) auto shapes, tables, and charts. Consequently, working with a notes
+slide is very much like working with a regular slide.</p>
+<p>Each slide can have zero or one notes slide. A notes slide is created the
+first time it is used, generally perhaps by adding notes text to a slide.
+Once created, it stays, even if all the text is deleted.</p>
+<section id="the-notes-master">
+<h2>The Notes Master<a class="headerlink" href="#the-notes-master" title="永久链接至标题">¶</a></h2>
+<p>A new notes slide is created using the <em>Notes Master</em> as a template.
+A presentation has no notes master when newly created in PowerPoint. One is
+created according to a PowerPoint-internal preset default the first time it
+is needed, which is generally when the first notes slide is created. It’s
+possible one can also be created by entering the Notes Master view and almost
+certainly is created by editing the master found there (haven’t tried it
+though). A presentation can have at most one notes master.</p>
+<p>The notes master governs the look and feel of notes pages, which can be
+viewed on-screen but are really designed for printing out. So if you want
+your notes page print-outs to look different from the default, you can make
+a lot of customizations by editing the notes master. You access the notes
+master editor using View &gt; Master &gt; Notes Master on the menu (on my version
+at least). Notes slides created using <cite>python-pptx</cite> will have the look and feel of the
+notes master in the presentation file you opened to create the presentation.</p>
+<p>On creation, certain placeholders (slide image, notes, slide number) are
+copied from the notes master onto the new notes slide (if they have not been
+removed from the master). These “cloned” placeholders inherit position, size,
+and formatting from their corresponding notes master placeholder. If the
+position, size, or formatting of a notes slide placeholder is changed, the
+changed property is no long inherited (unchanged properties, however,
+continue to be inherited).</p>
+</section>
+<section id="notes-slide-basics">
+<h2>Notes Slide basics<a class="headerlink" href="#notes-slide-basics" title="永久链接至标题">¶</a></h2>
+<p>Enough talk, let’s show some code. Let’s say you have a slide you’re working
+with and you want to see if it has a notes slide yet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span><span class="o">.</span><span class="n">has_notes_slide</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Ok, not yet. Good. Let’s add some notes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes_slide</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">notes_slide</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span> <span class="o">=</span> <span class="n">notes_slide</span><span class="o">.</span><span class="n">notes_text_frame</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;foobar&#39;</span>
+</pre></div>
+</div>
+<p>Alright, simple enough. Let’s look at what happened here:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">slide.notes_slide</span></code> gave us the notes slide. In this case, it first
+created that notes slide based on the notes master. If there was no notes
+master, it created that too. So a lot of things can happen behind the
+scenes with this call the first time you call it, but if we called it again
+it would just give us back the reference to the same notes slide, which it
+caches, once retrieved.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">notes_slide.notes_text_frame</span></code> gave us the <a class="reference internal" href="../api/text.html#pptx.text.text.TextFrame" title="pptx.text.text.TextFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextFrame</span></code></a> object that
+contains the actual notes. The reason it’s not just
+<code class="docutils literal notranslate"><span class="pre">notes_slide.text_frame</span></code> is that there are potentially more than one. What
+this is doing behind the scenes is finding the placeholder shape that
+contains the notes (as opposed to the slide image, header, slide number,
+etc.) and giving us <em>that</em> particular text frame.</p></li>
+<li><p>A text frame in a notes slide works the same as one in a regular slide.
+More precisely, a text frame on a shape in a notes slide works the same as
+in any other shape. We used the <code class="docutils literal notranslate"><span class="pre">.text</span></code> property to quickly pop some text
+in there.</p></li>
+</ul>
+<p>Using the text frame, you can add an arbitrary amount of text, formatted
+however you want.</p>
+</section>
+<section id="notes-slide-placeholders">
+<h2>Notes Slide Placeholders<a class="headerlink" href="#notes-slide-placeholders" title="永久链接至标题">¶</a></h2>
+<p>What we haven’t explicitly seen so far is the shapes on a slide master. It’s
+easy to get started with that:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes_placeholder</span> <span class="o">=</span> <span class="n">notes_slide</span><span class="o">.</span><span class="n">notes_placeholder</span>
+</pre></div>
+</div>
+<p>This notes placeholder is just like a body placeholder we saw a couple
+sections back. You can change its position, size, and many other attributes,
+as well as get at its text via its text frame.</p>
+<p>You can also access the other placeholders:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">placeholder</span> <span class="ow">in</span> <span class="n">notes_slide</span><span class="o">.</span><span class="n">placeholders</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="nb">print</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">placeholder_format</span><span class="o">.</span><span class="n">type</span>
+<span class="gp">...</span>
+<span class="go">SLIDE_IMAGE (101)</span>
+<span class="go">BODY (2)</span>
+<span class="go">SLIDE_NUMBER (13)</span>
+</pre></div>
+</div>
+<p>and also the shapes (a superset of the placeholders):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">notes_slide</span><span class="o">.</span><span class="n">shapes</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="nb">print</span> <span class="n">shape</span>
+<span class="gp">...</span>
+<span class="go">&lt;pptx.shapes.placeholder.NotesSlidePlaceholder object at 0x11091e890&gt;</span>
+<span class="go">&lt;pptx.shapes.placeholder.NotesSlidePlaceholder object at 0x11091e750&gt;</span>
+<span class="go">&lt;pptx.shapes.placeholder.NotesSlidePlaceholder object at 0x11091e990&gt;</span>
+</pre></div>
+</div>
+<p>In the common case, the notes slide contains only placeholders. However, if
+you added an image, for example, to the notes slide, that would show up as
+well. Note that if you added that image to the notes master, perhaps a logo,
+it would appear on the notes slide “visually”, but would not appear as
+a shape in the notes slide shape collection. Rather, it is visually
+“inherited” from the notes master.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Working with Notes Slides</a><ul>
+<li><a class="reference internal" href="#the-notes-master">The Notes Master</a></li>
+<li><a class="reference internal" href="#notes-slide-basics">Notes Slide basics</a></li>
+<li><a class="reference internal" href="#notes-slide-placeholders">Notes Slide Placeholders</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="table.html"
+                          title="上一章">Working with tables</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="use-cases.html"
+                          title="下一章">Use cases</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="use-cases.html" title="Use cases"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="table.html" title="Working with tables"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Working with Notes Slides</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

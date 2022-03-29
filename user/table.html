@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Working with tables &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Working with Notes Slides" href="notes.html" />
+    <link rel="prev" title="Working with charts" href="charts.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="notes.html" title="Working with Notes Slides"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="charts.html" title="Working with charts"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Working with tables</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="working-with-tables">
+<h1>Working with tables<a class="headerlink" href="#working-with-tables" title="永久链接至标题">¶</a></h1>
+<p>PowerPoint allows text and numbers to be presented in tabular form (aligned
+rows and columns) in a reasonably flexible way. A PowerPoint table is not
+nearly as functional as an Excel spreadsheet, and is definitely less powerful
+than a table in Microsoft Word, but it serves well for most presentation
+purposes.</p>
+<section id="concepts">
+<h2>Concepts<a class="headerlink" href="#concepts" title="永久链接至标题">¶</a></h2>
+<p>There are a few terms worth reviewing as a basis for understanding PowerPoint
+tables:</p>
+<dl>
+<dt>table</dt><dd><p>A table is a matrix of cells arranged in aligned rows and columns. This
+orderly arrangement allows a reader to more easily make sense of relatively
+large number of individual items. It is commonly used for displaying
+numbers, but can also be used for blocks of text.</p>
+<a class="reference internal image-reference" href="../_images/table-01.png"><img alt="../_images/table-01.png" src="../_images/table-01.png" style="width: 458.25px; height: 90.0px;" /></a>
+</dd>
+<dt>cell</dt><dd><p>An individual content “container” within a table. A cell has a text-frame
+in which it holds that content. A PowerPoint table cell can only contain
+text. I cannot hold images, other shapes, or other tables.</p>
+<p>A cell has a background fill, borders, margins, and several other
+formatting settings that can be customized on a cell-by-cell basis.</p>
+</dd>
+<dt>row</dt><dd><p>A side-by-side sequence of cells running across the table, all sharing the
+same top and bottom boundary.</p>
+</dd>
+<dt>column</dt><dd><p>A vertical sequence of cells spanning the height of the table, all sharing
+the same left and right boundary.</p>
+</dd>
+<dt>table grid, also cell grid</dt><dd><p>The underlying cells in a PowerPoint table are strictly regular. In
+a three-by-three table there are nine grid cells, three in each row and
+three in each column. The presence of merged cells can obscure portions of
+the cell grid, but not change the number of cells in the grid. Access to
+a table cell in <cite>python-pptx</cite> is always via that cell’s coordinates in the cell
+grid, which may not conform to its visual location (or lack thereof) in the
+table.</p>
+</dd>
+<dt>merged cell</dt><dd><p>A cell can be “merged” with adjacent cells, horizontally, vertically, or
+both, causing the resulting cell to look and behave like a single cell that
+spans the area formerly occupied by those individual cells.</p>
+<a class="reference internal image-reference" href="../_images/table-02.png"><img alt="../_images/table-02.png" src="../_images/table-02.png" style="width: 345.0px; height: 89.25px;" /></a>
+</dd>
+<dt>merge-origin cell</dt><dd><p>The top-left grid-cell in a merged cell has certain special behaviors. The
+content of that cell is what appears on the slide; content of any “spanned”
+cells is hidden. In <cite>python-pptx</cite> a merge-origin cell can be identified with the
+<a class="reference internal" href="../api/table.html#pptx.table._Cell.is_merge_origin" title="pptx.table._Cell.is_merge_origin"><code class="xref py py-attr docutils literal notranslate"><span class="pre">_Cell.is_merge_origin</span></code></a> property. Such a cell can report the size of
+the merged cell with its <a class="reference internal" href="../api/table.html#pptx.table._Cell.span_height" title="pptx.table._Cell.span_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">span_height</span></code></a> and <a class="reference internal" href="../api/table.html#pptx.table._Cell.span_width" title="pptx.table._Cell.span_width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">span_width</span></code></a>
+properties, and can be “unmerged” back to its underlying grid cells using
+its <a class="reference internal" href="../api/table.html#pptx.table._Cell.split" title="pptx.table._Cell.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a> method.</p>
+</dd>
+<dt>spanned-cell</dt><dd><p>A grid-cell other than the merge-origin cell that is “occupied” by a merged
+cell is called a <em>spanned cell</em>. Intuitively, the merge-origin cell “spans”
+the other grid cells within its area. A spanned cell can be identified with
+its <a class="reference internal" href="../api/table.html#pptx.table._Cell.is_spanned" title="pptx.table._Cell.is_spanned"><code class="xref py py-attr docutils literal notranslate"><span class="pre">_Cell.is_spanned</span></code></a> property. A merge-origin cell is not itself
+a spanned cell.</p>
+</dd>
+</dl>
+</section>
+<section id="adding-a-table">
+<h2>Adding a table<a class="headerlink" href="#adding-a-table" title="永久链接至标题">¶</a></h2>
+<p>The following code adds a 3-by-3 table in a new presentation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Inches</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ---create presentation with 1 slide---</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ---add table to slide---</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">add_table</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span>
+<span class="go">&lt;pptx.shapes.graphfrm.GraphicFrame object at 0x1022816d0&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">has_table</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">table</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span>
+<span class="go">&lt;pptx.table.Table object at 0x1096f8d90&gt;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/table-03.png"><img alt="../_images/table-03.png" class="align-center" src="../_images/table-03.png" style="width: 338.4px; height: 135.6px;" /></a>
+<p>A couple things to note:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/shapes.html#pptx.shapes.shapetree.SlideShapes.add_table" title="pptx.shapes.shapetree.SlideShapes.add_table"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SlideShapes.add_table()</span></code></a> returns a shape that contains the table, not
+the table itself. In PowerPoint, a table is contained in a graphic-frame
+shape, as is a chart or SmartArt. You can determine whether a shape
+contains a table using its <a class="reference internal" href="../api/shapes.html#pptx.shapes.base.BaseShape.has_table" title="pptx.shapes.base.BaseShape.has_table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">has_table</span></code></a> property and you
+access the table object using the shape’s <a class="reference internal" href="../api/shapes.html#pptx.shapes.graphfrm.GraphicFrame.table" title="pptx.shapes.graphfrm.GraphicFrame.table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">table</span></code></a>
+property.</p></li>
+</ul>
+</section>
+<section id="inserting-a-table-into-a-table-placeholder">
+<h2>Inserting a table into a table placeholder<a class="headerlink" href="#inserting-a-table-into-a-table-placeholder" title="永久链接至标题">¶</a></h2>
+<p>A placeholder allows you to specify the position and size of a shape as part
+of the presentation “template”, and to place a shape of your choosing into
+that placeholder when authoring a presentation based on that template. This
+can lead to a better looking presentation, with objects appearing in
+a consistent location from slide-to-slide.</p>
+<p>Placeholders come in different types, one of which is a <em>table placeholder</em>.
+A table placeholder behaves like other placeholders except it can only accept
+insertion of a table. Other placeholder types accept text bullets or charts.</p>
+<p>There is a subtle distinction between a <em>layout placeholder</em> and a <em>slide
+placeholder</em>. A layout placeholder appears in a slide layout, and defines the
+position and size of the placeholder “cloned” from it onto each slide created
+with that layout. As long as you don’t adjust the position or size of the
+slide placeholder, it will inherit it’s position and size from the layout
+placeholder it derives from.</p>
+<p>To insert a table into a table placeholder, you need a slide layout that
+includes a table placeholder, and you need to create a slide using that
+layout. These examples assume that the third slide layout in <cite>template.pptx</cite>
+includes a table placeholder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="s1">&#39;template.pptx&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><em>Accessing the table placeholder.</em> Generally, the easiest way to access
+a placeholder shape is to know its position in the <cite>slide.shapes</cite> collection.
+If you always use the same template, it will always show up in the same
+position:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">table_placeholder</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>Inserting a table.</em> A table is inserted into the placeholder by calling its
+<a class="reference internal" href="../api/placeholders.html#pptx.shapes.placeholder.TablePlaceholder.insert_table" title="pptx.shapes.placeholder.TablePlaceholder.insert_table"><code class="xref py py-meth docutils literal notranslate"><span class="pre">insert_table()</span></code></a> method and providing the desired
+number of rows and columns:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span> <span class="o">=</span> <span class="n">table_placeholder</span><span class="o">.</span><span class="n">insert_table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The return value is a <a class="reference internal" href="../api/shapes.html#pptx.shapes.graphfrm.GraphicFrame" title="pptx.shapes.graphfrm.GraphicFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphicFrame</span></code></a> shape containing the new table, not the
+table object itself. Use the <a class="reference internal" href="../api/shapes.html#pptx.shapes.graphfrm.GraphicFrame.table" title="pptx.shapes.graphfrm.GraphicFrame.table"><code class="xref py py-attr docutils literal notranslate"><span class="pre">table</span></code></a> property of that
+shape to access the table object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">table</span>
+</pre></div>
+</div>
+<p>The containing shape controls the position and size. Everything else, like
+accessing cells and their contents, is done from the table object.</p>
+</section>
+<section id="accessing-a-cell">
+<h2>Accessing a cell<a class="headerlink" href="#accessing-a-cell" title="永久链接至标题">¶</a></h2>
+<p>All content in a table is in a cell, so getting a reference to one of those
+is a good place to start:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">text</span>
+<span class="go">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Unladen Swallow&#39;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/table-04.png"><img alt="../_images/table-04.png" class="align-center" src="../_images/table-04.png" style="width: 328.8px; height: 142.79999999999998px;" /></a>
+<p>The cell is specified by its row, column coordinates as zero-based offsets.
+The top-left cell is at row, column (0, 0).</p>
+<p>Like an auto-shape, a cell has a text-frame and can contain arbitrary text
+divided into paragraphs and runs. Any desired character formatting can be
+applied individually to each run.</p>
+<p>Often however, cell text is just a simple string. For these cases the
+read/write <a class="reference internal" href="../api/table.html#pptx.table._Cell.text" title="pptx.table._Cell.text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">_Cell.text</span></code></a> property can be the quickest way to set cell
+contents.</p>
+</section>
+<section id="merging-cells">
+<h2>Merging cells<a class="headerlink" href="#merging-cells" title="永久链接至标题">¶</a></h2>
+<p>A merged cell is produced by specifying two diagonal cells. The merged cell
+will occupy all the grid cells in the rectangular region specified by that
+diagonal:</p>
+<a class="reference internal image-reference" href="../_images/table-05.png"><img alt="../_images/table-05.png" class="align-center" src="../_images/table-05.png" style="width: 329.4px; height: 126.6px;" /></a>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">other_cell</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">is_merge_origin</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">other_cell</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">is_merge_origin</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">is_spanned</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">other_cell</span><span class="o">.</span><span class="n">is_spanned</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">is_spanned</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/table-06.png"><img alt="../_images/table-06.png" class="align-center" src="../_images/table-06.png" style="width: 327.0px; height: 149.4px;" /></a>
+<p>A few things to observe:</p>
+<ul class="simple">
+<li><p>The merged cell appears as a single cell occupying the space formerly
+occupied by the other grid cells in the specified rectangular region.</p></li>
+<li><p>The formatting of the merged cell (background color, font etc.) is taken
+from the merge origin cell, the top-left cell of the table in this case.</p></li>
+<li><p>Content from the merged cells was migrated to the merge-origin cell. That
+content is no longer present in the spanned grid cells (although you can’t
+see those at the moment). The content of each cell appears as a separate
+paragraph in the merged cell; it isn’t concatenated into a single
+paragraph. Content is migrated in left-to-right, top-to-bottom order of the
+original cells.</p></li>
+<li><p>Calling <code class="xref py py-attr docutils literal notranslate"><span class="pre">other_cell.merge(cell)</span></code> would have the exact same effect. The
+merge origin is always the top-left cell in the specified rectangular
+region. There are four distinct ways to specify a given rectangular region
+(two diagonals, each having two orderings).</p></li>
+</ul>
+</section>
+<section id="un-merging-a-cell">
+<h2>Un-merging a cell<a class="headerlink" href="#un-merging-a-cell" title="永久链接至标题">¶</a></h2>
+<p>A merged cell can be restored to its underlying grid cells by calling the
+<a class="reference internal" href="../api/table.html#pptx.table._Cell.split" title="pptx.table._Cell.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a> method on its merge-origin cell. Calling
+<a class="reference internal" href="../api/table.html#pptx.table._Cell.split" title="pptx.table._Cell.split"><code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code></a> on a cell that is not a merge-origin raises
+<code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">is_merge_origin</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">is_merge_origin</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">is_spanned</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/table-07.png"><img alt="../_images/table-07.png" class="align-center" src="../_images/table-07.png" style="width: 327.59999999999997px; height: 190.79999999999998px;" /></a>
+<p>Note that the content migration performed as part of the <cite>.merge()</cite> operation
+was not reversed.</p>
+</section>
+<section id="a-few-snippets-that-might-be-handy">
+<h2>A few snippets that might be handy<a class="headerlink" href="#a-few-snippets-that-might-be-handy" title="永久链接至标题">¶</a></h2>
+<p>Use Case: Interrogate table for merged cells:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">iter_merge_origins</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate each merge-origin cell in *table*.</span>
+
+<span class="sd">    Cell objects are ordered by their position in the table,</span>
+<span class="sd">    left-to-right, top-to-bottom.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">cell</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">iter_cells</span><span class="p">()</span> <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">is_merge_origin</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">merged_cell_report</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return str summarizing position and size of merged *cell*.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="s1">&#39;merged cell at row </span><span class="si">%d</span><span class="s1">, col </span><span class="si">%d</span><span class="s1">, </span><span class="si">%d</span><span class="s1"> cells high and </span><span class="si">%d</span><span class="s1"> cells wide&#39;</span>
+        <span class="o">%</span> <span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">row_idx</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">col_idx</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">span_height</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">span_width</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="c1"># ---Print a summary line for each merged cell in *table*.---</span>
+<span class="k">for</span> <span class="n">merge_origin_cell</span> <span class="ow">in</span> <span class="n">iter_merge_origins</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">merged_cell_report</span><span class="p">(</span><span class="n">merge_origin_cell</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>prints a report like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">merged</span> <span class="n">cell</span> <span class="n">at</span> <span class="n">row</span> <span class="mi">0</span><span class="p">,</span> <span class="n">col</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="n">cells</span> <span class="n">high</span> <span class="ow">and</span> <span class="mi">2</span> <span class="n">cells</span> <span class="n">wide</span>
+<span class="n">merged</span> <span class="n">cell</span> <span class="n">at</span> <span class="n">row</span> <span class="mi">3</span><span class="p">,</span> <span class="n">col</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="n">cells</span> <span class="n">high</span> <span class="ow">and</span> <span class="mi">2</span> <span class="n">cells</span> <span class="n">wide</span>
+<span class="n">merged</span> <span class="n">cell</span> <span class="n">at</span> <span class="n">row</span> <span class="mi">4</span><span class="p">,</span> <span class="n">col</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="n">cells</span> <span class="n">high</span> <span class="ow">and</span> <span class="mi">1</span> <span class="n">cells</span> <span class="n">wide</span>
+</pre></div>
+</div>
+<p>Use Case: Access only cells that display text (are not spanned):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">iter_visible_cells</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">cell</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">iter_cells</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">cell</span><span class="o">.</span><span class="n">is_spanned</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use Case: Determine whether table contains merged cells:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">has_merged_cells</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">iter_cells</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">is_merge_origin</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Working with tables</a><ul>
+<li><a class="reference internal" href="#concepts">Concepts</a></li>
+<li><a class="reference internal" href="#adding-a-table">Adding a table</a></li>
+<li><a class="reference internal" href="#inserting-a-table-into-a-table-placeholder">Inserting a table into a table placeholder</a></li>
+<li><a class="reference internal" href="#accessing-a-cell">Accessing a cell</a></li>
+<li><a class="reference internal" href="#merging-cells">Merging cells</a></li>
+<li><a class="reference internal" href="#un-merging-a-cell">Un-merging a cell</a></li>
+<li><a class="reference internal" href="#a-few-snippets-that-might-be-handy">A few snippets that might be handy</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="charts.html"
+                          title="上一章">Working with charts</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="notes.html"
+                          title="下一章">Working with Notes Slides</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="notes.html" title="Working with Notes Slides"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="charts.html" title="Working with charts"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Working with tables</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

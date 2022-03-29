@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Auto Shape &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Shadow" href="shp-shadow.html" />
+    <link rel="prev" title="Group Shape" href="shp-group-shape.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="shp-shadow.html" title="Shadow"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="shp-group-shape.html" title="Group Shape"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Auto Shape</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="auto-shape">
+<span id="autoshape"></span><h1>Auto Shape<a class="headerlink" href="#auto-shape" title="永久链接至标题">¶</a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="永久链接至标题">¶</a></h2>
+<p><em>AutoShape</em> is the name the MS Office API uses for a shape with preset
+geometry, those referred to in the PowerPoint UI simply as <em>shape</em>. Typical
+examples are a rectangle, a circle, or a star shape. An auto shape has a type
+(preset geometry), an outline line style, a fill, and an effect, in addition to
+a position and size. The outline, fill, and effect can each be None.</p>
+<p>Each auto shape is contained in an <code class="docutils literal notranslate"><span class="pre">&lt;p:sp&gt;</span></code> element.</p>
+</section>
+<section id="auto-shape-type">
+<h2>Auto shape type<a class="headerlink" href="#auto-shape-type" title="永久链接至标题">¶</a></h2>
+<p>There are 187 pre-defined auto shape types, each corresponding to a distinct
+preset geometry. Some types have one or more <em>adjustment value</em>, which
+corresponds to the position of an adjustment handle (small yellow diamond) on
+the shape in the UI that changes an aspect of the shape geometry, for example
+the corner radius of a rounded rectangle.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://msdn.microsoft.com/en-us/library/office/aa432469(v=office.14).aspx">MsoAutoShapeType Enumeration</a> page on MSDN</p></li>
+</ul>
+</section>
+<section id="adjustment-values">
+<h2>Adjustment values<a class="headerlink" href="#adjustment-values" title="永久链接至标题">¶</a></h2>
+<p>Many auto shapes may be adjusted to change their shape beyond just their width,
+height, and rotation. In the PowerPoint application, this is accomplished by
+dragging small yellow diamond-shaped handles that appear on the shape when it
+is selected.</p>
+<p>In the XML, the position of these adjustment handles is reflected in the
+contents of the <code class="docutils literal notranslate"><span class="pre">&lt;a:avLst&gt;</span></code> element:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">prstGeom</span> <span class="n">prst</span><span class="o">=</span><span class="s2">&quot;roundRect&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">avLst</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">a</span><span class="p">:</span><span class="n">gd</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;adj&quot;</span> <span class="n">fmla</span><span class="o">=</span><span class="s2">&quot;val 30346&quot;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">avLst</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">a</span><span class="p">:</span><span class="n">prstGeom</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;a:avLst&gt;</span></code> element can be empty, even if the shape has available adjustments.</p>
+<dl class="simple">
+<dt>guide</dt><dd><p>a guide is essentially a variable within DrawingML. Its value is the result
+of a simple expression like <code class="docutils literal notranslate"><span class="pre">&quot;*/</span> <span class="pre">100000</span> <span class="pre">w</span> <span class="pre">ss&quot;</span></code>. Its value may then be used
+in other expressions or directly to specify a point, by referring to it by
+name.</p>
+</dd>
+</dl>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;a:gd&gt;</span></code> stands for <em>guide</em> …</p>
+<dl>
+<dt>Where are the custom geometries defined?</dt><dd><p>The geometries for autoshapes are defined in <code class="docutils literal notranslate"><span class="pre">presetShapeDefinitions.xml</span></code>,
+located in:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pptx/ref/ISO-IEC-29500-1/schemas/dml-geometries/OfficeOpenXML-DrawingMLGeometries/</span></code>.</p>
+</dd>
+<dt>What is the range of the formula values?</dt><dd><p>In general, the nominal adjustment value range for the preset shapes is 0 to
+100000. However, the actual value stored can be outside that range,
+depending on the formulas involved. For example, in the case of the chevron
+shape, the range is from 0 to 100000 * width / short-side. When the shape is
+taller than it is wide, width is the short side and the range is 0 to
+100000. However, when the shape is wider than it is tall, the range can be
+much larger. Required values are probably best discovered via
+experimentation or calculation based on the preset formula.</p>
+</dd>
+</dl>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;a:avLst&gt;</span></code> element does not appear initially when the shape is inserted. However,
+if the adjustment handle is moved and then moved back to the default value, the
+<code class="docutils literal notranslate"><span class="pre">&lt;a:avLst&gt;</span></code> element is not removed. The default value becomes the effective value for
+the guide if the <code class="docutils literal notranslate"><span class="pre">&lt;a:avLst&gt;</span></code> element is not present.</p>
+<p>The adjustment value is preserved over scaling of the object. Its effective
+value can change however, depending on the formula. In the case of the chevron
+shape, the effective value is a function of <code class="docutils literal notranslate"><span class="pre">ss</span></code>, the “short side”, and the
+adjustment handle moves on screen when the chevron is made wider than it is
+tall.</p>
+<p>A certain level of documentation for auto shapes could be generated from the
+XML shape definition file. The preset name and the number of adjustment values
+it has (guide definitions) and the adjustment value name can readily be
+determined by inspection of the XML.</p>
+<dl>
+<dt>What coordinate system are the formula values expressed in?</dt><dd><p>There appear to be two coordinate systems at work. The 0 to 100000 bit the
+adjustment handles are expressed in appears to be the (arbitrary) shape
+coordinate system. The built-in values like <code class="docutils literal notranslate"><span class="pre">w</span></code>, <code class="docutils literal notranslate"><span class="pre">ss</span></code>, etc., appear to
+be in the slide coordinate system, the one the <code class="docutils literal notranslate"><span class="pre">xfrm</span></code> element traffics in.</p>
+<p>Probably worth experimenting with some custom shapes to find out (edit and
+rezip with bash one-liner).</p>
+</dd>
+<dt>useful web resources</dt><dd><p>What useful web resources are out there on DrawingML?</p>
+<p><a class="reference external" href="http://officeopenxml.com/drwSp-custGeom.php">http://officeopenxml.com/drwSp-custGeom.php</a></p>
+</dd>
+</dl>
+</section>
+<section id="xml-produced-by-powerpoint-client">
+<h2>XML produced by PowerPoint® client<a class="headerlink" href="#xml-produced-by-powerpoint-client" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:sp&gt;</span>
+  <span class="nt">&lt;p:nvSpPr&gt;</span>
+    <span class="nt">&lt;p:cNvPr</span> <span class="na">id=</span><span class="s">&quot;3&quot;</span> <span class="na">name=</span><span class="s">&quot;Rounded Rectangle 2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;p:cNvSpPr/&gt;</span>
+    <span class="nt">&lt;p:nvPr/&gt;</span>
+  <span class="nt">&lt;/p:nvSpPr&gt;</span>
+  <span class="nt">&lt;p:spPr&gt;</span>
+    <span class="nt">&lt;a:xfrm&gt;</span>
+      <span class="nt">&lt;a:off</span> <span class="na">x=</span><span class="s">&quot;760096&quot;</span> <span class="na">y=</span><span class="s">&quot;562720&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:ext</span> <span class="na">cx=</span><span class="s">&quot;2520824&quot;</span> <span class="na">cy=</span><span class="s">&quot;914400&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:xfrm&gt;</span>
+    <span class="nt">&lt;a:prstGeom</span> <span class="na">prst=</span><span class="s">&quot;roundRect&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:avLst&gt;</span>
+        <span class="nt">&lt;a:gd</span> <span class="na">name=</span><span class="s">&quot;adj&quot;</span> <span class="na">fmla=</span><span class="s">&quot;val 30346&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:avLst&gt;</span>
+    <span class="nt">&lt;/a:prstGeom&gt;</span>
+  <span class="nt">&lt;/p:spPr&gt;</span>
+  <span class="nt">&lt;p:style&gt;</span>
+    <span class="nt">&lt;a:lnRef</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:lnRef&gt;</span>
+    <span class="nt">&lt;a:fillRef</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:fillRef&gt;</span>
+    <span class="nt">&lt;a:effectRef</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;accent1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:effectRef&gt;</span>
+    <span class="nt">&lt;a:fontRef</span> <span class="na">idx=</span><span class="s">&quot;minor&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a:schemeClr</span> <span class="na">val=</span><span class="s">&quot;lt1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:fontRef&gt;</span>
+  <span class="nt">&lt;/p:style&gt;</span>
+  <span class="nt">&lt;p:txBody&gt;</span>
+    <span class="nt">&lt;a:bodyPr</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span> <span class="na">anchor=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a:lstStyle/&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      <span class="nt">&lt;a:pPr</span> <span class="na">algn=</span><span class="s">&quot;ctr&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:r&gt;</span>
+        <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;a:t&gt;</span>This is text inside a rounded rectangle<span class="nt">&lt;/a:t&gt;</span>
+      <span class="nt">&lt;/a:r&gt;</span>
+      <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:p&gt;</span>
+  <span class="nt">&lt;/p:txBody&gt;</span>
+<span class="nt">&lt;/p:sp&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://officeopenxml.com/drwShape.php">DrawingML Shapes</a> on officeopenxml.com</p></li>
+<li><p><a class="reference external" href="http://msdn.microsoft.com/en-us/library/office/ff744177(v=office.14).aspx">Shape Object MSDN page</a></p></li>
+<li><p><a class="reference external" href="http://msdn.microsoft.com/en-us/library/office/aa432678(v=office.14).aspx">MsoShapeType Enumeration</a></p></li>
+</ul>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Auto Shape</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#auto-shape-type">Auto shape type</a></li>
+<li><a class="reference internal" href="#adjustment-values">Adjustment values</a></li>
+<li><a class="reference internal" href="#xml-produced-by-powerpoint-client">XML produced by PowerPoint® client</a></li>
+<li><a class="reference internal" href="#resources">Resources</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="shp-group-shape.html"
+                          title="上一章">Group Shape</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="shp-shadow.html"
+                          title="下一章">Shadow</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="shp-shadow.html" title="Shadow"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="shp-group-shape.html" title="Group Shape"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Auto Shape</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Text - Fit text to shape &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Text - Auto-fit text to shape" href="txt-autofit-text.html" />
+    <link rel="prev" title="Paragraph Spacing" href="txt-para-spacing.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="txt-autofit-text.html" title="Text - Auto-fit text to shape"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="txt-para-spacing.html" title="Paragraph Spacing"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Text - Fit text to shape</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="text-fit-text-to-shape">
+<h1>Text - Fit text to shape<a class="headerlink" href="#text-fit-text-to-shape" title="永久链接至标题">¶</a></h1>
+<p>An AutoShape has a text frame, referred to in the PowerPoint UI as the
+shape’s <em>Text Box</em>. One of the settings provided is <em>Autofit</em>, which can be
+one of “Do not autofit”, “Resize text to fit shape”, or “Resize shape to fit
+text”. The scope of this analysis is how best to provide an alternative to
+the “Resize text to fit shape” behavior that simply resizes the text to the
+largest point size that will fit entirely within the shape extents.</p>
+<p>This produces a similar visual effect, but the “auto-size” behavior does not
+persist to later changes to the text or shape. It is just as though the user
+had reduced the font size just until all the text fit within the shape.</p>
+<section id="candidate-protocol">
+<h2>Candidate Protocol<a class="headerlink" href="#candidate-protocol" title="永久链接至标题">¶</a></h2>
+<p>Shape size and text are set before calling <a class="reference internal" href="../../api/text.html#pptx.text.text.TextFrame.fit_text" title="pptx.text.text.TextFrame.fit_text"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.fit_text()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Lorem ipsum .. post facto.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">text_frame</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">auto_size</span><span class="p">,</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">word_wrap</span>
+<span class="go">(None, False)</span>
+</pre></div>
+</div>
+<p>Calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.fit_text()</span></code> sets auto-size to MSO_AUTO_SIZE.NONE,
+turns word-wrap on, and sets the font size of all text in the shape to the
+maximum size that will fit entirely within the shape, not to exceed the
+optional <em>max_size</em>. The default <em>max_size</em> is 18pt. The font size is applied
+directly on each run-level element in the shape. The path to the matching
+font file must be specified:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">fit_text</span><span class="p">(</span><span class="s1">&#39;calibriz.ttf&#39;</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">auto_size</span><span class="p">,</span> <span class="n">text_frame</span><span class="o">.</span><span class="n">word_wrap</span>
+<span class="go">(MSO_AUTO_SIZE.NONE (0), True)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">text_frame</span><span class="o">.</span><span class="n">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">pt</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+</section>
+<section id="current-constraints">
+<h2>Current constraints<a class="headerlink" href="#current-constraints" title="永久链接至标题">¶</a></h2>
+<section id="textframe-fit-text">
+<h3><a class="reference internal" href="../../api/text.html#pptx.text.text.TextFrame.fit_text" title="pptx.text.text.TextFrame.fit_text"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.fit_text()</span></code></a><a class="headerlink" href="#textframe-fit-text" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>Path to font file must be provided manually.</p></li>
+<li><p>Bold and italic variant is selected unconditionally.</p></li>
+<li><p>Calibri typeface name is selected unconditionally.</p></li>
+<li><p>User must manually set the font typeface of all shape text to match the
+provided font file.</p></li>
+<li><p>Font typeface and variant is assumed to be uniform.</p></li>
+<li><p>Font size is made uniform, without regard to existing differences in font
+size in the shape text.</p></li>
+<li><p>Line breaks are replaced with a single space.</p></li>
+</ul>
+</section>
+</section>
+<section id="incremental-enhancements">
+<h2>Incremental enhancements<a class="headerlink" href="#incremental-enhancements" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Allow font file to be specified.</strong> This allows
+<a class="reference internal" href="../../api/text.html#pptx.text.text.TextFrame.fit_text" title="pptx.text.text.TextFrame.fit_text"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.fit_text()</span></code></a> to be run from <cite>pip</cite> installed version.
+OS-specific file locations and names can be determined by client.</p></li>
+<li><p><strong>Allow bold and italic to be specified.</strong> This allows the client to
+determine whether to apply the bold and/or italic typeface variant to the
+text.</p></li>
+<li><p><strong>Allow typeface name to be specified.</strong> This allows the client to
+determine which base typeface is applied to the text.</p></li>
+<li><p><strong>Auto-locate font file based on typeface and variants.</strong> Relax requirement
+for client to specify font file, looking it up in current system based on
+system type, typeface name, and variants.</p></li>
+</ul>
+</section>
+<section id="powerpoint-behavior">
+<h2>PowerPoint behavior<a class="headerlink" href="#powerpoint-behavior" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>PowerPoint shrinks text in whole-number font sizes.</p></li>
+<li><p>When assigning a font size to a shape, PowerPoint applies that font size at
+the run level, adding a <cite>sz</cite> attribute to the <cite>&lt;a:rPr&gt;</cite> element for every
+content child of every <cite>&lt;a:p&gt;</cite> element in the shape. The <cite>&lt;a:endParaRPr&gt;</cite>
+element in each paragraph also gets a <cite>sz</cite> attribute set to that size.</p></li>
+</ul>
+</section>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;p:txBody&gt;</span></code> for default new textbox:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:txBody&gt;</span>
+  <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;none&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:spAutoFit/&gt;</span>  <span class="cm">&lt;!-- fit shape to text --&gt;</span>
+  <span class="nt">&lt;/a:bodyPr&gt;</span>
+  <span class="nt">&lt;a:lstStyle/&gt;</span>
+  <span class="nt">&lt;a:p/&gt;</span>
+<span class="nt">&lt;/p:txBody&gt;</span>
+</pre></div>
+</div>
+<p>8” x 0.5” text box, default margins, defaulting to 18pt “full-size” text,
+auto-reduced to 12pt. <code class="docutils literal notranslate"><span class="pre">&lt;a:t&gt;</span></code> element text wrapped for compact display:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;p:txBody&gt;</span>
+  <span class="nt">&lt;a:bodyPr</span> <span class="na">wrap=</span><span class="s">&quot;square&quot;</span> <span class="na">rtlCol=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a:noAutofit/&gt;</span>
+  <span class="nt">&lt;/a:bodyPr&gt;</span>
+  <span class="nt">&lt;a:lstStyle/&gt;</span>
+  <span class="nt">&lt;a:p&gt;</span>
+    <span class="nt">&lt;a:r&gt;</span>
+      <span class="nt">&lt;a:rPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">sz=</span><span class="s">1200</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span> <span class="na">smtClean=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;a:t&gt;</span>The art and craft of designing typefaces is called type design.
+           Designers of typefaces are called type designers and are often
+           employed by type foundries. In digital typography, type
+           designers are sometimes also called font developers or font
+           designers.<span class="nt">&lt;/a:t&gt;</span>
+    <span class="nt">&lt;/a:r&gt;</span>
+    <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span> <span class="na">sz=</span><span class="s">1200</span> <span class="na">dirty=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/a:p&gt;</span>
+<span class="nt">&lt;/p:txBody&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextBody&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;bodyPr&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextBodyProperties&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;lstStyle&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextListStyle&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;p&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TextParagraph&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextBodyProperties&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;prstTxWarp&quot;</span>  <span class="na">type=</span><span class="s">&quot;CT_PresetTextShape&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>      <span class="cm">&lt;!-- EG_TextAutofit --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;noAutofit&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextNoAutofit&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;normAutofit&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextNormalAutofit&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spAutoFit&quot;</span>   <span class="na">type=</span><span class="s">&quot;CT_TextShapeAutofit&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;scene3d&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_Scene3D&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>      <span class="cm">&lt;!-- EG_Text3D --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sp3d&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_Shape3D&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;flatTx&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_FlatText&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rot&quot;</span>              <span class="na">type=</span><span class="s">&quot;ST_Angle&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spcFirstLastPara&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;vertOverflow&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TextVertOverflowType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;horzOverflow&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TextHorzOverflowType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;vert&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_TextVerticalType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;wrap&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_TextWrappingType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;lIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;tIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bIns&quot;</span>             <span class="na">type=</span><span class="s">&quot;ST_Coordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;numCol&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_TextColumnCount&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spcCol&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_PositiveCoordinate32&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;rtlCol&quot;</span>           <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;fromWordArt&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;anchor&quot;</span>           <span class="na">type=</span><span class="s">&quot;ST_TextAnchoringType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;anchorCtr&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;forceAA&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;upright&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;compatLnSpc&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextNoAutofit&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextParagraph&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pPr&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:choice</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>  <span class="cm">&lt;!-- EG_TextRun --&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;r&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_RegularTextRun&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;br&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_TextLineBreak&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;fld&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_TextField&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/xsd:choice&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;endParaRPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextCharacterProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_RegularTextRun&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;rPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextCharacterProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;t&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextLineBreak&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;rPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextCharacterProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextField&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;rPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextCharacterProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;pPr&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_TextParagraphProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;t&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>                 <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span>   <span class="na">type=</span><span class="s">&quot;s:ST_Guid&quot;</span>  <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextCharacterProperties&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ln&quot;</span>                   <span class="na">type=</span><span class="s">&quot;CT_LineProperties&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_FillProperties&quot;</span>                                     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_EffectProperties&quot;</span>                                   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;highlight&quot;</span>            <span class="na">type=</span><span class="s">&quot;CT_Color&quot;</span>                  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_TextUnderlineLine&quot;</span>                                  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:group</span>    <span class="na">ref=</span><span class="s">&quot;EG_TextUnderlineFill&quot;</span>                                  <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;latin&quot;</span>                <span class="na">type=</span><span class="s">&quot;CT_TextFont&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ea&quot;</span>                   <span class="na">type=</span><span class="s">&quot;CT_TextFont&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cs&quot;</span>                   <span class="na">type=</span><span class="s">&quot;CT_TextFont&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;sym&quot;</span>                  <span class="na">type=</span><span class="s">&quot;CT_TextFont&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hlinkClick&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_Hyperlink&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;hlinkMouseOver&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_Hyperlink&quot;</span>              <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;rtl&quot;</span>                  <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>                <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>               <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;kumimoji&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;lang&quot;</span>       <span class="na">type=</span><span class="s">&quot;s:ST_Lang&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;altLang&quot;</span>    <span class="na">type=</span><span class="s">&quot;s:ST_Lang&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;sz&quot;</span>         <span class="na">type=</span><span class="s">&quot;ST_TextFontSize&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;b&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;i&quot;</span>          <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;u&quot;</span>          <span class="na">type=</span><span class="s">&quot;ST_TextUnderlineType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;strike&quot;</span>     <span class="na">type=</span><span class="s">&quot;ST_TextStrikeType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;kern&quot;</span>       <span class="na">type=</span><span class="s">&quot;ST_TextNonNegativePoint&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;cap&quot;</span>        <span class="na">type=</span><span class="s">&quot;ST_TextCapsType&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;spc&quot;</span>        <span class="na">type=</span><span class="s">&quot;ST_TextPoint&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;normalizeH&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;baseline&quot;</span>   <span class="na">type=</span><span class="s">&quot;ST_Percentage&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;noProof&quot;</span>    <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;dirty&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>     <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;err&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>     <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;smtClean&quot;</span>   <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span>     <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;smtId&quot;</span>      <span class="na">type=</span><span class="s">&quot;xsd:unsignedInt&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;bmk&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_TextFont&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;typeface&quot;</span>    <span class="na">type=</span><span class="s">&quot;ST_TextTypeface&quot;</span> <span class="na">use=</span><span class="s">&quot;required&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;panose&quot;</span>      <span class="na">type=</span><span class="s">&quot;s:ST_Panose&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;pitchFamily&quot;</span> <span class="na">type=</span><span class="s">&quot;ST_PitchFamily&quot;</span>  <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;charset&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:byte&quot;</span>        <span class="na">default=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_Hyperlink&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;snd&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_EmbeddedWAVAudioFile&quot;</span>   <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_OfficeArtExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+  <span class="nt">&lt;xsd:attribute</span> <span class="na">ref=</span><span class="s">&quot;r:id&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;invalidUrl&quot;</span>     <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;action&quot;</span>         <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;tgtFrame&quot;</span>       <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;tooltip&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:string&quot;</span>  <span class="na">default=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;history&quot;</span>        <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;highlightClick&quot;</span> <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:attribute</span> <span class="na">name=</span><span class="s">&quot;endSnd&quot;</span>         <span class="na">type=</span><span class="s">&quot;xsd:boolean&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextCapsType&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:token&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;none&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;small&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:enumeration</span> <span class="na">value=</span><span class="s">&quot;all&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextFontSize&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:int&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;xsd:minInclusive</span> <span class="na">value=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:maxInclusive</span> <span class="na">value=</span><span class="s">&quot;400000&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:restriction&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+
+<span class="nt">&lt;xsd:simpleType</span> <span class="na">name=</span><span class="s">&quot;ST_TextTypeface&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;xsd:restriction</span> <span class="na">base=</span><span class="s">&quot;xsd:string&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/xsd:simpleType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Text - Fit text to shape</a><ul>
+<li><a class="reference internal" href="#candidate-protocol">Candidate Protocol</a></li>
+<li><a class="reference internal" href="#current-constraints">Current constraints</a><ul>
+<li><a class="reference internal" href="#textframe-fit-text"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextFrame.fit_text()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#incremental-enhancements">Incremental enhancements</a></li>
+<li><a class="reference internal" href="#powerpoint-behavior">PowerPoint behavior</a></li>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="txt-para-spacing.html"
+                          title="上一章">Paragraph Spacing</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="txt-autofit-text.html"
+                          title="下一章">Text - Auto-fit text to shape</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="txt-autofit-text.html" title="Text - Auto-fit text to shape"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="txt-para-spacing.html" title="Paragraph Spacing"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Text - Fit text to shape</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

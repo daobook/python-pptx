@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>pptx.presentation &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">模块代码</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.presentation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>pptx.presentation 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># encoding: utf-8</span>
+
+<span class="sd">&quot;&quot;&quot;Main presentation object.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pptx.shared</span> <span class="kn">import</span> <span class="n">PartElementProxy</span>
+<span class="kn">from</span> <span class="nn">pptx.slide</span> <span class="kn">import</span> <span class="n">SlideMasters</span><span class="p">,</span> <span class="n">Slides</span>
+<span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+
+
+<div class="viewcode-block" id="Presentation"><a class="viewcode-back" href="../../api/presentation.html#pptx.presentation.Presentation">[文档]</a><span class="k">class</span> <span class="nc">Presentation</span><span class="p">(</span><span class="n">PartElementProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;PresentationML (PML) presentation.</span>
+
+<span class="sd">    Not intended to be constructed directly. Use :func:`pptx.Presentation` to open or</span>
+<span class="sd">    create a presentation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">core_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instance of |CoreProperties| holding the read/write Dublin Core</span>
+<span class="sd">        document properties for this presentation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">core_properties</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">notes_master</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instance of |NotesMaster| for this presentation. If the presentation</span>
+<span class="sd">        does not have a notes master, one is created from a default template</span>
+<span class="sd">        and returned. The same single instance is returned on each call.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">notes_master</span>
+
+<div class="viewcode-block" id="Presentation.save"><a class="viewcode-back" href="../../api/presentation.html#pptx.presentation.Presentation.save">[文档]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save this presentation to *file*, where *file* can be either a path</span>
+<span class="sd">        to a file (a string) or a file-like object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">slide_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Height of slides in this presentation, in English Metric Units (EMU).</span>
+<span class="sd">        Returns |None| if no slide width is defined. Read/write.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sldSz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">sldSz</span>
+        <span class="k">if</span> <span class="n">sldSz</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">sldSz</span><span class="o">.</span><span class="n">cy</span>
+
+    <span class="nd">@slide_height</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">slide_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="n">sldSz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_sldSz</span><span class="p">()</span>
+        <span class="n">sldSz</span><span class="o">.</span><span class="n">cy</span> <span class="o">=</span> <span class="n">height</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">slide_layouts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sequence of |SlideLayout| instances belonging to the first</span>
+<span class="sd">        |SlideMaster| of this presentation. A presentation can have more than</span>
+<span class="sd">        one slide master and each master will have its own set of layouts.</span>
+<span class="sd">        This property is a convenience for the common case where the</span>
+<span class="sd">        presentation has only a single slide master.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">slide_masters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">slide_layouts</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">slide_master</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        First |SlideMaster| object belonging to this presentation. Typically,</span>
+<span class="sd">        presentations have only a single slide master. This property provides</span>
+<span class="sd">        simpler access in that common case.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">slide_masters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Presentation.slide_masters"><a class="viewcode-back" href="../../api/presentation.html#pptx.presentation.Presentation.slide_masters">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">slide_masters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sequence of |SlideMaster| objects belonging to this presentation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SlideMasters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_sldMasterIdLst</span><span class="p">(),</span> <span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">slide_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Width of slides in this presentation, in English Metric Units (EMU).</span>
+<span class="sd">        Returns |None| if no slide width is defined. Read/write.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sldSz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">sldSz</span>
+        <span class="k">if</span> <span class="n">sldSz</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">sldSz</span><span class="o">.</span><span class="n">cx</span>
+
+    <span class="nd">@slide_width</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">slide_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+        <span class="n">sldSz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_sldSz</span><span class="p">()</span>
+        <span class="n">sldSz</span><span class="o">.</span><span class="n">cx</span> <span class="o">=</span> <span class="n">width</span>
+
+<div class="viewcode-block" id="Presentation.slides"><a class="viewcode-back" href="../../api/presentation.html#pptx.presentation.Presentation.slides">[文档]</a>    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">slides</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        |Slides| object containing the slides in this presentation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sldIdLst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">get_or_add_sldIdLst</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">part</span><span class="o">.</span><span class="n">rename_slide_parts</span><span class="p">([</span><span class="n">sldId</span><span class="o">.</span><span class="n">rId</span> <span class="k">for</span> <span class="n">sldId</span> <span class="ow">in</span> <span class="n">sldIdLst</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">Slides</span><span class="p">(</span><span class="n">sldIdLst</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >模块代码</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pptx.presentation</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>

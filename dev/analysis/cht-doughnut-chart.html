@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+
+    <title>Doughnut Chart &#8212; python-pptx 0.6.21 文档</title>
+
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/rtd.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="../../../../_static/searchtools.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Chart - Points" href="cht-points.html" />
+    <link rel="prev" title="Area Chart" href="cht-area-chart.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-points.html" title="Chart - Points"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-area-chart.html" title="Area Chart"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Doughnut Chart</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="doughnut-chart">
+<h1>Doughnut Chart<a class="headerlink" href="#doughnut-chart" title="永久链接至标题">¶</a></h1>
+<p>A doughnut chart is similar in many ways to a pie chart, except there is
+a “hole” in the middle. It can accept multiple series, which appear as
+concentric “rings”.</p>
+<section id="xml-specimens">
+<h2>XML specimens<a class="headerlink" href="#xml-specimens" title="永久链接至标题">¶</a></h2>
+<p>XML for default doughnut chart:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39; standalone=&#39;yes&#39;?&gt;</span>
+<span class="nt">&lt;c:chartSpace</span>
+    <span class="na">xmlns:a=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/main&quot;</span>
+    <span class="na">xmlns:c=</span><span class="s">&quot;http://schemas.openxmlformats.org/drawingml/2006/chart&quot;</span>
+    <span class="na">xmlns:r=</span><span class="s">&quot;http://schemas.openxmlformats.org/officeDocument/2006/relationships&quot;</span>
+    <span class="nt">&gt;</span>
+  <span class="nt">&lt;c:date1904</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:lang</span> <span class="na">val=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;c:roundedCorners</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;mc:AlternateContent</span> <span class="na">xmlns:mc=</span><span class="s">&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;mc:Choice</span> <span class="na">xmlns:c14=</span><span class="s">&quot;http://schemas.microsoft.com/office/drawing/2007/8/2/chart&quot;</span> <span class="na">Requires=</span><span class="s">&quot;c14&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;c14:style</span> <span class="na">val=</span><span class="s">&quot;118&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/mc:Choice&gt;</span>
+    <span class="nt">&lt;mc:Fallback&gt;</span>
+      <span class="nt">&lt;c:style</span> <span class="na">val=</span><span class="s">&quot;18&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/mc:Fallback&gt;</span>
+  <span class="nt">&lt;/mc:AlternateContent&gt;</span>
+  <span class="nt">&lt;c:chart&gt;</span>
+    <span class="nt">&lt;c:autoTitleDeleted</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:plotArea&gt;</span>
+      <span class="nt">&lt;c:layout/&gt;</span>
+      <span class="nt">&lt;c:doughnutChart&gt;</span>
+        <span class="nt">&lt;c:varyColors</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:ser&gt;</span>
+          <span class="nt">&lt;c:idx</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:order</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:tx&gt;</span>
+            <span class="nt">&lt;c:strRef&gt;</span>
+              <span class="nt">&lt;c:f&gt;</span>Sheet1!$B$1<span class="nt">&lt;/c:f&gt;</span>
+              <span class="nt">&lt;c:strCache&gt;</span>
+                <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>Sales<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+              <span class="nt">&lt;/c:strCache&gt;</span>
+            <span class="nt">&lt;/c:strRef&gt;</span>
+          <span class="nt">&lt;/c:tx&gt;</span>
+          <span class="nt">&lt;c:cat&gt;</span>
+            <span class="nt">&lt;c:strRef&gt;</span>
+              <span class="nt">&lt;c:f&gt;</span>Sheet1!$A$2:$A$5<span class="nt">&lt;/c:f&gt;</span>
+              <span class="nt">&lt;c:strCache&gt;</span>
+                <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>1st Qtr<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>2nd Qtr<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>3rd Qtr<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>4th Qtr<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+              <span class="nt">&lt;/c:strCache&gt;</span>
+            <span class="nt">&lt;/c:strRef&gt;</span>
+          <span class="nt">&lt;/c:cat&gt;</span>
+          <span class="nt">&lt;c:val&gt;</span>
+            <span class="nt">&lt;c:numRef&gt;</span>
+              <span class="nt">&lt;c:f&gt;</span>Sheet1!$B$2:$B$5<span class="nt">&lt;/c:f&gt;</span>
+              <span class="nt">&lt;c:numCache&gt;</span>
+                <span class="nt">&lt;c:formatCode&gt;</span>General<span class="nt">&lt;/c:formatCode&gt;</span>
+                <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>8.2<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>3.2<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>1.4<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>1.2<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+              <span class="nt">&lt;/c:numCache&gt;</span>
+            <span class="nt">&lt;/c:numRef&gt;</span>
+          <span class="nt">&lt;/c:val&gt;</span>
+        <span class="nt">&lt;/c:ser&gt;</span>
+        <span class="nt">&lt;c:ser&gt;</span>
+          <span class="nt">&lt;c:idx</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:order</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:tx&gt;</span>
+            <span class="nt">&lt;c:strRef&gt;</span>
+              <span class="nt">&lt;c:f&gt;</span>Sheet1!$C$1<span class="nt">&lt;/c:f&gt;</span>
+              <span class="nt">&lt;c:strCache&gt;</span>
+                <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>Revenue<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+              <span class="nt">&lt;/c:strCache&gt;</span>
+            <span class="nt">&lt;/c:strRef&gt;</span>
+          <span class="nt">&lt;/c:tx&gt;</span>
+          <span class="nt">&lt;c:cat&gt;</span>
+            <span class="nt">&lt;c:strRef&gt;</span>
+              <span class="nt">&lt;c:f&gt;</span>Sheet1!$A$2:$A$5<span class="nt">&lt;/c:f&gt;</span>
+              <span class="nt">&lt;c:strCache&gt;</span>
+                <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>1st Qtr<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>2nd Qtr<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>3rd Qtr<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>4th Qtr<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+              <span class="nt">&lt;/c:strCache&gt;</span>
+            <span class="nt">&lt;/c:strRef&gt;</span>
+          <span class="nt">&lt;/c:cat&gt;</span>
+          <span class="nt">&lt;c:val&gt;</span>
+            <span class="nt">&lt;c:numRef&gt;</span>
+              <span class="nt">&lt;c:f&gt;</span>Sheet1!$C$2:$C$5<span class="nt">&lt;/c:f&gt;</span>
+              <span class="nt">&lt;c:numCache&gt;</span>
+                <span class="nt">&lt;c:formatCode&gt;</span>General<span class="nt">&lt;/c:formatCode&gt;</span>
+                <span class="nt">&lt;c:ptCount</span> <span class="na">val=</span><span class="s">&quot;4&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>1000.0<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>2000.0<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>3000.0<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+                <span class="nt">&lt;c:pt</span> <span class="na">idx=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;c:v&gt;</span>4000.0<span class="nt">&lt;/c:v&gt;</span>
+                <span class="nt">&lt;/c:pt&gt;</span>
+              <span class="nt">&lt;/c:numCache&gt;</span>
+            <span class="nt">&lt;/c:numRef&gt;</span>
+          <span class="nt">&lt;/c:val&gt;</span>
+        <span class="nt">&lt;/c:ser&gt;</span>
+        <span class="nt">&lt;c:dLbls&gt;</span>
+          <span class="nt">&lt;c:showLegendKey</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showVal</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showCatName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showSerName</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showPercent</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showBubbleSize</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;c:showLeaderLines</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/c:dLbls&gt;</span>
+        <span class="nt">&lt;c:firstSliceAng</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;c:holeSize</span> <span class="na">val=</span><span class="s">&quot;50&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/c:doughnutChart&gt;</span>
+    <span class="nt">&lt;/c:plotArea&gt;</span>
+    <span class="nt">&lt;c:legend&gt;</span>
+      <span class="nt">&lt;c:legendPos</span> <span class="na">val=</span><span class="s">&quot;r&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;c:layout/&gt;</span>
+      <span class="nt">&lt;c:overlay</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/c:legend&gt;</span>
+    <span class="nt">&lt;c:plotVisOnly</span> <span class="na">val=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:dispBlanksAs</span> <span class="na">val=</span><span class="s">&quot;gap&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;c:showDLblsOverMax</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/c:chart&gt;</span>
+  <span class="nt">&lt;c:txPr&gt;</span>
+    <span class="nt">&lt;a:bodyPr/&gt;</span>
+    <span class="nt">&lt;a:lstStyle/&gt;</span>
+    <span class="nt">&lt;a:p&gt;</span>
+      <span class="nt">&lt;a:pPr&gt;</span>
+        <span class="nt">&lt;a:defRPr</span> <span class="na">sz=</span><span class="s">&quot;1800&quot;</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a:pPr&gt;</span>
+      <span class="nt">&lt;a:endParaRPr</span> <span class="na">lang=</span><span class="s">&quot;en-US&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/a:p&gt;</span>
+  <span class="nt">&lt;/c:txPr&gt;</span>
+  <span class="nt">&lt;c:externalData</span> <span class="na">r:id=</span><span class="s">&quot;rId1&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;c:autoUpdate</span> <span class="na">val=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/c:externalData&gt;</span>
+<span class="nt">&lt;/c:chartSpace&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="related-schema-definitions">
+<h2>Related Schema Definitions<a class="headerlink" href="#related-schema-definitions" title="永久链接至标题">¶</a></h2>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_DoughnutChart&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;varyColors&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_Boolean&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;ser&quot;</span>           <span class="na">type=</span><span class="s">&quot;CT_PieSer&quot;</span>        <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>         <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>         <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;firstSliceAng&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_FirstSliceAng&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;holeSize&quot;</span>      <span class="na">type=</span><span class="s">&quot;CT_HoleSize&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+
+<span class="nt">&lt;xsd:complexType</span> <span class="na">name=</span><span class="s">&quot;CT_PieSer&quot;</span><span class="nt">&gt;</span>  <span class="cm">&lt;!-- denormalized --&gt;</span>
+  <span class="nt">&lt;xsd:sequence&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;idx&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;order&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;tx&quot;</span>        <span class="na">type=</span><span class="s">&quot;CT_SerTx&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;spPr&quot;</span>      <span class="na">type=</span><span class="s">&quot;a:CT_ShapeProperties&quot;</span> <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;explosion&quot;</span> <span class="na">type=</span><span class="s">&quot;CT_UnsignedInt&quot;</span>       <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dPt&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_DPt&quot;</span>               <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;dLbls&quot;</span>     <span class="na">type=</span><span class="s">&quot;CT_DLbls&quot;</span>             <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;cat&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_AxDataSource&quot;</span>      <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;val&quot;</span>       <span class="na">type=</span><span class="s">&quot;CT_NumDataSource&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;xsd:element</span> <span class="na">name=</span><span class="s">&quot;extLst&quot;</span>    <span class="na">type=</span><span class="s">&quot;CT_ExtensionList&quot;</span>     <span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/xsd:sequence&gt;</span>
+<span class="nt">&lt;/xsd:complexType&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Doughnut Chart</a><ul>
+<li><a class="reference internal" href="#xml-specimens">XML specimens</a></li>
+<li><a class="reference internal" href="#related-schema-definitions">Related Schema Definitions</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一个主题</h4>
+    <p class="topless"><a href="cht-area-chart.html"
+                          title="上一章">Area Chart</a></p>
+  </div>
+  <div>
+    <h4>下一个主题</h4>
+    <p class="topless"><a href="cht-points.html"
+                          title="下一章">Chart - Points</a></p>
+  </div><h3>Useful Links</h3>
+<ul>
+  <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/python-pptx">python-pptx @ PyPI</a></li>
+  <li><a href="http://github.com/scanny/python-pptx/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li class="right" >
+          <a href="cht-points.html" title="Chart - Points"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="cht-area-chart.html" title="Area Chart"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Analysis</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Doughnut Chart</a></li> 
+      </ul>
+    </div>
+<div class="footer">
+    &copy; Copyright 2012, 2013, Steve Canny.
+  Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+  <br />Theme based on <a href="http://readthedocs.org/">Read The Docs</a>
+
+</div>
+
+
+
+
+
+  </body>
+</html>
