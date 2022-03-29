@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 
-    <title>Working with Slides &#8212; python-pptx 0.6.21 文档</title>
+    <title>幻灯片 &#8212; python-pptx 0.6.21 文档</title>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
 
@@ -23,7 +23,7 @@
     <script src="../../_static/searchtools.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="Understanding Shapes" href="understanding-shapes.html" />
+    <link rel="next" title="理解形状" href="understanding-shapes.html" />
     <link rel="prev" title="使用演示文稿" href="presentations.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,13 +36,13 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="understanding-shapes.html" title="Understanding Shapes"
+          <a href="understanding-shapes.html" title="理解形状"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
           <a href="presentations.html" title="使用演示文稿"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Working with Slides</a></li> 
+        <li class="nav-item nav-item-this"><a href="">幻灯片</a></li> 
       </ul>
     </div>  
 
@@ -52,30 +52,13 @@
           <div class="body" role="main">
             
   <section id="working-with-slides">
-<h1>Working with Slides<a class="headerlink" href="#working-with-slides" title="永久链接至标题">¶</a></h1>
-<p>Every slide in a presentation is based on a slide layout. Not surprising then
-that you have to specify which slide layout to use when you create a new slide.
-Let’s take a minute to understand a few things about slide layouts that we’ll
-need so the slide we add looks the way we want it to.</p>
+<h1>幻灯片<a class="headerlink" href="#working-with-slides" title="永久链接至标题">¶</a></h1>
+<p>演示文稿中的每张幻灯片都基于幻灯片布局。毫无疑问，当您创建新的幻灯片时，您必须指定使用哪个幻灯片布局。让我们花点时间来理解一些关于幻灯片布局的东西，这样我们就可以添加我们想要的幻灯片外观。</p>
 <section id="slide-layout-basics">
-<h2>Slide layout basics<a class="headerlink" href="#slide-layout-basics" title="永久链接至标题">¶</a></h2>
-<p>A slide layout is like a template for a slide. Whatever is on the slide layout
-“shows through” on a slide created with it and formatting choices made on the
-slide layout are inherited by the slide. This is an important feature for
-getting a professional-looking presentation deck, where all the slides are
-formatted consistently. Each slide layout is based on the slide master in
-a similar way, so you can make presentation-wide formatting decisions on the
-slide master and layout-specific decisions on the slide layouts. There can
-actually be multiple slide masters, but I’ll pretend for now there’s only one.
-Usually there is.</p>
-<p>The presentation themes that come with PowerPoint have about nine slide
-layouts, with names like <em>Title</em>, <em>Title and Content</em>, <em>Title Only</em>, and
-<em>Blank</em>. Each has zero or more placeholders (mostly not zero), preformatted
-areas into which you can place a title, multi-level bullets, an image, etc.
-More on those later.</p>
-<p>The slide layouts in a standard PowerPoint theme always occur in the same
-sequence. This allows content from one deck to be pasted into another and be
-connected with the right new slide layout:</p>
+<h2>幻灯片布局基础<a class="headerlink" href="#slide-layout-basics" title="永久链接至标题">¶</a></h2>
+<p>幻灯片布局就像幻灯片的模板。无论幻灯片布局上的内容是什么，它都会“通过”显示在幻灯片上，而在幻灯片布局上所做的格式选择也会被幻灯片继承。这是重要的特性，可以获得看起来很专业的演示文稿套件，其中所有幻灯片的格式都是一致的。每个幻灯片布局都以类似的方式基于幻灯片母版，因此您可以在幻灯片母版上做出整个演示文稿的格式决定，在幻灯片布局上做出特定于布局的决定。实际上可以有多个幻灯片母版，但现在我假设只有一个。通常有。</p>
+<p>PowerPoint 的演示文稿主题有九种幻灯片布局，分别是 <em>Title</em>、<em>Title and Content</em>、<em>Title Only</em> 和 <em>Blank</em>。每个都有零个或多个占位符（大多数不是零个），可以放置标题、多级项目列表符号、图像等的预设格式化区域。稍后再详细介绍。</p>
+<p>标准 PowerPoint 主题中的幻灯片布局总是以相同的顺序出现。这允许内容从一个 deck 粘贴到另一个，并连接到正确的新幻灯片布局：</p>
 <ul class="simple">
 <li><p>Title (presentation title slide)</p></li>
 <li><p>Title and Content</p></li>
@@ -87,18 +70,12 @@ connected with the right new slide layout:</p>
 <li><p>Content with Caption</p></li>
 <li><p>Picture with Caption</p></li>
 </ul>
-<p>In <cite>python-pptx</cite>, these are <code class="docutils literal notranslate"><span class="pre">prs.slide_layouts[0]</span></code> through <code class="docutils literal notranslate"><span class="pre">prs.slide_layouts[8]</span></code>.
-However, there’s no rule they have to appear in this order, it’s just
-a convention followed by the themes provided with PowerPoint. If the deck
-you’re using as your template has different slide layouts or has them in
-a different order, you’ll have to work out the slide layout indices for
-yourself. It’s pretty easy. Just open it up in Slide Master view in PowerPoint
-and count down from the top, starting at zero.</p>
-<p>Now we can get to creating a new slide.</p>
+<p>在 <cite>python-pptx</cite> 中，这些是 <code class="docutils literal notranslate"><span class="pre">prs.slide_layouts[0]</span></code> 通过 <code class="docutils literal notranslate"><span class="pre">prs.slide_layouts[8]</span></code>。然而，并没有规定它们必须按照这个顺序出现，这只是 PowerPoint 提供的主题遵循的惯例。如果你使用的模板有不同的幻灯片布局，或者有不同的顺序，你必须自己制定幻灯片布局索引。它很简单。只要在 PowerPoint 的幻灯片主视图中打开它，从顶部开始倒数，从 0 开始。</p>
+<p>现在我们可以创建新的幻灯片。</p>
 </section>
 <section id="adding-a-slide">
-<h2>Adding a slide<a class="headerlink" href="#adding-a-slide" title="永久链接至标题">¶</a></h2>
-<p>Let’s use the Title and Content slide layout; a lot of slides do:</p>
+<h2>添加幻灯片<a class="headerlink" href="#adding-a-slide" title="永久链接至标题">¶</a></h2>
+<p>让我们使用标题和内容幻灯片布局；很多幻灯片都是这样的:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SLD_LAYOUT_TITLE_AND_CONTENT</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
@@ -106,40 +83,20 @@ and count down from the top, starting at zero.</p>
 <span class="n">slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">slide_layout</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>A few things to note:</p>
+<p>有几件事需要注意：</p>
 <ul class="simple">
-<li><p>Using a “constant” value like <code class="docutils literal notranslate"><span class="pre">SLD_LAYOUT_TITLE_AND_CONTENT</span></code> is up to you.
-If you’re creating many slides it can be handy to have constants defined so
-a reader can more easily make sense of what you’re doing. There isn’t a set
-of these built into the package because they can’t be assured to be right for
-the starting deck you’re using.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">prs.slide_layouts</span></code> is the collection of slide layouts contained in the
-presentation and has list semantics, at least for item access which is about
-all you can do with that collection at the moment. Using <code class="docutils literal notranslate"><span class="pre">prs</span></code> for the
-Presentation instance is purely conventional, but I like it and use it
-consistently.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">prs.slides</span></code> is the collection of slides in the presentation, also has
-list semantics for item access, and len() works on it. Note that the method
-to add the slide is on the slide collection, not the presentation. The
-<code class="docutils literal notranslate"><span class="pre">add_slide()</span></code> method appends the new slide to the end of the collection. At
-the time of writing it’s the only way to add a slide, but sooner or later
-I expect someone will want to insert one in the middle, and when they post
-a feature request for that I expect I’ll add an <code class="docutils literal notranslate"><span class="pre">insert_slide(idx,</span> <span class="pre">...)</span></code>
-method.</p></li>
+<li><p>使用像 <code class="docutils literal notranslate"><span class="pre">SLD_LAYOUT_TITLE_AND_CONTENT</span></code> 这样的 “constant” 值是由你决定的。如果你要制作很多幻灯片，定义一些常量会很方便，这样读者就能更容易地理解你在做什么。软件包中并没有一套这样的工具，因为你不能保证它们对你正在使用的起始平台是正确的。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prs.slide_layouts</span></code> 是包含在演示文稿中的幻灯片布局的集合，具有列表语义，至少对于 item 访问，这是关于所有你可以用该集合在此刻做的。在 Presentation 实例中使用 <code class="docutils literal notranslate"><span class="pre">prs</span></code> 纯粹是传统的，但我喜欢它，并一直使用它。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prs.slides</span></code> 是演示文稿中的幻灯片集合，也有用于项访问的列表语义，<code class="docutils literal notranslate"><span class="pre">len()</span></code> 可以处理它。请注意，添加幻灯片的方法是在幻灯片集合中，而不是在演示文稿中。<code class="docutils literal notranslate"><span class="pre">add_slide()</span></code> 方法将新幻灯片追加到集合的末尾。在编写时，这是添加幻灯片的唯一方法，但我预计迟早会有人想要在中间插入幻灯片，当他们发布功能请求时，我预计我会添加 <code class="docutils literal notranslate"><span class="pre">insert_slide(idx,</span> <span class="pre">...)</span></code> 方法。</p></li>
 </ul>
 </section>
 <section id="doing-other-things-with-slides">
-<h2>Doing other things with slides<a class="headerlink" href="#doing-other-things-with-slides" title="永久链接至标题">¶</a></h2>
-<p>Right now, adding a slide is the only operation on the slide collection. On the
-backlog at the time of writing is deleting a slide and moving a slide to
-a different position in the list. Copying a slide from one presentation to
-another turns out to be pretty hard to get right in the general case, so that
-probably won’t come until more of the backlog is burned down.</p>
+<h2>用幻灯片做其他事情<a class="headerlink" href="#doing-other-things-with-slides" title="永久链接至标题">¶</a></h2>
+<p>现在，添加幻灯片是幻灯片集合上的唯一操作。在编写待办事项列表时，删除幻灯片并将幻灯片移动到列表中的不同位置。在一般情况下，将幻灯片从一个演示文稿复制到另一个演示文稿是非常困难的，所以在更多的积压工作完成之前，这可能不会发生。</p>
 </section>
 <section id="up-next">
-<h2>Up next …<a class="headerlink" href="#up-next" title="永久链接至标题">¶</a></h2>
-<p>Ok, now that we have a new slide, let’s talk about how to put something on
-it …</p>
+<h2>接下来为你放映 。。。<a class="headerlink" href="#up-next" title="永久链接至标题">¶</a></h2>
+<p>好了，现在我们有了新幻灯片，让我们来谈谈如何在上面添加东西 ……</p>
 </section>
 </section>
 
@@ -153,11 +110,11 @@ it …</p>
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Working with Slides</a><ul>
-<li><a class="reference internal" href="#slide-layout-basics">Slide layout basics</a></li>
-<li><a class="reference internal" href="#adding-a-slide">Adding a slide</a></li>
-<li><a class="reference internal" href="#doing-other-things-with-slides">Doing other things with slides</a></li>
-<li><a class="reference internal" href="#up-next">Up next …</a></li>
+<li><a class="reference internal" href="#">幻灯片</a><ul>
+<li><a class="reference internal" href="#slide-layout-basics">幻灯片布局基础</a></li>
+<li><a class="reference internal" href="#adding-a-slide">添加幻灯片</a></li>
+<li><a class="reference internal" href="#doing-other-things-with-slides">用幻灯片做其他事情</a></li>
+<li><a class="reference internal" href="#up-next">接下来为你放映 。。。</a></li>
 </ul>
 </li>
 </ul>
@@ -171,7 +128,7 @@ it …</p>
   <div>
     <h4>下一个主题</h4>
     <p class="topless"><a href="understanding-shapes.html"
-                          title="下一章">Understanding Shapes</a></p>
+                          title="下一章">理解形状</a></p>
   </div><h3>Useful Links</h3>
 <ul>
   <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
@@ -202,13 +159,13 @@ it …</p>
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="understanding-shapes.html" title="Understanding Shapes"
+          <a href="understanding-shapes.html" title="理解形状"
              >下一页</a> |</li>
         <li class="right" >
           <a href="presentations.html" title="使用演示文稿"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Working with Slides</a></li> 
+        <li class="nav-item nav-item-this"><a href="">幻灯片</a></li> 
       </ul>
     </div>
 <div class="footer">

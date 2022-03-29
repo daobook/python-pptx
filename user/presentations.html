@@ -23,7 +23,7 @@
     <script src="../../_static/searchtools.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="Working with Slides" href="slides.html" />
+    <link rel="next" title="幻灯片" href="slides.html" />
     <link rel="prev" title="快速上手" href="quickstart.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,7 +36,7 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="slides.html" title="Working with Slides"
+          <a href="slides.html" title="幻灯片"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
           <a href="quickstart.html" title="快速上手"
@@ -64,54 +64,28 @@
 <span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;test.pptx&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This creates a new presentation from the built-in default template and saves it
-unchanged to a file named ‘test.pptx’. A couple things to note:</p>
+<p>这将从内置的默认模板创建新的演示文稿，并将其保存到名为 ‘test.pptx’ 的文件中。有几件事需要注意：</p>
 <ul class="simple">
-<li><p>The so-called “default template” is actually just a PowerPoint file that
-doesn’t have any slides in it, stored with the installed <cite>python-pptx</cite> package. It’s
-the same as what you would get if you created a new presentation from a fresh
-PowerPoint install, a 4x3 aspect ratio presentation based on the “White”
-template. Well, except it won’t contain any slides. PowerPoint always adds
-a blank first slide by default.</p></li>
-<li><p>You don’t need to do anything to it before you save it. If you want to see
-exactly what that template contains, just look in the ‘test.pptx’ file this
-creates.</p></li>
-<li><p>We’ve called it a <em>template</em>, but in fact it’s just a regular PowerPoint file
-with all the slides removed. Actual PowerPoint template files (.potx files)
-are something a bit different. More on those later maybe, but you won’t need
-them to work with <cite>python-pptx</cite>.</p></li>
+<li><p>所谓的默认模板实际上只是 PowerPoint 文件，里面没有任何幻灯片，存储在已安装的 python-pptx 包中。这与你从全新的 PowerPoint 安装中创建新的演示文稿时所得到的效果是一样的，基于 “White” 模板的 4x3 宽高比演示文稿。好吧，但它不包含任何幻灯片。默认情况下，PowerPoint 总是会添加一张空白页作为第一张幻灯片。</p></li>
+<li><p>在保存之前，您不需要对它做任何操作。如果你想知道模板包含了什么，只需查看它创建的 ‘test.pptx’ 文件。</p></li>
+<li><p>我们称它为 <strong>模板</strong>，但实际上它只是普通的 PowerPoint 文件，删除了所有的幻灯片。和实际的 PowerPoint 模板文件（<code class="docutils literal notranslate"><span class="pre">.potx</span></code>）有点不同。稍后可能会详细介绍这些内容，但是在使用 <cite>python-pptx</cite> 时并不需要它们。</p></li>
 </ul>
 <section id="really-opening-a-presentation">
-<h3>REALLY opening a presentation<a class="headerlink" href="#really-opening-a-presentation" title="永久链接至标题">¶</a></h3>
-<p>Okay, so if you want any control at all to speak of over the final
-presentation, or if you want to change an existing presentation, you need to
-open one with a filename:</p>
+<h3>真正打开演示文稿<a class="headerlink" href="#really-opening-a-presentation" title="永久链接至标题">¶</a></h3>
+<p>好的，如果你想要控制最终的演示文稿，或者如果你想要改变现有的演示文稿，你需要打开带文件名的文件:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="s1">&#39;existing-prs-file.pptx&#39;</span><span class="p">)</span>
 <span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;new-file-name.pptx&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Things to note:</p>
+<p>注意事项：</p>
 <ul class="simple">
-<li><p>You can open any PowerPoint 2007 or later file this way (.ppt files from
-PowerPoint 2003 and earlier won’t work). While you might not be able to
-manipulate all the contents yet, whatever is already in there will load and
-save just fine. The feature set is still being built out, so you can’t add or
-change things like Notes Pages yet, but if the presentation has them <cite>python-pptx</cite> is
-polite enough to leave them alone and smart enough to save them without
-actually understanding what they are.</p></li>
-<li><p>If you use the same filename to open and save the file, <cite>python-pptx</cite> will obediently
-overwrite the original file without a peep. You’ll want to make sure that’s
-what you intend.</p></li>
+<li><p>你可以用这种方式打开任何 PowerPoint 2007 及以后版本的文件（PowerPoint 2003 及以前版本的 .ppt 文件不行）。虽然您可能还不能操作所有的内容，但已经存在的内容都可以加载和保存。功能集仍在构建中，所以你还不能添加或更改像 Notes Pages 这样的东西，但如果演示文稿已经有了这些功能，那么 <cite>python-pptx</cite> 就会礼貌地不去理会它们，而聪明地在不了解它们是什么的情况下保存它们。</p></li>
+<li><p>如果你使用相同的文件名来打开和保存文件，<cite>python-pptx</cite> 会乖乖地覆盖原来的文件，一眼也看不出来。你要确保这就是你的意图。</p></li>
 </ul>
 </section>
 <section id="opening-a-file-like-presentation">
-<h3>Opening a ‘file-like’ presentation<a class="headerlink" href="#opening-a-file-like-presentation" title="永久链接至标题">¶</a></h3>
-<p><cite>python-pptx</cite> can open a presentation from a so-called <em>file-like</em> object. It can also
-save to a file-like object. This can be handy when you want to get the source
-or target presentation over a network connection or from a database and don’t
-want to (or aren’t allowed to) fuss with interacting with the file system. In
-practice this means you can pass an open file or StringIO/BytesIO stream object
-to open or save a presentation like so:</p>
+<h3>打开 ‘file-like’ 演示文稿<a class="headerlink" href="#opening-a-file-like-presentation" title="永久链接至标题">¶</a></h3>
+<p><cite>python-pptx</cite> 可以从所谓的 <em>file-like</em> 对象打开演示文稿。它还可以保存到 file-like 的对象。当您希望通过网络连接或从数据库获得源或目标演示文稿，并且不希望（或不允许）与文件系统交互时，这很方便。在实践中，这意味着你可以像这样传递打开的文件或 StringIO/BytesIO 流对象来打开或保存演示文稿:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;foobar.pptx&#39;</span><span class="p">)</span>
 <span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -127,8 +101,7 @@ to open or save a presentation like so:</p>
 <span class="n">prs</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">target_stream</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Okay, so you’ve got a presentation open and are pretty sure you can save it
-somewhere later. Next step is to get a slide in there …</p>
+<p>好吧，你已经打开了演示文稿，并且很确定你可以把它保存在某个地方。下一步就是在那里幻灯片……</p>
 </section>
 </section>
 </section>
@@ -145,8 +118,8 @@ somewhere later. Next step is to get a slide in there …</p>
     <ul>
 <li><a class="reference internal" href="#">使用演示文稿</a><ul>
 <li><a class="reference internal" href="#opening-a-presentation">打开演示文稿</a><ul>
-<li><a class="reference internal" href="#really-opening-a-presentation">REALLY opening a presentation</a></li>
-<li><a class="reference internal" href="#opening-a-file-like-presentation">Opening a ‘file-like’ presentation</a></li>
+<li><a class="reference internal" href="#really-opening-a-presentation">真正打开演示文稿</a></li>
+<li><a class="reference internal" href="#opening-a-file-like-presentation">打开 ‘file-like’ 演示文稿</a></li>
 </ul>
 </li>
 </ul>
@@ -162,7 +135,7 @@ somewhere later. Next step is to get a slide in there …</p>
   <div>
     <h4>下一个主题</h4>
     <p class="topless"><a href="slides.html"
-                          title="下一章">Working with Slides</a></p>
+                          title="下一章">幻灯片</a></p>
   </div><h3>Useful Links</h3>
 <ul>
   <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
@@ -193,7 +166,7 @@ somewhere later. Next step is to get a slide in there …</p>
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="slides.html" title="Working with Slides"
+          <a href="slides.html" title="幻灯片"
              >下一页</a> |</li>
         <li class="right" >
           <a href="quickstart.html" title="快速上手"

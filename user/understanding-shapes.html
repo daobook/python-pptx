@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 
-    <title>Understanding Shapes &#8212; python-pptx 0.6.21 文档</title>
+    <title>理解形状 &#8212; python-pptx 0.6.21 文档</title>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
 
@@ -24,7 +24,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="Working with AutoShapes" href="autoshapes.html" />
-    <link rel="prev" title="Working with Slides" href="slides.html" /> 
+    <link rel="prev" title="幻灯片" href="slides.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>导航</h3>
@@ -39,10 +39,10 @@
           <a href="autoshapes.html" title="Working with AutoShapes"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="slides.html" title="Working with Slides"
+          <a href="slides.html" title="幻灯片"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Understanding Shapes</a></li> 
+        <li class="nav-item nav-item-this"><a href="">理解形状</a></li> 
       </ul>
     </div>  
 
@@ -52,33 +52,15 @@
           <div class="body" role="main">
             
   <section id="understanding-shapes">
-<h1>Understanding Shapes<a class="headerlink" href="#understanding-shapes" title="永久链接至标题">¶</a></h1>
-<p>Pretty much anything on a slide is a shape; the only thing I can think of that
-can appear on a slide that’s not a shape is a slide background. There are
-between six and ten different types of shape, depending how you count. I’ll
-explain some of the general shape concepts you’ll need to make sense of how to
-work with them and then we’ll jump right into working with the specific types.</p>
-<p>Technically there are six and only six different types of shapes that can be
-placed on a slide:</p>
+<h1>理解形状<a class="headerlink" href="#understanding-shapes" title="永久链接至标题">¶</a></h1>
+<p>幻灯片上的几乎所有东西都是一个形状；我能想到的唯一能出现在一张不是形状的幻灯片上的东西就是幻灯片背景。有六到十种不同的形状，取决于你如何计数。我将解释一些一般的形状概念，你将需要理解如何使用它们，然后我们将直接进入具体的类型。</p>
+<p>从技术上讲，有六种且只有六种不同类型的形状可以放置在幻灯片上：</p>
 <dl class="simple">
-<dt>auto shape</dt><dd><p>This is a regular shape, like a rectangle, an ellipse, or a block arrow.
-They come in a large variety of preset shapes, in the neighborhood of 180
-different ones. An auto shape can have a fill and an outline, and can
-contain text. Some auto shapes have adjustments, the little yellow diamonds
-you can drag to adjust how round the corners of a rounded rectangle are for
-example. A text box is also an autoshape, a rectangular one, just by default
-without a fill and without an outline.</p>
+<dt>aoto 形状</dt><dd><p>这是规则的形状，像矩形，椭圆，或块箭头。它们有各种各样的预设形状，大约有 180 种不同的形状。auto 形状可以有填充和轮廓，也可以包含文本。一些 auto 形状有调节器，比如你可以拖动黄色的小方块来调整圆角矩形的圆角。文本框也是 auto 形状，矩形的，只是默认情况下没有填充和轮廓线。</p>
 </dd>
-<dt>picture</dt><dd><p>A raster image, like a photograph or clip art is referred to as a <em>picture</em>
-in PowerPoint. It’s its own kind of shape with different behaviors than an
-autoshape. Note that an auto shape can have a picture fill, in which an
-image “shows through” as the background of the shape instead of a fill color
-or gradient. That’s a different thing. But cool.</p>
+<dt>picture</dt><dd><p>光栅图像，如照片或剪贴画，在 PowerPoint 中被称为 <em>picture</em>。它有自己的形状，与 auto 形状有不同的行为。注意，auto 形状可以有 picture 填充，其中图像“通过显示”作为形状的背景，而不是填充颜色或渐变。这是另一回事。但很酷。</p>
 </dd>
-<dt>graphic frame</dt><dd><p>This is the technical name for the container that holds a table, a chart,
-a smart art diagram, or media clip. You can’t add one of these by itself,
-it just shows up in the file when you add a graphical object. You probably
-won’t need to know anything more about these.</p>
+<dt>图形框架</dt><dd><p>这是用于存放表（table）、图表（chart）、智能艺术图表（smart art diagram）或媒体剪辑（media clip）的容器的技术名称。你不能单独添加其中一个，当你添加图形对象时，它会在文件中显示出来。关于这些，你可能不需要知道更多。</p>
 </dd>
 <dt>group shape</dt><dd><p>In PowerPoint, a set of shapes can be <em>grouped</em>, allowing them to be
 selected, moved, resized, and even filled as a unit. When you group a set of
@@ -141,7 +123,7 @@ working with AutoShapes.</p>
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Understanding Shapes</a><ul>
+<li><a class="reference internal" href="#">理解形状</a><ul>
 <li><a class="reference internal" href="#accessing-the-shapes-on-a-slide">Accessing the shapes on a slide</a></li>
 <li><a class="reference internal" href="#up-next">Up next …</a></li>
 </ul>
@@ -152,7 +134,7 @@ working with AutoShapes.</p>
   <div>
     <h4>上一个主题</h4>
     <p class="topless"><a href="slides.html"
-                          title="上一章">Working with Slides</a></p>
+                          title="上一章">幻灯片</a></p>
   </div>
   <div>
     <h4>下一个主题</h4>
@@ -191,10 +173,10 @@ working with AutoShapes.</p>
           <a href="autoshapes.html" title="Working with AutoShapes"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="slides.html" title="Working with Slides"
+          <a href="slides.html" title="幻灯片"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Understanding Shapes</a></li> 
+        <li class="nav-item nav-item-this"><a href="">理解形状</a></li> 
       </ul>
     </div>
 <div class="footer">
