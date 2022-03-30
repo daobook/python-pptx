@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../user/use-cases.rst:2
 msgid "Use cases"
-msgstr ""
+msgstr "用例"
 
 #: ../../user/use-cases.rst:4
 msgid ""
@@ -33,6 +33,9 @@ msgid ""
 "attention to detail is satisfied, well, my coding fingers got quite "
 "itchy."
 msgstr ""
+"驱使我开始这个库工作的用例是，自动构建手工编写的冗长乏味的幻灯片。"
+"例如，考虑这样一项任务：编写幻灯片，其中包含特定部门人员的 10 张头像数组，照片旁边是该人员的姓名和头衔。"
+"在这样做了十几次之后，为了让所有的对齐方式和大小都能满足我对细节的关注，我的编码手指开始发痒了。"
 
 #: ../../user/use-cases.rst:12
 msgid ""
@@ -48,4 +51,8 @@ msgid ""
 "clicks to use in a sales presentation, for example. As you come up with "
 "applications I'd love to hear about them."
 msgstr ""
-
+"然而，我相信更广泛的应用将是在非 windows 服务器平台上的服务器端文档生成，我主要希望是 Linux。"
+"在我的公司里，我发现对 PowerPoint 文档作为沟通手段的需求显然是无法满足的。"
+"一旦一个人升到了项目经理的级别，他解释文字的意愿就会迅速下降，PowerPoint 就会成为一种日常媒介。"
+"我曾经想象过，如果能够为销售人员生成演示文稿准备好的套件，其中包括产品目录的特定子集，"
+"例如，他们只需点击几下鼠标就可以生成用于销售演示的产品。当你提出申请时，我很乐意听到。"

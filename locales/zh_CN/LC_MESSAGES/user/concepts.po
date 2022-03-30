@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../user/concepts.rst:2
 msgid "Concepts"
-msgstr ""
+msgstr "概念"
 
 #: ../../user/concepts.rst:4
 msgid ""
@@ -30,12 +30,15 @@ msgid ""
 "here are some basics to get you started, especially some relationships "
 "you might find surprising at first."
 msgstr ""
+"|pp| 是完全面向对象的，通常你用它执行的任何操作都将是在对象上。演示文稿的根对象是 |Presentation|。"
+"API 的详细信息在模块页面上提供，但这里有一些基础知识让你开始，特别是一些你可能会在一开始感到惊讶的关系。"
 
 #: ../../user/concepts.rst:10
 msgid ""
 "A presentation is loaded by constructing a new |Presentation| instance, "
 "passing in the path to a presentation to be loaded::"
 msgstr ""
+"通过构造一个新的 |Presentation| 实例来加载演示文稿，并传入要加载演示文稿的路径 ::"
 
 #: ../../user/concepts.rst:18
 msgid ""
@@ -45,6 +48,8 @@ msgid ""
 "started quickly, and most of the examples in this documentation use the "
 "default template.::"
 msgstr ""
+"|pp| 也包含默认模板，如果你构造没有 path 的 |Presentation| 实例，基于该默认模板的演示文稿将被加载。"
+"当你想快速开始时，这可以很方便，并且本文档中的大多数示例都使用默认模板。"
 
 #: ../../user/concepts.rst:26
 msgid ""
@@ -55,16 +60,20 @@ msgid ""
 "delete all the slides (or leave some in if it suits), and then load that "
 "as your starting place."
 msgstr ""
+"请注意，与 PowerPoint® 客户端相比，|pp| 中目前没有模板和演示文稿之间的区别，只有演示文稿。"
+"要在演示文稿中使用 \"template\"，你只需创建包含你想要的所有风格、徽标和布局的演示文稿，"
+"删除所有的幻灯片（或留一些如果适合的话），然后加载它作为你的起点。"
 
 #: ../../user/concepts.rst:34
 msgid "Slide masters"
-msgstr ""
+msgstr "幻灯片母版"
 
 #: ../../user/concepts.rst:36
 msgid ""
 "A presentation has a list of slide masters and a list of slides. Let's "
 "start with a discussion of the slide masters."
 msgstr ""
+"演示文稿有幻灯片母版列表和幻灯片列表。我们先来讨论一下幻灯片母版。"
 
 #: ../../user/concepts.rst:39
 #, python-format
@@ -82,10 +91,16 @@ msgid ""
 "situation, you can refer to the first slide master as though it were the "
 "only one::"
 msgstr ""
+"一个让一些人感到惊讶的事实是，演示文稿可以有多个幻灯片母版。"
+"在我的经验中，很少发现演示文稿使用了这个特性，但它是完全支持的。"
+"我唯一见过这种情况发生的情况是，来自 \"foreign\" 演示文稿的幻灯片被粘贴到另一个平台上；"
+"如果您希望在粘贴的幻灯片上保留另一组的格式和背景，则需要提供幻灯片母版及其幻灯片布局。"
+"因此，演示文稿需要维护幻灯片模板列表，而不仅仅是一个，即使可能 99% 的时间你只使用一个。"
+"为了使 99% 的情况更容易一些，您可以参考第一个幻灯片母版，就像它是唯一的一样::"
 
 #: ../../user/concepts.rst:58
 msgid "Slide layouts"
-msgstr ""
+msgstr "幻灯片布局"
 
 #: ../../user/concepts.rst:60
 #, python-format
@@ -97,20 +112,24 @@ msgid ""
 "the first slide master can also be accessed directly from the "
 "presentation via syntactic sugar::"
 msgstr ""
+"另一个可能令人惊讶的事实是，幻灯片布局属于幻灯片母版，而不是直接属于演示文稿，"
+"所以通常您必须通过它们的幻灯片母版访问幻灯片布局。"
+"由于这与上面描述的 99% 的情况相同，属于第一个幻灯片母版的幻灯片布局也可以通过语法糖直接从演示文稿中访问::"
 
 #: ../../user/concepts.rst:74
 msgid "Slides"
-msgstr ""
+msgstr "幻灯片"
 
 #: ../../user/concepts.rst:76
 msgid ""
 "The slides in a presentation belong to the presentation object and are "
 "accessed using the ``slides`` attribute::"
 msgstr ""
+"演示文稿中的幻灯片属于演示文稿对象，可以通过 ``slides`` 属性访问::"
 
 #: ../../user/concepts.rst:84
 msgid "Adding a slide"
-msgstr ""
+msgstr "添加幻灯片"
 
 #: ../../user/concepts.rst:86
 msgid ""
@@ -118,4 +137,5 @@ msgid ""
 " the :attr:`slides` attribute of the presentation. A slide layout must be"
 " passed in to specify the layout the new slide should take on::"
 msgstr ""
-
+"通过调用演示文稿的 :attr:`slides` 属性上的 :meth:`add_slide` 方法来添加幻灯片。"
+"必须传入一个幻灯片布局来指定新幻灯片应该采用的布局::"

@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../user/notes.rst:3
 msgid "Working with Notes Slides"
-msgstr ""
+msgstr "使用 Notes 幻灯片"
 
 #: ../../user/notes.rst:5
 msgid ""
@@ -28,6 +28,7 @@ msgid ""
 "commonly encountered in the notes pane, below the slide in PowerPoint "
 "\"Normal\" view where it may say \"Click to add notes\"."
 msgstr ""
+"幻灯片可以有与之相关的注释。这些可能最常在注释窗格中遇到，在 PowerPoint \"Normal\" 视图的幻灯片下方，它可能会说 \"Click to add notes\"。"
 
 #: ../../user/notes.rst:9
 msgid ""
@@ -35,6 +36,7 @@ msgid ""
 "pane. They also appear in *Presenter View* and in *Notes Page* view, both"
 " available from the menu."
 msgstr ""
+"每当幻灯片出现在主面板上时，这里添加的注释就会出现。它们也出现在 *Presenter View* 和 *Notes Page* 视图中，都可以从菜单中获得。"
 
 #: ../../user/notes.rst:13
 msgid ""
@@ -42,6 +44,7 @@ msgid ""
 "and colors, etc. The Notes Page view has somewhat more powerful tools for"
 " editing the notes text than the note pane in Normal view."
 msgstr ""
+"Notes可以包含富文本，通常是项目符号、粗体、不同字体大小和颜色等。Notes Page 视图拥有比 Normal 视图中的注释窗格更强大的工具来编辑注释文本。"
 
 #: ../../user/notes.rst:17
 msgid ""
@@ -53,6 +56,8 @@ msgid ""
 "working with a notes slide is very much like working with a regular "
 "slide."
 msgstr ""
+"在 API 和底层 XML 中，包含文本的对象称为 *Notes Slide*。这是因为在内部，Notes 幻灯片实际上是幻灯片的专门化实例。"
+"它包含形状，其中许多是占位符，并允许插入新的形状，如图片(可能是一个标志)、自动形状、表格和图表。因此，处理笔记幻灯片就像处理普通幻灯片一样。"
 
 #: ../../user/notes.rst:24
 msgid ""
@@ -60,10 +65,11 @@ msgid ""
 " first time it is used, generally perhaps by adding notes text to a "
 "slide. Once created, it stays, even if all the text is deleted."
 msgstr ""
+"每张幻灯片可以有零张或一张 notes 幻灯片。第一次使用笔记幻灯片时，就创建了笔记幻灯片，通常可以在幻灯片中添加笔记文本。一旦创建，它就会保留，即使所有的文本都被删除了。"
 
 #: ../../user/notes.rst:29
 msgid "The Notes Master"
-msgstr ""
+msgstr "Note 母板"
 
 #: ../../user/notes.rst:31
 msgid ""
@@ -76,6 +82,9 @@ msgid ""
 "(haven't tried it though). A presentation can have at most one notes "
 "master."
 msgstr ""
+"新的笔记幻灯片是用 *笔记母版* 作为模板创建的。"
+"演示文稿在 PowerPoint 中创建时没有笔记主。一个是在第一次需要时根据powerpoint内部预置的默认值创建的，通常是在第一张幻灯片创建时。"
+"也可以通过进入 Notes 母版 视图来创建，并且几乎可以肯定是通过编辑在那里找到的 母版 视图来创建的(不过还没有尝试过)。一场演讲最多只能有笔记母版。"
 
 #: ../../user/notes.rst:39
 msgid ""

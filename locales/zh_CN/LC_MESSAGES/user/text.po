@@ -20,17 +20,18 @@ msgstr ""
 
 #: ../../user/text.rst:3
 msgid "Working with text"
-msgstr ""
+msgstr "文本"
 
 #: ../../user/text.rst:5
 msgid ""
 "Auto shapes and table cells can contain text. Other shapes can't. Text is"
 " always manipulated the same way, regardless of its container."
 msgstr ""
+"自动形状和表格单元格可以包含文本。其他形状不能。文本总是以相同的方式操作，不管它的容器是什么。"
 
 #: ../../user/text.rst:8
 msgid "Text exists in a hierarchy of three levels:"
-msgstr ""
+msgstr "文本存在于三个层次："
 
 #: ../../user/text.rst:10
 msgid ":attr:`.Shape.text_frame`"
@@ -53,6 +54,10 @@ msgid ""
 "paragraphs, which always contains at least one paragraph, even when "
 "empty."
 msgstr ""
+"形状中的所有文本都包含在其文本框架中。"
+"文本框具有垂直对齐、边距、换行和自动适应行为、旋转角度和一些可能的 3D 视觉功能，"
+"可以设置为将文本格式化为多个列。"
+"它还包含段落序列，它总是包含至少一个段落，即使是空的。"
 
 #: ../../user/text.rst:20
 msgid ""
@@ -61,6 +66,8 @@ msgid ""
 " paragraph can be empty, but if it contains any text, that text is "
 "contained in one or more runs."
 msgstr ""
+"段落有行间距、前后空格、可用的 bullet 格式、制表符、大纲/缩进级别和水平对齐方式。"
+"段落可以为空，但如果它包含任何文本，则该文本将包含在一次或多次 run 中。"
 
 #: ../../user/text.rst:25
 msgid ""
@@ -69,16 +76,19 @@ msgid ""
 "italic, and underline styles, strikethrough, kerning, and a few "
 "capitalization styles like all caps."
 msgstr ""
+"``run`` 的存在是为了提供字符级格式，包括字体、大小和颜色、可选的超链接目标 URL、"
+"粗体、斜体和下划线样式、删除线、字距，以及一些大写样式，如所有大写。"
 
 #: ../../user/text.rst:29
 msgid ""
 "Let's run through these one by one. Only features available in the "
 "current release are shown."
 msgstr ""
+"让我们一个一个地看一遍。仅显示当前版本中可用的特性。"
 
 #: ../../user/text.rst:34
 msgid "Accessing the text frame"
-msgstr ""
+msgstr "访问文本框"
 
 #: ../../user/text.rst:36
 msgid ""
@@ -86,10 +96,12 @@ msgid ""
 " you don't want to catch the possible exception, you'll want to check "
 "before attempting to access it::"
 msgstr ""
+"如前所述，并不是所有形状都有文本框架。"
+"所以，如果你不确定，你不想捕获可能的异常，你会想要在尝试访问它之前检查："
 
 #: ../../user/text.rst:49
 msgid "Accessing paragraphs"
-msgstr ""
+msgstr "访问段落"
 
 #: ../../user/text.rst:51
 msgid ""
@@ -98,10 +110,12 @@ msgid ""
 "clunkier than one might like. Say for example you want a shape with three"
 " paragraphs::"
 msgstr ""
+"文本框架总是至少包含一个段落。这就导致了将多个段落整理成一个形状的过程比人们希望的要笨拙一些。"
+"举个例子，你想要一个有三个段落的形状："
 
 #: ../../user/text.rst:73
 msgid "Adding text"
-msgstr ""
+msgstr "添加文本"
 
 #: ../../user/text.rst:75
 msgid ""
@@ -110,10 +124,13 @@ msgid ""
 "placing text in a run contained by those objects. The following two "
 "snippets produce the same result::"
 msgstr ""
+"只有 run 才能真正包含文本。"
+"将字符串赋值给形状、文本框架或段落的 ``.text`` 属性是将文本放置在由这些对象包含的 run 中的一种快捷方法。"
+"下面两个代码片段产生了相同的结果："
 
 #: ../../user/text.rst:92
 msgid "Applying text frame-level formatting"
-msgstr ""
+msgstr "应用文本框架级格式"
 
 #: ../../user/text.rst:94
 msgid ""
@@ -124,6 +141,9 @@ msgid ""
 "text. Note that vertical alignment is set on the text frame. Horizontal "
 "alignment is set on each paragraph::"
 msgstr ""
+"下面生成的形状只有一个段落，底部距比顶部距稍宽（默认值为 0.05\"），没有左边距，顶部文本对齐，并关闭了换行功能。"
+"此外，设置自动大小行为来调整形状的宽度和高度以适应其文本。"
+"请注意，文本框上设置了垂直对齐。在每个段落设置水平对齐："
 
 #: ../../user/text.rst:112
 msgid ""
@@ -131,20 +151,23 @@ msgid ""
 "``TextFrame.vertical_anchor`` are specified by the enumeration "
 ":ref:`MsoAutoSize` and :ref:`MsoVerticalAnchor` respectively."
 msgstr ""
+"``TextFrame.auto_size`` 和 ``TextFrame.vertical_anchor`` 的可能值分别由枚举 "
+":ref:`MsoAutoSize` 和 :ref:`MsoVerticalAnchor` 指定。"
 
 #: ../../user/text.rst:118
 msgid "Applying paragraph formatting"
-msgstr ""
+msgstr "应用段落级格式"
 
 #: ../../user/text.rst:120
 msgid ""
 "The following produces a shape containing three left-aligned paragraphs, "
 "the second and third indented (like sub-bullets) under the first::"
 msgstr ""
+"下面的形状包含三个左对齐的段落，第二个和第三个缩进（像 sub-bullets）在第一个下面："
 
 #: ../../user/text.rst:146
 msgid "Applying character formatting"
-msgstr ""
+msgstr "应用字符级格式"
 
 #: ../../user/text.rst:148
 msgid ""
@@ -152,14 +175,17 @@ msgid ""
 "``.font`` attribute. The following formats a sentence in 18pt Calibri "
 "Bold and applies the theme color Accent 1."
 msgstr ""
+"字符级格式化在 run 级应用，使用 ``.font`` 属性。"
+"下面用 18pt Calibri 粗体格式化一个句子，并应用主题颜色 Accent 1。"
 
 #: ../../user/text.rst:172
 msgid ""
 "If you prefer, you can set the font color to an absolute RGB value. Note "
 "that this will not change color when the theme is changed::"
 msgstr ""
+"如果您愿意，可以将字体颜色设置为绝对 RGB 值。注意，当主题改变时，这不会改变颜色："
 
 #: ../../user/text.rst:177
 msgid "A run can also be made into a hyperlink by providing a target URL::"
-msgstr ""
+msgstr "通过提供目标 URL，run 也可以变成超链接："
 

@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../user/placeholders-understanding.rst:3
 msgid "Understanding placeholders"
-msgstr ""
+msgstr "理解占位符"
 
 #: ../../user/placeholders-understanding.rst:5
 msgid ""
@@ -31,6 +31,9 @@ msgid ""
 "content. This speeds the presentation development process while "
 "encouraging visual consistency in slides created from the same template."
 msgstr ""
+"直观地说，占位符是可以放置内容的预格式化容器。"
+"通过为内容提供预先设置的格式，它将许多格式选择交给了模板设计人员，同时允许最终用户专注于实际的内容。"
+"这加快了演示文稿的开发过程，同时鼓励从相同模板创建的幻灯片的视觉一致性。"
 
 #: ../../user/placeholders-understanding.rst:12
 msgid ""
@@ -42,10 +45,13 @@ msgid ""
 "want to know how to work with them, you may want to skip forward to the "
 "following page :ref:`placeholders-using`."
 msgstr ""
+"“虽然他们的典型终端用户行为相对简单，但支持他们操作的结构却比较复杂。"
+"本页面是为那些希望更好地理解占位符子系统的体系结构，并且可能不太容易对其有时令人费解的行为感到困惑的人准备的。"
+"如果你不关心他们为什么工作，只是想知道如何使用他们，你可能想跳过以下页面 :ref:`placeholders-using`。"
 
 #: ../../user/placeholders-understanding.rst:21
 msgid "A placeholder is a shape"
-msgstr ""
+msgstr "占位符是形状"
 
 #: ../../user/placeholders-understanding.rst:23
 msgid ""
@@ -57,14 +63,18 @@ msgid ""
 "shapes cannot be a placeholder. A graphic frame placeholder can contain a"
 " table, a chart, or SmartArt."
 msgstr ""
+"占位符是正交的形状类别，也就是说多种形状类型都可以是占位符。"
+"特别是，auto shape （`p:sp` 元素）、picture （`p:pic` 元素）和 graphic frame （`p:graphicFrame`）形状类型可以是占位符。"
+"组 shape （`p:grpSp`）、connector （`p:cxnSp`）和 content part （`p:contentPart`）形状不能是占位符。"
+"graphic frame 占位符可以包含表格、图表或 SmartArt。"
 
 #: ../../user/placeholders-understanding.rst:33
 msgid "Placeholder types"
-msgstr ""
+msgstr "占位符类型"
 
 #: ../../user/placeholders-understanding.rst:35
 msgid "There are 18 types of placeholder."
-msgstr ""
+msgstr "占位符有18种类型。"
 
 #: ../../user/placeholders-understanding.rst:40
 msgid "Title, Center Title, Subtitle, Body"
@@ -76,10 +86,11 @@ msgid ""
 "containing text only, often organized as a title and a series of bullet "
 "points. All of these placeholders can accept text only."
 msgstr ""
+"这些占位符通常出现在传统的只包含文本的 \"word chart\" 上，通常以标题和一系列 bullet 点的形式组织起来。所有这些占位符都只能接受文本。"
 
 #: ../../user/placeholders-understanding.rst:45
 msgid "Content"
-msgstr ""
+msgstr "内容"
 
 #: ../../user/placeholders-understanding.rst:43
 msgid ""
@@ -87,10 +98,11 @@ msgid ""
 "a slide. When unpopulated, it displays 6 buttons to allow insertion of a "
 "table, a chart, SmartArt, a picture, clip art, or a media clip."
 msgstr ""
+"这个多用途占位符是幻灯片主体中最常用的。当未填充时，它会显示 6 个按钮，允许插入表格、图表、SmartArt、图片、剪贴画或媒体剪辑。"
 
 #: ../../user/placeholders-understanding.rst:50
 msgid "Picture, Clip Art"
-msgstr ""
+msgstr "图片，剪贴画"
 
 #: ../../user/placeholders-understanding.rst:48
 msgid ""
@@ -98,6 +110,7 @@ msgid ""
 "placeholder brings up the clip art gallery rather than an image file "
 "chooser, but otherwise these behave the same."
 msgstr ""
+"这两者都允许插入图像。剪贴画占位符上的插入按钮打开的是剪贴画库，而不是图像文件选择器，但除此之外，它们的行为是一样的。”"
 
 #: ../../user/placeholders-understanding.rst:54
 msgid "Chart, Table, Smart Art"
@@ -107,15 +120,15 @@ msgstr ""
 msgid ""
 "These three allow the respective type of rich graphical content to be "
 "inserted."
-msgstr ""
+msgstr "这三种类型允许插入不同类型的富 graphical 内容。"
 
 #: ../../user/placeholders-understanding.rst:57
 msgid "Media Clip"
-msgstr ""
+msgstr "媒体剪辑"
 
 #: ../../user/placeholders-understanding.rst:57
 msgid "Allows a video or sound recording to be inserted."
-msgstr ""
+msgstr "允许插入视频或声音记录。"
 
 #: ../../user/placeholders-understanding.rst:62
 msgid "Date, Footer, Slide Number"
@@ -127,22 +140,24 @@ msgid ""
 "behave as most users would expect. These also commonly appear on the "
 "Notes Master and Handout Master."
 msgstr ""
+"这三种方式出现在大多数幻灯片模板和幻灯片布局中，但并不像大多数用户期望的那样。"
+"这些也经常出现在 Notes Master 和 Handout Master 上。”"
 
 #: ../../user/placeholders-understanding.rst:65
 msgid "Header"
-msgstr ""
+msgstr "标题栏"
 
 #: ../../user/placeholders-understanding.rst:65
 msgid "Only valid on the Notes Master and Handout Master."
-msgstr ""
+msgstr "只适用于 Notes Master 和 Handout Master 上。"
 
 #: ../../user/placeholders-understanding.rst:69
 msgid "Vertical Body, Vertical Object, Vertical Title"
-msgstr ""
+msgstr "垂直体，垂直对象，垂直标题"
 
 #: ../../user/placeholders-understanding.rst:68
 msgid "Used with vertically oriented languages such as Japanese."
-msgstr ""
+msgstr "用于垂直方向的语言，如日语。"
 
 #: ../../user/placeholders-understanding.rst:72
 msgid "Unpopulated vs. populated"
@@ -155,6 +170,8 @@ msgid ""
 "customizable prompt text. A rich content placeholder will also display "
 "one or more content insertion buttons when empty."
 msgstr ""
+"幻灯片上的占位符可以是空的，也可以是填充的。这在图片占位符中最为明显。"
+"当未填充时，占位符将显示可定制的提示文本。当内容占位符为空时，也会显示一个或多个内容插入按钮。"
 
 #: ../../user/placeholders-understanding.rst:79
 msgid ""
@@ -168,10 +185,14 @@ msgid ""
 "mode. An additional delete will remove the placeholder itself. A deleted "
 "placeholder can be restored by reapplying the layout."
 msgstr ""
+"当输入文本的第一个字符时，纯文本占位符进入 \"populated\" （填充） 模式，当删除文本的最后一个字符时，返回到 \"unpopulated\" 模式。"
+"富内容占位符在插入图片等内容时进入填充模式，在删除内容时返回到未填充模式。"
+"为了删除填充的占位符，形状必须删除 *两次*。第一次删除内容，并将占位符恢复为未填充模式。额外的删除将删除占位符本身。"
+"删除的占位符可以通过重新应用布局来恢复。"
 
 #: ../../user/placeholders-understanding.rst:91
 msgid "Placholders inherit"
-msgstr ""
+msgstr "占位符继承"
 
 #: ../../user/placeholders-understanding.rst:93
 msgid ""
@@ -181,6 +202,8 @@ msgid ""
 "those on a slide layout, and those that ultimately appear on a slide in a"
 " presentation."
 msgstr ""
+"占位符出现在幻灯片上只是整个占位符机制的一部分。"
+"占位符行为需要三种不同的占位符形状；有的出现在幻灯片母版上，有的出现在幻灯片布局上，还有的最终出现在演示文稿的幻灯片上。"
 
 #: ../../user/placeholders-understanding.rst:98
 msgid ""
@@ -191,6 +214,10 @@ msgid ""
 "both, a possible inheritor from a slide master placeholder and an "
 "inheritee to placeholders on slides linked to that layout."
 msgstr ""
+"这三种类型的占位符参与到属性继承层次结构中，要么作为继承者，要么作为继承者，或者两者兼有。"
+"母版上的占位符形状仅为继承。"
+"相反，幻灯片上的占位符形状只是继承对象。"
+"幻灯片布局中的占位符既是幻灯片主占位符的可能继承者，也是链接到该布局的幻灯片上占位符的继承者。"
 
 #: ../../user/placeholders-understanding.rst:105
 msgid ""
@@ -199,6 +226,8 @@ msgid ""
 "sharing the same type. A slide placeholder inherits from the layout "
 "placeholder having the same `idx` value."
 msgstr ""
+"“布局继承自母版，与幻灯片继承自布局不同。"
+"布局占位符继承于共享相同类型的主占位符。幻灯片占位符继承自布局占位符，具有相同的 ``idx`` 值。"
 
 #: ../../user/placeholders-understanding.rst:110
 msgid ""
@@ -208,36 +237,40 @@ msgid ""
 "inherited value. Directly applied formatting can be removed be reapplying"
 " the layout."
 msgstr ""
+"通常，所有的格式化属性都继承自 \"parent\" 占位符。"
+"这包括位置和大小以及填充、线和字体。"
+"任何直接应用的格式化都会覆盖相应的继承值。直接应用的格式可以在重新应用布局时被删除。"
 
 #: ../../user/placeholders-understanding.rst:117
 msgid "Glossary"
-msgstr ""
+msgstr "术语"
 
 #: ../../user/placeholders-understanding.rst:120
 msgid "placeholder shape"
-msgstr ""
+msgstr "占位符形状"
 
 #: ../../user/placeholders-understanding.rst:120
 msgid "A shape on a slide that inherits from a layout placeholder."
-msgstr ""
+msgstr "幻灯片上从布局占位符继承的形状。"
 
 #: ../../user/placeholders-understanding.rst:124
 msgid "layout placeholder"
-msgstr ""
+msgstr "布局占位符"
 
 #: ../../user/placeholders-understanding.rst:123
 msgid ""
 "a shorthand name for the placeholder shape on the slide layout from which"
 " a particular placeholder on a slide inherits shape properties"
 msgstr ""
+"幻灯片布局中占位符形状的简写名称，幻灯片上的某个占位符从它继承形状属性。"
 
 #: ../../user/placeholders-understanding.rst:129
 msgid "master placeholder"
-msgstr ""
+msgstr "母版占位符"
 
 #: ../../user/placeholders-understanding.rst:127
 msgid ""
 "the placeholder shape on the slide master which a layout placeholder "
 "inherits from, if any."
 msgstr ""
-
+"幻灯片母版上的占位符形状，如果有的话，布局占位符是从它继承来的。"

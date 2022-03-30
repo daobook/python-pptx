@@ -83,27 +83,27 @@ msgstr "填充文本占位符，例如创建 bullet 幻灯片"
 
 #: ../../index.rst:18
 msgid "Add image to slide at arbitrary position and size"
-msgstr ""
+msgstr "添加图像到幻灯片的任意位置和大小"
 
 #: ../../index.rst:19
 msgid "Add textbox to a slide; manipulate text font size and bold"
-msgstr ""
+msgstr "将文本框添加到幻灯片；操纵文本字体大小和粗体"
 
 #: ../../index.rst:20
 msgid "Add table to a slide"
-msgstr ""
+msgstr "添加表格到幻灯片"
 
 #: ../../index.rst:21
 msgid "Add auto shapes (e.g. polygons, flowchart shapes, etc.) to a slide"
-msgstr ""
+msgstr "添加自动形状（例如，多边形，流程图形状等）到幻灯片"
 
 #: ../../index.rst:22
 msgid "Add and manipulate column, bar, line, and pie charts"
-msgstr ""
+msgstr "添加和操作 column, bar, line 和饼图"
 
 #: ../../index.rst:23
 msgid "Access and change core document properties such as title and subject"
-msgstr ""
+msgstr "访问和更改核心文档属性，如标题和主题"
 
 #: ../../index.rst:25
 msgid ""
@@ -113,20 +113,22 @@ msgid ""
 "tracker and we'll see if we can jump the queue for you to pop it in there"
 " :)"
 msgstr ""
+"“额外的功能正在积极开发中，大约每个月发布一次。"
+"如果你发现你需要的功能，|pp| 还没有，通过邮件列表或问题跟踪器联系，我们会看看我们是否可以为你跳转到那里:)"
 
 #: ../../index.rst:32
 msgid "User Guide"
-msgstr ""
+msgstr "用户指南"
 
 #: ../../index.rst:55
 msgid "Community Guide"
-msgstr ""
+msgstr "社区指南"
 
 #: ../../index.rst:68
 msgid "API Documentation"
-msgstr ""
+msgstr "API 文档"
 
 #: ../../index.rst:90
 msgid "Contributor Guide"
-msgstr ""
+msgstr "贡献者指南"
 
