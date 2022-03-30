@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 
-    <title>Working with Notes Slides &#8212; python-pptx 0.6.21 文档</title>
+    <title>使用 Notes 幻灯片 &#8212; python-pptx 0.6.21 文档</title>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
 
@@ -23,7 +23,7 @@
     <script src="../../_static/searchtools.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="Use cases" href="use-cases.html" />
+    <link rel="next" title="用例" href="use-cases.html" />
     <link rel="prev" title="Working with tables" href="table.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,13 +36,13 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="use-cases.html" title="Use cases"
+          <a href="use-cases.html" title="用例"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
           <a href="table.html" title="Working with tables"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Working with Notes Slides</a></li> 
+        <li class="nav-item nav-item-this"><a href="">使用 Notes 幻灯片</a></li> 
       </ul>
     </div>  
 
@@ -52,34 +52,15 @@
           <div class="body" role="main">
             
   <section id="working-with-notes-slides">
-<h1>Working with Notes Slides<a class="headerlink" href="#working-with-notes-slides" title="永久链接至标题">¶</a></h1>
-<p>A slide can have notes associated with it. These are perhaps most commonly
-encountered in the notes pane, below the slide in PowerPoint “Normal” view
-where it may say “Click to add notes”.</p>
-<p>The notes added here appear each time that slide is present in the main pane.
-They also appear in <em>Presenter View</em> and in <em>Notes Page</em> view, both available
-from the menu.</p>
-<p>Notes can contain rich text, commonly bullets, bold, varying font sizes and
-colors, etc. The Notes Page view has somewhat more powerful tools for editing
-the notes text than the note pane in Normal view.</p>
-<p>In the API and the underlying XML, the object that contains the text is known
-as a <em>Notes Slide</em>. This is because internally, a notes slide is actually
-a specialized instance of a slide. It contains shapes, many of which are
-placeholders, and allows inserting of new shapes such as pictures (a logo
-perhaps) auto shapes, tables, and charts. Consequently, working with a notes
-slide is very much like working with a regular slide.</p>
-<p>Each slide can have zero or one notes slide. A notes slide is created the
-first time it is used, generally perhaps by adding notes text to a slide.
-Once created, it stays, even if all the text is deleted.</p>
+<h1>使用 Notes 幻灯片<a class="headerlink" href="#working-with-notes-slides" title="永久链接至标题">¶</a></h1>
+<p>幻灯片可以有与之相关的注释。这些可能最常在注释窗格中遇到，在 PowerPoint “Normal” 视图的幻灯片下方，它可能会说 “Click to add notes”。</p>
+<p>每当幻灯片出现在主面板上时，这里添加的注释就会出现。它们也出现在 <em>Presenter View</em> 和 <em>Notes Page</em> 视图中，都可以从菜单中获得。</p>
+<p>Notes可以包含富文本，通常是项目符号、粗体、不同字体大小和颜色等。Notes Page 视图拥有比 Normal 视图中的注释窗格更强大的工具来编辑注释文本。</p>
+<p>在 API 和底层 XML 中，包含文本的对象称为 <em>Notes Slide</em>。这是因为在内部，Notes 幻灯片实际上是幻灯片的专门化实例。它包含形状，其中许多是占位符，并允许插入新的形状，如图片(可能是一个标志)、自动形状、表格和图表。因此，处理笔记幻灯片就像处理普通幻灯片一样。</p>
+<p>每张幻灯片可以有零张或一张 notes 幻灯片。第一次使用笔记幻灯片时，就创建了笔记幻灯片，通常可以在幻灯片中添加笔记文本。一旦创建，它就会保留，即使所有的文本都被删除了。</p>
 <section id="the-notes-master">
-<h2>The Notes Master<a class="headerlink" href="#the-notes-master" title="永久链接至标题">¶</a></h2>
-<p>A new notes slide is created using the <em>Notes Master</em> as a template.
-A presentation has no notes master when newly created in PowerPoint. One is
-created according to a PowerPoint-internal preset default the first time it
-is needed, which is generally when the first notes slide is created. It’s
-possible one can also be created by entering the Notes Master view and almost
-certainly is created by editing the master found there (haven’t tried it
-though). A presentation can have at most one notes master.</p>
+<h2>Note 母板<a class="headerlink" href="#the-notes-master" title="永久链接至标题">¶</a></h2>
+<p>新的笔记幻灯片是用 <em>笔记母版</em> 作为模板创建的。演示文稿在 PowerPoint 中创建时没有笔记主。一个是在第一次需要时根据powerpoint内部预置的默认值创建的，通常是在第一张幻灯片创建时。也可以通过进入 Notes 母版 视图来创建，并且几乎可以肯定是通过编辑在那里找到的 母版 视图来创建的(不过还没有尝试过)。一场演讲最多只能有笔记母版。</p>
 <p>The notes master governs the look and feel of notes pages, which can be
 viewed on-screen but are really designed for printing out. So if you want
 your notes page print-outs to look different from the default, you can make
@@ -178,8 +159,8 @@ a shape in the notes slide shape collection. Rather, it is visually
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Working with Notes Slides</a><ul>
-<li><a class="reference internal" href="#the-notes-master">The Notes Master</a></li>
+<li><a class="reference internal" href="#">使用 Notes 幻灯片</a><ul>
+<li><a class="reference internal" href="#the-notes-master">Note 母板</a></li>
 <li><a class="reference internal" href="#notes-slide-basics">Notes Slide basics</a></li>
 <li><a class="reference internal" href="#notes-slide-placeholders">Notes Slide Placeholders</a></li>
 </ul>
@@ -195,7 +176,7 @@ a shape in the notes slide shape collection. Rather, it is visually
   <div>
     <h4>下一个主题</h4>
     <p class="topless"><a href="use-cases.html"
-                          title="下一章">Use cases</a></p>
+                          title="下一章">用例</a></p>
   </div><h3>Useful Links</h3>
 <ul>
   <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
@@ -226,13 +207,13 @@ a shape in the notes slide shape collection. Rather, it is visually
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="use-cases.html" title="Use cases"
+          <a href="use-cases.html" title="用例"
              >下一页</a> |</li>
         <li class="right" >
           <a href="table.html" title="Working with tables"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Working with Notes Slides</a></li> 
+        <li class="nav-item nav-item-this"><a href="">使用 Notes 幻灯片</a></li> 
       </ul>
     </div>
 <div class="footer">

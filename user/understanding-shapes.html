@@ -23,7 +23,7 @@
     <script src="../../_static/searchtools.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="Working with AutoShapes" href="autoshapes.html" />
+    <link rel="next" title="AutoShape" href="autoshapes.html" />
     <link rel="prev" title="幻灯片" href="slides.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,7 +36,7 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="autoshapes.html" title="Working with AutoShapes"
+          <a href="autoshapes.html" title="AutoShape"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
           <a href="slides.html" title="幻灯片"
@@ -56,60 +56,42 @@
 <p>幻灯片上的几乎所有东西都是一个形状；我能想到的唯一能出现在一张不是形状的幻灯片上的东西就是幻灯片背景。有六到十种不同的形状，取决于你如何计数。我将解释一些一般的形状概念，你将需要理解如何使用它们，然后我们将直接进入具体的类型。</p>
 <p>从技术上讲，有六种且只有六种不同类型的形状可以放置在幻灯片上：</p>
 <dl class="simple">
-<dt>aoto 形状</dt><dd><p>这是规则的形状，像矩形，椭圆，或块箭头。它们有各种各样的预设形状，大约有 180 种不同的形状。auto 形状可以有填充和轮廓，也可以包含文本。一些 auto 形状有调节器，比如你可以拖动黄色的小方块来调整圆角矩形的圆角。文本框也是 auto 形状，矩形的，只是默认情况下没有填充和轮廓线。</p>
+<dt>auto 形状</dt><dd><p>这是规则的形状，像矩形，椭圆，或块箭头。它们有各种各样的预设形状，大约有 180 种不同的形状。auto 形状可以有填充和轮廓，也可以包含文本。一些 auto 形状有调节器，比如你可以拖动黄色的小方块来调整圆角矩形的圆角。文本框也是 auto 形状，矩形的，只是默认情况下没有填充和轮廓线。</p>
 </dd>
 <dt>picture</dt><dd><p>光栅图像，如照片或剪贴画，在 PowerPoint 中被称为 <em>picture</em>。它有自己的形状，与 auto 形状有不同的行为。注意，auto 形状可以有 picture 填充，其中图像“通过显示”作为形状的背景，而不是填充颜色或渐变。这是另一回事。但很酷。</p>
 </dd>
 <dt>图形框架</dt><dd><p>这是用于存放表（table）、图表（chart）、智能艺术图表（smart art diagram）或媒体剪辑（media clip）的容器的技术名称。你不能单独添加其中一个，当你添加图形对象时，它会在文件中显示出来。关于这些，你可能不需要知道更多。</p>
 </dd>
-<dt>group shape</dt><dd><p>In PowerPoint, a set of shapes can be <em>grouped</em>, allowing them to be
-selected, moved, resized, and even filled as a unit. When you group a set of
-shapes a group shape gets created to contain those member shapes. You can’t
-actually see these except by their bounding box when the group is
-selected.</p>
+<dt>group shape</dt><dd><p>在 PowerPoint 中，一组图形可以被分组，允许它们被选择、移动、调整大小，甚至作为一个单元填充。当对一组形状进行分组时，将创建一个 group 形状以包含这些成员形状。实际上，您无法看到这些，除非当组被选中时，通过它们的包围框。</p>
 </dd>
-<dt>line/connector</dt><dd><p>Lines are different from auto shapes because, well, they’re linear. Some
-lines can be connected to other shapes and stay connected when the other
-shape is moved. These aren’t supported yet either so I don’t know much more
-about them. I’d better get to these soon though, they seem like they’d be
-very handy.</p>
+<dt>line/connector</dt><dd><p>线不同于 auto 形状，因为它们是线性的。一些线可以连接到其他形状，并保持连接时，其他形状移动。这些还没有被支持，所以我不知道更多关于他们。不过我最好还是快点看，它们看起来很方便。</p>
 </dd>
-<dt>content part</dt><dd><p>I actually have only the vaguest notion of what these are. It has something
-to do with embedding “foreign” XML like SVG in with the presentation. I’m
-pretty sure PowerPoint itself doesn’t do anything with these. My strategy
-is to ignore them. Working good so far.</p>
+<dt>content part</dt><dd><p>实际上我对这些东西只有最模糊的概念。它与在表示中嵌入“外来的” XML（如 SVG）有关。我很确定 PowerPoint 本身对这些没用。我的策略是无视他们。到目前为止工作顺利。</p>
 </dd>
 </dl>
-<p>As for real-life shapes, there are these nine types:</p>
+<p>至于现实生活中的形状，有九种：</p>
 <ul class="simple">
-<li><p>shape shapes – auto shapes with fill and an outline</p></li>
-<li><p>text boxes – auto shapes with no fill and no outline</p></li>
-<li><p>placeholders – auto shapes that can appear on a slide layout or master and
-be inherited on slides that use that layout, allowing content to be added
-that takes on the formatting of the placeholder</p></li>
-<li><p>line/connector – as described above</p></li>
-<li><p>picture – as described above</p></li>
-<li><p>table – that row and column thing</p></li>
-<li><p>chart – pie chart, line chart, etc.</p></li>
-<li><p>smart art – not supported yet, although preserved if present</p></li>
-<li><p>media clip – video or audio</p></li>
+<li><p>shape shapes —— 带有填充和轮廓的 auto 形状</p></li>
+<li><p>文本框——没有填充和轮廓的 auto 形状</p></li>
+<li><p>自动形状，可以出现在幻灯片布局或主幻灯片上，并在使用该布局的幻灯片上继承，允许添加采用占位符格式的内容</p></li>
+<li><p>line/connector —— 如上所述</p></li>
+<li><p>picture —— 如上所述</p></li>
+<li><p>table —— 由行和列组成</p></li>
+<li><p>chart —— 饼状图、折线图等</p></li>
+<li><p>smart art —— 还没有被支持，虽然保存如果存在</p></li>
+<li><p>media clip —— 视频或者音频</p></li>
 </ul>
 <section id="accessing-the-shapes-on-a-slide">
-<h2>Accessing the shapes on a slide<a class="headerlink" href="#accessing-the-shapes-on-a-slide" title="永久链接至标题">¶</a></h2>
-<p>Each slide has a <em>shape tree</em> that holds its shapes. It’s called a tree because
-it’s hierarchical in the general case; a node in the shape tree can be a group
-shape which itself can contain shapes and has the same semantics as the shape
-tree. For most purposes the shape tree has list semantics. You gain access to
-it like so:</p>
+<h2>访问幻灯片上形状<a class="headerlink" href="#accessing-the-shapes-on-a-slide" title="永久链接至标题">¶</a></h2>
+<p>每张幻灯片都有形状树来保存它的形状。它被称为树，因为在一般情况下它是分层的；形状树中的节点可以是 group 形状，组形状本身可以包含形状，并且具有与形状树相同的语义。在大多数情况下，形状树具有列表语义。你可以这样访问它：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shapes</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
 </pre></div>
 </div>
-<p>We’ll see a lot more of the shape tree in the next few sections.</p>
+<p>我们将在接下来的几节中看到更多的形状树。</p>
 </section>
 <section id="up-next">
 <h2>Up next …<a class="headerlink" href="#up-next" title="永久链接至标题">¶</a></h2>
-<p>Okay. That should be enough noodle work to get started. Let’s move on to
-working with AutoShapes.</p>
+<p>好吧。这些面条应该足够我们开始了。让我们继续使用自动形状。</p>
 </section>
 </section>
 
@@ -124,7 +106,7 @@ working with AutoShapes.</p>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
 <li><a class="reference internal" href="#">理解形状</a><ul>
-<li><a class="reference internal" href="#accessing-the-shapes-on-a-slide">Accessing the shapes on a slide</a></li>
+<li><a class="reference internal" href="#accessing-the-shapes-on-a-slide">访问幻灯片上形状</a></li>
 <li><a class="reference internal" href="#up-next">Up next …</a></li>
 </ul>
 </li>
@@ -139,7 +121,7 @@ working with AutoShapes.</p>
   <div>
     <h4>下一个主题</h4>
     <p class="topless"><a href="autoshapes.html"
-                          title="下一章">Working with AutoShapes</a></p>
+                          title="下一章">AutoShape</a></p>
   </div><h3>Useful Links</h3>
 <ul>
   <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
@@ -170,7 +152,7 @@ working with AutoShapes.</p>
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="autoshapes.html" title="Working with AutoShapes"
+          <a href="autoshapes.html" title="AutoShape"
              >下一页</a> |</li>
         <li class="right" >
           <a href="slides.html" title="幻灯片"

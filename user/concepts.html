@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 
-    <title>Concepts &#8212; python-pptx 0.6.21 文档</title>
+    <title>概念 &#8212; python-pptx 0.6.21 文档</title>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
 
@@ -24,7 +24,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="Frequently Asked Questions" href="../community/faq.html" />
-    <link rel="prev" title="Use cases" href="use-cases.html" /> 
+    <link rel="prev" title="用例" href="use-cases.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>导航</h3>
@@ -39,10 +39,10 @@
           <a href="../community/faq.html" title="Frequently Asked Questions"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="use-cases.html" title="Use cases"
+          <a href="use-cases.html" title="用例"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Concepts</a></li> 
+        <li class="nav-item nav-item-this"><a href="">概念</a></li> 
       </ul>
     </div>  
 
@@ -52,48 +52,25 @@
           <div class="body" role="main">
             
   <section id="concepts">
-<h1>Concepts<a class="headerlink" href="#concepts" title="永久链接至标题">¶</a></h1>
-<p><cite>python-pptx</cite> is completely object-oriented, and in general any operations you perform
-with it will be on an object. The root object for a presentation is
-<a class="reference internal" href="../api/presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a>. API details are provided on the modules pages, but here are
-some basics to get you started, especially some relationships you might find
-surprising at first.</p>
-<p>A presentation is loaded by constructing a new <a class="reference internal" href="../api/presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> instance,
-passing in the path to a presentation to be loaded:</p>
+<h1>概念<a class="headerlink" href="#concepts" title="永久链接至标题">¶</a></h1>
+<p><cite>python-pptx</cite> 是完全面向对象的，通常你用它执行的任何操作都将是在对象上。演示文稿的根对象是 <a class="reference internal" href="../api/presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a>。API 的详细信息在模块页面上提供，但这里有一些基础知识让你开始，特别是一些你可能会在一开始感到惊讶的关系。</p>
+<p>通过构造一个新的 <a class="reference internal" href="../api/presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> 实例来加载演示文稿，并传入要加载演示文稿的路径</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx</span> <span class="kn">import</span> <span class="n">Presentation</span>
 
 <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;slide-deck-foo.pptx&#39;</span>
 <span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><cite>python-pptx</cite> also contains a default template, and if you construct a <a class="reference internal" href="../api/presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a>
-instance without a path, a presentation based on that default template is
-loaded. This can be handy when you want to get started quickly, and most of the
-examples in this documentation use the default template.:</p>
+<p><cite>python-pptx</cite> 也包含默认模板，如果你构造没有 path 的 <a class="reference internal" href="../api/presentation.html#pptx.presentation.Presentation" title="pptx.presentation.Presentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Presentation</span></code></a> 实例，基于该默认模板的演示文稿将被加载。当你想快速开始时，这可以很方便，并且本文档中的大多数示例都使用默认模板。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># start with default presentation</span>
 <span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Note that there is currently no distinction between templates and presentations
-in <cite>python-pptx</cite> as there is in the PowerPoint® client, there are only presentations. To
-use a “template” for a presentation you simply create a presentation with all
-the styles, logo, and layouts you want, delete all the slides (or leave some in
-if it suits), and then load that as your starting place.</p>
+<p>请注意，与 PowerPoint® 客户端相比，<cite>python-pptx</cite> 中目前没有模板和演示文稿之间的区别，只有演示文稿。要在演示文稿中使用 “template”，你只需创建包含你想要的所有风格、徽标和布局的演示文稿，删除所有的幻灯片（或留一些如果适合的话），然后加载它作为你的起点。</p>
 <section id="slide-masters">
-<h2>Slide masters<a class="headerlink" href="#slide-masters" title="永久链接至标题">¶</a></h2>
-<p>A presentation has a list of slide masters and a list of slides. Let’s start
-with a discussion of the slide masters.</p>
-<p>One fact some find surprising (I did) is that a presentation file can have
-more than one slide master. It’s quite uncommon in my experience to find
-presentations that make use of this feature, but it’s entirely supported. The
-only time I’ve seen this happen is when slides from a “foreign” presentation
-are pasted into another deck; if you want the formatting and backgrounds from
-the other deck to be preserved on the pasted-in slides, the slide master and
-its slide layouts need to come with. Consequently, the presentation needs to
-maintain a list of slide masters, not just a single one, even though perhaps
-99% of the time you only ever use the one. To make things a little easier for
-the 99% situation, you can refer to the first slide master as though it were
-the only one:</p>
+<h2>幻灯片母版<a class="headerlink" href="#slide-masters" title="永久链接至标题">¶</a></h2>
+<p>演示文稿有幻灯片母版列表和幻灯片列表。我们先来讨论一下幻灯片母版。</p>
+<p>一个让一些人感到惊讶的事实是，演示文稿可以有多个幻灯片母版。在我的经验中，很少发现演示文稿使用了这个特性，但它是完全支持的。我唯一见过这种情况发生的情况是，来自 “foreign” 演示文稿的幻灯片被粘贴到另一个平台上；如果您希望在粘贴的幻灯片上保留另一组的格式和背景，则需要提供幻灯片母版及其幻灯片布局。因此，演示文稿需要维护幻灯片模板列表，而不仅仅是一个，即使可能 99% 的时间你只使用一个。为了使 99% 的情况更容易一些，您可以参考第一个幻灯片母版，就像它是唯一的一样:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
 <span class="n">slide_master</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_masters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="c1"># is equivalent to</span>
@@ -102,13 +79,8 @@ the only one:</p>
 </div>
 </section>
 <section id="slide-layouts">
-<h2>Slide layouts<a class="headerlink" href="#slide-layouts" title="永久链接至标题">¶</a></h2>
-<p>Another fact that might be surprising is that slide layouts belong to a slide
-master, not directly to a presentation, so normally you have to access the
-slide layouts via their slide master. Since this is subject to the same 99%
-situation described above, the slide layouts belonging to the first slide
-master can also be accessed directly from the presentation via syntactic
-sugar:</p>
+<h2>幻灯片布局<a class="headerlink" href="#slide-layouts" title="永久链接至标题">¶</a></h2>
+<p>另一个可能令人惊讶的事实是，幻灯片布局属于幻灯片母版，而不是直接属于演示文稿，所以通常您必须通过它们的幻灯片母版访问幻灯片布局。由于这与上面描述的 99% 的情况相同，属于第一个幻灯片母版的幻灯片布局也可以通过语法糖直接从演示文稿中访问:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
 <span class="n">title_slide_layout</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_masters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="c1"># is equivalent to:</span>
@@ -117,18 +89,15 @@ sugar:</p>
 </div>
 </section>
 <section id="slides">
-<h2>Slides<a class="headerlink" href="#slides" title="永久链接至标题">¶</a></h2>
-<p>The slides in a presentation belong to the presentation object and are
-accessed using the <code class="docutils literal notranslate"><span class="pre">slides</span></code> attribute:</p>
+<h2>幻灯片<a class="headerlink" href="#slides" title="永久链接至标题">¶</a></h2>
+<p>演示文稿中的幻灯片属于演示文稿对象，可以通过 <code class="docutils literal notranslate"><span class="pre">slides</span></code> 属性访问:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 <span class="n">first_slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 <section id="adding-a-slide">
-<h3>Adding a slide<a class="headerlink" href="#adding-a-slide" title="永久链接至标题">¶</a></h3>
-<p>Adding a slide is accomplished by calling the <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_slide()</span></code> method on the
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">slides</span></code> attribute of the presentation. A slide layout must be passed
-in to specify the layout the new slide should take on:</p>
+<h3>添加幻灯片<a class="headerlink" href="#adding-a-slide" title="永久链接至标题">¶</a></h3>
+<p>通过调用演示文稿的 <code class="xref py py-attr docutils literal notranslate"><span class="pre">slides</span></code> 属性上的 <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_slide()</span></code> 方法来添加幻灯片。必须传入一个幻灯片布局来指定新幻灯片应该采用的布局:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prs</span> <span class="o">=</span> <span class="n">Presentation</span><span class="p">()</span>
 <span class="n">title_slide_layout</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slide_layouts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">new_slide</span> <span class="o">=</span> <span class="n">prs</span><span class="o">.</span><span class="n">slides</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">title_slide_layout</span><span class="p">)</span>
@@ -148,11 +117,11 @@ in to specify the layout the new slide should take on:</p>
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Concepts</a><ul>
-<li><a class="reference internal" href="#slide-masters">Slide masters</a></li>
-<li><a class="reference internal" href="#slide-layouts">Slide layouts</a></li>
-<li><a class="reference internal" href="#slides">Slides</a><ul>
-<li><a class="reference internal" href="#adding-a-slide">Adding a slide</a></li>
+<li><a class="reference internal" href="#">概念</a><ul>
+<li><a class="reference internal" href="#slide-masters">幻灯片母版</a></li>
+<li><a class="reference internal" href="#slide-layouts">幻灯片布局</a></li>
+<li><a class="reference internal" href="#slides">幻灯片</a><ul>
+<li><a class="reference internal" href="#adding-a-slide">添加幻灯片</a></li>
 </ul>
 </li>
 </ul>
@@ -163,7 +132,7 @@ in to specify the layout the new slide should take on:</p>
   <div>
     <h4>上一个主题</h4>
     <p class="topless"><a href="use-cases.html"
-                          title="上一章">Use cases</a></p>
+                          title="上一章">用例</a></p>
   </div>
   <div>
     <h4>下一个主题</h4>
@@ -202,10 +171,10 @@ in to specify the layout the new slide should take on:</p>
           <a href="../community/faq.html" title="Frequently Asked Questions"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="use-cases.html" title="Use cases"
+          <a href="use-cases.html" title="用例"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Concepts</a></li> 
+        <li class="nav-item nav-item-this"><a href="">概念</a></li> 
       </ul>
     </div>
 <div class="footer">

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 
-    <title>Working with AutoShapes &#8212; python-pptx 0.6.21 文档</title>
+    <title>AutoShape &#8212; python-pptx 0.6.21 文档</title>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
 
@@ -23,7 +23,7 @@
     <script src="../../_static/searchtools.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="Understanding placeholders" href="placeholders-understanding.html" />
+    <link rel="next" title="理解占位符" href="placeholders-understanding.html" />
     <link rel="prev" title="理解形状" href="understanding-shapes.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,13 +36,13 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="placeholders-understanding.html" title="Understanding placeholders"
+          <a href="placeholders-understanding.html" title="理解占位符"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
           <a href="understanding-shapes.html" title="理解形状"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Working with AutoShapes</a></li> 
+        <li class="nav-item nav-item-this"><a href="">AutoShape</a></li> 
       </ul>
     </div>  
 
@@ -52,18 +52,12 @@
           <div class="body" role="main">
             
   <section id="working-with-autoshapes">
-<h1>Working with AutoShapes<a class="headerlink" href="#working-with-autoshapes" title="永久链接至标题">¶</a></h1>
-<p>Auto shapes are regular shape shapes. Squares, circles, triangles, stars,
-that sort of thing. There are 182 different auto shapes to choose from. 120
-of these have adjustment “handles” you can use to change the shape, sometimes
-dramatically.</p>
-<p>Many shape types share a common set of properties. We’ll introduce many of
-them here because several of those shapes are just a specialized form of
-AutoShape.</p>
+<h1>AutoShape<a class="headerlink" href="#working-with-autoshapes" title="永久链接至标题">¶</a></h1>
+<p>自动形状是规则形状。正方形，圆形，三角形，星星，诸如此类。有 182 种不同的自动形状可供选择。其中 120 个有调整“手柄”，你可以用来改变形状，有时是戏剧性的。</p>
+<p>许多形状类型共享一组共同的属性。我们将在这里介绍其中的许多形状，因为其中有几个形状只是 AutoShape 的特殊形式。</p>
 <section id="adding-an-auto-shape">
-<h2>Adding an auto shape<a class="headerlink" href="#adding-an-auto-shape" title="永久链接至标题">¶</a></h2>
-<p>The following code adds a rounded rectangle shape, one inch square, and
-positioned one inch from the top-left corner of the slide:</p>
+<h2>添加自动形状<a class="headerlink" href="#adding-an-auto-shape" title="永久链接至标题">¶</a></h2>
+<p>下面的代码添加了圆角矩形（1 英寸正方形），并位于幻灯片左上角 1 英寸处：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">MSO_SHAPE</span>
 
 <span class="n">shapes</span> <span class="o">=</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span>
@@ -73,23 +67,13 @@ positioned one inch from the top-left corner of the slide:</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>See the <a class="reference internal" href="../api/enum/MsoAutoShapeType.html#msoautoshapetype"><span class="std std-ref">MSO_AUTO_SHAPE_TYPE</span></a> enumeration page for a list of all 182 auto
-shape types.</p>
+<p>请参阅 <a class="reference internal" href="../api/enum/MsoAutoShapeType.html#msoautoshapetype"><span class="std std-ref">MSO_AUTO_SHAPE_TYPE</span></a> 枚举页中所有 182 个自动形状类型的列表。</p>
 </section>
 <section id="understanding-english-metric-units">
-<span id="emu"></span><h2>Understanding English Metric Units<a class="headerlink" href="#understanding-english-metric-units" title="永久链接至标题">¶</a></h2>
-<p>In the prior example we set the position and dimension values to the
-expression <code class="docutils literal notranslate"><span class="pre">Inches(1.0)</span></code>. What’s that about?</p>
-<p>Internally, PowerPoint stores length values in <em>English Metric Units</em> (EMU).
-This term might be worth a quick Googling, but the short story is EMU is an
-integer unit of length, 914400 to the inch. Most lengths in Office documents
-are stored in EMU. 914400 has the great virtue that it is evenly divisible by
-a great many common factors, allowing exact conversion between inches and
-centimeters, for example. Being an integer, it can be represented exactly
-across serializations and across platforms.</p>
-<p>As you might imagine, working directly in EMU is inconvenient. To make it
-easier, python-pptx provides a collection of value types to allow easy
-specification and conversion into convenient units:</p>
+<span id="emu"></span><h2>理解英语度量单位<a class="headerlink" href="#understanding-english-metric-units" title="永久链接至标题">¶</a></h2>
+<p>在前面的示例中，我们将位置和尺寸值设置为表达式 <code class="docutils literal notranslate"><span class="pre">Inches(1.0)</span></code>。那是什么呢？</p>
+<p>在内部，PowerPoint 以英语公制单位（English Metric Units，简称 EMU）存储长度值。这个术语可能值得我们在谷歌上搜索一下，但简而言之，EMU 是长度的整数单位，914400 立方英寸。Office 文档中的大部分长度都存储在 EMU 中。914400 的优点是它可以被许多公因数整除，例如，可以在英寸和厘米之间进行精确换算。作为一个整数，它可以跨序列化和平台准确地表示。</p>
+<p>你可以想象，直接在 EMU 工作是不方便的。为了让它更简单，python-pptx 提供了一个值类型集合，以方便地规范和转换为便利的单位：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Inches</span><span class="p">,</span> <span class="n">Pt</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">length</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">length</span>
@@ -105,13 +89,11 @@ specification and conversion into convenient units:</p>
 <span class="go">914400</span>
 </pre></div>
 </div>
-<p>More details are available in the <a class="reference internal" href="../api/util.html#util"><span class="std std-ref">API documentation for pptx.util</span></a></p>
+<p>更多细节可以在 <a class="reference internal" href="../api/util.html#util"><span class="std std-ref">pptx.util 的 API 文档</span></a> 中找到</p>
 </section>
 <section id="shape-position-and-dimensions">
-<h2>Shape position and dimensions<a class="headerlink" href="#shape-position-and-dimensions" title="永久链接至标题">¶</a></h2>
-<p>All shapes have a position on their slide and have a size. In general,
-position and size are specified when the shape is created. Position and size
-can also be read from existing shapes and changed:</p>
+<h2>形状位置和维度<a class="headerlink" href="#shape-position-and-dimensions" title="永久链接至标题">¶</a></h2>
+<p>所有形状在其 slide 上都有位置和大小。通常，位置和大小是在创建形状时指定的。位置和大小也可以从现有的形状和改变：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx.enum.shapes</span> <span class="kn">import</span> <span class="n">MSO_SHAPE</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">left</span> <span class="o">=</span> <span class="n">top</span> <span class="o">=</span> <span class="n">width</span> <span class="o">=</span> <span class="n">height</span> <span class="o">=</span> <span class="n">Inches</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_shape</span><span class="p">(</span>
@@ -128,23 +110,17 @@ can also be read from existing shapes and changed:</p>
 </div>
 </section>
 <section id="fill">
-<h2>Fill<a class="headerlink" href="#fill" title="永久链接至标题">¶</a></h2>
-<p>AutoShapes have an outline around their outside edge. What appears within
-that outline is called the shape’s <em>fill</em>.</p>
-<p>The most common type of fill is a solid color. A shape may also be filled
-with a gradient, a picture, a pattern (like cross-hatching for example), or
-may have no fill (transparent).</p>
-<p>When a color is used, it may be specified as a specific RGB value or a color
-from the theme palette.</p>
-<p>Because there are so many options, the API for fill is a bit complex. This
-code sets the fill of a shape to red:</p>
+<h2>填充<a class="headerlink" href="#fill" title="永久链接至标题">¶</a></h2>
+<p>自动形状的外部边缘有轮廓。在这个轮廓中出现的东西叫做形状的填充。</p>
+<p>最常见的填充类型是纯色。形状也可以用渐变填充，图片，模式（比如交叉填充），或者没有填充（透明填充）。</p>
+<p>当使用 color 时，它可能被指定为特定的 RGB 值或来自主题调色板的颜色。</p>
+<p>因为有很多选项，所以填充的 API 有点复杂。这段代码将形状的填充设置为红色:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">fill</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This sets it to the theme color that appears as ‘Accent 1 - 25% Darker’ in
-the toolbar palette:</p>
+<p>将其设置为在工具栏调色板中显示为 ‘Accent 1 - 25% Darker’ 的主题颜色:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pptx.enum.dml</span> <span class="kn">import</span> <span class="n">MSO_THEME_COLOR</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">fill</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
@@ -152,16 +128,11 @@ the toolbar palette:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span><span class="o">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.25</span>
 </pre></div>
 </div>
-<p>This sets the shape fill to transparent, or ‘No Fill’ as it’s called in the
-PowerPoint UI:</p>
+<p>将形状填充设置为透明，或 ‘No fill’ 在 PowerPoint UI 中是这样的:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shape</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">background</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>As you can see, the first step is to specify the desired fill type by calling
-the corresponding method on fill. Doing so actually changes the properties
-available on the fill object. For example, referencing <code class="docutils literal notranslate"><span class="pre">.fore_color</span></code> on a
-fill object after calling its <code class="docutils literal notranslate"><span class="pre">.background()</span></code> method will raise an
-exception:</p>
+<p>如您所见，第一步是通过调用 fill 上的相应方法来指定所需的填充类型。这样做实际上改变了填充对象上可用的属性。例如，引用 <code class="docutils literal notranslate"><span class="pre">.fore_color</span></code> 调用填充对象的 <code class="docutils literal notranslate"><span class="pre">.background()</span></code> 方法后，将引发异常:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">fill</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span>
@@ -175,36 +146,30 @@ exception:</p>
 </div>
 </section>
 <section id="line">
-<h2>Line<a class="headerlink" href="#line" title="永久链接至标题">¶</a></h2>
-<p>The outline of an AutoShape can also be formatted, including setting its
-color, width, dash (solid, dashed, dotted, etc.), line style (single, double,
-thick-thin, etc.), end cap, join type, and others. At the time of writing,
-color and width can be set using python-pptx:</p>
+<h2>线<a class="headerlink" href="#line" title="永久链接至标题">¶</a></h2>
+<p>自动形状的轮廓也可以格式化，包括设置其颜色、宽度、虚线（实线、虚线、虚线等）、线样式（单线、双线、厚-薄线等）、尾端、连接类型等。::在编写时，可以使用 python-pptx 设置颜色和宽度</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">line</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># 50% lighter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">Pt</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Theme colors can be used on lines too:</p>
+<p>主题颜色也可以在线条上使用:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">theme_color</span> <span class="o">=</span> <span class="n">MSO_THEME_COLOR</span><span class="o">.</span><span class="n">ACCENT_6</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Shape.line</span></code> has the attribute <code class="docutils literal notranslate"><span class="pre">.color</span></code>. This is essentially a shortcut
-for:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Shape.line</span></code> 具有 <code class="docutils literal notranslate"><span class="pre">.color</span></code> 属性。这本质上是快捷方式:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">solid</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">fore_color</span>
 </pre></div>
 </div>
-<p>This makes sense for line formatting because a shape outline is most
-frequently set to a solid color. Accessing the fill directly is required, for
-example, to set the line to transparent:</p>
+<p>这对于线格式很有意义，因为形状轮廓通常被设置为纯色。需要直接访问填充，例如，将该行设置为 transparent:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">fill</span><span class="o">.</span><span class="n">background</span><span class="p">()</span>
 </pre></div>
 </div>
 <section id="line-width">
-<h3>Line width<a class="headerlink" href="#line-width" title="永久链接至标题">¶</a></h3>
-<p>The shape outline also has a read/write width property:</p>
+<h3>线宽<a class="headerlink" href="#line-width" title="永久链接至标题">¶</a></h3>
+<p>形状轮廓还有读/写宽度属性:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">width</span>
 <span class="go">9525</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span><span class="o">.</span><span class="n">width</span><span class="o">.</span><span class="n">pt</span>
@@ -217,38 +182,17 @@ example, to set the line to transparent:</p>
 </section>
 </section>
 <section id="adjusting-an-autoshape">
-<h2>Adjusting an autoshape<a class="headerlink" href="#adjusting-an-autoshape" title="永久链接至标题">¶</a></h2>
-<p>Many auto shapes have adjustments. In PowerPoint, these show up as little
-yellow diamonds you can drag to change the look of the shape. They’re a little
-fiddly to work with via a program, but if you have the patience to get them
-right, you can achieve some remarkable effects with great precision.</p>
+<h2>调整自动形状<a class="headerlink" href="#adjusting-an-autoshape" title="永久链接至标题">¶</a></h2>
+<p>“许多自动形状都可以调整。在 PowerPoint 中，这些会显示为黄色的小方块，你可以拖动来改变形状的外观。通过程序处理它们有点棘手，但如果你有耐心把它们做对，你可以以非常精确的方式实现一些显著的效果。</p>
 <section id="shape-adjustment-concepts">
-<h3>Shape Adjustment Concepts<a class="headerlink" href="#shape-adjustment-concepts" title="永久链接至标题">¶</a></h3>
-<p>There are a few concepts it’s worthwhile to grasp before trying to do serious
-work with adjustments.</p>
-<p>First, adjustments are particular to a specific auto shape type. Each auto
-shape has between zero and eight adjustments. What each of them does is
-arbitrary and depends on the shape design.</p>
-<p>Conceptually, adjustments are guides, in many ways like the light blue ones you
-can align to in the PowerPoint UI and other drawing apps. These don’t show, but
-they operate in a similar way, each defining an x or y value that part of the
-shape will align to, changing the proportions of the shape.</p>
-<p>Adjustment values are large integers, each based on a nominal value of 100,000.
-The effective value of an adjustment is proportional to the width or height of
-the shape. So a value of 50,000 for an x-coordinate adjustment corresponds to
-half the width of the shape; a value of 75,000 for a y-coordinate adjustment
-corresponds to 3/4 of the shape height.</p>
-<p>Adjustment values can be negative, generally indicating the coordinate is to
-the left or above the top left corner (origin) of the shape. Values can also be
-subject to limits, meaning their effective value cannot be outside a prescribed
-range. In practice this corresponds to a point not being able to extend beyond
-the left side of the shape, for example.</p>
-<p>Spending some time fooling around with shape adjustments in PowerPoint is time
-well spent to build an intuitive sense of how they behave. You also might want
-to have <code class="docutils literal notranslate"><span class="pre">opc-diag</span></code> installed so you can look at the XML values that are
-generated by different adjustments as a head start on developing your
-adjustment code.</p>
-<p>The following code formats a callout shape using its adjustments:</p>
+<h3>形状调整概念<a class="headerlink" href="#shape-adjustment-concepts" title="永久链接至标题">¶</a></h3>
+<p>在进行认真的调整工作之前，有一些概念是值得掌握的。</p>
+<p>首先，调整是针对特定的自动形状类型。每个自动形状有 0 到 8 个调整。它们的作用是任意的，取决于形状设计。</p>
+<p>从概念上讲，调整是一种指导，在很多方面，比如你可以在 PowerPoint UI 和其他绘图应用程序中对齐的淡蓝色。它们不会显示出来，但它们以相似的方式运作，每一个都定义了 x 或 y 值，该形状的一部分将对齐，改变形状的比例。</p>
+<p>调整值是大整数，每一调整值以 100,000 的名义值为基础。调整的有效值与形状的宽度或高度成比例。因此 x 坐标调整值为 50,000 对应于形状宽度的一半；y 坐标调整值为 75000 相当于形状高度的 3/4。</p>
+<p>调整值可以是负的，通常表示坐标在左边或在形状的左上角（原点）以上。值也可以受限制，这意味着它们的有效值不能超出规定的范围。实际上，这相当于一个点不能延伸到形状的左边。</p>
+<p>花些时间在幻灯片上调整形状，这是很好的时间，可以建立一个直观的感觉，了解他们的行为。您还可能希望安装 <code class="docutils literal notranslate"><span class="pre">opc-diag</span></code>，这样您就可以查看由不同的调整生成的 XML 值，作为开发您的调整代码的开始。</p>
+<p>下面的代码使用调整来格式化 callout 形状:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">callout_sp</span> <span class="o">=</span> <span class="n">shapes</span><span class="o">.</span><span class="n">add_shape</span><span class="p">(</span>
     <span class="n">MSO_SHAPE</span><span class="o">.</span><span class="n">LINE_CALLOUT_2_ACCENT_BAR</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
 <span class="p">)</span>
@@ -281,17 +225,17 @@ adjustment code.</p>
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Working with AutoShapes</a><ul>
-<li><a class="reference internal" href="#adding-an-auto-shape">Adding an auto shape</a></li>
-<li><a class="reference internal" href="#understanding-english-metric-units">Understanding English Metric Units</a></li>
-<li><a class="reference internal" href="#shape-position-and-dimensions">Shape position and dimensions</a></li>
-<li><a class="reference internal" href="#fill">Fill</a></li>
-<li><a class="reference internal" href="#line">Line</a><ul>
-<li><a class="reference internal" href="#line-width">Line width</a></li>
+<li><a class="reference internal" href="#">AutoShape</a><ul>
+<li><a class="reference internal" href="#adding-an-auto-shape">添加自动形状</a></li>
+<li><a class="reference internal" href="#understanding-english-metric-units">理解英语度量单位</a></li>
+<li><a class="reference internal" href="#shape-position-and-dimensions">形状位置和维度</a></li>
+<li><a class="reference internal" href="#fill">填充</a></li>
+<li><a class="reference internal" href="#line">线</a><ul>
+<li><a class="reference internal" href="#line-width">线宽</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#adjusting-an-autoshape">Adjusting an autoshape</a><ul>
-<li><a class="reference internal" href="#shape-adjustment-concepts">Shape Adjustment Concepts</a></li>
+<li><a class="reference internal" href="#adjusting-an-autoshape">调整自动形状</a><ul>
+<li><a class="reference internal" href="#shape-adjustment-concepts">形状调整概念</a></li>
 </ul>
 </li>
 </ul>
@@ -307,7 +251,7 @@ adjustment code.</p>
   <div>
     <h4>下一个主题</h4>
     <p class="topless"><a href="placeholders-understanding.html"
-                          title="下一章">Understanding placeholders</a></p>
+                          title="下一章">理解占位符</a></p>
   </div><h3>Useful Links</h3>
 <ul>
   <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
@@ -338,13 +282,13 @@ adjustment code.</p>
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="placeholders-understanding.html" title="Understanding placeholders"
+          <a href="placeholders-understanding.html" title="理解占位符"
              >下一页</a> |</li>
         <li class="right" >
           <a href="understanding-shapes.html" title="理解形状"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Working with AutoShapes</a></li> 
+        <li class="nav-item nav-item-this"><a href="">AutoShape</a></li> 
       </ul>
     </div>
 <div class="footer">

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 
-    <title>Working with text &#8212; python-pptx 0.6.21 文档</title>
+    <title>文本 &#8212; python-pptx 0.6.21 文档</title>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
 
@@ -24,7 +24,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="Working with charts" href="charts.html" />
-    <link rel="prev" title="Working with placeholders" href="placeholders-using.html" /> 
+    <link rel="prev" title="使用占位符" href="placeholders-using.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>导航</h3>
@@ -39,10 +39,10 @@
           <a href="charts.html" title="Working with charts"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="placeholders-using.html" title="Working with placeholders"
+          <a href="placeholders-using.html" title="使用占位符"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Working with text</a></li> 
+        <li class="nav-item nav-item-this"><a href="">文本</a></li> 
       </ul>
     </div>  
 
@@ -52,34 +52,21 @@
           <div class="body" role="main">
             
   <section id="working-with-text">
-<h1>Working with text<a class="headerlink" href="#working-with-text" title="永久链接至标题">¶</a></h1>
-<p>Auto shapes and table cells can contain text. Other shapes can’t. Text is
-always manipulated the same way, regardless of its container.</p>
-<p>Text exists in a hierarchy of three levels:</p>
+<h1>文本<a class="headerlink" href="#working-with-text" title="永久链接至标题">¶</a></h1>
+<p>自动形状和表格单元格可以包含文本。其他形状不能。文本总是以相同的方式操作，不管它的容器是什么。</p>
+<p>文本存在于三个层次：</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../api/shapes.html#pptx.shapes.autoshape.Shape.text_frame" title="pptx.shapes.autoshape.Shape.text_frame"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Shape.text_frame</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/text.html#pptx.text.text.TextFrame.paragraphs" title="pptx.text.text.TextFrame.paragraphs"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TextFrame.paragraphs</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api/text.html#pptx.text.text._Paragraph.runs" title="pptx.text.text._Paragraph.runs"><code class="xref py py-attr docutils literal notranslate"><span class="pre">_Paragraph.runs</span></code></a></p></li>
 </ul>
-<p>All the text in a shape is contained in its <em>text frame</em>. A text frame has
-vertical alignment, margins, wrapping and auto-fit behavior, a rotation angle,
-some possible 3D visual features, and can be set to format its text into
-multiple columns. It also contains a sequence of paragraphs, which always
-contains at least one paragraph, even when empty.</p>
-<p>A paragraph has line spacing, space before, space after, available bullet
-formatting, tabs, outline/indentation level, and horizontal alignment.
-A paragraph can be empty, but if it contains any text, that text is contained
-in one or more runs.</p>
-<p>A run exists to provide character level formatting, including font typeface,
-size, and color, an optional hyperlink target URL, bold, italic, and underline
-styles, strikethrough, kerning, and a few capitalization styles like all caps.</p>
-<p>Let’s run through these one by one. Only features available in the current
-release are shown.</p>
+<p>形状中的所有文本都包含在其文本框架中。文本框具有垂直对齐、边距、换行和自动适应行为、旋转角度和一些可能的 3D 视觉功能，可以设置为将文本格式化为多个列。它还包含段落序列，它总是包含至少一个段落，即使是空的。</p>
+<p>段落有行间距、前后空格、可用的 bullet 格式、制表符、大纲/缩进级别和水平对齐方式。段落可以为空，但如果它包含任何文本，则该文本将包含在一次或多次 run 中。</p>
+<p><code class="docutils literal notranslate"><span class="pre">run</span></code> 的存在是为了提供字符级格式，包括字体、大小和颜色、可选的超链接目标 URL、粗体、斜体和下划线样式、删除线、字距，以及一些大写样式，如所有大写。</p>
+<p>让我们一个一个地看一遍。仅显示当前版本中可用的特性。</p>
 <section id="accessing-the-text-frame">
-<h2>Accessing the text frame<a class="headerlink" href="#accessing-the-text-frame" title="永久链接至标题">¶</a></h2>
-<p>As mentioned, not all shapes have a text frame. So if you’re not sure and you
-don’t want to catch the possible exception, you’ll want to check before
-attempting to access it:</p>
+<h2>访问文本框<a class="headerlink" href="#accessing-the-text-frame" title="永久链接至标题">¶</a></h2>
+<p>如前所述，并不是所有形状都有文本框架。所以，如果你不确定，你不想捕获可能的异常，你会想要在尝试访问它之前检查：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">slide</span><span class="o">.</span><span class="n">shapes</span><span class="p">:</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">shape</span><span class="o">.</span><span class="n">has_text_frame</span><span class="p">:</span>
         <span class="k">continue</span>
@@ -90,10 +77,8 @@ attempting to access it:</p>
 </div>
 </section>
 <section id="accessing-paragraphs">
-<h2>Accessing paragraphs<a class="headerlink" href="#accessing-paragraphs" title="永久链接至标题">¶</a></h2>
-<p>A text frame always contains at least one paragraph. This causes the process
-of getting multiple paragraphs into a shape to be a little clunkier than one
-might like. Say for example you want a shape with three paragraphs:</p>
+<h2>访问段落<a class="headerlink" href="#accessing-paragraphs" title="永久链接至标题">¶</a></h2>
+<p>文本框架总是至少包含一个段落。这就导致了将多个段落整理成一个形状的过程比人们希望的要笨拙一些。举个例子，你想要一个有三个段落的形状：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paragraph_strs</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;Egg, bacon, sausage and spam.&#39;</span><span class="p">,</span>
     <span class="s1">&#39;Spam, bacon, sausage and spam.&#39;</span><span class="p">,</span>
@@ -113,11 +98,8 @@ might like. Say for example you want a shape with three paragraphs:</p>
 </div>
 </section>
 <section id="adding-text">
-<h2>Adding text<a class="headerlink" href="#adding-text" title="永久链接至标题">¶</a></h2>
-<p>Only runs can actually contain text. Assigning a string to the <code class="docutils literal notranslate"><span class="pre">.text</span></code>
-attribute on a shape, text frame, or paragraph is a shortcut method for placing
-text in a run contained by those objects. The following two snippets produce
-the same result:</p>
+<h2>添加文本<a class="headerlink" href="#adding-text" title="永久链接至标题">¶</a></h2>
+<p>只有 run 才能真正包含文本。将字符串赋值给形状、文本框架或段落的 <code class="docutils literal notranslate"><span class="pre">.text</span></code> 属性是将文本放置在由这些对象包含的 run 中的一种快捷方法。下面两个代码片段产生了相同的结果：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shape</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;foobar&#39;</span>
 
 <span class="c1"># is equivalent to ...</span>
@@ -131,13 +113,8 @@ the same result:</p>
 </div>
 </section>
 <section id="applying-text-frame-level-formatting">
-<h2>Applying text frame-level formatting<a class="headerlink" href="#applying-text-frame-level-formatting" title="永久链接至标题">¶</a></h2>
-<p>The following produces a shape with a single paragraph, a slightly wider bottom
-than top margin (these default to 0.05”), no left margin, text aligned top, and
-word wrapping turned off. In addition, the auto-size behavior is set to
-adjust the width and height of the shape to fit its text. Note that vertical
-alignment is set on the text frame. Horizontal alignment is set on each
-paragraph:</p>
+<h2>应用文本框架级格式<a class="headerlink" href="#applying-text-frame-level-formatting" title="永久链接至标题">¶</a></h2>
+<p>下面生成的形状只有一个段落，底部距比顶部距稍宽（默认值为 0.05”），没有左边距，顶部文本对齐，并关闭了换行功能。此外，设置自动大小行为来调整形状的宽度和高度以适应其文本。请注意，文本框上设置了垂直对齐。在每个段落设置水平对齐：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Inches</span>
 <span class="kn">from</span> <span class="nn">pptx.enum.text</span> <span class="kn">import</span> <span class="n">MSO_ANCHOR</span><span class="p">,</span> <span class="n">MSO_AUTO_SIZE</span>
 
@@ -150,14 +127,11 @@ paragraph:</p>
 <span class="n">text_frame</span><span class="o">.</span><span class="n">auto_size</span> <span class="o">=</span> <span class="n">MSO_AUTO_SIZE</span><span class="o">.</span><span class="n">SHAPE_TO_FIT_TEXT</span>
 </pre></div>
 </div>
-<p>The possible values for <code class="docutils literal notranslate"><span class="pre">TextFrame.auto_size</span></code> and
-<code class="docutils literal notranslate"><span class="pre">TextFrame.vertical_anchor</span></code> are specified by the enumeration
-<a class="reference internal" href="../api/enum/MsoAutoSize.html#msoautosize"><span class="std std-ref">MSO_AUTO_SIZE</span></a> and <a class="reference internal" href="../api/enum/MsoVerticalAnchor.html#msoverticalanchor"><span class="std std-ref">MSO_VERTICAL_ANCHOR</span></a> respectively.</p>
+<p><code class="docutils literal notranslate"><span class="pre">TextFrame.auto_size</span></code> 和 <code class="docutils literal notranslate"><span class="pre">TextFrame.vertical_anchor</span></code> 的可能值分别由枚举 <a class="reference internal" href="../api/enum/MsoAutoSize.html#msoautosize"><span class="std std-ref">MSO_AUTO_SIZE</span></a> 和 <a class="reference internal" href="../api/enum/MsoVerticalAnchor.html#msoverticalanchor"><span class="std std-ref">MSO_VERTICAL_ANCHOR</span></a> 指定。</p>
 </section>
 <section id="applying-paragraph-formatting">
-<h2>Applying paragraph formatting<a class="headerlink" href="#applying-paragraph-formatting" title="永久链接至标题">¶</a></h2>
-<p>The following produces a shape containing three left-aligned paragraphs, the
-second and third indented (like sub-bullets) under the first:</p>
+<h2>应用段落级格式<a class="headerlink" href="#applying-paragraph-formatting" title="永久链接至标题">¶</a></h2>
+<p>下面的形状包含三个左对齐的段落，第二个和第三个缩进（像 sub-bullets）在第一个下面：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx.enum.text</span> <span class="kn">import</span> <span class="n">PP_ALIGN</span>
 
 <span class="n">paragraph_strs</span> <span class="o">=</span> <span class="p">[</span>
@@ -182,10 +156,8 @@ second and third indented (like sub-bullets) under the first:</p>
 </div>
 </section>
 <section id="applying-character-formatting">
-<h2>Applying character formatting<a class="headerlink" href="#applying-character-formatting" title="永久链接至标题">¶</a></h2>
-<p>Character level formatting is applied at the run level, using the <code class="docutils literal notranslate"><span class="pre">.font</span></code>
-attribute. The following formats a sentence in 18pt Calibri Bold and applies
-the theme color Accent 1.</p>
+<h2>应用字符级格式<a class="headerlink" href="#applying-character-formatting" title="永久链接至标题">¶</a></h2>
+<p>字符级格式化在 run 级应用，使用 <code class="docutils literal notranslate"><span class="pre">.font</span></code> 属性。下面用 18pt Calibri 粗体格式化一个句子，并应用主题颜色 Accent 1。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pptx.dml.color</span> <span class="kn">import</span> <span class="n">RGBColor</span>
 <span class="kn">from</span> <span class="nn">pptx.enum.dml</span> <span class="kn">import</span> <span class="n">MSO_THEME_COLOR</span>
 <span class="kn">from</span> <span class="nn">pptx.util</span> <span class="kn">import</span> <span class="n">Pt</span>
@@ -205,12 +177,11 @@ the theme color Accent 1.</p>
 <span class="n">font</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">theme_color</span> <span class="o">=</span> <span class="n">MSO_THEME_COLOR</span><span class="o">.</span><span class="n">ACCENT_1</span>
 </pre></div>
 </div>
-<p>If you prefer, you can set the font color to an absolute RGB value. Note that
-this will not change color when the theme is changed:</p>
+<p>如果您愿意，可以将字体颜色设置为绝对 RGB 值。注意，当主题改变时，这不会改变颜色：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">font</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">rgb</span> <span class="o">=</span> <span class="n">RGBColor</span><span class="p">(</span><span class="mh">0xFF</span><span class="p">,</span> <span class="mh">0x7F</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>A run can also be made into a hyperlink by providing a target URL:</p>
+<p>通过提供目标 URL，run 也可以变成超链接：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run</span><span class="o">.</span><span class="n">hyperlink</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/scanny/python-pptx&#39;</span>
 </pre></div>
 </div>
@@ -227,13 +198,13 @@ this will not change color when the theme is changed:</p>
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Working with text</a><ul>
-<li><a class="reference internal" href="#accessing-the-text-frame">Accessing the text frame</a></li>
-<li><a class="reference internal" href="#accessing-paragraphs">Accessing paragraphs</a></li>
-<li><a class="reference internal" href="#adding-text">Adding text</a></li>
-<li><a class="reference internal" href="#applying-text-frame-level-formatting">Applying text frame-level formatting</a></li>
-<li><a class="reference internal" href="#applying-paragraph-formatting">Applying paragraph formatting</a></li>
-<li><a class="reference internal" href="#applying-character-formatting">Applying character formatting</a></li>
+<li><a class="reference internal" href="#">文本</a><ul>
+<li><a class="reference internal" href="#accessing-the-text-frame">访问文本框</a></li>
+<li><a class="reference internal" href="#accessing-paragraphs">访问段落</a></li>
+<li><a class="reference internal" href="#adding-text">添加文本</a></li>
+<li><a class="reference internal" href="#applying-text-frame-level-formatting">应用文本框架级格式</a></li>
+<li><a class="reference internal" href="#applying-paragraph-formatting">应用段落级格式</a></li>
+<li><a class="reference internal" href="#applying-character-formatting">应用字符级格式</a></li>
 </ul>
 </li>
 </ul>
@@ -242,7 +213,7 @@ this will not change color when the theme is changed:</p>
   <div>
     <h4>上一个主题</h4>
     <p class="topless"><a href="placeholders-using.html"
-                          title="上一章">Working with placeholders</a></p>
+                          title="上一章">使用占位符</a></p>
   </div>
   <div>
     <h4>下一个主题</h4>
@@ -281,10 +252,10 @@ this will not change color when the theme is changed:</p>
           <a href="charts.html" title="Working with charts"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="placeholders-using.html" title="Working with placeholders"
+          <a href="placeholders-using.html" title="使用占位符"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Working with text</a></li> 
+        <li class="nav-item nav-item-this"><a href="">文本</a></li> 
       </ul>
     </div>
 <div class="footer">

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 
-    <title>Understanding placeholders &#8212; python-pptx 0.6.21 文档</title>
+    <title>理解占位符 &#8212; python-pptx 0.6.21 文档</title>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
 
@@ -23,8 +23,8 @@
     <script src="../../_static/searchtools.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="Working with placeholders" href="placeholders-using.html" />
-    <link rel="prev" title="Working with AutoShapes" href="autoshapes.html" /> 
+    <link rel="next" title="使用占位符" href="placeholders-using.html" />
+    <link rel="prev" title="AutoShape" href="autoshapes.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>导航</h3>
@@ -36,13 +36,13 @@
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="placeholders-using.html" title="Working with placeholders"
+          <a href="placeholders-using.html" title="使用占位符"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="autoshapes.html" title="Working with AutoShapes"
+          <a href="autoshapes.html" title="AutoShape"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Understanding placeholders</a></li> 
+        <li class="nav-item nav-item-this"><a href="">理解占位符</a></li> 
       </ul>
     </div>  
 
@@ -52,107 +52,55 @@
           <div class="body" role="main">
             
   <section id="understanding-placeholders">
-<h1>Understanding placeholders<a class="headerlink" href="#understanding-placeholders" title="永久链接至标题">¶</a></h1>
-<p>Intuitively, a placeholder is a pre-formatted container into which content
-can be placed. By providing pre-set formatting to its content, it places many
-of the formatting choices in the hands of the template designer while
-allowing the end-user to concentrate on the actual content. This speeds the
-presentation development process while encouraging visual consistency in
-slides created from the same template.</p>
-<p>While their typical end-user behaviors are relatively simple, the structures
-that support their operation are more complex. This page is for those who
-want to better understand the architecture of the placeholder subsystem and
-perhaps be less prone to confusion at its sometimes puzzling behavior. If you
-don’t care why they work and just want to know how to work with them, you may
-want to skip forward to the following page <a class="reference internal" href="placeholders-using.html#placeholders-using"><span class="std std-ref">Working with placeholders</span></a>.</p>
+<h1>理解占位符<a class="headerlink" href="#understanding-placeholders" title="永久链接至标题">¶</a></h1>
+<p>直观地说，占位符是可以放置内容的预格式化容器。通过为内容提供预先设置的格式，它将许多格式选择交给了模板设计人员，同时允许最终用户专注于实际的内容。这加快了演示文稿的开发过程，同时鼓励从相同模板创建的幻灯片的视觉一致性。</p>
+<p>“虽然他们的典型终端用户行为相对简单，但支持他们操作的结构却比较复杂。本页面是为那些希望更好地理解占位符子系统的体系结构，并且可能不太容易对其有时令人费解的行为感到困惑的人准备的。如果你不关心他们为什么工作，只是想知道如何使用他们，你可能想跳过以下页面 <a class="reference internal" href="placeholders-using.html#placeholders-using"><span class="std std-ref">使用占位符</span></a>。</p>
 <section id="a-placeholder-is-a-shape">
-<h2>A placeholder is a shape<a class="headerlink" href="#a-placeholder-is-a-shape" title="永久链接至标题">¶</a></h2>
-<p>Placeholders are an orthogonal category of shape, which is to say multiple
-shape types can be placeholders. In particular, the auto shape (<cite>p:sp</cite>
-element), picture (<cite>p:pic</cite> element), and graphic frame (<cite>p:graphicFrame</cite>)
-shape types can be a placeholder. The group shape (<cite>p:grpSp</cite>), connector
-(<cite>p:cxnSp</cite>), and content part (<cite>p:contentPart</cite>) shapes cannot be
-a placeholder. A graphic frame placeholder can contain a table, a chart, or
-SmartArt.</p>
+<h2>占位符是形状<a class="headerlink" href="#a-placeholder-is-a-shape" title="永久链接至标题">¶</a></h2>
+<p>占位符是正交的形状类别，也就是说多种形状类型都可以是占位符。特别是，auto shape （<cite>p:sp</cite> 元素）、picture （<cite>p:pic</cite> 元素）和 graphic frame （<cite>p:graphicFrame</cite>）形状类型可以是占位符。组 shape （<cite>p:grpSp</cite>）、connector （<cite>p:cxnSp</cite>）和 content part （<cite>p:contentPart</cite>）形状不能是占位符。graphic frame 占位符可以包含表格、图表或 SmartArt。</p>
 </section>
 <section id="placeholder-types">
-<h2>Placeholder types<a class="headerlink" href="#placeholder-types" title="永久链接至标题">¶</a></h2>
-<p>There are 18 types of placeholder.</p>
+<h2>占位符类型<a class="headerlink" href="#placeholder-types" title="永久链接至标题">¶</a></h2>
+<p>占位符有18种类型。</p>
 <dl class="simple">
-<dt>Title, Center Title, Subtitle, Body</dt><dd><p>These placeholders typically appear on a conventional “word chart”
-containing text only, often organized as a title and a series of bullet
-points. All of these placeholders can accept text only.</p>
+<dt>Title, Center Title, Subtitle, Body</dt><dd><p>这些占位符通常出现在传统的只包含文本的 “word chart” 上，通常以标题和一系列 bullet 点的形式组织起来。所有这些占位符都只能接受文本。</p>
 </dd>
-<dt>Content</dt><dd><p>This multi-purpose placeholder is the most commonly used for the body of
-a slide. When unpopulated, it displays 6 buttons to allow insertion of
-a table, a chart, SmartArt, a picture, clip art, or a media clip.</p>
+<dt>内容</dt><dd><p>这个多用途占位符是幻灯片主体中最常用的。当未填充时，它会显示 6 个按钮，允许插入表格、图表、SmartArt、图片、剪贴画或媒体剪辑。</p>
 </dd>
-<dt>Picture, Clip Art</dt><dd><p>These both allow insertion of an image. The insert button on a clip art
-placeholder brings up the clip art gallery rather than an image file
-chooser, but otherwise these behave the same.</p>
+<dt>图片，剪贴画</dt><dd><p>这两者都允许插入图像。剪贴画占位符上的插入按钮打开的是剪贴画库，而不是图像文件选择器，但除此之外，它们的行为是一样的。”</p>
 </dd>
-<dt>Chart, Table, Smart Art</dt><dd><p>These three allow the respective type of rich graphical content to be
-inserted.</p>
+<dt>Chart, Table, Smart Art</dt><dd><p>这三种类型允许插入不同类型的富 graphical 内容。</p>
 </dd>
-<dt>Media Clip</dt><dd><p>Allows a video or sound recording to be inserted.</p>
+<dt>媒体剪辑</dt><dd><p>允许插入视频或声音记录。</p>
 </dd>
-<dt>Date, Footer, Slide Number</dt><dd><p>These three appear on most slide masters and slide layouts, but do not
-behave as most users would expect. These also commonly appear on the Notes
-Master and Handout Master.</p>
+<dt>Date, Footer, Slide Number</dt><dd><p>这三种方式出现在大多数幻灯片模板和幻灯片布局中，但并不像大多数用户期望的那样。这些也经常出现在 Notes Master 和 Handout Master 上。”</p>
 </dd>
-<dt>Header</dt><dd><p>Only valid on the Notes Master and Handout Master.</p>
+<dt>标题栏</dt><dd><p>只适用于 Notes Master 和 Handout Master 上。</p>
 </dd>
-<dt>Vertical Body, Vertical Object, Vertical Title</dt><dd><p>Used with vertically oriented languages such as Japanese.</p>
+<dt>垂直体，垂直对象，垂直标题</dt><dd><p>用于垂直方向的语言，如日语。</p>
 </dd>
 </dl>
 </section>
 <section id="unpopulated-vs-populated">
 <h2>Unpopulated vs. populated<a class="headerlink" href="#unpopulated-vs-populated" title="永久链接至标题">¶</a></h2>
-<p>A placeholder on a slide can be empty or filled. This is most evident with
-a picture placeholder. When unpopulated, a placeholder displays customizable
-prompt text. A rich content placeholder will also display one or more content
-insertion buttons when empty.</p>
-<p>A text-only placeholder enters “populated” mode when the first character of
-text is entered and returns to “unpopulated” mode when the last character of
-text is removed. A rich-content placeholder enters populated mode when
-content such as a picture is inserted and returns to unpopulated mode when
-that content is deleted. In order to delete a populated placeholder, the
-shape must be deleted <em>twice</em>. The first delete removes the content and
-restores the placeholder to unpopulated mode. An additional delete will
-remove the placeholder itself. A deleted placeholder can be restored by
-reapplying the layout.</p>
+<p>幻灯片上的占位符可以是空的，也可以是填充的。这在图片占位符中最为明显。当未填充时，占位符将显示可定制的提示文本。当内容占位符为空时，也会显示一个或多个内容插入按钮。</p>
+<p>当输入文本的第一个字符时，纯文本占位符进入 “populated” （填充） 模式，当删除文本的最后一个字符时，返回到 “unpopulated” 模式。富内容占位符在插入图片等内容时进入填充模式，在删除内容时返回到未填充模式。为了删除填充的占位符，形状必须删除 <em>两次</em>。第一次删除内容，并将占位符恢复为未填充模式。额外的删除将删除占位符本身。删除的占位符可以通过重新应用布局来恢复。</p>
 </section>
 <section id="placholders-inherit">
-<h2>Placholders inherit<a class="headerlink" href="#placholders-inherit" title="永久链接至标题">¶</a></h2>
-<p>A placeholder appearing on a slide is only part of the overall placeholder
-mechanism. Placeholder behavior requires three different categories of
-placeholder shape; those that exist on a slide master, those on a slide
-layout, and those that ultimately appear on a slide in a presentation.</p>
-<p>These three categories of placeholder participate in a property inheritance
-hierarchy, either as an inheritor, an inheritee, or both. Placeholder shapes
-on masters are inheritees only. Conversely placeholder shapes on slides are
-inheritors only. Placeholders on slide layouts are both, a possible inheritor
-from a slide master placeholder and an inheritee to placeholders on slides
-linked to that layout.</p>
-<p>A layout inherits from its master differently than a slide inherits from
-its layout. A layout placeholder inherits from the master placeholder sharing
-the same type. A slide placeholder inherits from the layout placeholder
-having the same <cite>idx</cite> value.</p>
-<p>In general, all formatting properties are inherited from the “parent”
-placeholder. This includes position and size as well as fill, line, and font.
-Any directly applied formatting overrides the corresponding inherited value.
-Directly applied formatting can be removed be reapplying the layout.</p>
+<h2>占位符继承<a class="headerlink" href="#placholders-inherit" title="永久链接至标题">¶</a></h2>
+<p>占位符出现在幻灯片上只是整个占位符机制的一部分。占位符行为需要三种不同的占位符形状；有的出现在幻灯片母版上，有的出现在幻灯片布局上，还有的最终出现在演示文稿的幻灯片上。</p>
+<p>这三种类型的占位符参与到属性继承层次结构中，要么作为继承者，要么作为继承者，或者两者兼有。母版上的占位符形状仅为继承。相反，幻灯片上的占位符形状只是继承对象。幻灯片布局中的占位符既是幻灯片主占位符的可能继承者，也是链接到该布局的幻灯片上占位符的继承者。</p>
+<p>“布局继承自母版，与幻灯片继承自布局不同。布局占位符继承于共享相同类型的主占位符。幻灯片占位符继承自布局占位符，具有相同的 <code class="docutils literal notranslate"><span class="pre">idx</span></code> 值。</p>
+<p>通常，所有的格式化属性都继承自 “parent” 占位符。这包括位置和大小以及填充、线和字体。任何直接应用的格式化都会覆盖相应的继承值。直接应用的格式可以在重新应用布局时被删除。</p>
 </section>
 <section id="glossary">
-<h2>Glossary<a class="headerlink" href="#glossary" title="永久链接至标题">¶</a></h2>
+<h2>术语<a class="headerlink" href="#glossary" title="永久链接至标题">¶</a></h2>
 <dl class="simple">
-<dt>placeholder shape</dt><dd><p>A shape on a slide that inherits from a layout placeholder.</p>
+<dt>占位符形状</dt><dd><p>幻灯片上从布局占位符继承的形状。</p>
 </dd>
-<dt>layout placeholder</dt><dd><p>a shorthand name for the placeholder shape on the slide layout from which
-a particular placeholder on a slide inherits shape properties</p>
+<dt>布局占位符</dt><dd><p>幻灯片布局中占位符形状的简写名称，幻灯片上的某个占位符从它继承形状属性。</p>
 </dd>
-<dt>master placeholder</dt><dd><p>the placeholder shape on the slide master which a layout placeholder
-inherits from, if any.</p>
+<dt>母版占位符</dt><dd><p>幻灯片母版上的占位符形状，如果有的话，布局占位符是从它继承来的。</p>
 </dd>
 </dl>
 </section>
@@ -168,12 +116,12 @@ inherits from, if any.</p>
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Understanding placeholders</a><ul>
-<li><a class="reference internal" href="#a-placeholder-is-a-shape">A placeholder is a shape</a></li>
-<li><a class="reference internal" href="#placeholder-types">Placeholder types</a></li>
+<li><a class="reference internal" href="#">理解占位符</a><ul>
+<li><a class="reference internal" href="#a-placeholder-is-a-shape">占位符是形状</a></li>
+<li><a class="reference internal" href="#placeholder-types">占位符类型</a></li>
 <li><a class="reference internal" href="#unpopulated-vs-populated">Unpopulated vs. populated</a></li>
-<li><a class="reference internal" href="#placholders-inherit">Placholders inherit</a></li>
-<li><a class="reference internal" href="#glossary">Glossary</a></li>
+<li><a class="reference internal" href="#placholders-inherit">占位符继承</a></li>
+<li><a class="reference internal" href="#glossary">术语</a></li>
 </ul>
 </li>
 </ul>
@@ -182,12 +130,12 @@ inherits from, if any.</p>
   <div>
     <h4>上一个主题</h4>
     <p class="topless"><a href="autoshapes.html"
-                          title="上一章">Working with AutoShapes</a></p>
+                          title="上一章">AutoShape</a></p>
   </div>
   <div>
     <h4>下一个主题</h4>
     <p class="topless"><a href="placeholders-using.html"
-                          title="下一章">Working with placeholders</a></p>
+                          title="下一章">使用占位符</a></p>
   </div><h3>Useful Links</h3>
 <ul>
   <li><a href="http://github.com/scanny/python-pptx">python-pptx @ GitHub</a></li>
@@ -218,13 +166,13 @@ inherits from, if any.</p>
           <a href="../py-modindex.html" title="Python 模块索引"
              >模块</a> |</li>
         <li class="right" >
-          <a href="placeholders-using.html" title="Working with placeholders"
+          <a href="placeholders-using.html" title="使用占位符"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="autoshapes.html" title="Working with AutoShapes"
+          <a href="autoshapes.html" title="AutoShape"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">python-pptx 0.6.21 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Understanding placeholders</a></li> 
+        <li class="nav-item nav-item-this"><a href="">理解占位符</a></li> 
       </ul>
     </div>
 <div class="footer">
